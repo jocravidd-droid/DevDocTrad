@@ -1,12 +1,32 @@
 #!/usr/bin/env python3
-"""Génère src/_locales/fr/messages.json et src/_locales/en/messages.json.
+"""Génère src/_locales/<langue>/messages.json pour toutes les langues de l'interface.
 
-Source unique des textes de l'interface : modifier le dictionnaire ci-dessous,
-puis lancer `python3 tools/gen_locales.py`. Les {0}, {1}... sont remplacés par DDT.t().
-Pour ajouter une langue d'interface : ajouter une colonne et un dossier.
+Sources des textes :
+- le dictionnaire M ci-dessous (clé -> (français, anglais)) : référence pour fr et en ;
+- un fichier JSON par langue supplémentaire dans tools/locales/<code>.json
+  (clé -> texte traduit, à partir du texte anglais).
+
+Lancer `python3 tools/gen_locales.py` après chaque modification. Les {0}, {1}... sont
+remplacés par DDT.t(). Un « $ » littéral s'écrit « $$ » (chrome.i18n traite « $ » à part).
+
+Pour ajouter une langue d'interface : créer tools/locales/<code>.json avec un code de
+CHROME_LOCALES (Chrome refuse l'extension si un dossier de _locales a un nom inconnu).
+Une clé absente d'un fichier de langue est omise de son messages.json : Chrome et Firefox
+affichent alors le texte de default_locale (en). Le script liste les clés manquantes.
+L'ourdou (ur) est une langue cible de traduction mais Chrome n'accepte pas de dossier
+_locales/ur : l'interface reste en anglais pour les navigateurs en ourdou.
 """
 import json
+import sys
 from pathlib import Path
+
+# Codes de dossier _locales acceptés par Chrome (liste officielle de chrome.i18n).
+CHROME_LOCALES = {
+    "ar", "am", "bg", "bn", "ca", "cs", "da", "de", "el", "en", "en_GB", "en_US", "es", "es_419",
+    "et", "fa", "fi", "fil", "fr", "gu", "he", "hi", "hr", "hu", "id", "it", "ja", "kn", "ko",
+    "lt", "lv", "ml", "mr", "ms", "nl", "no", "pl", "pt_BR", "pt_PT", "ro", "ru", "sk", "sl",
+    "sr", "sv", "sw", "ta", "te", "th", "tr", "uk", "vi", "zh_CN", "zh_TW",
+}
 
 M = {
     # Manifeste
@@ -243,10 +263,45 @@ M = {
                         "this Google project uses prepaid billing and its credits are used up. Do not top up: create a key in a project without billing in Google AI Studio (free tier)."),
 }
 
-root = Path(__file__).resolve().parent.parent / "src" / "_locales"
-for col, lang in ((0, "fr"), (1, "en")):
-    out = {k: {"message": v[col]} for k, v in M.items()}
-    d = root / lang
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "src" / "_locales"
+EXTRA = Path(__file__).resolve().parent / "locales"
+
+
+def write(lang, messages):
+    d = OUT / lang
     d.mkdir(parents=True, exist_ok=True)
+    out = {k: {"message": v} for k, v in messages.items()}
     (d / "messages.json").write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"{lang}: {len(out)} messages")
+    return len(out)
+
+
+def main():
+    errors = []
+    for col, lang in ((0, "fr"), (1, "en")):
+        n = write(lang, {k: v[col] for k, v in M.items()})
+        print(f"{lang}: {n} messages")
+    for f in sorted(EXTRA.glob("*.json")):
+        lang = f.stem
+        if lang not in CHROME_LOCALES:
+            errors.append(f"{f.name} : code de langue refusé par Chrome")
+            continue
+        if lang in ("fr", "en"):
+            errors.append(f"{f.name} : fr et en viennent du dictionnaire M")
+            continue
+        data = json.loads(f.read_text(encoding="utf-8"))
+        unknown = sorted(set(data) - set(M))
+        if unknown:
+            errors.append(f"{f.name} : clés inconnues {', '.join(unknown)}")
+        messages = {k: data[k] for k in M if isinstance(data.get(k), str) and data[k].strip()}
+        missing = [k for k in M if k not in messages]
+        n = write(lang, messages)
+        print(f"{lang}: {n} messages" + (f" (manquantes, repli anglais : {', '.join(missing)})" if missing else ""))
+        if missing:
+            print(f"  attention : {lang} n'a pas {len(missing)} clé(s) : {', '.join(missing)}", file=sys.stderr)
+    if errors:
+        sys.exit("\n".join(errors))
+
+
+if __name__ == "__main__":
+    main()

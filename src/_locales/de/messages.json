@@ -1,0 +1,611 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "extDescription": {
+    "message": "Übersetzt Entwicklerdokumentation und Programmierseiten originalgetreu, ohne jemals den Code anzutasten."
+  },
+  "cmdToggle": {
+    "message": "Seite übersetzen oder zum Original zurückkehren"
+  },
+  "badgeTranslating": {
+    "message": "Übersetzung läuft: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Übersetzt: {0} Abschnitte"
+  },
+  "badgeDoneFailed": {
+    "message": "Übersetzt: {0} Abschnitte, {1} im Original belassen"
+  },
+  "badgeStopped": {
+    "message": "Gestoppt"
+  },
+  "badgeCap": {
+    "message": "Limit von {0} Zeichen für diese Seite erreicht."
+  },
+  "badgeRateLimited": {
+    "message": "Limit der kostenlosen Schlüssel erreicht. Neuer Versuch in {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limit bei allen kostenlosen Schlüsseln erreicht. Versuche es später erneut."
+  },
+  "badgeNoKey": {
+    "message": "Kein Schlüssel verfügbar. Füge in den Einstellungen einen Schlüssel hinzu."
+  },
+  "badgeError": {
+    "message": "Fehler: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "lokal übersetzt (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "online übersetzt ({0})"
+  },
+  "badgeNothing": {
+    "message": "Auf dieser Seite gibt es nichts zu übersetzen."
+  },
+  "badgeKeyProblem": {
+    "message": "Problem mit Schlüssel {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Stopp"
+  },
+  "btnOriginal": {
+    "message": "Original anzeigen"
+  },
+  "btnTranslation": {
+    "message": "Übersetzung anzeigen"
+  },
+  "btnMinimize": {
+    "message": "Minimieren"
+  },
+  "btnClose": {
+    "message": "Schließen"
+  },
+  "btnContinue": {
+    "message": "Fortsetzen"
+  },
+  "errAuth": {
+    "message": "Schlüssel abgelehnt (ungültig oder widerrufen)"
+  },
+  "errPayment": {
+    "message": "unzureichendes Guthaben beim Anbieter; Schlüssel gestoppt"
+  },
+  "errRate": {
+    "message": "Anfragelimit erreicht, versuche es in einer Minute erneut"
+  },
+  "errOllamaDown": {
+    "message": "Ollama antwortet nicht auf localhost:11434. Starte Ollama und versuche es erneut."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama lehnt die Erweiterung ab (403). Setze die Umgebungsvariable OLLAMA_ORIGINS auf chrome-extension://*,moz-extension://* und starte Ollama neu."
+  },
+  "errOpenRouterFree": {
+    "message": "im kostenlosen Modus akzeptiert OpenRouter nur Modelle, deren Name auf :free endet"
+  },
+  "errPaidUnset": {
+    "message": "kostenpflichtiger Schlüssel gesperrt: lege zuerst in den Einstellungen das Tageslimit und beide Preise fest."
+  },
+  "errPaidCap": {
+    "message": "Tageslimit für den kostenpflichtigen Schlüssel erreicht ({0} $$ von {1} $$)."
+  },
+  "errUnknown": {
+    "message": "Unbekannter Fehler"
+  },
+  "keyAvailable": {
+    "message": "verfügbar"
+  },
+  "keyDisabled": {
+    "message": "deaktiviert"
+  },
+  "keyNoModel": {
+    "message": "Modell auswählen"
+  },
+  "keyPausedUntil": {
+    "message": "pausiert bis {0}"
+  },
+  "keyProblem": {
+    "message": "Problem"
+  },
+  "tier_free": {
+    "message": "kostenlos"
+  },
+  "tier_paid": {
+    "message": "kostenpflichtig"
+  },
+  "tier_local": {
+    "message": "lokal"
+  },
+  "gl_never": {
+    "message": "Nie übersetzen"
+  },
+  "gl_always": {
+    "message": "Immer übersetzen als"
+  },
+  "popupTranslate": {
+    "message": "Diese Seite übersetzen"
+  },
+  "popupSettings": {
+    "message": "Einstellungen"
+  },
+  "popupUnsupported": {
+    "message": "Diese Seite kann von einer Erweiterung nicht übersetzt werden (Browserseite, Erweiterungsshop oder PDF-Viewer)."
+  },
+  "popupKey": {
+    "message": "Schlüssel"
+  },
+  "popupKeyAuto": {
+    "message": "Automatisch (kostenlos und lokal)"
+  },
+  "popupAuto": {
+    "message": "Diese Website automatisch übersetzen"
+  },
+  "popupSensitive": {
+    "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
+  },
+  "popupKeys": {
+    "message": "Schlüsselstatus"
+  },
+  "popupNoKeys": {
+    "message": "Noch kein Schlüssel."
+  },
+  "popupAddKey": {
+    "message": "Schlüssel hinzufügen"
+  },
+  "popupShortcut": {
+    "message": "Tastenkürzel:"
+  },
+  "optTitle": {
+    "message": "DevDocTrad-Einstellungen"
+  },
+  "optPermMissing": {
+    "message": "Der Zugriff auf die Übersetzungsanbieter ist vom Browser noch nicht erlaubt."
+  },
+  "optPermGrant": {
+    "message": "Zugriff auf Anbieter erlauben"
+  },
+  "optTabKeys": {
+    "message": "Schlüssel"
+  },
+  "optTabTranslation": {
+    "message": "Übersetzung"
+  },
+  "optTabGlossary": {
+    "message": "Glossar"
+  },
+  "optTabSites": {
+    "message": "Websites"
+  },
+  "optTabData": {
+    "message": "Daten"
+  },
+  "optKeysTitle": {
+    "message": "API-Schlüssel"
+  },
+  "optKeysLocal": {
+    "message": "Die Schlüssel bleiben in diesem Browser (lokaler Speicher). Sie werden nie mit deinem Konto synchronisiert und nur an den jeweiligen Anbieter gesendet. Die Reihenfolge der Karten ist die Priorität."
+  },
+  "optAddKey": {
+    "message": "Hinzufügen"
+  },
+  "optKey": {
+    "message": "Schlüssel"
+  },
+  "optShow": {
+    "message": "Anzeigen"
+  },
+  "optHide": {
+    "message": "Verbergen"
+  },
+  "optBaseUrl": {
+    "message": "Ollama-Adresse"
+  },
+  "optTier": {
+    "message": "Typ"
+  },
+  "optModelEasy": {
+    "message": "Modell (einfache Seiten)"
+  },
+  "optModelHard": {
+    "message": "Modell für schwierige Seiten (optional)"
+  },
+  "optMaxChars": {
+    "message": "Stapelgröße (Zeichen)"
+  },
+  "optInterval": {
+    "message": "Abstand zwischen Anfragen (ms)"
+  },
+  "optMaxReq": {
+    "message": "Max. Anfragen pro Tag (0 = unbegrenzt)"
+  },
+  "optPriceIn": {
+    "message": "Eingabepreis ($$ pro Million Token)"
+  },
+  "optPriceOut": {
+    "message": "Ausgabepreis ($$ pro Million Token)"
+  },
+  "optDailyCap": {
+    "message": "Tageslimit ($$)"
+  },
+  "optLoadModels": {
+    "message": "Modelle laden"
+  },
+  "optTest": {
+    "message": "Testen"
+  },
+  "optUp": {
+    "message": "Nach oben"
+  },
+  "optDown": {
+    "message": "Nach unten"
+  },
+  "optDelete": {
+    "message": "Löschen"
+  },
+  "optDeleteConfirm": {
+    "message": "Diesen Schlüssel löschen?"
+  },
+  "optWorking": {
+    "message": "Wird geprüft…"
+  },
+  "optTestOk": {
+    "message": "Gültiger Schlüssel, {0} Modelle verfügbar."
+  },
+  "optModelsLoaded": {
+    "message": "{0} Modelle geladen: wähle eines aus der Liste."
+  },
+  "optSaved": {
+    "message": "Gespeichert"
+  },
+  "optTarget": {
+    "message": "Zielsprache"
+  },
+  "optTargetAuto": {
+    "message": "Browsersprache ({0})"
+  },
+  "optMode": {
+    "message": "Anzeige"
+  },
+  "optModeReplace": {
+    "message": "Text ersetzen"
+  },
+  "optModeBilingual": {
+    "message": "Zweisprachig (Übersetzung unter dem Original)"
+  },
+  "optExplain": {
+    "message": "Fachbegriffe erklären"
+  },
+  "optExplainHelp": {
+    "message": "Standardmäßig aus: Die Erweiterung übersetzt, sie erklärt nicht. Wenn aktiviert, fügt sie beim ersten Vorkommen eines Begriffs die Übersetzung in Klammern hinzu."
+  },
+  "optComments": {
+    "message": "Kommentare in Codeblöcken übersetzen"
+  },
+  "optCommentsHelp": {
+    "message": "Standardmäßig aus. Nur Kommentare, die die Syntaxhervorhebung der Website erkennt, werden übersetzt; der Code wird nie verändert und das Original kehrt unverändert zurück."
+  },
+  "optPageCap": {
+    "message": "Zeichenlimit pro Seite"
+  },
+  "optShortcut": {
+    "message": "Tastenkürzel"
+  },
+  "optShortcutCurrent": {
+    "message": "Aktuelles Tastenkürzel: {0}."
+  },
+  "optShortcutNone": {
+    "message": "keines"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Zum Ändern: chrome://extensions/shortcuts öffnen."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Zum Ändern: Add-ons-Verwaltung, Zahnradsymbol, „Tastenkombinationen für Erweiterungen verwalten“."
+  },
+  "optGlossaryHelp": {
+    "message": "Begriffe, die nie übersetzt oder immer auf eine bestimmte Weise übersetzt werden sollen. Nur Begriffe, die im Abschnitt vorkommen, werden an das Modell gesendet. Höchstens 500 Einträge."
+  },
+  "optGlTerm": {
+    "message": "Begriff"
+  },
+  "optGlType": {
+    "message": "Regel"
+  },
+  "optGlTranslation": {
+    "message": "Vorgegebene Übersetzung"
+  },
+  "optGlAdd": {
+    "message": "Begriff hinzufügen"
+  },
+  "optGlExport": {
+    "message": "Exportieren (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importieren (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Ungültige Datei: erwartet wird eine JSON-Liste von Objekten {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Automatisch übersetzte Websites"
+  },
+  "optAutoHelp": {
+    "message": "Füge eine Website im Popup mit „Diese Website automatisch übersetzen“ hinzu. Automatisch werden nur kostenlose Schlüssel und Ollama verwendet."
+  },
+  "optAutoEmpty": {
+    "message": "Noch keine Website."
+  },
+  "optAutoGranted": {
+    "message": "erlaubt"
+  },
+  "optAutoRevoked": {
+    "message": "Berechtigung entzogen"
+  },
+  "optSensitiveTitle": {
+    "message": "Sensible Seiten"
+  },
+  "optSensitiveHelp": {
+    "message": "Nie automatisch übersetzt (ebenso jede Seite mit einem Passwortfeld). Die manuelle Schaltfläche funktioniert trotzdem."
+  },
+  "optSensitiveBase": {
+    "message": "Grundmuster:"
+  },
+  "optSensitiveExtra": {
+    "message": "Zusätzliche Muster (eines pro Zeile, Wort oder Domain)"
+  },
+  "optCacheTitle": {
+    "message": "Übersetzungscache"
+  },
+  "optCacheInfo": {
+    "message": "{0} Abschnitte im Cache ({1} MB). Eine bereits übersetzte Seite wird ohne Netzwerkanfrage erneut angezeigt."
+  },
+  "optCacheClear": {
+    "message": "Cache leeren"
+  },
+  "optUsageTitle": {
+    "message": "Heutiger Verbrauch"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} Anfragen{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Datenschutz"
+  },
+  "optPrivacyText": {
+    "message": "Der Text der übersetzten Seiten wird nur an den von dir gewählten Anbieter gesendet oder bleibt mit Ollama auf deinem Rechner. Keine Statistiken, kein Tracking, nichts wird an den Entwickler gesendet. In den kostenlosen Stufen können Gemini und Mistral die gesendeten Texte weiterverwenden."
+  },
+  "warnGemini": {
+    "message": "Erstelle den Schlüssel in Google AI Studio, ohne eine Abrechnung zu verknüpfen. In der kostenlosen Stufe kann Google die gesendeten Texte weiterverwenden. Zwei Schlüssel aus demselben Projekt teilen sich dasselbe Limit."
+  },
+  "warnGroq": {
+    "message": "Kostenlose Stufe ohne Karte: Über dem Limit gibt es nur einen 429-Fehler, nie eine Rechnung."
+  },
+  "warnMistral": {
+    "message": "Kostenloser Modus ohne Karte. Anfragen können zum Training verwendet werden: Deaktiviere das in der Mistral-Konsole, wenn du möchtest."
+  },
+  "warnOpenRouter": {
+    "message": "Im kostenlosen Modus werden nur Modelle akzeptiert, die auf :free enden (etwa 50 Anfragen pro Tag). Lade für diese Erweiterung nie Guthaben auf."
+  },
+  "warnOllama": {
+    "message": "Modell auf deinem Computer: kostenlos und privat, nichts verlässt deinen Rechner. Ein kleines Modell macht mehr Fehler; zweifelhafte Abschnitte bleiben im Original."
+  },
+  "popupView": {
+    "message": "Seitenanzeige"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Übersetzung"
+  },
+  "popupTranslating": {
+    "message": "Übersetzung läuft…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} Abschnitte"
+  },
+  "popupManage": {
+    "message": "Verwalten"
+  },
+  "popupMoreKeys": {
+    "message": "und {0} weitere(r) Schlüssel"
+  },
+  "popupNoKeysLong": {
+    "message": "Füge einen kostenlosen Schlüssel (Gemini, Groq, Mistral, OpenRouter) oder Ollama hinzu, um zu beginnen."
+  },
+  "stateReady": {
+    "message": "Bereit zum Übersetzen"
+  },
+  "stateNoKey": {
+    "message": "Kein Schlüssel eingerichtet"
+  },
+  "stateRunning": {
+    "message": "Übersetzung läuft"
+  },
+  "stateTranslated": {
+    "message": "Seite übersetzt"
+  },
+  "stateOriginal": {
+    "message": "Original angezeigt"
+  },
+  "stateStopped": {
+    "message": "Gestoppt"
+  },
+  "statePaused": {
+    "message": "Seitenlimit erreicht"
+  },
+  "stateError": {
+    "message": "Fehler"
+  },
+  "stateUnavailable": {
+    "message": "Seite nicht übersetzbar"
+  },
+  "toastAutoOn": {
+    "message": "Automatische Übersetzung für {0} aktiviert."
+  },
+  "toastAutoOff": {
+    "message": "Automatische Übersetzung für {0} deaktiviert."
+  },
+  "toastPermDenied": {
+    "message": "Berechtigung verweigert: Die Website wurde nicht hinzugefügt."
+  },
+  "badgeShowBadge": {
+    "message": "DevDocTrad-Badge anzeigen"
+  },
+  "optNavLabel": {
+    "message": "Bereiche der Einstellungen"
+  },
+  "optNavKeys": {
+    "message": "Anbieter und Schlüssel"
+  },
+  "optNavPrivacy": {
+    "message": "Datenschutz und Kosten"
+  },
+  "optNavAppearance": {
+    "message": "Darstellung"
+  },
+  "optDescKeys": {
+    "message": "Deine API-Schlüssel und Ollama, in der Reihenfolge der Karten von oben nach unten ausprobiert."
+  },
+  "optDescTranslation": {
+    "message": "Sprache, Anzeige und was die Erweiterung übersetzen darf."
+  },
+  "optDescPrivacy": {
+    "message": "Was deinen Browser verlässt, an wen, und was es kostet."
+  },
+  "optDescSites": {
+    "message": "Automatisch übersetzte Websites und zu schützende Seiten."
+  },
+  "optDescGlossary": {
+    "message": "Begriffe, die unverändert bleiben oder immer gleich übersetzt werden sollen."
+  },
+  "optDescData": {
+    "message": "Übersetzungscache und in diesem Browser gespeicherte Daten."
+  },
+  "optDescAppearance": {
+    "message": "Design der Einstellungen, des Popups und des auf Seiten angezeigten Badges."
+  },
+  "optVersion": {
+    "message": "Version {0}"
+  },
+  "optAddProvider": {
+    "message": "Anbieter hinzufügen"
+  },
+  "optAddProviderHelp": {
+    "message": "Die neue Karte wird ans Ende gesetzt. Die Reihenfolge der Karten ist die Priorität."
+  },
+  "optProvider": {
+    "message": "Anbieter"
+  },
+  "optKeysEmptyHint": {
+    "message": "Wähle einen Anbieter: Eine Karte erscheint, füge deinen Schlüssel ein, dann „Modelle laden“ und ein Modell auswählen."
+  },
+  "optKeyName": {
+    "message": "Name des Schlüssels"
+  },
+  "optKeyEnabled": {
+    "message": "Diesen Schlüssel verwenden"
+  },
+  "optPriority": {
+    "message": "Priorität {0}"
+  },
+  "optKeyHelp": {
+    "message": "Standardmäßig verborgen, nur in diesem Browser gespeichert."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama muss auf deinem Computer laufen."
+  },
+  "optModelHelp": {
+    "message": "„Modelle laden“ füllt die Vorschlagsliste."
+  },
+  "optLimits": {
+    "message": "Limits"
+  },
+  "optLimitsHelp": {
+    "message": "Leer = Standardwert des Anbieters."
+  },
+  "optPaidTitle": {
+    "message": "Kosten"
+  },
+  "optPaidHelp": {
+    "message": "Wird nur verwendet, wenn du ihn im Popup auswählst."
+  },
+  "optPaidOk": {
+    "message": "Limit und Preise festgelegt: Der Schlüssel kann bis zum Limit verwendet werden."
+  },
+  "optPrivacyFlow": {
+    "message": "Wohin der Text geht"
+  },
+  "optProviderNotes": {
+    "message": "Hinweise je Anbieter"
+  },
+  "optProviderUsed": {
+    "message": "in Verwendung"
+  },
+  "optUsageEmpty": {
+    "message": "Noch kein Schlüssel eingerichtet."
+  },
+  "optUsageHelp": {
+    "message": "Wird jeden Tag um Mitternacht (UTC) zurückgesetzt."
+  },
+  "optPaidRuleTitle": {
+    "message": "Kostenpflichtige Schlüssel"
+  },
+  "optPaidRule": {
+    "message": "Ein kostenpflichtiger Schlüssel wird nie automatisch verwendet: Du musst ihn im Popup auswählen. Er bleibt gesperrt, bis das Tageslimit und beide Preise festgelegt sind, und stoppt, sobald das Limit erreicht ist."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Noch keine automatische Website"
+  },
+  "optAutoEmptyLong": {
+    "message": "So fügst du eine hinzu: Öffne die Website, klicke auf das DevDocTrad-Symbol in der Symbolleiste und aktiviere „Diese Website automatisch übersetzen“. Der Browser fragt nur für diese Website nach der Berechtigung."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} aus den automatisch übersetzten Websites entfernen?"
+  },
+  "optGlEmpty": {
+    "message": "Noch kein Begriff. Beispiel: „thread“ mit der Regel „Nie übersetzen“."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 Begriffe"
+  },
+  "optGlImported": {
+    "message": "{0} Begriffe importiert."
+  },
+  "optCacheConfirm": {
+    "message": "Cache leeren? Bereits übersetzte Seiten müssen erneut übersetzt werden (neue Anfragen an die Anbieter)."
+  },
+  "optCacheCleared": {
+    "message": "Cache geleert."
+  },
+  "optStorageTitle": {
+    "message": "Lokaler Speicher"
+  },
+  "optTheme": {
+    "message": "Design"
+  },
+  "optThemeHelp": {
+    "message": "„System“ folgt der hellen oder dunklen Einstellung deines Computers."
+  },
+  "optThemeSystem": {
+    "message": "System"
+  },
+  "optThemeLight": {
+    "message": "Hell"
+  },
+  "optThemeDark": {
+    "message": "Dunkel"
+  },
+  "optPriceInUsd": {
+    "message": "Eingabepreis ($$ pro Million Token)"
+  },
+  "optPriceOutUsd": {
+    "message": "Ausgabepreis ($$ pro Million Token)"
+  },
+  "optDailyCapUsd": {
+    "message": "Tageslimit ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "dieses Google-Projekt nutzt Prepaid-Abrechnung und sein Guthaben ist aufgebraucht. Lade nichts auf: Erstelle in Google AI Studio einen Schlüssel in einem Projekt ohne Abrechnung (kostenlose Stufe)."
+  }
+}

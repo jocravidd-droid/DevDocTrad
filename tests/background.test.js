@@ -196,7 +196,8 @@ test('Ollama : secours après les clés gratuites, bon point d\'entrée, sans en
   assert.equal(call.url, 'http://localhost:11434/api/chat');
   assert.equal(call.init.headers.Authorization, undefined);
   const body = JSON.parse(call.init.body);
-  assert.equal(body.format, 'json');
+  assert.deepEqual(body.format.properties.translations, { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 2 });
+  assert.deepEqual(body.format.required, ['translations']);
   assert.equal(body.stream, false);
 });
 
@@ -224,7 +225,7 @@ test('Ollama en premier sur une page sensible (traduction manuelle)', async () =
 
 test('Ollama 403 : la marche à suivre OLLAMA_ORIGINS est donnée', async () => {
   const ollama = { id: 'ol', provider: 'ollama', label: 'Ollama', tier: 'local', enabled: true, modelEasy: 'm' };
-  const { bg } = makeBackground({ local: { settings: settings(), keys: [ollama] }, handler: () => response(403, 'Forbidden') });
+  const { bg } = makeBackground({ local: { settings: settings(), keys: [ollama] }, handler: (url, init) => (init.method === 'GET' ? response(200, { models: [{ name: 'm' }] }) : response(403, 'Forbidden')) });
   const t = await bg.testKey(ollama);
   assert.equal(t.ok, false);
   assert.match(t.message, /errOllamaOrigin/);
