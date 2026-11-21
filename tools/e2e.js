@@ -46,7 +46,9 @@ function serveDemo() {
 async function badgeText(page) {
   return page.evaluate(() => {
     const h = document.querySelector('div[data-tr-ui]');
-    return h && h.shadowRoot ? h.shadowRoot.querySelector('.msg').textContent : '';
+    if (!h || !h.shadowRoot) return '';
+    const m = h.shadowRoot.querySelector('.msg');
+    return m.textContent + ' | ' + (m.title || '');
   });
 }
 async function waitDone(page, timeout = 20000) {
@@ -89,7 +91,7 @@ async function shot(page, name) {
 
     const ollamaKey = { id: 'k-ollama', provider: 'ollama', label: 'Ollama', tier: 'local', enabled: true, modelEasy: 'demo-model:latest', baseUrl: 'http://127.0.0.1:11434', order: 1 };
     const demoKey = { id: 'k-gemini', provider: 'gemini', label: 'Gemini', key: 'AIzaSy-DEMO-NOT-A-REAL-KEY-000000', tier: 'free', enabled: false, modelEasy: 'gemini-flash-latest', order: 0 };
-    await sw.evaluate((k) => chrome.storage.local.set({ keys: k, settings: { target: 'auto', mode: 'replace', explainTerms: false, translateComments: true, pageCap: 150000, batchChars: 6000, sensitiveExtra: [], autoSites: [] } }), [demoKey, ollamaKey]);
+    await sw.evaluate((k) => chrome.storage.local.set({ keys: k, settings: { target: 'auto', mode: 'replace', explainTerms: false, translateComments: false, pageCap: 150000, batchChars: 6000, sensitiveExtra: [], autoSites: [] } }), [demoKey, ollamaKey]);
 
     const page = await ctx.newPage();
     await page.goto('http://localhost:8123/');
@@ -104,13 +106,25 @@ async function shot(page, name) {
     const codeOk = await page.evaluate(() => [...document.querySelectorAll('main code')].map((c) => c.textContent));
     check('code jamais traduit', codeOk.includes('npm install nimbus-http') && codeOk.includes("await api.get('/users')"));
     const comment = await page.textContent('.token.comment');
-    check('commentaire de code traduit (option activée)', comment.startsWith('// ') && comment !== '// Create a client with a base URL', comment);
+    check('commentaire de code intact (option désactivée par défaut)', comment === '// Create a client with a base URL', comment);
     const pre = await page.textContent('pre');
     check('code du bloc intact', pre.includes("createClient({ baseUrl: 'https://api.example.com' })"));
     check('badge : traduit en local', /Ollama|local/.test(await badgeText(page)), await badgeText(page));
     const unknown = path.join(__dirname, 'demo', 'unknown.txt');
     check('toutes les phrases ont une traduction préparée', !fs.existsSync(unknown), fs.existsSync(unknown) ? fs.readFileSync(unknown, 'utf8') : '');
     await shot(page, 'screenshot-1-traduction-fr.png');
+
+    // 1 bis. Option « commentaires » activée : seul le texte du commentaire change (pas de capture)
+    await sw.evaluate(() => chrome.storage.local.get('settings').then((r) => chrome.storage.local.set({ settings: Object.assign(r.settings, { translateComments: true }) })));
+    await page.reload();
+    await sw.evaluate((id) => self.__DDT_BG.tabCommand(id, 'translate', null), tabId);
+    await waitDone(page);
+    const comment2 = await page.textContent('.token.comment');
+    check('commentaire de code traduit quand l\'option est activée', comment2 === '// Créer un client avec une URL de base', comment2);
+    await sw.evaluate(() => chrome.storage.local.get('settings').then((r) => chrome.storage.local.set({ settings: Object.assign(r.settings, { translateComments: false }) })));
+    await page.reload();
+    await sw.evaluate((id) => self.__DDT_BG.tabCommand(id, 'translate', null), tabId);
+    await waitDone(page);
 
     // 2. Retour à l'original : identique octet pour octet
     await sw.evaluate((id) => self.__DDT_BG.tabCommand(id, 'toggle', null), tabId);

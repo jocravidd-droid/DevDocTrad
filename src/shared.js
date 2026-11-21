@@ -78,7 +78,8 @@
     pageCap: 150000,
     batchChars: 6000,
     sensitiveExtra: [],
-    autoSites: []               // noms d'hôte
+    autoSites: [],              // noms d'hôte
+    theme: 'system'             // 'system' | 'light' | 'dark'
   };
 
   /* ---------- Échappement ---------- */
@@ -441,7 +442,11 @@
     for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('placeholder', t(nodes[i].getAttribute('data-i18n-placeholder')));
     nodes = doc.querySelectorAll('[data-i18n-title]');
     for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('title', t(nodes[i].getAttribute('data-i18n-title')));
-    try { doc.documentElement.lang = (api.i18n.getUILanguage() || 'en').slice(0, 2); } catch (e) { /* rien */ }
+    nodes = doc.querySelectorAll('[data-i18n-aria]');
+    for (i = 0; i < nodes.length; i++) nodes[i].setAttribute('aria-label', t(nodes[i].getAttribute('data-i18n-aria')));
+    if (doc.documentElement) {
+      try { doc.documentElement.lang = (api.i18n.getUILanguage() || 'en').slice(0, 2); } catch (e) { /* rien */ }
+    }
   }
 
   root.DDT = {

@@ -388,5 +388,212 @@
   },
   "warnOllama": {
     "message": "Model on your computer: free and private, nothing leaves your machine. A small model makes more mistakes; doubtful passages stay in the original."
+  },
+  "popupView": {
+    "message": "Page display"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Translation"
+  },
+  "popupTranslating": {
+    "message": "Translating…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} passages"
+  },
+  "popupManage": {
+    "message": "Manage"
+  },
+  "popupMoreKeys": {
+    "message": "and {0} more key(s)"
+  },
+  "popupNoKeysLong": {
+    "message": "Add a free key (Gemini, Groq, Mistral, OpenRouter) or Ollama to get started."
+  },
+  "stateReady": {
+    "message": "Ready to translate"
+  },
+  "stateNoKey": {
+    "message": "No key configured"
+  },
+  "stateRunning": {
+    "message": "Translating"
+  },
+  "stateTranslated": {
+    "message": "Page translated"
+  },
+  "stateOriginal": {
+    "message": "Showing original"
+  },
+  "stateStopped": {
+    "message": "Stopped"
+  },
+  "statePaused": {
+    "message": "Page limit reached"
+  },
+  "stateError": {
+    "message": "Error"
+  },
+  "stateUnavailable": {
+    "message": "Page can't be translated"
+  },
+  "toastAutoOn": {
+    "message": "Automatic translation turned on for {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatic translation turned off for {0}."
+  },
+  "toastPermDenied": {
+    "message": "Permission denied: the site was not added."
+  },
+  "badgeShowBadge": {
+    "message": "Show the DevDocTrad badge"
+  },
+  "optNavLabel": {
+    "message": "Settings sections"
+  },
+  "optNavKeys": {
+    "message": "Providers and keys"
+  },
+  "optNavPrivacy": {
+    "message": "Privacy and costs"
+  },
+  "optNavAppearance": {
+    "message": "Appearance"
+  },
+  "optDescKeys": {
+    "message": "Your API keys and Ollama, tried in card order, from top to bottom."
+  },
+  "optDescTranslation": {
+    "message": "Language, display and what the extension is allowed to translate."
+  },
+  "optDescPrivacy": {
+    "message": "What leaves your browser, to whom, and what it costs."
+  },
+  "optDescSites": {
+    "message": "Automatically translated sites and pages to protect."
+  },
+  "optDescGlossary": {
+    "message": "Terms to keep as they are or to always translate the same way."
+  },
+  "optDescData": {
+    "message": "Translation cache and data kept in this browser."
+  },
+  "optDescAppearance": {
+    "message": "Theme of the settings, the popup and the badge shown on pages."
+  },
+  "optVersion": {
+    "message": "version {0}"
+  },
+  "optAddProvider": {
+    "message": "Add a provider"
+  },
+  "optAddProviderHelp": {
+    "message": "The new card goes last. Card order is priority order."
+  },
+  "optProvider": {
+    "message": "Provider"
+  },
+  "optKeysEmptyHint": {
+    "message": "Pick a provider: a card appears, paste your key, then \"Load models\" and choose a model."
+  },
+  "optKeyName": {
+    "message": "Key name"
+  },
+  "optKeyEnabled": {
+    "message": "Use this key"
+  },
+  "optPriority": {
+    "message": "priority {0}"
+  },
+  "optKeyHelp": {
+    "message": "Hidden by default, kept only in this browser."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama must be running on your computer."
+  },
+  "optModelHelp": {
+    "message": "\"Load models\" fills the suggestion list."
+  },
+  "optLimits": {
+    "message": "Limits"
+  },
+  "optLimitsHelp": {
+    "message": "Empty = provider default."
+  },
+  "optPaidTitle": {
+    "message": "Costs"
+  },
+  "optPaidHelp": {
+    "message": "Used only when you pick it in the popup."
+  },
+  "optPaidOk": {
+    "message": "Cap and prices set: the key can be used up to the cap."
+  },
+  "optPrivacyFlow": {
+    "message": "Where the text goes"
+  },
+  "optProviderNotes": {
+    "message": "Notes per provider"
+  },
+  "optProviderUsed": {
+    "message": "in use"
+  },
+  "optUsageEmpty": {
+    "message": "No key configured yet."
+  },
+  "optUsageHelp": {
+    "message": "Reset every day at midnight (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Paid keys"
+  },
+  "optPaidRule": {
+    "message": "A paid key is never used automatically: you have to pick it in the popup. It stays blocked until the daily cap and both prices are set, and stops as soon as the cap is reached."
+  },
+  "optAutoEmptyTitle": {
+    "message": "No automatic site yet"
+  },
+  "optAutoEmptyLong": {
+    "message": "To add one: open the site, click the DevDocTrad icon in the toolbar, then turn on \"Translate this site automatically\". The browser asks for permission for that site only."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Remove {0} from automatically translated sites?"
+  },
+  "optGlEmpty": {
+    "message": "No term yet. Example: \"thread\" with the rule \"Never translate\"."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 terms"
+  },
+  "optGlImported": {
+    "message": "{0} terms imported."
+  },
+  "optCacheConfirm": {
+    "message": "Clear the cache? Pages already translated will have to be translated again (new provider calls)."
+  },
+  "optCacheCleared": {
+    "message": "Cache cleared."
+  },
+  "optStorageTitle": {
+    "message": "Local storage"
+  },
+  "optTheme": {
+    "message": "Theme"
+  },
+  "optThemeHelp": {
+    "message": "\"System\" follows your computer's light or dark setting."
+  },
+  "optThemeSystem": {
+    "message": "System"
+  },
+  "optThemeLight": {
+    "message": "Light"
+  },
+  "optThemeDark": {
+    "message": "Dark"
   }
 }

@@ -35,7 +35,7 @@ http.createServer((req, res) => {
         fs.writeFileSync(path.join(dir, 'unknown.txt'), [...unknown].join('\n') + '\n');
         return t.replace(/\{(\d+)\|[^{}]*\}/g, '{$1}');
       });
-      return setTimeout(() => res.end(JSON.stringify({ message: { role: 'assistant', content: JSON.stringify({ translations }) } })), 250);
+      return setTimeout(() => res.end(JSON.stringify({ message: { role: 'assistant', content: JSON.stringify({ translations }) } })), Number(process.env.FAKE_OLLAMA_DELAY || 250));
     }
     res.statusCode = 404;
     res.end('{}');

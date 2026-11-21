@@ -1,8 +1,13 @@
 # Plan : DevDocTrad, extension de traduction fidèle (Chromium + Firefox)
 
-Version 2.3 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 15 liste les questions encore ouvertes.
+Version 2.4 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 15 liste les questions encore ouvertes.
 
 ## 0. Changements
+
+### Version 2.4
+
+- Nouvelle direction artistique (`design/`), logo « feuilles décalées », thème Système / Clair / Sombre, notifications, badge redessiné très discret.
+- Faits techniques vérifiés sur les documentations officielles (Firefox 140 et `websiteContent`, `optional_host_permissions` depuis Firefox 128, `persistAcrossSessions`, origines Ollama, limites OpenRouter 20 par minute et 50 par jour, pagination Gemini).
 
 ### Version 2.3
 
@@ -334,17 +339,11 @@ Envoi au modèle : seulement les entrées dont le terme apparaît dans le lot (c
 
 ## 7. Interface
 
-Style inspiré d'Apple (macOS, iOS), pas un style minimal plat :
+L'apparence est définie par `design/DIRECTION_ARTISTIQUE.md` (direction validée par l'utilisateur) et précisée dans `design/DESIGN_SPEC.md` (piste retenue : « Prisme feuilleté » — verre Liquid Glass, irisation prismatique réservée au logo et à l'action principale, motif de la feuille décalée du logo, badge très discret). Ces deux documents remplacent l'ancienne description « sobre, une seule couleur d'accent » ; le fonctionnement décrit ci-dessous ne change pas.
 
-- verre dépoli : fonds translucides (`rgba` blanc ou noir à 55 à 75 %) avec `backdrop-filter: blur(24px) saturate(180%)` (et `-webkit-backdrop-filter`), fine bordure claire de 1 px, ombres douces et larges ;
-- coins arrondis : 14 à 22 px pour les cartes et panneaux, boutons en forme de pilule, interrupteurs (toggles) façon iOS ;
-- fond des pages de l'extension : dégradé doux et coloré (bleu, violet, rose pâle) pour que l'effet de verre se voie ;
-- police système : `-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif` ;
-- couleur d'accent bleu système (`#0a84ff`), animations courtes (150 à 250 ms) et respect de `prefers-reduced-motion` ;
-- thème clair et sombre selon le réglage du système (`prefers-color-scheme`) ;
-- si `backdrop-filter` n'est pas pris en charge, fond plus opaque pour rester lisible ;
-- pas d'emoji ; icônes dessinées en SVG simple ;
-- texte en français ou en anglais selon la langue du navigateur.
+- Thème : Système (par défaut), Clair ou Sombre, réglable dans les réglages (section Apparence), sans flash au chargement.
+- Tokens de design centralisés dans `src/tokens.css` ; composants partagés dans `src/ui.css` et `src/ui.js` (icônes, notifications).
+- Pas d'emoji ; une seule famille d'icônes ; textes en français ou en anglais selon la langue du navigateur.
 
 ### 7.1 Popup
 

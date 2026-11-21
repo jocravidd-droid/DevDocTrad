@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 128" width="560" height="128">
+  <title>DevDocTrad</title>
+  <g>
+  <defs>
+    <linearGradient id="ddt-back" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4330e0"/><stop offset="1" stop-color="#1c3bd4"/>
+    </linearGradient>
+    <linearGradient id="ddt-prism" x1="0.05" y1="0" x2="0.95" y2="1">
+      <stop offset="0" stop-color="#2f7bff"/><stop offset="0.36" stop-color="#1fc2ef"/>
+      <stop offset="0.6" stop-color="#2dd4b4"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="ddt-spec" x1="0" y1="0" x2="0.55" y2="0.75">
+      <stop offset="0" stop-color="#fff" stop-opacity=".7"/><stop offset=".42" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="ddt-front"><rect x="42" y="30" width="70" height="88" rx="15"/></clipPath>
+  </defs>
+  <!-- couche source, décalée -->
+  <rect x="16" y="12" width="70" height="88" rx="15" fill="url(#ddt-back)" transform="rotate(-9 51 56)"/>
+  <!-- couche traduite : verre prismatique -->
+  <rect x="42" y="30" width="70" height="88" rx="15" fill="url(#ddt-prism)"/>
+  <g clip-path="url(#ddt-front)"><rect x="16" y="12" width="70" height="88" rx="15" fill="#18208f" opacity=".26" transform="rotate(-9 51 56)"/></g>
+  <rect x="42" y="30" width="70" height="88" rx="15" fill="url(#ddt-spec)"/>
+  <g fill="#fff"><rect x="56" y="52" width="42" height="9" rx="4.5"/><rect x="56" y="69" width="30" height="9" rx="4.5" opacity=".92"/><rect x="56" y="86" width="38" height="9" rx="4.5" opacity=".84"/></g>
+  <rect x="42.75" y="30.75" width="68.5" height="86.5" rx="14.25" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+</g>
+  <text x="142" y="84" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-size="58" font-weight="700" letter-spacing="-1.6" fill="#16182a">DevDoc<tspan fill="url(#ddt-prism)">Trad</tspan></text>
+</svg>

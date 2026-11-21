@@ -541,8 +541,25 @@
         url = baseOf(key) + '/models';
         headers.Authorization = 'Bearer ' + key.key;
       }
-      return fetchWithTimeout(url, { method: 'GET', headers: headers }, timeout).then(function (res) {
-        return readBody(res).then(function (b) {
+      var pages = 0;
+      var geminiModels = [];
+      function getPage(u) {
+        return fetchWithTimeout(u, { method: 'GET', headers: headers }, timeout).then(function (res) {
+          return readBody(res).then(function (b) {
+            if (!res.ok) throw classify(key, res, b);
+            var j0 = b.json || {};
+            if (p === 'gemini') {
+              geminiModels = geminiModels.concat(j0.models || []);
+              if (j0.nextPageToken && ++pages < 5) return getPage(url + '&pageToken=' + encodeURIComponent(j0.nextPageToken));
+              return { res: res, b: { json: { models: geminiModels } } };
+            }
+            return { res: res, b: b };
+          });
+        });
+      }
+      return getPage(url).then(function (r) {
+        var res = r.res;
+        return Promise.resolve(r.b).then(function (b) {
           if (!res.ok) throw classify(key, res, b);
           var j = b.json || {};
           var list = [];

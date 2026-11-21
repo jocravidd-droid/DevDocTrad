@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>DevDocTrad — piste A : feuilles décalées</title>
+  <defs>
+    <linearGradient id="back" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b2bd1"/><stop offset="1" stop-color="#1d3fd8"/>
+    </linearGradient>
+    <linearGradient id="prism" x1="0.05" y1="0" x2="0.95" y2="1">
+      <stop offset="0" stop-color="#2f7bff"/><stop offset="0.38" stop-color="#22c3ee"/>
+      <stop offset="0.62" stop-color="#2fd4b4"/><stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="spec" x1="0" y1="0" x2="0.6" y2="0.7">
+      <stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset=".45" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="front"><rect x="40" y="30" width="72" height="88" rx="14"/></clipPath>
+  </defs>
+  <rect x="14" y="10" width="72" height="88" rx="14" fill="url(#back)" transform="rotate(-8 50 54)"/>
+  <rect x="40" y="30" width="72" height="88" rx="14" fill="url(#prism)"/>
+  <!-- zone de recouvrement : la couche source vue à travers le verre -->
+  <g clip-path="url(#front)"><rect x="14" y="10" width="72" height="88" rx="14" fill="#1b1f8f" opacity=".28" transform="rotate(-8 50 54)"/></g>
+  <rect x="40" y="30" width="72" height="88" rx="14" fill="url(#spec)"/>
+  <g fill="#fff"><rect x="54" y="52" width="44" height="8" rx="4"/><rect x="54" y="68" width="34" height="8" rx="4" opacity=".92"/><rect x="54" y="84" width="40" height="8" rx="4" opacity=".85"/></g>
+  <rect x="40.75" y="30.75" width="70.5" height="86.5" rx="13.25" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <title>DevDocTrad — piste C : page pliée en couches</title>
+  <defs>
+    <linearGradient id="prism" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b5cf6"/><stop offset=".4" stop-color="#22c3ee"/><stop offset=".7" stop-color="#2fd4b4"/><stop offset="1" stop-color="#2f7bff"/>
+    </linearGradient>
+  </defs>
+  <path d="M28 10 H76 L104 38 V106 a12 12 0 0 1 -12 12 H28 a12 12 0 0 1 -12 -12 V22 a12 12 0 0 1 12 -12 Z" fill="#2840c4"/>
+  <path d="M76 10 V30 a8 8 0 0 0 8 8 H104 Z" fill="url(#prism)"/>
+  <path d="M60 58 L112 58 L112 106 a12 12 0 0 1 -12 12 H60 Z" fill="url(#prism)" opacity=".95"/>
+  <g fill="#fff"><rect x="28" y="40" width="34" height="7" rx="3.5"/><rect x="28" y="56" width="22" height="7" rx="3.5"/><rect x="70" y="72" width="30" height="7" rx="3.5"/><rect x="70" y="88" width="22" height="7" rx="3.5"/></g>
+</svg>

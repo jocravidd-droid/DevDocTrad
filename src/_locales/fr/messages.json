@@ -388,5 +388,212 @@
   },
   "warnOllama": {
     "message": "Modèle sur ton ordinateur : gratuit et privé, rien ne quitte ta machine. Un petit modèle fera plus d'erreurs ; les passages douteux restent en original."
+  },
+  "popupView": {
+    "message": "Affichage de la page"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Traduction"
+  },
+  "popupTranslating": {
+    "message": "Traduction en cours…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} passages"
+  },
+  "popupManage": {
+    "message": "Gérer"
+  },
+  "popupMoreKeys": {
+    "message": "et {0} autre(s) clé(s)"
+  },
+  "popupNoKeysLong": {
+    "message": "Ajoute une clé gratuite (Gemini, Groq, Mistral, OpenRouter) ou Ollama pour commencer."
+  },
+  "stateReady": {
+    "message": "Prête à traduire"
+  },
+  "stateNoKey": {
+    "message": "Aucune clé configurée"
+  },
+  "stateRunning": {
+    "message": "Traduction en cours"
+  },
+  "stateTranslated": {
+    "message": "Page traduite"
+  },
+  "stateOriginal": {
+    "message": "Original affiché"
+  },
+  "stateStopped": {
+    "message": "Arrêtée"
+  },
+  "statePaused": {
+    "message": "Limite de la page atteinte"
+  },
+  "stateError": {
+    "message": "Erreur"
+  },
+  "stateUnavailable": {
+    "message": "Page non traduisible"
+  },
+  "toastAutoOn": {
+    "message": "Traduction automatique activée pour {0}."
+  },
+  "toastAutoOff": {
+    "message": "Traduction automatique désactivée pour {0}."
+  },
+  "toastPermDenied": {
+    "message": "Permission refusée : le site n'a pas été ajouté."
+  },
+  "badgeShowBadge": {
+    "message": "Afficher le badge DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Sections des réglages"
+  },
+  "optNavKeys": {
+    "message": "Fournisseurs et clés"
+  },
+  "optNavPrivacy": {
+    "message": "Confidentialité et coûts"
+  },
+  "optNavAppearance": {
+    "message": "Apparence"
+  },
+  "optDescKeys": {
+    "message": "Tes clés d'API et Ollama, essayées dans l'ordre des cartes, de haut en bas."
+  },
+  "optDescTranslation": {
+    "message": "Langue, affichage et ce que l'extension a le droit de traduire."
+  },
+  "optDescPrivacy": {
+    "message": "Ce qui quitte ton navigateur, vers qui, et ce que cela coûte."
+  },
+  "optDescSites": {
+    "message": "Sites traduits automatiquement et pages à protéger."
+  },
+  "optDescGlossary": {
+    "message": "Termes à garder tels quels ou à traduire toujours de la même façon."
+  },
+  "optDescData": {
+    "message": "Cache des traductions et données gardées dans ce navigateur."
+  },
+  "optDescAppearance": {
+    "message": "Thème des réglages, du popup et du badge affiché sur les pages."
+  },
+  "optVersion": {
+    "message": "version {0}"
+  },
+  "optAddProvider": {
+    "message": "Ajouter un fournisseur"
+  },
+  "optAddProviderHelp": {
+    "message": "La nouvelle carte se place en dernier. L'ordre des cartes est l'ordre de priorité."
+  },
+  "optProvider": {
+    "message": "Fournisseur"
+  },
+  "optKeysEmptyHint": {
+    "message": "Choisis un fournisseur : une carte apparaît, colle ta clé, puis « Charger les modèles » et choisis un modèle."
+  },
+  "optKeyName": {
+    "message": "Nom de la clé"
+  },
+  "optKeyEnabled": {
+    "message": "Utiliser cette clé"
+  },
+  "optPriority": {
+    "message": "priorité {0}"
+  },
+  "optKeyHelp": {
+    "message": "Masquée par défaut, gardée uniquement dans ce navigateur."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama doit tourner sur ton ordinateur."
+  },
+  "optModelHelp": {
+    "message": "« Charger les modèles » remplit la liste de suggestions."
+  },
+  "optLimits": {
+    "message": "Limites"
+  },
+  "optLimitsHelp": {
+    "message": "Vide = valeur par défaut du fournisseur."
+  },
+  "optPaidTitle": {
+    "message": "Coûts"
+  },
+  "optPaidHelp": {
+    "message": "Utilisée seulement si tu la choisis dans le popup."
+  },
+  "optPaidOk": {
+    "message": "Plafond et prix réglés : la clé peut servir jusqu'au plafond."
+  },
+  "optPrivacyFlow": {
+    "message": "Où vont les textes"
+  },
+  "optProviderNotes": {
+    "message": "Notes par fournisseur"
+  },
+  "optProviderUsed": {
+    "message": "utilisé"
+  },
+  "optUsageEmpty": {
+    "message": "Aucune clé configurée pour l'instant."
+  },
+  "optUsageHelp": {
+    "message": "Remis à zéro chaque jour à minuit (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Clés payantes"
+  },
+  "optPaidRule": {
+    "message": "Une clé payante n'est jamais utilisée en automatique : il faut la choisir dans le popup. Elle reste bloquée tant que le plafond journalier et les deux prix ne sont pas réglés, et s'arrête dès que le plafond est atteint."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Aucun site en automatique"
+  },
+  "optAutoEmptyLong": {
+    "message": "Pour en ajouter un : ouvre le site, clique sur l'icône DevDocTrad dans la barre d'outils, puis active « Traduire automatiquement ce site ». Le navigateur demande l'autorisation pour ce site uniquement."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Retirer {0} des sites traduits automatiquement ?"
+  },
+  "optGlEmpty": {
+    "message": "Aucun terme pour l'instant. Exemple : « thread » avec la règle « Ne jamais traduire »."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termes"
+  },
+  "optGlImported": {
+    "message": "{0} termes importés."
+  },
+  "optCacheConfirm": {
+    "message": "Vider le cache ? Les pages déjà traduites devront être retraduites (nouveaux appels aux fournisseurs)."
+  },
+  "optCacheCleared": {
+    "message": "Cache vidé."
+  },
+  "optStorageTitle": {
+    "message": "Stockage local"
+  },
+  "optTheme": {
+    "message": "Thème"
+  },
+  "optThemeHelp": {
+    "message": "« Système » suit le réglage clair ou sombre de ton ordinateur."
+  },
+  "optThemeSystem": {
+    "message": "Système"
+  },
+  "optThemeLight": {
+    "message": "Clair"
+  },
+  "optThemeDark": {
+    "message": "Sombre"
   }
 }

@@ -721,32 +721,55 @@
       try { win.addEventListener('popstate', function () { setTimeout(checkUrl, 50); }); } catch (e) { /* rien */ }
     }
 
-    /* ---------------- Badge (verre dépoli, shadow DOM) ---------------- */
+    /* ---------------- Badge : très discret, uniquement fonctionnel (shadow DOM) ----------------
+     * Valeurs recopiées de src/tokens.css (vérifiées par tests/design.test.js). Pas d'irisation. */
     var BADGE_CSS = [
-      ':host{all:initial}',
-      '.b{position:fixed;right:18px;bottom:18px;z-index:2147483647;font:13px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;',
-      'color:#1d1d1f;background:rgba(255,255,255,.62);-webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);',
-      'border:1px solid rgba(255,255,255,.55);border-radius:18px;box-shadow:0 10px 40px rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.6) inset;',
-      'padding:12px 14px;min-width:240px;max-width:340px;transition:opacity .2s,transform .2s}',
-      '@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.b{background:rgba(250,250,252,.96)}}',
-      '.top{display:flex;align-items:center;gap:8px;margin-bottom:6px}',
-      '.logo{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#0a84ff,#5e5ce6);flex:none}',
-      '.name{font-weight:600;flex:1;letter-spacing:-.01em}',
-      '.ic{border:0;background:rgba(120,120,128,.16);color:inherit;width:22px;height:22px;border-radius:11px;cursor:pointer;font:inherit;line-height:22px;padding:0}',
-      '.ic:hover{background:rgba(120,120,128,.28)}',
-      '.msg{color:#3a3a3c;margin:2px 0 8px;min-height:1em}',
-      '.bar{height:6px;border-radius:3px;background:rgba(120,120,128,.2);overflow:hidden;margin-bottom:10px}',
-      '.fill{height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#0a84ff,#5e5ce6);transition:width .25s}',
-      '.btns{display:flex;gap:6px;flex-wrap:wrap}',
-      '.btn{border:0;border-radius:999px;padding:6px 12px;font:inherit;font-weight:500;cursor:pointer;background:rgba(120,120,128,.16);color:inherit}',
-      '.btn:hover{background:rgba(120,120,128,.26)}',
-      '.btn.p{background:#0a84ff;color:#fff}.btn.p:hover{background:#0071e3}',
-      '.btn:focus-visible,.ic:focus-visible{outline:2px solid #0a84ff;outline-offset:2px}',
-      '.min .msg,.min .bar,.min .btns{display:none}.min{min-width:0;padding:8px 12px}.min .top{margin:0}',
-      '.hide{display:none}',
-      '@media (prefers-color-scheme:dark){.b{color:#f5f5f7;background:rgba(36,36,38,.62);border-color:rgba(255,255,255,.12)}.msg{color:#d1d1d6}}',
-      '@media (prefers-reduced-motion:reduce){.b,.fill{transition:none}}'
+      ':host{all:initial;--b-text-1:#12152b;--b-text-2:#4a5071;--b-accent:#2f6bff;--b-focus:rgba(47, 107, 255, .55);',
+      '--b-surface:rgba(255,255,255,.80);--b-solid:#f8f9fd;--b-hairline:rgba(24, 32, 84, .10);--b-err:#c81e45;--b-warn:#a35f00;--b-ok:#138a45;',
+      '--b-shadow:0 8px 24px rgba(28, 40, 110, .12), 0 1px 2px rgba(20, 28, 80, .06);--b-pill:999px;--b-r:18px}',
+      ':host([data-theme=dark]){--b-text-1:#eef0ff;--b-text-2:#a9b0d8;--b-accent:#5b8cff;--b-focus:rgba(110, 160, 255, .6);',
+      '--b-surface:rgba(24,28,64,.80);--b-solid:#141836;--b-hairline:rgba(170, 190, 255, .14);--b-err:#fb7185;--b-warn:#fbbf24;--b-ok:#4ade80;',
+      '--b-shadow:0 10px 28px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .3)}',
+      '@media (prefers-color-scheme:dark){:host(:not([data-theme=light])){--b-text-1:#eef0ff;--b-text-2:#a9b0d8;--b-accent:#5b8cff;--b-focus:rgba(110, 160, 255, .6);',
+      '--b-surface:rgba(24,28,64,.80);--b-solid:#141836;--b-hairline:rgba(170, 190, 255, .14);--b-err:#fb7185;--b-warn:#fbbf24;--b-ok:#4ade80;',
+      '--b-shadow:0 10px 28px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .3)}}',
+      '.b{position:fixed;right:16px;bottom:16px;z-index:2147483647;box-sizing:border-box;max-width:min(320px,calc(100vw - 32px));',
+      'font:12.5px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;color:var(--b-text-1);',
+      'background:var(--b-solid);border:1px solid var(--b-hairline);border-radius:var(--b-r);box-shadow:var(--b-shadow);overflow:hidden;',
+      'transition:opacity .2s cubic-bezier(.2,.8,.2,1),transform .2s cubic-bezier(.2,.8,.2,1)}',
+      '@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.b{background:var(--b-surface);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}}',
+      '@media (prefers-reduced-transparency:reduce){.b{background:var(--b-solid)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}',
+      '.row{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 10px}',
+      '.sym{width:16px;height:16px;flex:none;color:var(--b-text-2)}',
+      '.msg{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:550;font-variant-numeric:tabular-nums}',
+      '.err .msg,.warn .msg{white-space:normal}',
+      '.err .sym{color:var(--b-err)}.warn .sym{color:var(--b-warn)}.ok .sym{color:var(--b-ok)}',
+      'button{all:unset;box-sizing:border-box;display:inline-grid;place-items:center;height:26px;min-width:26px;padding:0 6px;border-radius:var(--b-pill);',
+      'color:var(--b-text-2);cursor:pointer;font:600 12px/1 inherit;font-family:inherit;transition:background .12s,color .12s}',
+      'button:hover{background:var(--b-hairline);color:var(--b-text-1)}',
+      'button:focus-visible{outline:2px solid var(--b-focus);outline-offset:1px}',
+      'button svg{width:15px;height:15px}',
+      'button.txt{padding:0 9px;color:var(--b-accent)}',
+      '.bar{height:2px;background:var(--b-hairline)}.fill{height:100%;width:0;background:var(--b-accent);transition:width .3s cubic-bezier(.2,.8,.2,1)}',
+      '.hide{display:none!important}',
+      '.min{border-radius:var(--b-pill)}.min .row{padding:5px}.min .msg,.min [data-a=stop],.min [data-a=toggle],.min [data-a=continue],.min [data-a=close],.min .bar{display:none}',
+      '.min [data-a=min]{width:26px}',
+      '@media (prefers-reduced-motion:reduce){.b,.fill,button{transition:none}}'
     ].join('');
+
+    var BI = {
+      sym: '<rect x="2.6" y="2.2" width="7.4" height="9.4" rx="1.8" transform="rotate(-9 6.3 6.9)" fill="currentColor" opacity=".45"/><rect x="6" y="4.6" width="7.6" height="9.6" rx="1.9" fill="currentColor"/>',
+      stop: '<rect x="6" y="6" width="12" height="12" rx="2.5"/>',
+      original: '<path d="M4 12s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z"/><circle cx="12" cy="12" r="2.5"/>',
+      translate: '<rect x="3.5" y="3" width="11" height="14" rx="2.5" transform="rotate(-8 9 10)"/><rect x="9.5" y="7" width="11" height="14" rx="2.5"/>',
+      min: '<path d="M6 12h12"/>',
+      max: '<path d="M7 14l5-5 5 5"/>',
+      close: '<path d="M7 7l10 10M17 7L7 17"/>'
+    };
+    function svg(name, fillMode) {
+      if (fillMode) return '<svg class="sym" viewBox="0 0 16 16" aria-hidden="true">' + BI[name] + '</svg>';
+      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + BI[name] + '</svg>';
+    }
 
     function ensureBadge() {
       if (badge || deps.noBadge) return;
@@ -759,24 +782,34 @@
       sr.appendChild(style);
       var box = doc.createElement('div');
       box.className = 'b';
-      box.setAttribute('role', 'status');
-      box.innerHTML = '<div class="top"><span class="logo"></span><span class="name">DevDocTrad</span>' +
-        '<button class="ic" data-a="min"></button><button class="ic" data-a="close">×</button></div>' +
-        '<div class="msg" aria-live="polite"></div><div class="bar"><div class="fill"></div></div>' +
-        '<div class="btns"><button class="btn" data-a="stop"></button><button class="btn p" data-a="toggle"></button>' +
-        '<button class="btn hide" data-a="continue"></button></div>';
+      box.setAttribute('role', 'region');
+      box.setAttribute('aria-label', 'DevDocTrad');
+      box.innerHTML = '<div class="row">' + svg('sym', true) +
+        '<span class="msg" aria-live="polite"></span>' +
+        '<button data-a="continue" class="txt hide"></button>' +
+        '<button data-a="stop">' + svg('stop') + '</button>' +
+        '<button data-a="toggle"></button>' +
+        '<button data-a="min">' + svg('min') + '</button>' +
+        '<button data-a="close">' + svg('close') + '</button></div>' +
+        '<div class="bar"><div class="fill"></div></div>';
       sr.appendChild(box);
-      box.querySelector('[data-a=min]').textContent = '–';
-      box.querySelector('[data-a=min]').setAttribute('aria-label', t('btnMinimize'));
-      box.querySelector('[data-a=close]').setAttribute('aria-label', t('btnClose'));
-      box.querySelector('[data-a=stop]').textContent = t('btnStop');
       box.querySelector('[data-a=continue]').textContent = t('btnContinue');
+      box.querySelector('[data-a=stop]').setAttribute('aria-label', t('btnStop'));
+      box.querySelector('[data-a=stop]').title = t('btnStop');
+      box.querySelector('[data-a=min]').setAttribute('aria-label', t('btnMinimize'));
+      box.querySelector('[data-a=min]').title = t('btnMinimize');
+      box.querySelector('[data-a=close]').setAttribute('aria-label', t('btnClose'));
+      box.querySelector('[data-a=close]').title = t('btnClose');
       box.addEventListener('click', function (ev) {
         var b = ev.target.closest && ev.target.closest('[data-a]');
         if (!b) return;
         var a = b.getAttribute('data-a');
-        if (a === 'min') box.classList.toggle('min');
-        else if (a === 'close') host.style.display = 'none';
+        if (a === 'min') {
+          var m = box.classList.toggle('min');
+          b.innerHTML = svg(m ? 'max' : 'min');
+          b.setAttribute('aria-label', m ? t('badgeShowBadge') : t('btnMinimize'));
+          b.title = b.getAttribute('aria-label');
+        } else if (a === 'close') host.style.display = 'none';
         else if (a === 'stop') stop();
         else if (a === 'toggle') toggle();
         else if (a === 'continue') continueAfterCap();
@@ -784,6 +817,13 @@
       (doc.body || doc.documentElement).appendChild(host);
       badge = { host: host, box: box };
       built.add(host);
+      applyBadgeTheme();
+    }
+    function applyBadgeTheme() {
+      if (!badge) return;
+      var th = settings.theme;
+      if (th === 'light' || th === 'dark') badge.host.setAttribute('data-theme', th);
+      else badge.host.removeAttribute('data-theme');
     }
 
     function updateBadge() {
@@ -791,20 +831,30 @@
       var st = status();
       badge.host.style.display = '';
       var msg = st.message;
+      var kind = '';
+      if (st.state === 'error') kind = 'err';
+      else if (st.state === 'paused' || (st.state === 'running' && msg)) kind = 'warn';
+      else if (st.state === 'done' && !st.failed) kind = 'ok';
       if (!msg) {
         if (st.state === 'running') msg = t('badgeTranslating', [st.done, st.total]);
         else if (st.state === 'stopped') msg = t('badgeStopped');
-        else if (st.state === 'done') {
-          msg = st.failed ? t('badgeDoneFailed', [st.done, st.failed]) : t('badgeDone', [st.done]);
-          if (st.via) msg += ' · ' + (st.via.local ? t('badgeViaLocal') : t('badgeViaOnline', [st.via.label]));
-        }
+        else if (st.state === 'done') msg = st.failed ? t('badgeDoneFailed', [st.done, st.failed]) : t('badgeDone', [st.done]);
       }
+      var full = msg;
+      if (st.state === 'done' && st.via) full += ' · ' + (st.via.local ? t('badgeViaLocal') : t('badgeViaOnline', [st.via.label]));
+      badge.box.className = 'b' + (badge.box.classList.contains('min') ? ' min' : '') + (kind ? ' ' + kind : '');
       badge.box.querySelector('.msg').textContent = msg || '';
+      badge.box.querySelector('.msg').title = full || '';
       var pct = st.total ? Math.round((st.done + st.failed) / st.total * 100) : 0;
       badge.box.querySelector('.fill').style.width = pct + '%';
       badge.box.querySelector('[data-a=stop]').classList.toggle('hide', st.state !== 'running');
       badge.box.querySelector('[data-a=continue]').classList.toggle('hide', st.state !== 'paused');
-      badge.box.querySelector('[data-a=toggle]').textContent = st.showing === 'translated' ? t('btnOriginal') : t('btnTranslation');
+      var tg = badge.box.querySelector('[data-a=toggle]');
+      var label = st.showing === 'translated' ? t('btnOriginal') : t('btnTranslation');
+      tg.innerHTML = svg(st.showing === 'translated' ? 'original' : 'translate');
+      tg.setAttribute('aria-label', label);
+      tg.title = label;
+      tg.classList.toggle('hide', !st.done);
     }
 
     /* ---------------- Infos de page (pour l'automatique) ---------------- */
@@ -822,7 +872,7 @@
       continueAfterCap: continueAfterCap, status: status, pageInfo: pageInfo, scan: scan,
       _units: function () { return units; }, _checkUrl: checkUrl, _built: built,
       setOnUrlChange: function (fn) { onUrlChange = fn; },
-      setSettings: function (s) { settings = Object.assign(settings, s || {}); capLimit = Math.max(capLimit, settings.pageCap); }
+      setSettings: function (s) { settings = Object.assign(settings, s || {}); capLimit = Math.max(capLimit, settings.pageCap); applyBadgeTheme(); }
     };
   }
 
