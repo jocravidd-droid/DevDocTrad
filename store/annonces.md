@@ -19,7 +19,7 @@ Liens utilisés dans les textes :
 | Élément | Adresse |
 |---|---|
 | Dépôt GitHub | `https://github.com/jocravidd-droid/DevDocTrad` |
-| Site (une fois GitHub Pages activé) | `https://jocravidd-droid.github.io/DevDocTrad/` |
+| Site (une fois GitHub Pages activé) | `https://devdoctrad.vercel.app/` |
 | Politique de confidentialité | `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` |
 | Chrome Web Store | `<LIEN_CHROME_WEB_STORE>` (à remplacer) |
 | addons.mozilla.org | `<LIEN_AMO>` (à remplacer) |
@@ -252,7 +252,7 @@ Where: `https://alternativeto.net/`, menu "Add new app" (sign in first). Fill in
 | Field | Value |
 |---|---|
 | Name | DevDocTrad |
-| Website | `https://jocravidd-droid.github.io/DevDocTrad/` once GitHub Pages is enabled; otherwise `https://github.com/jocravidd-droid/DevDocTrad` |
+| Website | `https://devdoctrad.vercel.app/` once GitHub Pages is enabled; otherwise `https://github.com/jocravidd-droid/DevDocTrad` |
 | Source code | `https://github.com/jocravidd-droid/DevDocTrad` |
 | License / pricing | Free, Open Source (MIT) |
 | Platforms | Google Chrome, Microsoft Edge, Brave, Mozilla Firefox |

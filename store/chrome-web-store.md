@@ -333,7 +333,7 @@ Coche les trois cases :
 | Champ | Valeur |
 |---|---|
 | URL de la politique de confidentialité (Privacy policy URL) | `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` |
-| Page d’accueil (Homepage URL) | `https://jocravidd-droid.github.io/DevDocTrad/` une fois GitHub Pages activé ; sinon `https://github.com/jocravidd-droid/DevDocTrad` |
+| Page d’accueil (Homepage URL) | `https://devdoctrad.vercel.app/` une fois GitHub Pages activé ; sinon `https://github.com/jocravidd-droid/DevDocTrad` |
 | Assistance (Support URL) | `https://github.com/jocravidd-droid/DevDocTrad/issues` |
 | Contenu pour adultes (Mature content) | Non |
 
@@ -431,7 +431,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 25. Dans « Captures d’écran » (Screenshots), envoie les quatre captures dans cet ordre : `store/screenshots/screenshot-1-traduction-fr.png`, puis `screenshot-2-bilingue.png`, puis `screenshot-3-reglages.png`, puis `screenshot-4-russe.png`.
 26. Dans « Petite vignette promotionnelle » (Small promo tile), envoie `store/promo-440x280.png` (créée à l’étape 6).
 27. Laisse vides la grande vignette (Marquee promo tile) et la vidéo : elles sont facultatives.
-28. Dans « URL de la page d’accueil » (Homepage URL), colle `https://jocravidd-droid.github.io/DevDocTrad/` si GitHub Pages est activé et que la page s’ouvre ; sinon colle `https://github.com/jocravidd-droid/DevDocTrad`.
+28. Dans « URL de la page d’accueil » (Homepage URL), colle `https://devdoctrad.vercel.app/` si GitHub Pages est activé et que la page s’ouvre ; sinon colle `https://github.com/jocravidd-droid/DevDocTrad`.
 29. Dans « URL d’assistance » (Support URL), colle `https://github.com/jocravidd-droid/DevDocTrad/issues`.
 30. Pour « Contenu pour adultes » (Mature content), réponds « Non ».
 31. Remonte en haut de l’onglet et choisis « Français » dans le sélecteur de langue.
@@ -523,7 +523,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 25. In "Screenshots", upload the four screenshots in this order: `store/screenshots/screenshot-1-traduction-fr.png`, then `screenshot-2-bilingue.png`, then `screenshot-3-reglages.png`, then `screenshot-4-russe.png`.
 26. In "Small promo tile", upload `store/promo-440x280.png` (created in step 6).
 27. Leave "Marquee promo tile" and the video empty: they are optional.
-28. In "Homepage URL", paste `https://jocravidd-droid.github.io/DevDocTrad/` if GitHub Pages is enabled and the page opens; otherwise paste `https://github.com/jocravidd-droid/DevDocTrad`.
+28. In "Homepage URL", paste `https://devdoctrad.vercel.app/` if GitHub Pages is enabled and the page opens; otherwise paste `https://github.com/jocravidd-droid/DevDocTrad`.
 29. In "Support URL", paste `https://github.com/jocravidd-droid/DevDocTrad/issues`.
 30. For "Mature content", answer "No".
 31. Scroll back to the top of the tab and choose "French" (Français) in the language selector.

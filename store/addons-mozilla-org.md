@@ -171,7 +171,7 @@ AMO limite le nombre de catégories. Choisis ces deux-là, dans cet ordre de pri
 
 | Champ AMO (libellé anglais) | Valeur |
 |---|---|
-| Homepage (page d’accueil) | `https://jocravidd-droid.github.io/DevDocTrad/` une fois GitHub Pages activé ; sinon `https://github.com/jocravidd-droid/DevDocTrad` |
+| Homepage (page d’accueil) | `https://devdoctrad.vercel.app/` une fois GitHub Pages activé ; sinon `https://github.com/jocravidd-droid/DevDocTrad` |
 | Support website (site d’assistance) | `https://github.com/jocravidd-droid/DevDocTrad/issues` |
 | Support email (e-mail d’assistance) | Facultatif. Laisse vide, sauf si tu veux afficher publiquement une adresse. |
 | License (licence) | MIT License |
@@ -332,7 +332,7 @@ Chaque étape se fait dans l’ordre. Les libellés d’AMO peuvent changer lég
 33. Dans le Developer Hub, ouvre « Mes modules » (My Add-ons), puis DevDocTrad, puis « Modifier la fiche » (Edit Product Page).
 34. Dans la partie des images, envoie les quatre captures dans cet ordre : `store/screenshots/screenshot-1-traduction-fr.png`, `screenshot-2-bilingue.png`, `screenshot-3-reglages.png`, `screenshot-4-russe.png`.
 35. Sous chaque capture, colle la légende anglaise correspondante de la section « 10. Captures d’écran et légendes ».
-36. Dans « Page d’accueil » (Homepage), colle `https://jocravidd-droid.github.io/DevDocTrad/` si GitHub Pages est activé et que la page s’ouvre ; sinon colle `https://github.com/jocravidd-droid/DevDocTrad`.
+36. Dans « Page d’accueil » (Homepage), colle `https://devdoctrad.vercel.app/` si GitHub Pages est activé et que la page s’ouvre ; sinon colle `https://github.com/jocravidd-droid/DevDocTrad`.
 37. Enregistre chaque partie modifiée avec son bouton « Enregistrer les modifications » (Save Changes).
 38. Pour ajouter la fiche française : en haut de la page de modification, utilise le sélecteur de langue pour choisir « Français ».
 39. Dans le résumé français, colle le bloc de la section « 3.1 Résumé en français » de ce fichier.
@@ -406,7 +406,7 @@ Do the steps in order. AMO labels may change slightly over time: look for the cl
 33. In the Developer Hub, open "My Add-ons", then DevDocTrad, then "Edit Product Page".
 34. In the images part, upload the four screenshots in this order: `store/screenshots/screenshot-1-traduction-fr.png`, `screenshot-2-bilingue.png`, `screenshot-3-reglages.png`, `screenshot-4-russe.png`.
 35. Under each screenshot, paste the matching English caption from section "10. Captures d’écran et légendes".
-36. In "Homepage", paste `https://jocravidd-droid.github.io/DevDocTrad/` if GitHub Pages is enabled and the page opens; otherwise paste `https://github.com/jocravidd-droid/DevDocTrad`.
+36. In "Homepage", paste `https://devdoctrad.vercel.app/` if GitHub Pages is enabled and the page opens; otherwise paste `https://github.com/jocravidd-droid/DevDocTrad`.
 37. Save each edited part with its "Save Changes" button.
 38. To add the French listing: at the top of the edit page, use the language selector to choose "Français".
 39. In the French summary, paste the block from section "3.1 Résumé en français" of this file.

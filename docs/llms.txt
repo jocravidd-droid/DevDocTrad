@@ -12,7 +12,7 @@ Key facts:
 - Interface in English and French.
 
 ## Links
-- [Website (French)](https://jocravidd-droid.github.io/DevDocTrad/)
-- [Website (English)](https://jocravidd-droid.github.io/DevDocTrad/en/)
+- [Website (French)](https://devdoctrad.vercel.app/)
+- [Website (English)](https://devdoctrad.vercel.app/en/)
 - [Source code and install guide](https://github.com/jocravidd-droid/DevDocTrad)
 - [Privacy policy](https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md)

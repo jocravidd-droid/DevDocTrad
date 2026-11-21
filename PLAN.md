@@ -476,9 +476,9 @@ But : quelqu'un qui tape ou demande à une IA "extension pour traduire la doc te
 - Releases GitHub pour chaque version, avec les deux `.zip` et la liste des changements.
 - Fichiers `CONTRIBUTING.md` et modèles d'issues, pour que d'autres puissent aider (cohérent avec la licence MIT).
 
-### 13.3 Site gratuit (GitHub Pages)
+### 13.3 Site gratuit (Vercel, plan Hobby gratuit)
 
-- Une page simple dans `docs/` publiée par GitHub Pages : présentation, captures, installation, FAQ ("Est-ce gratuit ?", "Mes clés sont-elles en sécurité ?", "Quelle différence avec la traduction intégrée de Chrome ?"), politique de confidentialité.
+- Une page simple dans `docs/`, publiée sur https://devdoctrad.vercel.app (projet Vercel gratuit relié au dépôt, mise à jour automatique à chaque envoi sur `main` ; ne jamais activer d'option payante) : présentation, captures, installation, FAQ ("Est-ce gratuit ?", "Mes clés sont-elles en sécurité ?", "Quelle différence avec la traduction intégrée de Chrome ?"), politique de confidentialité.
 - Balises `title`, `meta description`, Open Graph, données structurées `SoftwareApplication` (schema.org), `sitemap.xml`, version française et anglaise (`hreflang`).
 - Un fichier `llms.txt` à la racine du site : résumé en texte brut de ce que fait l'extension et des liens utiles, lisible facilement par les IA.
 
