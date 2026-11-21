@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><style>
+body{margin:0;font:13px -apple-system,system-ui,sans-serif;display:grid;grid-template-columns:1fr 1fr}
+.side{padding:18px}.light{background:#f3f4f6;color:#111}.dark{background:#202124;color:#eee}
+.row{display:flex;align-items:end;gap:22px;margin:10px 0 22px}.row div{text-align:center}
+img{display:block;margin:0 auto 4px;image-rendering:auto}
+.bar{display:flex;gap:10px;align-items:center;padding:6px 10px;border-radius:8px;width:max-content}
+.light .bar{background:#fff;border:1px solid #ddd}.dark .bar{background:#35363a}
+.bar span{width:16px;height:16px;border-radius:50%;background:#999;opacity:.5}
+</style>
+<body>
+<script>
+const P=[['A','piste-a-feuilles-decalees.svg','A — feuilles décalées'],['B','piste-b-prisme.svg','B — page à travers un prisme'],['C','piste-c-page-pliee.svg','C — page pliée en couches']];
+for(const cls of ['light','dark']){const s=document.createElement('div');s.className='side '+cls;
+ s.innerHTML='<b>'+(cls==='light'?'Barre d\'outils claire':'Barre d\'outils sombre')+'</b>'+P.map(p=>`<div>${p[2]}</div><div class="row">${[128,48,32,16].map(z=>`<div><img src="${p[1]}" width="${z}" height="${z}">${z}px</div>`).join('')}<div class="bar"><span></span><span></span><img src="${p[1]}" width="16" height="16"><span></span></div></div>`).join('');
+ document.body.appendChild(s);}
+</script>

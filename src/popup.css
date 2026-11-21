@@ -1,0 +1,34 @@
+/* DevDocTrad - popup (360 px, sans défilement). Licence MIT. */
+body.popup { width: 360px; min-height: 120px; }
+.top { display: flex; align-items: center; gap: var(--s-3); padding: 12px 14px 2px 16px; }
+.mark { width: 30px; height: 30px; flex: none; filter: drop-shadow(0 3px 6px rgba(47, 107, 255, .3)); }
+.id { flex: 1; min-width: 0; }
+.id h1 { font-size: var(--fs-lg); font-weight: 700; line-height: 1.15; }
+.host { font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+main { padding: 6px 14px 4px; display: flex; flex-direction: column; gap: 8px; }
+.card { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+#main { margin: 6px 0 2px 6px; }  /* place pour la feuille décalée */
+.count { font-size: var(--fs-sm); color: var(--text-2); }
+.controls { gap: var(--s-2); }
+.controls .seg { flex: 1; min-width: 0; }
+.controls .seg label > span { padding: 6px 8px; }
+.controls .btn { flex: none; }
+#status:empty { display: none; }
+.field { display: block; }
+.note { display: flex; gap: 8px; align-items: flex-start; }
+.note svg { width: 15px; height: 15px; flex: none; margin-top: 1px; color: var(--warn); }
+.group-card { gap: 10px; }
+.group-card select { min-height: 34px; padding-top: 6px; padding-bottom: 6px; }
+h3 { font-size: var(--fs-md); font-weight: 650; }
+.small-link { font-size: var(--fs-sm); font-weight: 550; }
+.keys { list-style: none; margin: 0; padding: 0; }
+.keys li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 0; font-size: var(--fs-md); }
+.keys li + li { border-top: 1px solid var(--hairline); }
+.keys .kname { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.keys .kname small { color: var(--text-2); margin-left: 4px; }
+.keys li.more { color: var(--text-2); font-size: var(--fs-sm); }
+.nokeys { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.foot { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 4px 14px 14px; color: var(--text-2); font-size: var(--fs-sm); }
+.foot svg { width: 15px; height: 15px; }
+.foot:empty, .foot.hidden { display: none; }
+.unsupported { gap: 10px; }

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="optTitle">DevDocTrad</title>
+<script src="theme.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="options.css">
+</head>
+<body class="opts">
+<div class="shell">
+
+  <!-- Navigation : matériau le plus opaque -->
+  <aside class="side m-primary m-dense enter">
+    <div class="brand">
+      <img src="icons/icon-48.png" alt="" width="36" height="36">
+      <div class="brand-id">
+        <b>DevDocTrad</b>
+        <span class="mono" id="version"></span>
+      </div>
+    </div>
+    <nav class="nav" data-i18n-aria="optNavLabel">
+      <ul>
+        <li><a href="#keys" data-sec="keys"><span data-icon="key"></span><span data-i18n="optNavKeys"></span></a></li>
+        <li><a href="#translation" data-sec="translation"><span data-icon="translate"></span><span data-i18n="optTabTranslation"></span></a></li>
+        <li><a href="#privacy" data-sec="privacy"><span data-icon="shield"></span><span data-i18n="optNavPrivacy"></span></a></li>
+        <li><a href="#sites" data-sec="sites"><span data-icon="globe"></span><span data-i18n="optTabSites"></span></a></li>
+        <li><a href="#glossary" data-sec="glossary"><span data-icon="book"></span><span data-i18n="optTabGlossary"></span></a></li>
+        <li><a href="#data" data-sec="data"><span data-icon="database"></span><span data-i18n="optTabData"></span></a></li>
+        <li><a href="#appearance" data-sec="appearance"><span data-icon="palette"></span><span data-i18n="optNavAppearance"></span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main class="content" id="content">
+    <!-- Firefox : accès aux API pas encore accordé -->
+    <div class="banner surface" id="permBanner" role="alert" hidden>
+      <span class="banner-icon" data-icon="alert"></span>
+      <p data-i18n="optPermMissing"></p>
+      <button class="btn small" id="grantApi"><span data-icon="key"></span><span data-i18n="optPermGrant"></span></button>
+    </div>
+
+    <!-- En-tête de section : seul panneau avec la feuille décalée -->
+    <header class="pagehead m-primary sheet" id="pagehead">
+      <span class="ph-icon" id="phIcon" aria-hidden="true"></span>
+      <div class="ph-txt">
+        <h1 id="phTitle" tabindex="-1"></h1>
+        <p id="phDesc"></p>
+      </div>
+    </header>
+
+    <!-- ============ Fournisseurs et clés ============ -->
+    <section class="sec" id="sec-keys" aria-labelledby="phTitle">
+      <div class="group surface" id="addGroup">
+        <div class="line">
+          <label class="txt" for="newProvider"><b data-i18n="optAddProvider"></b><span data-i18n="optAddProviderHelp"></span></label>
+          <div class="ctl">
+            <select id="newProvider" class="provider-sel"></select>
+            <button class="btn" id="addKeyBtn"><span data-icon="plus"></span><span data-i18n="optAddKey"></span></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="empty surface" id="keysEmpty" hidden>
+        <span class="empty-icon" data-icon="key"></span>
+        <h2 data-i18n="popupNoKeys"></h2>
+        <p data-i18n="popupNoKeysLong"></p>
+        <p class="help" data-i18n="optKeysEmptyHint"></p>
+        <div class="empty-actions">
+          <label class="sr-only" for="emptyProvider" data-i18n="optProvider"></label>
+          <select id="emptyProvider" class="provider-sel"></select>
+          <button class="btn" id="emptyAdd"><span data-icon="plus"></span><span data-i18n="optAddKey"></span></button>
+        </div>
+      </div>
+
+      <div id="keyList" class="keylist"></div>
+    </section>
+
+    <!-- ============ Traduction ============ -->
+    <section class="sec" id="sec-translation" aria-labelledby="phTitle" hidden>
+      <div class="group surface">
+        <div class="line">
+          <label class="txt" for="target"><b data-i18n="optTarget"></b></label>
+          <div class="ctl"><select id="target"></select></div>
+        </div>
+        <div class="line">
+          <div class="txt" id="modeLbl"><b data-i18n="optMode"></b></div>
+          <div class="ctl">
+            <div class="seg" role="radiogroup" aria-labelledby="modeLbl">
+              <label><input type="radio" name="mode" value="replace"><span data-i18n="optModeReplace"></span></label>
+              <label><input type="radio" name="mode" value="bilingual"><span data-i18n="optModeBilingual"></span></label>
+            </div>
+          </div>
+        </div>
+        <div class="line">
+          <label class="txt" for="explainTerms"><b data-i18n="optExplain"></b><span data-i18n="optExplainHelp"></span></label>
+          <div class="ctl"><label class="switch"><input type="checkbox" id="explainTerms"><span class="track"></span></label></div>
+        </div>
+        <div class="line">
+          <label class="txt" for="translateComments"><b data-i18n="optComments"></b><span data-i18n="optCommentsHelp"></span></label>
+          <div class="ctl"><label class="switch"><input type="checkbox" id="translateComments"><span class="track"></span></label></div>
+        </div>
+        <div class="line">
+          <label class="txt" for="pageCap"><b data-i18n="optPageCap"></b></label>
+          <div class="ctl"><input type="number" id="pageCap" class="mono num" min="10000" step="10000"></div>
+        </div>
+      </div>
+
+      <div class="group surface">
+        <div class="line">
+          <div class="txt"><b data-i18n="optShortcut"></b><span id="shortcutWhere"></span></div>
+          <div class="ctl keys-ctl" id="shortcutKeys"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Confidentialité et coûts ============ -->
+    <section class="sec" id="sec-privacy" aria-labelledby="phTitle" hidden>
+      <div class="group surface">
+        <div class="ghead">
+          <h2><span data-icon="shield"></span><span data-i18n="optPrivacyFlow"></span></h2>
+        </div>
+        <div class="line prose"><p data-i18n="optPrivacyText"></p></div>
+      </div>
+
+      <div class="group surface">
+        <div class="ghead">
+          <h2><span data-icon="coin"></span><span data-i18n="optPaidRuleTitle"></span></h2>
+        </div>
+        <div class="line prose"><p data-i18n="optPaidRule"></p></div>
+      </div>
+
+      <div class="group surface" id="usageGroup">
+        <div class="ghead">
+          <h2><span data-icon="list"></span><span data-i18n="optUsageTitle"></span></h2>
+          <p class="help" data-i18n="optUsageHelp"></p>
+        </div>
+      </div>
+
+      <div class="group surface" id="notesGroup">
+        <div class="ghead">
+          <h2><span data-icon="info"></span><span data-i18n="optProviderNotes"></span></h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Sites ============ -->
+    <section class="sec" id="sec-sites" aria-labelledby="phTitle" hidden>
+      <div class="group surface" id="autoGroup">
+        <div class="ghead">
+          <h2><span data-icon="globe"></span><span data-i18n="optAutoTitle"></span></h2>
+          <p class="help" data-i18n="optAutoHelp"></p>
+        </div>
+        <div id="autoList" class="lines"></div>
+      </div>
+
+      <div class="group surface">
+        <div class="ghead">
+          <h2><span data-icon="shield"></span><span data-i18n="optSensitiveTitle"></span></h2>
+          <p class="help" data-i18n="optSensitiveHelp"></p>
+        </div>
+        <div class="line stack">
+          <div class="txt"><b data-i18n="optSensitiveBase"></b></div>
+          <div class="pats" id="sensitiveBase"></div>
+        </div>
+        <div class="line stack">
+          <label class="txt" for="sensitiveExtra"><b data-i18n="optSensitiveExtra"></b></label>
+          <textarea id="sensitiveExtra" class="mono" spellcheck="false" placeholder="intranet&#10;example.org"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Glossaire ============ -->
+    <section class="sec" id="sec-glossary" aria-labelledby="phTitle" hidden>
+      <div class="group surface">
+        <div class="ghead">
+          <p class="help" data-i18n="optGlossaryHelp"></p>
+        </div>
+        <div class="gl-row gl-head" aria-hidden="true">
+          <span data-i18n="optGlTerm"></span><span data-i18n="optGlType"></span><span data-i18n="optGlTranslation"></span><span></span>
+        </div>
+        <div id="glossBody" class="gl-body"></div>
+        <p class="gl-empty help" id="glEmpty" data-i18n="optGlEmpty" hidden></p>
+        <div class="gl-tools">
+          <button class="btn small" id="glAdd"><span data-icon="plus"></span><span data-i18n="optGlAdd"></span></button>
+          <span class="gl-count mono" id="glCount"></span>
+          <span class="spacer"></span>
+          <button class="btn small" id="glExport"><span data-icon="download"></span><span data-i18n="optGlExport"></span></button>
+          <label class="btn small" for="glImport" id="glImportBtn" tabindex="0" role="button"><span data-icon="upload"></span><span data-i18n="optGlImport"></span></label>
+          <input type="file" id="glImport" accept="application/json,.json" class="hidden">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Données ============ -->
+    <section class="sec" id="sec-data" aria-labelledby="phTitle" hidden>
+      <div class="group surface">
+        <div class="line">
+          <div class="txt"><b data-i18n="optCacheTitle"></b><span id="cacheInfo"></span></div>
+          <div class="ctl"><button class="btn small danger" id="clearCache"><span data-icon="trash"></span><span data-i18n="optCacheClear"></span></button></div>
+        </div>
+      </div>
+      <div class="group surface">
+        <div class="ghead">
+          <h2><span data-icon="key"></span><span data-i18n="optStorageTitle"></span></h2>
+        </div>
+        <div class="line prose"><p data-i18n="optKeysLocal"></p></div>
+      </div>
+    </section>
+
+    <!-- ============ Apparence ============ -->
+    <section class="sec" id="sec-appearance" aria-labelledby="phTitle" hidden>
+      <div class="group surface">
+        <div class="line">
+          <div class="txt" id="themeLbl"><b data-i18n="optTheme"></b><span data-i18n="optThemeHelp"></span></div>
+          <div class="ctl">
+            <div class="seg" role="radiogroup" aria-labelledby="themeLbl">
+              <label><input type="radio" name="theme" value="system"><span><span data-icon="monitor"></span><span data-i18n="optThemeSystem"></span></span></label>
+              <label><input type="radio" name="theme" value="light"><span><span data-icon="sun"></span><span data-i18n="optThemeLight"></span></span></label>
+              <label><input type="radio" name="theme" value="dark"><span><span data-icon="moon"></span><span data-i18n="optThemeDark"></span></span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Carte d'un fournisseur configuré -->
+<template id="keyTpl">
+  <article class="keycard surface">
+    <header class="kc-head">
+      <span class="mono-badge" aria-hidden="true"></span>
+      <div class="kc-id">
+        <input type="text" class="label-in" data-f="label" data-i18n-aria="optKeyName" spellcheck="false">
+        <span class="kc-meta"></span>
+      </div>
+      <span class="chip kc-state"></span>
+      <label class="switch" data-i18n-title="optKeyEnabled"><input type="checkbox" data-f="enabled" data-i18n-aria="optKeyEnabled"><span class="track"></span></label>
+    </header>
+    <p class="kc-note"><span data-icon="shield"></span><span class="kc-note-txt"></span></p>
+
+    <div class="kline f-key">
+      <div class="kl-lbl"><label class="kl-name" data-for="key" data-i18n="optKey"></label><span class="kl-help" data-i18n="optKeyHelp"></span></div>
+      <div class="kl-ctl with-btn">
+        <input type="password" class="mono" data-f="key" autocomplete="off" spellcheck="false">
+        <button class="btn icon" data-a="show" data-icon="eye" data-i18n-aria="optShow" data-i18n-title="optShow"></button>
+      </div>
+    </div>
+    <div class="kline f-url">
+      <div class="kl-lbl"><label class="kl-name" data-for="baseUrl" data-i18n="optBaseUrl"></label><span class="kl-help" data-i18n="optBaseUrlHelp"></span></div>
+      <div class="kl-ctl"><input type="url" class="mono" data-f="baseUrl" spellcheck="false"></div>
+    </div>
+    <div class="kline f-tier">
+      <div class="kl-lbl"><span class="kl-name tier-lbl" data-i18n="optTier"></span></div>
+      <div class="kl-ctl">
+        <div class="seg" role="radiogroup">
+          <label><input type="radio" value="free" data-f="tier"><span data-i18n="tier_free"></span></label>
+          <label><input type="radio" value="paid" data-f="tier"><span data-i18n="tier_paid"></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="kline">
+      <div class="kl-lbl"><label class="kl-name" data-for="modelEasy" data-i18n="optModelEasy"></label><span class="kl-help" data-i18n="optModelHelp"></span></div>
+      <div class="kl-ctl"><input type="text" class="mono" data-f="modelEasy" spellcheck="false"></div>
+    </div>
+    <div class="kline">
+      <div class="kl-lbl"><label class="kl-name" data-for="modelHard" data-i18n="optModelHard"></label></div>
+      <div class="kl-ctl"><input type="text" class="mono" data-f="modelHard" spellcheck="false"></div>
+    </div>
+    <div class="kline">
+      <div class="kl-lbl"><span class="kl-name" data-i18n="optLimits"></span><span class="kl-help" data-i18n="optLimitsHelp"></span></div>
+      <div class="kl-ctl trio">
+        <label><span class="label" data-i18n="optMaxChars"></span><input type="number" class="mono" data-f="maxChars" min="200" step="100"></label>
+        <label><span class="label" data-i18n="optInterval"></span><input type="number" class="mono" data-f="minIntervalMs" min="0" step="100"></label>
+        <label><span class="label" data-i18n="optMaxReq"></span><input type="number" class="mono" data-f="maxRequestsPerDay" min="0" step="1"></label>
+      </div>
+    </div>
+    <div class="kline f-paid">
+      <div class="kl-lbl"><span class="kl-name" data-i18n="optPaidTitle"></span><span class="kl-help" data-i18n="optPaidHelp"></span></div>
+      <div class="kl-ctl">
+        <div class="trio">
+          <label><span class="label" data-i18n="optPriceInUsd"></span><input type="number" class="mono" data-f="priceIn" min="0" step="0.01"></label>
+          <label><span class="label" data-i18n="optPriceOutUsd"></span><input type="number" class="mono" data-f="priceOut" min="0" step="0.01"></label>
+          <label><span class="label" data-i18n="optDailyCapUsd"></span><input type="number" class="mono" data-f="dailyCap" min="0" step="0.01"></label>
+        </div>
+        <p class="paid-state"></p>
+      </div>
+    </div>
+
+    <footer class="kc-actions">
+      <button class="btn small" data-a="models"><span data-icon="list"></span><span data-i18n="optLoadModels"></span></button>
+      <button class="btn small" data-a="test"><span data-icon="test"></span><span data-i18n="optTest"></span></button>
+      <span class="spacer"></span>
+      <button class="btn small icon" data-a="up" data-icon="up" data-i18n-aria="optUp" data-i18n-title="optUp"></button>
+      <button class="btn small icon" data-a="down" data-icon="down" data-i18n-aria="optDown" data-i18n-title="optDown"></button>
+      <button class="btn small danger" data-a="del"><span data-icon="trash"></span><span data-i18n="optDelete"></span></button>
+    </footer>
+    <p class="kc-result" aria-live="polite" hidden></p>
+    <datalist></datalist>
+  </article>
+</template>
+
+<script src="shared.js"></script>
+<script src="ui.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

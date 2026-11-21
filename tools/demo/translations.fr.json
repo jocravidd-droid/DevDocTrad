@@ -1,0 +1,22 @@
+{
+ "Getting started – Nimbus HTTP": "Prise en main – Nimbus HTTP",
+ "Nimbus HTTP": "Nimbus HTTP",
+ "<1>Guide</1><2>API reference</2><3>Changelog</3>": "<1>Guide</1><2>Référence de l'API</2><3>Journal des modifications</3>",
+ "Basics": "Notions de base",
+ "Getting started": "Prise en main",
+ "Making requests": "Envoyer des requêtes",
+ "Handling errors": "Gérer les erreurs",
+ "Advanced": "Avancé",
+ "Retries and timeouts": "Retries et timeouts",
+ "Streaming responses": "Réponses en streaming",
+ "Nimbus is a small HTTP client for Node.js that keeps your code readable.": "Nimbus est un petit client HTTP pour Node.js qui garde votre code lisible.",
+ "Install the package with {1|npm install nimbus-http}, then import the <2>default client</2> in your project.": "Installez le package avec {1}, puis importez le <2>client par défaut</2> dans votre projet.",
+ "Every request returns a promise. Use {1|await api.get('/users')} to read the response body as JSON, or call {2|response.text()} if you need the <3>raw text</3>.": "Chaque requête renvoie une promise. Utilisez {1} pour lire le corps de la réponse en JSON, ou appelez {2} si vous avez besoin du <3>texte brut</3>.",
+ "<1>Note:</1> requests time out after 30 seconds by default. You can change this with the {2|timeout} option.": "<1>Remarque :</1> par défaut, les requêtes expirent au bout de 30 secondes. Vous pouvez changer cela avec l'option {2}.",
+ "When the server answers with a status code of 400 or more, Nimbus throws an {1|HttpError}. The error keeps the original response, so you can inspect the headers.": "Quand le serveur répond avec un code de statut de 400 ou plus, Nimbus lève une {1}. L'erreur garde la réponse d'origine, vous pouvez donc inspecter les headers.",
+ "Option": "Option",
+ "Description": "Description",
+ "Number of times a failed request is sent again.": "Nombre de fois où une requête qui a échoué est renvoyée.",
+ "Maximum time to wait for an answer, in milliseconds.": "Temps maximal d'attente d'une réponse, en millisecondes.",
+ "Create a client with a base URL": "Créer un client avec une URL de base"
+}

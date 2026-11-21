@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevDocTrad</title>
+<script src="theme.js"></script>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="popup.css">
+</head>
+<body class="popup">
+<header class="top enter">
+  <img class="mark" src="icons/icon-48.png" alt="" width="30" height="30">
+  <div class="id">
+    <h1>DevDocTrad</h1>
+    <div class="host mono" id="host"></div>
+  </div>
+  <button class="btn icon ghost" id="openOptions" data-icon="gear" data-i18n-title="popupSettings" data-i18n-aria="popupSettings"></button>
+</header>
+
+<main>
+  <section class="m-primary sheet card enter enter-2" id="main" aria-labelledby="stateChip">
+    <div class="row between">
+      <span class="chip" id="stateChip"></span>
+      <span class="count mono" id="count"></span>
+    </div>
+    <button class="btn hero" id="translate"><span data-icon="translate"></span><span id="translateLabel" data-i18n="popupTranslate"></span></button>
+    <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+    <div class="row controls">
+      <div class="seg" role="radiogroup" data-i18n-aria="popupView">
+        <label><input type="radio" name="view" value="original"><span><span data-icon="original"></span><span data-i18n="segOriginal"></span></span></label>
+        <label><input type="radio" name="view" value="translated"><span><span data-icon="translate"></span><span data-i18n="segTranslation"></span></span></label>
+      </div>
+      <button class="btn" id="stop" hidden><span data-icon="stop"></span><span data-i18n="btnStop"></span></button>
+    </div>
+    <p class="help" id="status" aria-live="polite"></p>
+  </section>
+
+  <section class="m-primary sheet card unsupported enter enter-2" id="unsupported" hidden>
+    <span class="chip warn"><span data-icon="off"></span><span data-i18n="stateUnavailable"></span></span>
+    <p class="help" data-i18n="popupUnsupported"></p>
+  </section>
+
+  <section class="m-secondary card group-card enter enter-3" id="opts">
+    <label class="field">
+      <span class="label" data-i18n="popupKey"></span>
+      <select id="keySel"></select>
+    </label>
+    <label class="switch">
+      <input type="checkbox" id="autoSite">
+      <span class="track"></span>
+      <span data-i18n="popupAuto"></span>
+    </label>
+    <p class="help note" id="sensitiveNote" hidden><span data-icon="shield"></span><span data-i18n="popupSensitive"></span></p>
+  </section>
+
+  <section class="m-secondary card enter enter-4">
+    <div class="row between">
+      <h3 data-i18n="popupKeys"></h3>
+      <a href="#" id="manageKeys" class="small-link" data-i18n="popupManage"></a>
+    </div>
+    <ul id="keys" class="keys"></ul>
+    <div id="noKeys" class="nokeys" hidden>
+      <p class="help" data-i18n="popupNoKeysLong"></p>
+      <button class="btn small" id="addKey"><span data-icon="plus"></span><span data-i18n="popupAddKey"></span></button>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" id="foot"><span data-icon="keyboard"></span><span id="shortcut"></span></footer>
+<script src="shared.js"></script>
+<script src="ui.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

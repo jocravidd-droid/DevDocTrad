@@ -1,0 +1,22 @@
+{
+ "Getting started – Nimbus HTTP": "Начало работы – Nimbus HTTP",
+ "Nimbus HTTP": "Nimbus HTTP",
+ "<1>Guide</1><2>API reference</2><3>Changelog</3>": "<1>Руководство</1><2>Справочник API</2><3>Список изменений</3>",
+ "Basics": "Основы",
+ "Getting started": "Начало работы",
+ "Making requests": "Отправка запросов",
+ "Handling errors": "Обработка ошибок",
+ "Advanced": "Продвинутые темы",
+ "Retries and timeouts": "Повторные попытки и тайм-ауты",
+ "Streaming responses": "Потоковые ответы",
+ "Nimbus is a small HTTP client for Node.js that keeps your code readable.": "Nimbus — это небольшой HTTP-клиент для Node.js, который сохраняет ваш код читаемым.",
+ "Install the package with {1|npm install nimbus-http}, then import the <2>default client</2> in your project.": "Установите пакет с помощью {1}, затем импортируйте <2>клиент по умолчанию</2> в свой проект.",
+ "Every request returns a promise. Use {1|await api.get('/users')} to read the response body as JSON, or call {2|response.text()} if you need the <3>raw text</3>.": "Каждый запрос возвращает promise. Используйте {1}, чтобы прочитать тело ответа как JSON, или вызовите {2}, если вам нужен <3>необработанный текст</3>.",
+ "<1>Note:</1> requests time out after 30 seconds by default. You can change this with the {2|timeout} option.": "<1>Примечание:</1> по умолчанию запросы завершаются по тайм-ауту через 30 секунд. Это можно изменить с помощью параметра {2}.",
+ "When the server answers with a status code of 400 or more, Nimbus throws an {1|HttpError}. The error keeps the original response, so you can inspect the headers.": "Когда сервер отвечает кодом состояния 400 или выше, Nimbus выбрасывает {1}. Ошибка сохраняет исходный ответ, поэтому вы можете просмотреть заголовки.",
+ "Option": "Параметр",
+ "Description": "Описание",
+ "Number of times a failed request is sent again.": "Сколько раз неудачный запрос отправляется повторно.",
+ "Maximum time to wait for an answer, in milliseconds.": "Максимальное время ожидания ответа в миллисекундах.",
+ "Create a client with a base URL": "Создать клиент с базовым URL"
+}

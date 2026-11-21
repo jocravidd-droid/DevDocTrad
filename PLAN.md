@@ -1,8 +1,23 @@
 # Plan : DevDocTrad, extension de traduction fidèle (Chromium + Firefox)
 
-Version 2.1 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 14 liste les questions encore ouvertes.
+Version 2.4 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 15 liste les questions encore ouvertes.
 
 ## 0. Changements
+
+### Version 2.4
+
+- Nouvelle direction artistique (`design/`), logo « feuilles décalées », thème Système / Clair / Sombre, notifications, badge redessiné très discret.
+- Faits techniques vérifiés sur les documentations officielles (Firefox 140 et `websiteContent`, `optional_host_permissions` depuis Firefox 128, `persistAcrossSessions`, origines Ollama, limites OpenRouter 20 par minute et 50 par jour, pagination Gemini).
+
+### Version 2.3
+
+- Interface en français et en anglais, selon la langue du navigateur.
+- Style visuel inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces, police système. Pas de style minimal plat.
+- Site de présentation (GitHub Pages) inclus dans la première livraison.
+
+### Version 2.2
+
+- Nouvelle section 13 : faire en sorte que n'importe qui trouve l'extension facilement, en cherchant sur le web ou en demandant à une IA.
 
 ### Version 2.1
 
@@ -53,6 +68,9 @@ L'utilisateur s'appelle Judley (pseudo : Ingénieur Fou), étudie la cybersécur
 | Extras de la version 1 | Raccourci clavier et glossaire personnel. Pas de traduction de sélection, pas d'original au survol dans cette version. |
 | Explication des termes | Désactivée par défaut. Fidélité stricte : on traduit, on n'explique pas. |
 | Licence | MIT. |
+| Langue de l'interface | Français et anglais, selon la langue du navigateur (`_locales/fr`, `_locales/en`). |
+| Style de l'interface | Inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces. Voir section 7. |
+| Site | Page de présentation sur GitHub Pages (`docs/`), livrée avec la première version. |
 | Publication | Chrome Web Store (frais d'inscription de 5 dollars, une seule fois, payés par l'utilisateur quand il le décide) et addons.mozilla.org (gratuit). |
 
 ## 3. Faits vérifiés sur les offres gratuites (novembre 2026)
@@ -174,7 +192,7 @@ Reconstruire les nœuds à partir de la sortie en réutilisant les éléments d'
 - Appliquer chaque lot dès qu'il revient (traduction progressive).
 - Un `MutationObserver` traduit le contenu ajouté plus tard (débouncé à 800 ms, déconnecté pendant les applications, utilise le cache).
 - Avant de commencer : mettre `translate="no"` sur `<html>` et une balise `<meta name="google" content="notranslate">`, pour empêcher la traduction automatique du navigateur de se lancer en parallèle et d'abîmer le DOM. Les retirer à la restauration. Mettre `lang` à la langue cible pendant l'affichage traduit, puis remettre l'ancien.
-- Badge d'état dans un shadow DOM fixé en bas à droite, sobre (pas d'emoji, une seule couleur neutre) : progression (unités faites / total), bouton Stop, bascule Original/Traduction, message d'erreur, nombre d'unités laissées en original. Le badge peut être réduit et ne doit jamais masquer un bouton de la page de façon permanente. Accessible au clavier, avec `aria-live="polite"` pour la progression.
+- Badge d'état dans un shadow DOM fixé en bas à droite, en verre dépoli translucide aux coins arrondis (section 7), sans emoji : progression (unités faites / total), bouton Stop, bascule Original/Traduction, message d'erreur, nombre d'unités laissées en original. Le badge peut être réduit et ne doit jamais masquer un bouton de la page de façon permanente. Accessible au clavier, avec `aria-live="polite"` pour la progression.
 
 ### 5.5 Pages sensibles et détection de langue
 
@@ -321,7 +339,11 @@ Envoi au modèle : seulement les entrées dont le terme apparaît dans le lot (c
 
 ## 7. Interface
 
-Sobre : pas d'emoji, pas de décoration superflue, une seule couleur d'accent, texte en français, termes techniques anglais gardés avec traduction à la première apparition. Thème clair et sombre selon le réglage du système (`prefers-color-scheme`).
+L'apparence est définie par `design/DIRECTION_ARTISTIQUE.md` (direction validée par l'utilisateur) et précisée dans `design/DESIGN_SPEC.md` (piste retenue : « Prisme feuilleté » — verre Liquid Glass, irisation prismatique réservée au logo et à l'action principale, motif de la feuille décalée du logo, badge très discret). Ces deux documents remplacent l'ancienne description « sobre, une seule couleur d'accent » ; le fonctionnement décrit ci-dessous ne change pas.
+
+- Thème : Système (par défaut), Clair ou Sombre, réglable dans les réglages (section Apparence), sans flash au chargement.
+- Tokens de design centralisés dans `src/tokens.css` ; composants partagés dans `src/ui.css` et `src/ui.js` (icônes, notifications).
+- Pas d'emoji ; une seule famille d'icônes ; textes en français ou en anglais selon la langue du navigateur.
 
 ### 7.1 Popup
 
@@ -434,7 +456,48 @@ Facultatif plus tard, gratuit : Microsoft Edge Add-ons (le paquet Chrome fonctio
 
 Ce qui ne peut pas être fait par Claude Code : créer les comptes, payer, envoyer le paquet, répondre aux relecteurs. Fournir à l'utilisateur la marche à suivre complète, étape par étape.
 
-## 13. Points à vérifier dès le début
+## 13. Visibilité : être trouvé facilement
+
+But : quelqu'un qui tape ou demande à une IA "extension pour traduire la doc technique en français sans casser le code" doit tomber sur DevDocTrad. Rien ne garantit qu'une IA la citera : les IA qui cherchent sur le web la trouveront dès qu'elle aura des pages publiques claires ; celles qui ne cherchent pas ne la connaîtront qu'après plusieurs mois et seulement si on en parle ailleurs. On met donc toutes les chances de son côté, gratuitement.
+
+### 13.1 Même nom et même phrase partout
+
+- Nom : DevDocTrad, partout (dépôt, boutiques, site, manifeste).
+- Phrase de présentation identique partout, en français et en anglais :
+  - "Traduit fidèlement en français la documentation technique et les sites pour programmeurs, sans jamais toucher au code."
+  - "Faithfully translates developer documentation and programming websites, without ever touching the code."
+- Mots-clés à reprendre naturellement dans les textes (pas de bourrage) : traduction documentation technique, traduire doc anglais, extension traduction développeur, translate documentation, developer docs translator, keep code intact, Chrome, Firefox, Gemini, Groq, Mistral, OpenRouter, Ollama, gratuit.
+
+### 13.2 GitHub
+
+- README en deux parties : français d'abord, puis une section complète en anglais (les IA et les moteurs de recherche lisent beaucoup l'anglais).
+- README avec une capture avant/après et une courte animation (GIF) d'une page traduite, liens directs vers les deux boutiques dès qu'elles sont en ligne.
+- Topics du dépôt (réglés par l'utilisateur, roue dentée "About") : `browser-extension`, `chrome-extension`, `firefox-addon`, `translation`, `translator`, `documentation`, `developer-tools`, `french`, `llm`, `gemini`, `groq`, `mistral`, `openrouter`, `ollama`, `manifest-v3`.
+- Releases GitHub pour chaque version, avec les deux `.zip` et la liste des changements.
+- Fichiers `CONTRIBUTING.md` et modèles d'issues, pour que d'autres puissent aider (cohérent avec la licence MIT).
+
+### 13.3 Site gratuit (GitHub Pages)
+
+- Une page simple dans `docs/` publiée par GitHub Pages : présentation, captures, installation, FAQ ("Est-ce gratuit ?", "Mes clés sont-elles en sécurité ?", "Quelle différence avec la traduction intégrée de Chrome ?"), politique de confidentialité.
+- Balises `title`, `meta description`, Open Graph, données structurées `SoftwareApplication` (schema.org), `sitemap.xml`, version française et anglaise (`hreflang`).
+- Un fichier `llms.txt` à la racine du site : résumé en texte brut de ce que fait l'extension et des liens utiles, lisible facilement par les IA.
+
+### 13.4 Boutiques
+
+- Fiches en français et en anglais (nom et description localisés via `_locales/fr` et `_locales/en`, et `__MSG_...__` dans le manifeste).
+- Catégorie "Outils de développement" (Developer Tools) sur les deux boutiques.
+- Description qui commence par la phrase de la section 13.1, puis les points forts en liste, puis les sites où elle marche bien.
+- Captures d'écran réelles sur des pages connues (MDN, GitHub, Stack Overflow).
+
+### 13.5 En parler (fait par l'utilisateur, jamais automatiquement)
+
+Une fois publiée, quelques messages honnêtes, sans spam, dans des endroits où les gens cherchent ce genre d'outil : Reddit (r/programmation, r/learnprogramming, r/firefox, r/chrome_extensions), forum de developpez.com, Zeste de Savoir, dev.to, "Show HN" sur Hacker News, AlternativeTo (fiche comme alternative à la traduction de Chrome ou à Immersive Translate), et une proposition d'ajout dans des listes "awesome" d'extensions pour développeurs. Claude Code prépare les textes ; c'est l'utilisateur qui publie.
+
+### 13.6 Livrables liés
+
+- README bilingue, `docs/` (site), `llms.txt`, `sitemap.xml`, `CONTRIBUTING.md`, `.github/ISSUE_TEMPLATE/`, textes prêts à publier dans `store/annonces.md`.
+
+## 14. Points à vérifier dès le début
 
 - Noms exacts et disponibilité gratuite des modèles : lire la liste chez chaque fournisseur, ne rien coder en dur.
 - Valeurs actuelles des limites gratuites : relire les pages officielles de la section 3.
@@ -446,6 +509,6 @@ Ce qui ne peut pas être fait par Claude Code : créer les comptes, payer, envoy
 - Classes exactes des commentaires chez les colorateurs de syntaxe sur des pages réelles (GitHub, MDN, docs Python, Docusaurus).
 - Règles actuelles des deux boutiques (programme du Chrome Web Store, politiques des modules de Mozilla) et tailles d'images demandées : relire avant de préparer `store/`.
 
-## 14. Questions ouvertes
+## 15. Questions ouvertes
 
-Aucune pour l'instant. Les quatre questions de la version 2 sont tranchées (version 2.1, section 0). Toute nouvelle question est ajoutée ici avant de coder la partie concernée.
+Aucune pour l'instant (la langue de l'interface est tranchée en version 2.3).

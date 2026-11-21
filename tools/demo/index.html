@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Getting started – Nimbus HTTP</title>
+<style>
+  :root { --ink:#1f2328; --muted:#59636e; --line:#d1d9e0; --accent:#0969da; --code:#f6f8fa; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.6 -apple-system, "Segoe UI", system-ui, sans-serif; color:var(--ink); background:#fff; }
+  header { display:flex; align-items:center; gap:14px; padding:12px 28px; border-bottom:1px solid var(--line); }
+  header b { font-size:18px; } header nav a { color:var(--muted); margin-left:18px; text-decoration:none; font-size:14px; }
+  .wrap { display:grid; grid-template-columns:230px 1fr; max-width:1280px; }
+  aside { padding:22px 24px; border-right:1px solid var(--line); min-height:100vh; font-size:14px; }
+  aside h4 { margin:14px 0 6px; font-size:12px; text-transform:uppercase; color:var(--muted); letter-spacing:.04em; }
+  aside a { display:block; color:var(--ink); text-decoration:none; padding:3px 0; } aside a.on { color:var(--accent); font-weight:600; }
+  main { padding:26px 48px 80px; max-width:900px; }
+  h1 { font-size:34px; margin:0 0 6px; } h2 { margin-top:30px; border-bottom:1px solid var(--line); padding-bottom:6px; font-size:22px; }
+  p.lead { color:var(--muted); font-size:18px; margin-top:0; }
+  a { color:var(--accent); }
+  code { font:13.5px ui-monospace, SFMono-Regular, Menlo, monospace; background:var(--code); padding:2px 5px; border-radius:5px; }
+  pre { background:#0d1117; color:#e6edf3; padding:14px 16px; border-radius:10px; overflow:auto; }
+  pre code { background:none; padding:0; color:inherit; } .token.comment { color:#8b949e; } .token.keyword { color:#ff7b72; } .token.string { color:#a5d6ff; }
+  .note { border-left:4px solid var(--accent); background:#ddf4ff; padding:10px 14px; border-radius:6px; }
+  table { border-collapse:collapse; width:100%; font-size:15px; } td, th { border:1px solid var(--line); padding:7px 10px; text-align:left; } th { background:var(--code); }
+</style>
+</head>
+<body>
+<header><b>Nimbus HTTP</b><span style="color:#59636e">v3.2</span>
+  <nav><a href="#">Guide</a><a href="#">API reference</a><a href="#">Changelog</a></nav></header>
+<div class="wrap">
+<aside>
+  <h4>Basics</h4>
+  <a class="on" href="#">Getting started</a><a href="#">Making requests</a><a href="#">Handling errors</a>
+  <h4>Advanced</h4>
+  <a href="#">Retries and timeouts</a><a href="#">Streaming responses</a>
+</aside>
+<main>
+  <h1>Getting started</h1>
+  <p class="lead">Nimbus is a small HTTP client for Node.js that keeps your code readable.</p>
+  <p>Install the package with <code>npm install nimbus-http</code>, then import the <a href="#">default client</a> in your project.</p>
+  <pre><code><span class="token comment">// Create a client with a base URL</span>
+<span class="token keyword">import</span> { createClient } <span class="token keyword">from</span> <span class="token string">'nimbus-http'</span>;
+<span class="token keyword">const</span> api = createClient({ baseUrl: <span class="token string">'https://api.example.com'</span> });</code></pre>
+  <p>Every request returns a promise. Use <code>await api.get('/users')</code> to read the response body as JSON, or call <code>response.text()</code> if you need the <strong>raw text</strong>.</p>
+  <div class="note"><p><strong>Note:</strong> requests time out after 30 seconds by default. You can change this with the <code>timeout</code> option.</p></div>
+  <h2>Handling errors</h2>
+  <p>When the server answers with a status code of 400 or more, Nimbus throws an <code>HttpError</code>. The error keeps the original response, so you can inspect the headers.</p>
+  <table>
+    <tr><th>Option</th><th>Description</th></tr>
+    <tr><td><code>retries</code></td><td>Number of times a failed request is sent again.</td></tr>
+    <tr><td><code>timeout</code></td><td>Maximum time to wait for an answer, in milliseconds.</td></tr>
+  </table>
+</main>
+</div>
+</body>
+</html>
