@@ -7,14 +7,18 @@ Pour tous ceux qui galèrent avec la doc en langue étrangère, sans sacrifier l
 - traduction fidèle phrase par phrase, sans résumé, sans omission, sans ajout ;
 - code, commandes, noms de fonctions, API, chemins et URL jamais traduits ;
 - mise en page conservée (liens, gras, `code` restent en place) ;
-- termes techniques anglais gardés, avec la traduction française à la première apparition, par exemple thread (fil d'exécution) ;
+- termes techniques anglais gardés tels quels : l'extension traduit, elle n'explique pas ;
 - bouton pour revenir à l'original à tout moment, ou affichage bilingue.
 
 Coût : 0 euro. L'extension utilise les paliers gratuits de Gemini, Groq, Mistral et OpenRouter (avec vos propres clés), ou un modèle local via Ollama. Elle ne peut jamais utiliser une clé payante sans plafond réglé par l'utilisateur.
 
 ## État
 
-Phase de conception. Le cahier des charges complet est dans [PLAN.md](PLAN.md).
+Phase de conception. Le cahier des charges complet est dans [PLAN.md](PLAN.md). Publication prévue sur le Chrome Web Store et sur addons.mozilla.org une fois les tests passés.
+
+## Licence
+
+MIT : chacun peut reprendre, modifier et redistribuer ce code, y compris dans un autre projet, à condition de garder la mention de licence. Voir [LICENSE](LICENSE).
 
 ## Sécurité
 

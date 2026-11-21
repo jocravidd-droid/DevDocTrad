@@ -1,8 +1,18 @@
 # Plan : DevDocTrad, extension de traduction fidèle (Chromium + Firefox)
 
-Version 2 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 13 liste les questions encore ouvertes.
+Version 2.1 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 14 liste les questions encore ouvertes.
 
-## 0. Changements par rapport à la version 1
+## 0. Changements
+
+### Version 2.1
+
+- Fidélité stricte : l'extension traduit, elle n'explique pas. Les termes techniques anglais restent en anglais, sans traduction entre parenthèses. L'explication à la première apparition devient une option désactivée par défaut.
+- Glossaire personnel simplifié à deux types d'entrée (le type "connu" disparaît, il ne servait qu'aux explications).
+- Page sensible traduite à la main : Ollama est utilisé en premier s'il est réglé et répond, sinon l'ordre normal des clés.
+- Licence MIT : tout le monde peut reprendre, modifier et redistribuer le code.
+- Publication prévue sur le Chrome Web Store et sur addons.mozilla.org (section 12).
+
+### Version 2 (par rapport à la version 1)
 
 - Nom du projet : DevDocTrad. Public élargi : tous les programmeurs qui galèrent avec une documentation ou un site technique en langue étrangère (pas seulement l'anglais).
 - Langue source : n'importe laquelle, détectée automatiquement. Règle des termes techniques précisée pour les sources non anglaises (section 6.3).
@@ -21,7 +31,7 @@ Une extension de navigateur qui traduit une page web entière vers le français 
 - traduction phrase par phrase, même ordre, sans omission, sans résumé, sans ajout ;
 - code, identifiants, noms de fonctions, méthodes, API, commandes, chemins et URL jamais traduits ;
 - structure et mise en forme de la page conservées (les vrais éléments `<code>`, liens, gras restent en place) ;
-- termes techniques anglais gardés en anglais, avec la traduction française à la première apparition (exemple : thread (fil d'exécution)).
+- termes techniques anglais gardés en anglais, sans explication ajoutée : l'extension traduit, elle n'explique pas (une option désactivée par défaut permet d'ajouter la traduction française entre parenthèses à la première apparition, par exemple thread (fil d'exécution)).
 
 Sites visés en priorité : documentations officielles (MDN, Python, Rust, docs générées par Sphinx, ReadTheDocs, Docusaurus, MkDocs), GitHub (README, issues, discussions), Stack Overflow et Stack Exchange, forums (Discourse, Reddit), blogs techniques, pages de frameworks JavaScript.
 
@@ -37,10 +47,13 @@ L'utilisateur s'appelle Judley (pseudo : Ingénieur Fou), étudie la cybersécur
 | Fournisseurs au départ | Gemini, Groq, Mistral, OpenRouter, plus Ollama en local. OpenAI et Claude plus tard, pas dans cette version. |
 | Limite atteinte (429) | Basculer automatiquement sur une autre clé gratuite, puis sur Ollama s'il est réglé. Jamais vers une clé payante. Sinon pause et message. |
 | Clé payante | Bloquée tant que l'utilisateur n'a pas réglé lui-même un plafond journalier et les prix. |
-| Pages sensibles (connexion, banque, mail) | Jamais de traduction automatique. Le bouton manuel fonctionne sans confirmation. |
+| Pages sensibles (connexion, banque, mail) | Jamais de traduction automatique. Le bouton manuel fonctionne sans confirmation, et utilise Ollama en premier s'il est réglé et répond, sinon l'ordre normal des clés. |
 | Choix du modèle | Selon la difficulté de la page (section 6.8), mais seulement parmi des modèles que l'utilisateur a réglés. |
 | Commentaires dans le code | Option, désactivée par défaut. Le code lui-même n'est jamais modifié. |
 | Extras de la version 1 | Raccourci clavier et glossaire personnel. Pas de traduction de sélection, pas d'original au survol dans cette version. |
+| Explication des termes | Désactivée par défaut. Fidélité stricte : on traduit, on n'explique pas. |
+| Licence | MIT. |
+| Publication | Chrome Web Store (frais d'inscription de 5 dollars, une seule fois, payés par l'utilisateur quand il le décide) et addons.mozilla.org (gratuit). |
 
 ## 3. Faits vérifiés sur les offres gratuites (novembre 2026)
 
@@ -165,7 +178,7 @@ Reconstruire les nœuds à partir de la sortie en réutilisant les éléments d'
 
 ### 5.5 Pages sensibles et détection de langue
 
-- Sensible : présence d'un `input[type=password]`, ou nom d'hôte contenant `mail`, `webmail`, `bank`, `banque`, `paypal`, `login`, `signin`, `auth`, `secure`, `impots`, `ameli`, `caf` (liste de base modifiable dans les réglages). Sur une page sensible : jamais de traduction automatique ; le bouton manuel fonctionne sans confirmation.
+- Sensible : présence d'un `input[type=password]`, ou nom d'hôte contenant `mail`, `webmail`, `bank`, `banque`, `paypal`, `login`, `signin`, `auth`, `secure`, `impots`, `ameli`, `caf` (liste de base modifiable dans les réglages). Sur une page sensible : jamais de traduction automatique ; le bouton manuel fonctionne sans confirmation. En manuel sur une page sensible, en mode "Automatique" du choix de clé : essayer Ollama en premier s'il est réglé et répond au test de présence (`GET /api/tags`, délai 2 secondes) ; sinon suivre l'ordre normal des clés gratuites. Le badge indique "Traduit en local (Ollama)" ou "Traduit en ligne" pour que l'utilisateur sache où est parti le texte. Si l'utilisateur a choisi une clé précise dans le popup, ce choix est respecté.
 - Correspondance des motifs sur des morceaux du nom d'hôte séparés par `.` ou `-` (par exemple `caf` ne doit pas attraper `cafe-coding.dev`, mais doit attraper `caf.fr` et `www.caf.fr`).
 - Page déjà dans la langue cible : ne pas lancer l'automatique si `html[lang]` commence par la langue cible, ou si `i18n.detectLanguage` sur un échantillon d'environ 2 000 caractères donne la langue cible avec `isReliable`. Si l'API ne répond pas, utiliser en secours la comparaison de mots courants (nettement plus de mots de la langue cible que d'anglais).
 - Le même test est fait par lot : une unité déjà dans la langue cible est envoyée quand même (règle 7 du prompt) mais une page entièrement dans la langue cible n'est pas traduite en automatique.
@@ -226,7 +239,7 @@ Prompt système (à écrire en français, à partir de ces règles) :
 2. Traduction fidèle phrase par phrase, même ordre, sans omission, sans résumé, sans ajout, sans commentaire. La langue source peut être n'importe laquelle.
 3. Ne jamais traduire : code, identifiants, noms de fonctions, méthodes, classes, API, commandes, chemins, URL, variables, noms de produits ; ni ce qui est dans un atome `{n|...}`.
 4. Règle des marqueurs de la section 5.2, chaque marqueur exactement une fois, bien imbriqué ; `&lt; &gt; &amp; &#123; &#125;` conservés tels quels.
-5. Termes techniques : un terme technique écrit en anglais dans la source reste en anglais ; à sa première apparition seulement (selon `already_glossed`), ajouter la traduction française entre parenthèses, et renvoyer le terme dans `glossed`. Un terme technique écrit dans une autre langue (par exemple allemand ou japonais) est traduit par le terme qu'utilisent les développeurs francophones, c'est-à-dire souvent le terme anglais. Désactivable dans les réglages.
+5. Termes techniques : un terme technique écrit en anglais dans la source reste en anglais, sans explication ni parenthèse ajoutée. Un terme technique écrit dans une autre langue (par exemple allemand ou japonais) est traduit par le terme qu'utilisent les développeurs francophones, c'est-à-dire souvent le terme anglais. Variante, seulement si l'option "Expliquer les termes" est activée (désactivée par défaut) : à la première apparition seulement (selon `already_glossed`), ajouter la traduction française entre parenthèses et renvoyer le terme dans `glossed`. Quand l'option est désactivée, les champs `already_glossed` et `glossed` ne sont pas envoyés ni demandés.
 6. Glossaire personnel (`glossary`) : respecter strictement chaque entrée (section 6.11). Il prime sur la règle 5.
 7. Conserver chiffres, unités, ponctuation et typographie française (espaces avant `: ; ! ?`, guillemets « »).
 8. Si le texte est déjà dans la langue cible, le renvoyer inchangé.
@@ -235,7 +248,7 @@ Prompt système (à écrire en français, à partir de ces règles) :
 
 Le prompt porte un numéro de version (`PROMPT_VERSION`) utilisé par le cache (section 6.7).
 
-`already_glossed` : par page (remis à zéro à chaque nouvelle page ou nouvelle URL de SPA), plus les termes marqués "connu" dans le glossaire personnel, qui ne sont jamais expliqués.
+`already_glossed` (seulement si l'option est activée) : par page, remis à zéro à chaque nouvelle page ou nouvelle URL de SPA.
 
 ### 6.4 Validation d'une traduction
 
@@ -292,18 +305,17 @@ Difficile si : les atomes dépassent 25 % des caractères du lot, ou une unité 
 - À l'ajout : demander la permission optionnelle `http://localhost:11434/*` et `http://127.0.0.1:11434/*` (geste utilisateur).
 - Appel : `POST {baseUrl}/api/chat` avec `{model, messages, stream: false, format: 'json', options: {temperature: 0}}`. Liste des modèles : `GET {baseUrl}/api/tags`.
 - Valeurs par défaut : lot de 2 000 caractères, intervalle minimum 0 ms, délai maximal 180 secondes par requête (un modèle local peut être lent).
-- Place par défaut : dernière dans l'ordre de priorité, donc utilisée seulement quand toutes les clés gratuites en ligne sont en pause. L'utilisateur peut la remonter en tête (par exemple pour tout garder sur sa machine).
+- Place par défaut : dernière dans l'ordre de priorité, donc utilisée seulement quand toutes les clés gratuites en ligne sont en pause. Exception : en manuel sur une page sensible, Ollama passe en premier (section 5.5). L'utilisateur peut la remonter en tête partout (par exemple pour tout garder sur sa machine).
 - Problème connu à vérifier : Ollama refuse par défaut les requêtes venant d'une origine qu'il ne connaît pas (réponse 403). Si "Tester" reçoit un 403, afficher la marche à suivre complète : définir la variable d'environnement `OLLAMA_ORIGINS` avec la valeur `chrome-extension://*,moz-extension://*`, puis redémarrer Ollama. Vérifier dans la FAQ d'Ollama la valeur exacte et si les origines d'extension sont déjà autorisées dans la version actuelle.
 - Si Ollama ne répond pas (logiciel fermé) : le traiter comme une clé en pause de 65 s, message "Ollama ne répond pas sur localhost:11434".
 - Prévenir dans les réglages : un petit modèle local fera plus d'erreurs de marqueurs ; les unités invalides restent en original (section 6.4), donc rien ne casse, mais la page sera moins complète.
 
 ### 6.11 Glossaire personnel
 
-Liste modifiable dans les réglages, stockée dans `storage.local`, avec import et export en JSON. Trois types d'entrée :
+Liste modifiable dans les réglages, stockée dans `storage.local`, avec import et export en JSON. Deux types d'entrée :
 
 - "Ne jamais traduire" : le terme reste tel quel, sans explication (exemple : `payload`, `exploit`, `shellcode`).
 - "Toujours traduire par" : le terme est toujours rendu par la traduction donnée (exemple : `buffer overflow` vers `dépassement de tampon`).
-- "Connu" : le terme reste en anglais et n'est jamais expliqué entre parenthèses (pour les termes que l'utilisateur maîtrise déjà).
 
 Envoi au modèle : seulement les entrées dont le terme apparaît dans le lot (comparaison insensible à la casse), pour ne pas gonfler les requêtes. Limite de 500 entrées. Le bouton "Ajouter au glossaire" du badge n'est pas dans la version 1.
 
@@ -317,7 +329,7 @@ Nom d'hôte, bouton "Traduire cette page", bascule "Voir l'original / Voir la tr
 
 ### 7.2 Réglages
 
-Cartes de clés (fournisseur, étiquette, clé masquée, gratuite/payante, activée, modèles facile/difficile avec liste chargée, taille de lot, intervalle, requêtes maximales par jour, champs payants, boutons Tester et Supprimer, ordre de priorité), carte Ollama (adresse, modèle, Tester), langue cible, mode d'affichage, explication des termes (activée ou non), traduction des commentaires de code (désactivée par défaut), glossaire personnel, cap de caractères par page, liste des sites automatiques (avec suppression), motifs de pages sensibles supplémentaires, vider le cache, consommation du jour par clé. Rappel en haut de page : les clés restent dans ce navigateur (`storage.local`), elles ne sont jamais synchronisées.
+Cartes de clés (fournisseur, étiquette, clé masquée, gratuite/payante, activée, modèles facile/difficile avec liste chargée, taille de lot, intervalle, requêtes maximales par jour, champs payants, boutons Tester et Supprimer, ordre de priorité), carte Ollama (adresse, modèle, Tester), langue cible, mode d'affichage, explication des termes (désactivée par défaut), traduction des commentaires de code (désactivée par défaut), glossaire personnel, cap de caractères par page, liste des sites automatiques (avec suppression), motifs de pages sensibles supplémentaires, vider le cache, consommation du jour par clé. Rappel en haut de page : les clés restent dans ce navigateur (`storage.local`), elles ne sont jamais synchronisées.
 
 ### 7.3 Raccourci clavier
 
@@ -339,13 +351,13 @@ Tests Node avec jsdom et faux fournisseurs (jamais de vrais appels réseau dans 
 7. Plafond payant : refus sans plafond, refus au dépassement, dépense enregistrée.
 8. OpenRouter free refuse un modèle sans `:free`.
 9. Cache : deuxième traduction de la même page sans appel fournisseur ; changer la langue, le glossaire ou `PROMPT_VERSION` provoque un nouvel appel.
-10. Pages sensibles et page déjà en français : pas de lancement automatique ; `caf` n'attrape pas `cafe-coding.dev`.
+10. Pages sensibles et page déjà en français : pas de lancement automatique ; `caf` n'attrape pas `cafe-coding.dev` ; en manuel sur une page sensible, Ollama est appelé en premier s'il répond, sinon la première clé gratuite ; une clé choisie dans le popup est respectée.
 11. Injection de prompt : une page contenant "ignore les instructions précédentes" est envoyée comme donnée, et le prompt système le dit.
 12. La clé n'apparaît dans aucun journal ni URL (recherche dans les appels simulés), ni dans un message d'erreur affiché.
 13. Commentaires de code : option désactivée, rien ne bouge dans `pre` ; option activée, seul le texte des commentaires change, le préfixe reste, et la restauration redonne le bloc identique ; un commentaire qui contient du code n'est pas traduit.
 14. SPA : changement d'URL simulé avec nouveau contenu, le nouveau contenu est traduit, l'ancien n'est pas retraduit ; une unité retirée de la page avant le retour du lot n'est pas appliquée.
 15. Ollama : appel au bon point d'entrée, sans en-tête `Authorization`, 403 affiche la marche à suivre `OLLAMA_ORIGINS`, absence de réponse met en pause.
-16. Glossaire personnel : seules les entrées présentes dans le lot sont envoyées ; un terme "connu" est dans `already_glossed`.
+16. Glossaire personnel : seules les entrées présentes dans le lot sont envoyées. Explications : option désactivée, le prompt demande de ne rien ajouter et la requête ne contient pas `already_glossed` ; option activée, `already_glossed` est envoyé et mis à jour.
 17. Compteur journalier : une clé OpenRouter à 50 requêtes est mise en pause sans attendre un 429.
 18. Background redémarré : après un arrêt simulé du service worker, les pauses et la dépense du jour sont relues depuis le stockage.
 
@@ -389,8 +401,40 @@ Chaque étape se termine par ses tests au vert avant de passer à la suivante.
    - Créer les clés : Gemini sur Google AI Studio sans lier de facturation ; Groq sur console.groq.com ; Mistral en mode gratuit ; OpenRouter en utilisant seulement des modèles `:free`. Ne jamais publier une clé sur GitHub.
    - Installer Ollama (facultatif) : télécharger depuis ollama.com, installer un modèle, régler `OLLAMA_ORIGINS` si "Tester" renvoie 403, ajouter Ollama dans les réglages.
 4. Rapport de tests : ce qui a passé, ce qui n'a pas pu être testé.
+5. `LICENSE` (MIT) à la racine du dépôt, recopié dans chaque paquet.
+6. `PRIVACY.md` : politique de confidentialité en français et en anglais (exigée par les deux boutiques, section 12).
+7. Dossier `store/` : textes de présentation et captures d'écran pour les deux boutiques (section 12).
 
-## 12. Points à vérifier dès le début
+## 12. Publication sur les boutiques
+
+Pas avant que les tests automatiques et manuels soient passés. L'inscription au Chrome Web Store coûte 5 dollars une seule fois : c'est l'utilisateur qui décide quand payer, rien ne se fait sans lui.
+
+Exigences communes, à prévoir dès le code :
+
+- Pas de code distant : tout le JavaScript est dans le paquet, pas de `eval`, pas de script chargé depuis Internet. Code non minifié (Mozilla demande sinon le code source séparé).
+- Un seul objectif clair : "traduire des pages web techniques en gardant le code intact".
+- Permissions minimales et justifiées une par une (texte prêt dans `store/permissions.md`) : `storage` et `unlimitedStorage` pour les réglages et le cache, `activeTab` et `scripting` pour traduire la page au clic, `host_permissions` des quatre API pour envoyer le texte au fournisseur choisi, `optional_host_permissions` pour les sites automatiques et Ollama, `commands` pour le raccourci.
+- Politique de confidentialité publique (`PRIVACY.md`, lien vers la page GitHub du fichier) : quelles données (le texte de la page traduite), où elles vont (le fournisseur choisi par l'utilisateur, ou sa propre machine avec Ollama), ce qui est stocké (clés, réglages, cache, uniquement dans le navigateur), aucune donnée envoyée au développeur, aucune statistique, aucun pistage.
+- Rappel dans la fiche : les clés d'API sont celles de l'utilisateur, et chaque fournisseur a ses propres conditions (Gemini et Mistral en gratuit peuvent réutiliser les textes).
+
+Chrome Web Store :
+
+- Compte développeur avec validation en deux étapes, frais de 5 dollars.
+- Formulaire "Pratiques de confidentialité" : déclarer "Contenu du site web" comme donnée traitée, et cocher les engagements d'usage limité.
+- Icône 128 px, au moins une capture d'écran 1280 x 800 ou 640 x 400, petite image promotionnelle 440 x 280.
+
+addons.mozilla.org :
+
+- Compte gratuit. `browser_specific_settings.gecko.id` fixe (ne plus jamais le changer après la première publication).
+- `data_collection_permissions` avec `websiteContent` requis (déjà prévu section 4).
+- Vérifier le paquet avec l'outil officiel `web-ext lint` avant l'envoi.
+- Une version signée par Mozilla peut aussi être installée de façon permanente sans passer par la fiche publique (distribution non listée).
+
+Facultatif plus tard, gratuit : Microsoft Edge Add-ons (le paquet Chrome fonctionne tel quel).
+
+Ce qui ne peut pas être fait par Claude Code : créer les comptes, payer, envoyer le paquet, répondre aux relecteurs. Fournir à l'utilisateur la marche à suivre complète, étape par étape.
+
+## 13. Points à vérifier dès le début
 
 - Noms exacts et disponibilité gratuite des modèles : lire la liste chez chaque fournisseur, ne rien coder en dur.
 - Valeurs actuelles des limites gratuites : relire les pages officielles de la section 3.
@@ -400,10 +444,8 @@ Chaque étape se termine par ses tests au vert avant de passer à la suivante.
 - Origines autorisées par défaut par Ollama (`OLLAMA_ORIGINS`) : vérifier dans la FAQ d'Ollama.
 - Disponibilité de `i18n.detectLanguage` dans le service worker et dans les content scripts des deux navigateurs.
 - Classes exactes des commentaires chez les colorateurs de syntaxe sur des pages réelles (GitHub, MDN, docs Python, Docusaurus).
+- Règles actuelles des deux boutiques (programme du Chrome Web Store, politiques des modules de Mozilla) et tailles d'images demandées : relire avant de préparer `store/`.
 
-## 13. Questions ouvertes (à poser à l'utilisateur avant de coder la partie concernée)
+## 14. Questions ouvertes
 
-1. Page sensible traduite à la main : utiliser en priorité Ollama s'il est réglé, pour que le texte ne quitte pas la machine ? Ou garder l'ordre normal des clés ?
-2. Explication des termes (thread (fil d'exécution)) : une fois par page, comme prévu, ou une fois pour toutes (le terme passe alors automatiquement en "connu" dans le glossaire) ?
-3. Licence du dépôt : MIT, GPL-3.0, ou aucune (tous droits réservés) ?
-4. Publication : rester en installation manuelle, ou viser plus tard le Chrome Web Store (5 dollars une fois) et addons.mozilla.org (gratuit) ?
+Aucune pour l'instant. Les quatre questions de la version 2 sont tranchées (version 2.1, section 0). Toute nouvelle question est ajoutée ici avant de coder la partie concernée.
