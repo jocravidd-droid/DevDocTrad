@@ -604,5 +604,8 @@
   },
   "optDailyCapUsd": {
     "message": "Daily cap ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "this Google project uses prepaid billing and its credits are used up. Do not top up: create a key in a project without billing in Google AI Studio (free tier)."
   }
 }

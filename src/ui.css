@@ -46,10 +46,11 @@ code, .mono { font-family: var(--mono); font-size: .92em; }
 
 /* Motif d'identité : la feuille décalée du logo, derrière le panneau principal */
 .sheet { position: relative; isolation: isolate; }
-.sheet::before {   /* seul le coin haut-gauche dépasse, comme la feuille arrière du logo */
+.sheet::before {   /* feuille arrière droite, visible seulement en haut et à gauche (pile de papier) */
   content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit;
-  background: linear-gradient(135deg, var(--sheet-back) 0, var(--sheet-back) 18%, transparent 42%);
-  border: 1px solid transparent; transform: translate(-6px, -6px) rotate(-1.2deg);
+  background: var(--sheet-back); border: 1px solid var(--edge);
+  transform: translate(-7px, -7px);
+  clip-path: polygon(0 0, 100% 0, 100% 7px, 7px 7px, 7px 100%, 0 100%);
   pointer-events: none;
 }
 

@@ -239,6 +239,8 @@ M = {
     "optPriceInUsd": ("Prix entrée ($$ par million de jetons)", "Input price ($$ per million tokens)"),
     "optPriceOutUsd": ("Prix sortie ($$ par million de jetons)", "Output price ($$ per million tokens)"),
     "optDailyCapUsd": ("Plafond journalier ($$)", "Daily cap ($$)"),
+    "errGeminiPrepay": ("ce projet Google est en facturation prépayée et ses crédits sont épuisés. Ne recharge rien : crée une clé dans un projet sans facturation sur Google AI Studio (palier gratuit).",
+                        "this Google project uses prepaid billing and its credits are used up. Do not top up: create a key in a project without billing in Google AI Studio (free tier)."),
 }
 
 root = Path(__file__).resolve().parent.parent / "src" / "_locales"

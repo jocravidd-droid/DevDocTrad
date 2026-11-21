@@ -7,7 +7,7 @@ Chrome · Edge · Brave · Firefox — gratuit — licence MIT</p>
 
 <p align="center"><a href="#installation">Installation</a> · <a href="#créer-une-clé-gratuite">Créer une clé gratuite</a> · <a href="#utilisation">Utilisation</a> · <a href="#english">English</a></p>
 
-![Page de documentation traduite par DevDocTrad](store/screenshots/screenshot-1-traduction-fr.png)
+![Page de documentation traduite par DevDocTrad](docs/assets/readme-hero.png)
 
 Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : documentation officielle, README et issues GitHub, Stack Overflow, forums, blogs techniques, pages de frameworks.
 

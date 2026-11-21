@@ -347,3 +347,17 @@ test('aucune clé configurée : no_key', async () => {
   const r = await bg.translateTexts(TEXTS, {});
   assert.equal(r.error, 'no_key');
 });
+
+test('Gemini 402 « prepayment credits are depleted » : clé arrêtée, message qui dit de ne rien recharger', async () => {
+  const { bg, fetch } = makeBackground({
+    local: { settings: settings(), keys: [key('g', 'gemini')] },
+    handler: () => response(402, { error: { code: 402, message: 'Your prepayment credits are depleted. Please go to AI Studio to manage your project and billing.', status: 'RESOURCE_EXHAUSTED' } })
+  });
+  const r = await bg.translateTexts(TEXTS, {});
+  assert.equal(r.error, 'error');
+  assert.match(r.message, /errGeminiPrepay/);
+  assert.equal(fetch.calls.length, 1, 'une seule requête, pas de nouvel essai');
+  const r2 = await bg.translateTexts(TEXTS, {});
+  assert.equal(r2.error, 'no_key');
+  assert.equal(fetch.calls.length, 1, 'clé arrêtée pour la session');
+});

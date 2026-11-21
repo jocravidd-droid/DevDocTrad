@@ -515,7 +515,8 @@
         msg = DDT.t('badgeKeyProblem', [label, DDT.t('errAuth')]);
       } else if (err.kind === 'payment') {
         disabled[key.id] = 'payment';
-        msg = DDT.t('badgeKeyProblem', [label, DDT.t('errPayment')]);
+        var prepay = key.provider === 'gemini' && /prepay|prepayment|credits are depleted|billing/i.test(err.message || '');
+        msg = DDT.t('badgeKeyProblem', [label, DDT.t(prepay ? 'errGeminiPrepay' : 'errPayment')]);
       } else if (err.kind === 'config') {
         msg = DDT.t('badgeKeyProblem', [label, err.message]);
       } else if (err.kind === 'paid_cap' || err.kind === 'paid_unset') {

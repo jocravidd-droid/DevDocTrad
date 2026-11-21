@@ -7,7 +7,7 @@ body.popup { width: 360px; min-height: 120px; }
 .host { font-size: var(--fs-xs); color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 main { padding: 6px 14px 4px; display: flex; flex-direction: column; gap: 8px; }
 .card { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
-#main { margin: 6px 0 2px 6px; }  /* place pour la feuille décalée */
+#main { margin: 8px 0 2px 8px; }  /* place pour la feuille arrière */
 .count { font-size: var(--fs-sm); color: var(--text-2); }
 .controls { gap: var(--s-2); }
 .controls .seg { flex: 1; min-width: 0; }

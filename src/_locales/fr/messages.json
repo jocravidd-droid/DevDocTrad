@@ -604,5 +604,8 @@
   },
   "optDailyCapUsd": {
     "message": "Plafond journalier ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "ce projet Google est en facturation prépayée et ses crédits sont épuisés. Ne recharge rien : crée une clé dans un projet sans facturation sur Google AI Studio (palier gratuit)."
   }
 }
