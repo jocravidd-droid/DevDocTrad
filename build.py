@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Construit les deux paquets de DevDocTrad.
+
+Utilisation (une seule commande, depuis la racine du dépôt) :
+
+    python3 build.py
+
+Ce que fait le script :
+1. vide le dossier dist/ ;
+2. copie src/ dans dist/chrome et dist/firefox ;
+3. écrit dans chaque dossier un manifest.json = manifests/base.json + manifests/<navigateur>.json ;
+4. ajoute le fichier LICENSE ;
+5. crée dist/chrome.zip et dist/firefox.zip (fichiers triés, dates fixes : même source = même zip) ;
+6. affiche l'empreinte SHA-256 de chaque zip, pour vérifier que la version livrée est celle testée.
+
+Aucune dépendance : Python 3.8 ou plus récent suffit.
+"""
+import hashlib
+import json
+import shutil
+import sys
+import zipfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "src"
+DIST = ROOT / "dist"
+TARGETS = ("chrome", "firefox")
+FIXED_DATE = (2026, 1, 1, 0, 0, 0)
+
+
+def merge(a, b):
+    out = dict(a)
+    for k, v in b.items():
+        out[k] = merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+    return out
+
+
+def build(target):
+    base = json.loads((ROOT / "manifests" / "base.json").read_text(encoding="utf-8"))
+    extra = json.loads((ROOT / "manifests" / f"{target}.json").read_text(encoding="utf-8"))
+    manifest = merge(base, extra)
+    out = DIST / target
+    shutil.copytree(SRC, out)
+    shutil.copy(ROOT / "LICENSE", out / "LICENSE")
+    (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for f in manifest.get("background", {}).get("scripts", []) + [manifest.get("background", {}).get("service_worker", "")]:
+        if f and not (out / f).exists():
+            sys.exit(f"Fichier manquant dans {target} : {f}")
+    zpath = DIST / f"{target}.zip"
+    with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
+        for p in sorted(out.rglob("*")):
+            if p.is_file():
+                info = zipfile.ZipInfo(p.relative_to(out).as_posix(), FIXED_DATE)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.external_attr = 0o644 << 16
+                z.writestr(info, p.read_bytes())
+    digest = hashlib.sha256(zpath.read_bytes()).hexdigest()
+    print(f"{zpath.relative_to(ROOT)}  {zpath.stat().st_size // 1024} Ko  sha256 {digest}")
+    return digest
+
+
+def main():
+    if DIST.exists():
+        shutil.rmtree(DIST)
+    DIST.mkdir()
+    version = json.loads((ROOT / "manifests" / "base.json").read_text(encoding="utf-8"))["version"]
+    print(f"DevDocTrad {version}")
+    for t in TARGETS:
+        build(t)
+
+
+if __name__ == "__main__":
+    main()

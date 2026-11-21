@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DevDocTrad</title>
+<link rel="stylesheet" href="ui.css">
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="page">
+  <header class="row hero">
+    <span class="logo big" aria-hidden="true"></span>
+    <div>
+      <h1 data-i18n="optTitle"></h1>
+      <div class="muted" data-i18n="extDescription"></div>
+    </div>
+  </header>
+
+  <div class="note warn hidden" id="permBanner">
+    <p data-i18n="optPermMissing"></p>
+    <button class="btn primary small" id="grantApi" data-i18n="optPermGrant"></button>
+  </div>
+
+  <nav class="glass tabs" role="tablist">
+    <button role="tab" data-tab="keys" class="on" data-i18n="optTabKeys"></button>
+    <button role="tab" data-tab="translation" data-i18n="optTabTranslation"></button>
+    <button role="tab" data-tab="glossary" data-i18n="optTabGlossary"></button>
+    <button role="tab" data-tab="sites" data-i18n="optTabSites"></button>
+    <button role="tab" data-tab="data" data-i18n="optTabData"></button>
+  </nav>
+
+  <!-- Clés -->
+  <section class="panel" id="tab-keys">
+    <div class="glass card">
+      <h2 data-i18n="optKeysTitle"></h2>
+      <p class="muted" data-i18n="optKeysLocal"></p>
+      <div class="row wrapflex">
+        <select id="newProvider" class="auto">
+          <option value="gemini">Gemini</option>
+          <option value="groq">Groq</option>
+          <option value="mistral">Mistral</option>
+          <option value="openrouter">OpenRouter</option>
+          <option value="ollama">Ollama (local)</option>
+        </select>
+        <button class="btn primary" id="addKeyBtn" data-i18n="optAddKey"></button>
+      </div>
+    </div>
+    <div id="keyList" class="stack"></div>
+  </section>
+
+  <!-- Traduction -->
+  <section class="panel hidden" id="tab-translation">
+    <div class="glass card stack">
+      <h2 data-i18n="optTabTranslation"></h2>
+      <label class="field"><span data-i18n="optTarget"></span><select id="target" class="auto"></select></label>
+      <div class="field">
+        <span class="lbl" data-i18n="optMode"></span>
+        <div class="segmented" role="radiogroup">
+          <label><input type="radio" name="mode" value="replace"><span data-i18n="optModeReplace"></span></label>
+          <label><input type="radio" name="mode" value="bilingual"><span data-i18n="optModeBilingual"></span></label>
+        </div>
+      </div>
+      <label class="switch"><input type="checkbox" id="explainTerms"><span class="track"></span><span data-i18n="optExplain"></span></label>
+      <p class="muted" data-i18n="optExplainHelp"></p>
+      <label class="switch"><input type="checkbox" id="translateComments"><span class="track"></span><span data-i18n="optComments"></span></label>
+      <p class="muted" data-i18n="optCommentsHelp"></p>
+      <label class="field narrow"><span data-i18n="optPageCap"></span><input type="number" id="pageCap" min="10000" step="10000"></label>
+      <div class="field">
+        <span class="lbl" data-i18n="optShortcut"></span>
+        <p class="muted" id="shortcutInfo"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Glossaire -->
+  <section class="panel hidden" id="tab-glossary">
+    <div class="glass card stack">
+      <h2 data-i18n="optTabGlossary"></h2>
+      <p class="muted" data-i18n="optGlossaryHelp"></p>
+      <table class="gloss">
+        <thead><tr><th data-i18n="optGlTerm"></th><th data-i18n="optGlType"></th><th data-i18n="optGlTranslation"></th><th></th></tr></thead>
+        <tbody id="glossBody"></tbody>
+      </table>
+      <div class="row wrapflex">
+        <button class="btn" id="glAdd" data-i18n="optGlAdd"></button>
+        <button class="btn" id="glExport" data-i18n="optGlExport"></button>
+        <label class="btn" for="glImport" data-i18n="optGlImport"></label>
+        <input type="file" id="glImport" accept="application/json,.json" class="hidden">
+      </div>
+    </div>
+  </section>
+
+  <!-- Sites -->
+  <section class="panel hidden" id="tab-sites">
+    <div class="glass card stack">
+      <h2 data-i18n="optAutoTitle"></h2>
+      <p class="muted" data-i18n="optAutoHelp"></p>
+      <ul id="autoList" class="list"></ul>
+    </div>
+    <div class="glass card stack">
+      <h2 data-i18n="optSensitiveTitle"></h2>
+      <p class="muted" data-i18n="optSensitiveHelp"></p>
+      <p class="muted"><span data-i18n="optSensitiveBase"></span> <span id="sensitiveBase"></span></p>
+      <label class="field"><span data-i18n="optSensitiveExtra"></span><textarea id="sensitiveExtra" spellcheck="false"></textarea></label>
+    </div>
+  </section>
+
+  <!-- Données -->
+  <section class="panel hidden" id="tab-data">
+    <div class="glass card stack">
+      <h2 data-i18n="optCacheTitle"></h2>
+      <p class="muted" id="cacheInfo"></p>
+      <button class="btn danger" id="clearCache" data-i18n="optCacheClear"></button>
+    </div>
+    <div class="glass card stack">
+      <h2 data-i18n="optUsageTitle"></h2>
+      <ul id="usageList" class="list"></ul>
+    </div>
+    <div class="glass card stack">
+      <h2 data-i18n="optPrivacyTitle"></h2>
+      <p class="muted" data-i18n="optPrivacyText"></p>
+    </div>
+  </section>
+
+  <footer class="muted foot"><span id="saved" class="saved" aria-live="polite"></span> DevDocTrad · MIT</footer>
+</div>
+
+<template id="keyTpl">
+  <article class="glass card keycard">
+    <div class="row between">
+      <div class="row">
+        <span class="prov pill"></span>
+        <input type="text" class="label-in" data-f="label">
+      </div>
+      <div class="row">
+        <span class="state pill"></span>
+        <label class="switch"><input type="checkbox" data-f="enabled"><span class="track"></span></label>
+      </div>
+    </div>
+    <p class="warnline muted"></p>
+    <div class="grid">
+      <label class="field keyfield"><span data-i18n="optKey"></span>
+        <div class="row"><input type="password" data-f="key" autocomplete="off" spellcheck="false"><button class="btn small" data-a="show" data-i18n="optShow"></button></div>
+      </label>
+      <label class="field urlfield hidden"><span data-i18n="optBaseUrl"></span><input type="url" data-f="baseUrl"></label>
+      <div class="field tierfield"><span class="lbl" data-i18n="optTier"></span>
+        <div class="segmented">
+          <label><input type="radio" value="free" data-f="tier"><span data-i18n="tier_free"></span></label>
+          <label><input type="radio" value="paid" data-f="tier"><span data-i18n="tier_paid"></span></label>
+        </div>
+      </div>
+      <label class="field"><span data-i18n="optModelEasy"></span><input type="text" data-f="modelEasy" spellcheck="false"></label>
+      <label class="field"><span data-i18n="optModelHard"></span><input type="text" data-f="modelHard" spellcheck="false"></label>
+      <label class="field"><span data-i18n="optMaxChars"></span><input type="number" data-f="maxChars" min="200" step="100"></label>
+      <label class="field"><span data-i18n="optInterval"></span><input type="number" data-f="minIntervalMs" min="0" step="100"></label>
+      <label class="field"><span data-i18n="optMaxReq"></span><input type="number" data-f="maxRequestsPerDay" min="0" step="1"></label>
+    </div>
+    <div class="grid paid hidden">
+      <label class="field"><span data-i18n="optPriceIn"></span><input type="number" data-f="priceIn" min="0" step="0.01"></label>
+      <label class="field"><span data-i18n="optPriceOut"></span><input type="number" data-f="priceOut" min="0" step="0.01"></label>
+      <label class="field"><span data-i18n="optDailyCap"></span><input type="number" data-f="dailyCap" min="0" step="0.01"></label>
+    </div>
+    <div class="row wrapflex actions">
+      <button class="btn small" data-a="models" data-i18n="optLoadModels"></button>
+      <button class="btn small" data-a="test" data-i18n="optTest"></button>
+      <button class="btn small" data-a="up" data-i18n="optUp"></button>
+      <button class="btn small" data-a="down" data-i18n="optDown"></button>
+      <button class="btn small danger" data-a="del" data-i18n="optDelete"></button>
+      <span class="result muted"></span>
+    </div>
+    <datalist></datalist>
+  </article>
+</template>
+
+<script src="shared.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

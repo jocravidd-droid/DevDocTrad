@@ -1,0 +1,392 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "extDescription": {
+    "message": "Faithfully translates developer documentation and programming websites, without ever touching the code."
+  },
+  "cmdToggle": {
+    "message": "Translate the page or go back to the original"
+  },
+  "badgeTranslating": {
+    "message": "Translating: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Translated: {0} passages"
+  },
+  "badgeDoneFailed": {
+    "message": "Translated: {0} passages, {1} left in the original"
+  },
+  "badgeStopped": {
+    "message": "Stopped"
+  },
+  "badgeCap": {
+    "message": "Limit of {0} characters reached for this page."
+  },
+  "badgeRateLimited": {
+    "message": "Free key limit reached. Retrying in {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limit reached on every free key. Try again later."
+  },
+  "badgeNoKey": {
+    "message": "No key available. Add a key in the settings."
+  },
+  "badgeError": {
+    "message": "Error: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "translated locally (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "translated online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Nothing to translate on this page."
+  },
+  "badgeKeyProblem": {
+    "message": "Problem with key {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Stop"
+  },
+  "btnOriginal": {
+    "message": "Show original"
+  },
+  "btnTranslation": {
+    "message": "Show translation"
+  },
+  "btnMinimize": {
+    "message": "Minimize"
+  },
+  "btnClose": {
+    "message": "Close"
+  },
+  "btnContinue": {
+    "message": "Continue"
+  },
+  "errAuth": {
+    "message": "key rejected (invalid or revoked)"
+  },
+  "errPayment": {
+    "message": "insufficient balance at the provider; key stopped"
+  },
+  "errRate": {
+    "message": "rate limit reached, try again in a minute"
+  },
+  "errOllamaDown": {
+    "message": "Ollama is not answering on localhost:11434. Start Ollama and try again."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama rejects the extension (403). Set the OLLAMA_ORIGINS environment variable to chrome-extension://*,moz-extension://* then restart Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "in free mode, OpenRouter only accepts models whose name ends with :free"
+  },
+  "errPaidUnset": {
+    "message": "paid key blocked: first set the daily cap and both prices in the settings."
+  },
+  "errPaidCap": {
+    "message": "daily cap reached for the paid key (${0} of ${1})."
+  },
+  "errUnknown": {
+    "message": "Unknown error"
+  },
+  "keyAvailable": {
+    "message": "available"
+  },
+  "keyDisabled": {
+    "message": "disabled"
+  },
+  "keyNoModel": {
+    "message": "choose a model"
+  },
+  "keyPausedUntil": {
+    "message": "paused until {0}"
+  },
+  "keyProblem": {
+    "message": "problem"
+  },
+  "tier_free": {
+    "message": "free"
+  },
+  "tier_paid": {
+    "message": "paid"
+  },
+  "tier_local": {
+    "message": "local"
+  },
+  "gl_never": {
+    "message": "Never translate"
+  },
+  "gl_always": {
+    "message": "Always translate as"
+  },
+  "popupTranslate": {
+    "message": "Translate this page"
+  },
+  "popupSettings": {
+    "message": "Settings"
+  },
+  "popupUnsupported": {
+    "message": "This page cannot be translated by an extension (browser page, extension store or PDF viewer)."
+  },
+  "popupKey": {
+    "message": "Key"
+  },
+  "popupKeyAuto": {
+    "message": "Automatic (free and local)"
+  },
+  "popupAuto": {
+    "message": "Translate this site automatically"
+  },
+  "popupSensitive": {
+    "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."
+  },
+  "popupKeys": {
+    "message": "Key status"
+  },
+  "popupNoKeys": {
+    "message": "No key yet."
+  },
+  "popupAddKey": {
+    "message": "Add a key"
+  },
+  "popupShortcut": {
+    "message": "Shortcut:"
+  },
+  "optTitle": {
+    "message": "DevDocTrad settings"
+  },
+  "optPermMissing": {
+    "message": "Access to the translation providers is not yet allowed by the browser."
+  },
+  "optPermGrant": {
+    "message": "Allow access to providers"
+  },
+  "optTabKeys": {
+    "message": "Keys"
+  },
+  "optTabTranslation": {
+    "message": "Translation"
+  },
+  "optTabGlossary": {
+    "message": "Glossary"
+  },
+  "optTabSites": {
+    "message": "Sites"
+  },
+  "optTabData": {
+    "message": "Data"
+  },
+  "optKeysTitle": {
+    "message": "API keys"
+  },
+  "optKeysLocal": {
+    "message": "Keys stay in this browser (local storage). They are never synced with your account nor sent anywhere except to the provider. Card order is priority order."
+  },
+  "optAddKey": {
+    "message": "Add"
+  },
+  "optKey": {
+    "message": "Key"
+  },
+  "optShow": {
+    "message": "Show"
+  },
+  "optHide": {
+    "message": "Hide"
+  },
+  "optBaseUrl": {
+    "message": "Ollama address"
+  },
+  "optTier": {
+    "message": "Type"
+  },
+  "optModelEasy": {
+    "message": "Model (simple pages)"
+  },
+  "optModelHard": {
+    "message": "Model for hard pages (optional)"
+  },
+  "optMaxChars": {
+    "message": "Batch size (characters)"
+  },
+  "optInterval": {
+    "message": "Interval between requests (ms)"
+  },
+  "optMaxReq": {
+    "message": "Max requests per day (0 = no limit)"
+  },
+  "optPriceIn": {
+    "message": "Input price ($ per million tokens)"
+  },
+  "optPriceOut": {
+    "message": "Output price ($ per million tokens)"
+  },
+  "optDailyCap": {
+    "message": "Daily cap ($)"
+  },
+  "optLoadModels": {
+    "message": "Load models"
+  },
+  "optTest": {
+    "message": "Test"
+  },
+  "optUp": {
+    "message": "Move up"
+  },
+  "optDown": {
+    "message": "Move down"
+  },
+  "optDelete": {
+    "message": "Delete"
+  },
+  "optDeleteConfirm": {
+    "message": "Delete this key?"
+  },
+  "optWorking": {
+    "message": "Checking…"
+  },
+  "optTestOk": {
+    "message": "Valid key, {0} models available."
+  },
+  "optModelsLoaded": {
+    "message": "{0} models loaded: pick one from the list."
+  },
+  "optSaved": {
+    "message": "Saved"
+  },
+  "optTarget": {
+    "message": "Target language"
+  },
+  "optTargetAuto": {
+    "message": "Browser language ({0})"
+  },
+  "optMode": {
+    "message": "Display"
+  },
+  "optModeReplace": {
+    "message": "Replace the text"
+  },
+  "optModeBilingual": {
+    "message": "Bilingual (translation below the original)"
+  },
+  "optExplain": {
+    "message": "Explain technical terms"
+  },
+  "optExplainHelp": {
+    "message": "Off by default: the extension translates, it does not explain. When on, it adds the translation in brackets the first time a term appears."
+  },
+  "optComments": {
+    "message": "Translate comments inside code blocks"
+  },
+  "optCommentsHelp": {
+    "message": "Off by default. Only comments recognised by the site's syntax highlighting are translated; code is never changed and the original comes back unchanged."
+  },
+  "optPageCap": {
+    "message": "Character limit per page"
+  },
+  "optShortcut": {
+    "message": "Keyboard shortcut"
+  },
+  "optShortcutCurrent": {
+    "message": "Current shortcut: {0}."
+  },
+  "optShortcutNone": {
+    "message": "none"
+  },
+  "optShortcutWhereChrome": {
+    "message": "To change it: open chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "To change it: Add-ons Manager, gear icon, \"Manage Extension Shortcuts\"."
+  },
+  "optGlossaryHelp": {
+    "message": "Terms to never translate, or to always translate a certain way. Only terms found in the passage are sent to the model. 500 entries max."
+  },
+  "optGlTerm": {
+    "message": "Term"
+  },
+  "optGlType": {
+    "message": "Rule"
+  },
+  "optGlTranslation": {
+    "message": "Forced translation"
+  },
+  "optGlAdd": {
+    "message": "Add a term"
+  },
+  "optGlExport": {
+    "message": "Export (JSON)"
+  },
+  "optGlImport": {
+    "message": "Import (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Invalid file: expected a JSON list of {term, type, translation} objects."
+  },
+  "optAutoTitle": {
+    "message": "Automatically translated sites"
+  },
+  "optAutoHelp": {
+    "message": "Add a site from the popup with \"Translate this site automatically\". Only free keys and Ollama are used automatically."
+  },
+  "optAutoEmpty": {
+    "message": "No site yet."
+  },
+  "optAutoGranted": {
+    "message": "allowed"
+  },
+  "optAutoRevoked": {
+    "message": "permission removed"
+  },
+  "optSensitiveTitle": {
+    "message": "Sensitive pages"
+  },
+  "optSensitiveHelp": {
+    "message": "Never translated automatically (nor any page with a password field). The manual button still works."
+  },
+  "optSensitiveBase": {
+    "message": "Base patterns:"
+  },
+  "optSensitiveExtra": {
+    "message": "Extra patterns (one per line, word or domain)"
+  },
+  "optCacheTitle": {
+    "message": "Translation cache"
+  },
+  "optCacheInfo": {
+    "message": "{0} passages cached ({1} MB). A page already translated shows again without any network call."
+  },
+  "optCacheClear": {
+    "message": "Clear cache"
+  },
+  "optUsageTitle": {
+    "message": "Today's usage"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} requests{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Privacy"
+  },
+  "optPrivacyText": {
+    "message": "The text of the pages you translate is sent only to the provider you chose, or stays on your machine with Ollama. No analytics, no tracking, nothing is sent to the developer. On free tiers, Gemini and Mistral may reuse the text sent."
+  },
+  "warnGemini": {
+    "message": "Create the key in Google AI Studio without linking billing. On the free tier, Google may reuse the text sent. Two keys from the same project share the same limit."
+  },
+  "warnGroq": {
+    "message": "Free tier without a card: past the limit you just get a 429 error, never a bill."
+  },
+  "warnMistral": {
+    "message": "Free mode without a card. Requests may be used for training: opt out in the Mistral console if you prefer."
+  },
+  "warnOpenRouter": {
+    "message": "On free mode, only models ending with :free are accepted (about 50 requests per day). Never top up credit for this extension."
+  },
+  "warnOllama": {
+    "message": "Model on your computer: free and private, nothing leaves your machine. A small model makes more mistakes; doubtful passages stay in the original."
+  }
+}

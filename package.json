@@ -5,7 +5,7 @@
   "description": "Faithfully translates developer documentation and programming websites, without ever touching the code.",
   "license": "MIT",
   "scripts": {
-    "test": "node --test tests/"
+    "test": "node --test tests/*.test.js"
   },
   "devDependencies": {
     "jsdom": "^26.1.0"

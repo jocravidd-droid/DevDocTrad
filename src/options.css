@@ -1,0 +1,31 @@
+.page { max-width: 880px; margin: 0 auto; padding: 32px 20px 48px; display: flex; flex-direction: column; gap: 16px; }
+.hero { gap: 14px; }
+.logo.big { width: 52px; height: 52px; border-radius: 14px; background-image: url(icons/icon-128.png); }
+.hero h1 { font-size: 26px; }
+.tabs { display: flex; gap: 4px; padding: 5px; border-radius: 16px; position: sticky; top: 10px; z-index: 5; flex-wrap: wrap; }
+.tabs button { flex: 1; border: 0; background: transparent; color: var(--text); font: inherit; font-weight: 550; padding: 8px 12px; border-radius: 12px; cursor: pointer; }
+.tabs button:hover { background: var(--fill); }
+.tabs button.on { background: var(--glass-strong); box-shadow: 0 1px 6px rgba(0, 0, 0, .1); }
+.panel { display: flex; flex-direction: column; gap: 14px; }
+.card { padding: 18px 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 4px 14px; margin-top: 10px; }
+.keyfield { grid-column: 1 / -1; }
+.keyfield .row input { flex: 1; }
+.lbl { display: block; font-size: 12px; color: var(--text-2); margin-bottom: 4px; }
+.label-in { font-weight: 600; width: auto; min-width: 160px; background: transparent; border-color: transparent; }
+.label-in:hover, .label-in:focus { background: var(--glass-strong); border-color: var(--hairline); }
+.warnline { margin: 8px 0 0; font-size: 12.5px; }
+.actions { margin-top: 6px; }
+.result { font-size: 12.5px; }
+.result.ok { color: #1f8f3d; } .result.bad { color: #c9302c; }
+.wrapflex { flex-wrap: wrap; }
+select.auto { width: auto; min-width: 200px; }
+.narrow { max-width: 260px; }
+.list { list-style: none; margin: 0; padding: 0; }
+.list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px solid var(--hairline); }
+.list li:first-child { border-top: 0; }
+table.gloss { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+table.gloss th { text-align: left; font-size: 12px; color: var(--text-2); font-weight: 550; padding: 0 6px; }
+table.gloss td { padding: 0 6px; }
+.foot { text-align: center; }
+.saved { color: var(--ok); font-weight: 600; margin-right: 8px; }
