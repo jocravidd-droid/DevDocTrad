@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://jocravidd-droid.github.io/DevDocTrad/sitemap.xml

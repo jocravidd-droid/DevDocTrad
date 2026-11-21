@@ -11,7 +11,8 @@ Ce que fait le script :
 3. écrit dans chaque dossier un manifest.json = manifests/base.json + manifests/<navigateur>.json ;
 4. ajoute le fichier LICENSE ;
 5. crée dist/chrome.zip et dist/firefox.zip (fichiers triés, dates fixes : même source = même zip) ;
-6. affiche l'empreinte SHA-256 de chaque zip, pour vérifier que la version livrée est celle testée.
+6. affiche l'empreinte SHA-256 de chaque zip, pour vérifier que la version livrée est celle testée ;
+7. copie les deux zips dans release/ (devdoctrad-<navigateur>-<version>.zip) avec SHA256SUMS.txt.
 
 Aucune dépendance : Python 3.8 ou plus récent suffit.
 """
@@ -66,8 +67,18 @@ def main():
     DIST.mkdir()
     version = json.loads((ROOT / "manifests" / "base.json").read_text(encoding="utf-8"))["version"]
     print(f"DevDocTrad {version}")
+    release = ROOT / "release"
+    release.mkdir(exist_ok=True)
+    for old in release.glob("devdoctrad-*.zip"):
+        old.unlink()
+    sums = []
     for t in TARGETS:
-        build(t)
+        digest = build(t)
+        name = f"devdoctrad-{t}-{version}.zip"
+        shutil.copy(DIST / f"{t}.zip", release / name)
+        sums.append(f"{digest}  {name}")
+    (release / "SHA256SUMS.txt").write_text("\n".join(sums) + "\n", encoding="utf-8")
+    print(f"Copies prêtes à télécharger dans release/ (empreintes dans release/SHA256SUMS.txt)")
 
 
 if __name__ == "__main__":

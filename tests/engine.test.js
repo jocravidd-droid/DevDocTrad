@@ -274,3 +274,13 @@ test('le badge est dans un shadow DOM et n\'est jamais traduit', async () => {
   assert.ok(host && host.shadowRoot);
   assert.deepEqual([...calls.flat()], ['Badge test page.']);
 });
+
+test('bilingue : pas de copie quand la traduction est identique (nom de produit)', async () => {
+  const dom = makeDom('<html><body><p>Nimbus HTTP</p><p>Real sentence here.</p></body></html>');
+  const before = bodyOf(dom);
+  const { engine } = makeEngine(dom, { settings: { mode: 'bilingual' }, translator: (s) => (s === 'Nimbus HTTP' ? s : fakeTranslate(s)) });
+  await engine.start();
+  assert.equal(dom.window.document.querySelectorAll('[data-tr-bi]').length, 1);
+  engine.showOriginal();
+  assert.equal(bodyOf(dom), before);
+});

@@ -322,6 +322,12 @@
       var parent = unit.parent;
       var last = unit.nodes[unit.nodes.length - 1];
       if (settings.mode === 'bilingual') {
+        // traduction identique à l'original (nom de produit...) : rien à ajouter
+        if (DDT.plainText(DDT.normalizeOutput(unit.src)) === DDT.plainText(unit.out)) {
+          unit.bi = null;
+          unit.applied = 'bilingual';
+          return true;
+        }
         var span = doc.createElement('span');
         span.setAttribute('data-tr-bi', '');
         span.setAttribute('translate', 'no');

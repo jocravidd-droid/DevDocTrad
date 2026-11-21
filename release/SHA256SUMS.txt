@@ -1,0 +1,2 @@
+bb5d5f26f3ab32c2b6ddb501a891570a55e9432369a058e00542c1e650e2f10d  devdoctrad-chrome-1.0.0.zip
+d204446b51ec70ccfa27d307e4f6d84b8aa8317eefcb7f4e1c78950d5dafda8b  devdoctrad-firefox-1.0.0.zip
