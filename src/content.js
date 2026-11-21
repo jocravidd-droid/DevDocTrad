@@ -40,7 +40,8 @@
     var showing = 'original';      // original | translated
     var stopFlag = false;
     var sentChars = 0;
-    var capLimit = settings.pageCap;
+    var capExtra = 0;              // ajouté par le bouton « Continuer »
+    function capLimit() { return (Number(settings.pageCap) || DDT.DEFAULT_SETTINGS.pageCap) + capExtra; }
     var glossed = new Set();
     var failed = 0;
     var lastVia = null;
@@ -452,16 +453,33 @@
       if (!el || !el.getBoundingClientRect) return null;
       try { return el.getBoundingClientRect(); } catch (e) { return null; }
     }
+    /* Ordre : titre, puis contenu principal visible, autre visible, reste du contenu principal, le reste.
+     * Le contenu principal = <main>, <article>, [role=main] ; menus, en-têtes et pieds de page après. */
+    var MAIN_SEL = 'main, article, [role="main"], .markdown-body, #content, .content';
+    var SIDE_SEL = 'nav, aside, [role="navigation"], [role="complementary"]';
+    function unitElement(u) {
+      if (u.kind === 'run') return u.parent.nodeType === 1 ? u.parent : (u.parent.host || null);
+      return u.el || null;
+    }
+    function isMainContent(u) {
+      var el = unitElement(u);
+      if (!el || !el.closest) return false;
+      var m = el.closest(MAIN_SEL);
+      if (!m) return false;
+      var side = el.closest(SIDE_SEL);
+      return !(side && m.contains(side));   // menu ou encadré à l'intérieur du contenu principal : après
+    }
     function orderUnits(list) {
       var h = win.innerHeight || 800;
-      var vis = [];
-      var rest = [];
+      var buckets = [[], [], [], [], []];
       list.forEach(function (u) {
-        if (u.kind === 'title') { vis.unshift(u); return; }
+        if (u.kind === 'title') { buckets[0].push(u); return; }
         var r = unitRect(u);
-        if (r && r.bottom >= -h && r.top <= h * 2) vis.push(u); else rest.push(u);
+        var visible = r && r.bottom >= -h && r.top <= h * 2;
+        var main = isMainContent(u);
+        buckets[visible ? (main ? 1 : 2) : (main ? 3 : 4)].push(u);
       });
-      return vis.concat(rest);
+      return buckets[0].concat(buckets[1], buckets[2], buckets[3], buckets[4]);
     }
 
     /* ---------------- Boucle de traduction ---------------- */
@@ -530,9 +548,9 @@
           var batches = makeBatches(todo);
           var batch = batches[0];
           var chars = batch.reduce(function (a, u) { return a + u.src.length; }, 0);
-          if (sentChars + chars > capLimit && sentChars > 0) {
+          if (sentChars + chars > capLimit() && sentChars > 0) {
             state = 'paused';
-            lastMessage = t('badgeCap', [capLimit.toLocaleString()]);
+            lastMessage = t('badgeCap', [capLimit().toLocaleString()]);
             updateBadge();
             runPromise = null;
             return;
@@ -602,7 +620,6 @@
     function start(opts) {
       options = Object.assign({}, options, opts || {});
       if (opts && opts.settings) settings = Object.assign(settings, opts.settings);
-      capLimit = Math.max(capLimit, settings.pageCap);
       ensureBadge();
       markPage();
       showing = 'translated';
@@ -656,7 +673,7 @@
     }
 
     function continueAfterCap() {
-      capLimit += settings.pageCap;
+      capExtra += Number(settings.pageCap) || DDT.DEFAULT_SETTINGS.pageCap;
       state = 'running';
       return run();
     }
@@ -872,7 +889,7 @@
       continueAfterCap: continueAfterCap, status: status, pageInfo: pageInfo, scan: scan,
       _units: function () { return units; }, _checkUrl: checkUrl, _built: built,
       setOnUrlChange: function (fn) { onUrlChange = fn; },
-      setSettings: function (s) { settings = Object.assign(settings, s || {}); capLimit = Math.max(capLimit, settings.pageCap); applyBadgeTheme(); }
+      setSettings: function (s) { settings = Object.assign(settings, s || {}); applyBadgeTheme(); }
     };
   }
 

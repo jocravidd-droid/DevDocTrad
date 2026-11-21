@@ -15,6 +15,20 @@ Date : 21 novembre 2026. Étape 9 de `design/DIRECTION_ARTISTIQUE.md`.
 
 Captures pour les boutiques et le site régénérées avec l'interface finale : `store/screenshots/*.png` (1280 × 800), `store/promo-440x280.png`, `store/promo-1400x560.png`, `docs/assets/*.png`.
 
+## Test avec une vraie IA (Groq, clé gratuite)
+
+`tools/e2e_real.js` avec `openai/gpt-oss-120b` sur Groq, environ 25 requêtes au total sur la journée (limite gratuite : 1 000 par jour, 8 000 jetons par minute) :
+
+- page de démo : 21 passages traduits en une requête, aucun échec, original restauré à l'identique ;
+- vraie page MDN (`Window.alert()`) : 342 passages, 168 éléments `code`/`pre` identiques avant et après ;
+- vrai README GitHub (`sindresorhus/is-online`) : 379 passages, 32 éléments de code identiques ;
+- qualité : fidèle, sans résumé, typographie française correcte, identifiants (`window.alert()`, `navigator.onLine`, `Promise<boolean>`) intacts ;
+- la clé n'apparaît dans aucun journal.
+
+Défauts trouvés par ce test et corrigés : limites de Groq atteintes vite (réflexion du modèle réduite avec `reasoning_effort: low`, pause courte anticipée grâce aux en-têtes `x-ratelimit-*`) ; menus traduits avant l'article (le contenu principal passe maintenant en premier) ; limite de caractères par page qui ne pouvait pas descendre sous 150 000.
+
+Clé Gemini fournie : projet Google en facturation prépayée à zéro (réponse 402), donc aucune traduction possible ; arrêt immédiat vérifié, aucun coût possible.
+
 ## Problèmes vus sur les captures et corrigés
 
 | Surface | Problème observé | Correction |

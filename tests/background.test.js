@@ -361,3 +361,26 @@ test('Gemini 402 « prepayment credits are depleted » : clé arrêtée, message
   assert.equal(r2.error, 'no_key');
   assert.equal(fetch.calls.length, 1, 'clé arrêtée pour la session');
 });
+
+test('Groq : réflexion courte pour gpt-oss, et pause douce quand les jetons restants sont bas', async () => {
+  let n = 0;
+  const { bg, fetch } = makeBackground({
+    local: { settings: settings(), keys: [key('q', 'groq', { modelEasy: 'openai/gpt-oss-120b' }), key('m', 'mistral', { order: 1 })] },
+    handler: (url, init) => {
+      n++;
+      const texts = textsFromRequest(url, init).user.texts.map(fakeTranslate);
+      const r = okReply(url, texts);
+      if (url.includes('groq')) r.headers = { get: (h) => ({ 'x-ratelimit-remaining-tokens': '1200', 'x-ratelimit-reset-tokens': '37.5s' })[h.toLowerCase()] || null };
+      return r;
+    }
+  });
+  await bg.translateTexts(['First text to translate here.'], {});
+  const body = JSON.parse(fetch.calls[0].init.body);
+  assert.equal(body.reasoning_effort, 'low');
+  await bg.translateTexts(['Second text, different from the first.'], {});
+  assert.ok(fetch.calls[1].url.includes('mistral'), 'Groq en pause douce, la clé suivante prend le relais');
+  const st = await bg.publicState();
+  const q = st.keys.find((k) => k.id === 'q');
+  assert.equal(q.available, false);
+  assert.ok(q.until > 0);
+});

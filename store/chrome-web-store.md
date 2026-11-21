@@ -367,6 +367,7 @@ Option : tu peux créer une clé Groq gratuite réservée à l’examen, l’aj
 | Capture 2 | `store/screenshots/screenshot-2-bilingue.png` | 1280 x 800 | Prête |
 | Capture 3 | `store/screenshots/screenshot-3-reglages.png` | 1280 x 800 | Prête |
 | Capture 4 | `store/screenshots/screenshot-4-russe.png` | 1280 x 800 | Prête |
+| Capture 5 | `store/screenshots/screenshot-5-github-reel.png` | 1280 x 800 | Prête (vraie page GitHub, vraie traduction par Groq) |
 | Petite image promotionnelle (Small promo tile) | à créer, par exemple `store/promo-440x280.png` | 440 x 280 | **Manquante** |
 
 Les captures ont été faites sur une page de documentation de démonstration (« Nimbus HTTP »), avec un modèle local simulé et l’option « traduire les commentaires du code » activée (elle est désactivée par défaut). C’est pour ça que le commentaire du bloc de code apparaît traduit ; le code lui-même ne change pas. Plus tard, des captures sur des pages réelles (MDN, GitHub, Stack Overflow) seront plus parlantes.
@@ -384,6 +385,7 @@ Les captures ont été faites sur une page de documentation de démonstration (�
 2. `screenshot-2-bilingue.png`: "Bilingual mode: the translation appears under each original sentence."
 3. `screenshot-3-reglages.png`: "Settings: your own free keys (Gemini, Groq, Mistral, OpenRouter) or local Ollama."
 4. `screenshot-4-russe.png`: "The target language can be changed in the settings: here, the same page in Russian."
+5. `screenshot-5-github-reel.png`: "A real GitHub README translated: commands and code samples stay untouched."
 
 Le Chrome Web Store n’a pas de champ de légende par capture : ces textes servent pour AMO, le site et les annonces. Garde-les quand même ici, dans l’ordre d’envoi des captures.
 

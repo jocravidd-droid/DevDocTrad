@@ -144,7 +144,7 @@
     function keyAvailability(key, st, usage) {
       var t = now();
       if (st.disabled[key.id]) return { ok: false, reason: st.disabled[key.id] };
-      var until = st.pauses[key.id] || 0;
+      var until = Math.max(st.pauses[key.id] || 0, softPause[key.id] || 0);
       if (until > t) return { ok: false, until: until, reason: 'paused' };
       var max = keyMaxPerDay(key);
       var used = (usage.perKey[key.id] || {}).requests || 0;
@@ -244,6 +244,8 @@
         messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
         response_format: { type: 'json_object' }
       };
+      // Modèles qui « réfléchissent » (gpt-oss chez Groq) : réflexion courte, beaucoup moins de jetons
+      if (p === 'groq' && /gpt-oss/i.test(model)) body.reasoning_effort = 'low';
       var headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key.key };
       if (p === 'openrouter') headers['X-Title'] = 'DevDocTrad';
       var pick = function (j) {
@@ -263,6 +265,7 @@
         return fetchWithTimeout(u, i, to).then(function (res) {
           return readBody(res).then(function (b) {
             if (!res.ok) throw classify(key, res, b);
+            noteRateHeaders(key, res.headers);
             return picker(b.json);
           });
         }, function (err) {
@@ -272,6 +275,34 @@
         });
       }
     }
+
+    /*
+     * Limites par minute annoncées dans les en-têtes (Groq, fournisseurs compatibles OpenAI) :
+     * si le reste de jetons est trop bas pour une requête de plus, courte pause jusqu'à la
+     * remise à zéro, au lieu d'attendre une erreur 429.
+     */
+    function parseDuration(v) {
+      if (!v) return 0;
+      if (/^\d+(\.\d+)?$/.test(v)) return Math.round(parseFloat(v) * 1000);
+      var m = String(v).match(/^(?:(\d+)h)?(?:(\d+)m(?!s))?(?:([\d.]+)s)?(?:(\d+)ms)?$/);
+      if (!m) return 0;
+      return ((+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (parseFloat(m[3]) || 0)) * 1000 + (+m[4] || 0);
+    }
+    var LOW_TOKENS = 3500;
+    function noteRateHeaders(key, headers) {
+      if (!headers || !headers.get) return;
+      var rem = headers.get('x-ratelimit-remaining-tokens');
+      var reset = parseDuration(headers.get('x-ratelimit-reset-tokens'));
+      if (rem === null || rem === undefined || rem === '' || isNaN(+rem) || +rem >= LOW_TOKENS || !reset) return;
+      var wait = Math.min(reset + 500, 90000);
+      getSessionState().then(function (st) {
+        var pauses = Object.assign({}, st.pauses);
+        pauses[key.id] = Math.max(pauses[key.id] || 0, now() + wait);
+        return setSessionState({ pauses: pauses });
+      });
+      softPause[key.id] = now() + wait;
+    }
+    var softPause = {};
 
     /* Une requête, avec un seul nouvel essai après 2 s pour 5xx / réseau */
     function callOnce(key, model, system, user, ctx) {

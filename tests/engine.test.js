@@ -284,3 +284,25 @@ test('bilingue : pas de copie quand la traduction est identique (nom de produit)
   engine.showOriginal();
   assert.equal(bodyOf(dom), before);
 });
+
+test('ordre : le contenu principal passe avant les menus et barres latérales', async () => {
+  const dom = makeDom('<html><body><nav><a href="/">Home page link</a></nav><aside><p>Sidebar text here.</p></aside>' +
+    '<main><aside><p>Inner aside text.</p></aside><article><h1>Main title of the page</h1><p>Main paragraph content.</p></article></main>' +
+    '<footer><p>Footer text here.</p></footer></body></html>');
+  const { engine, calls } = makeEngine(dom, { settings: { batchChars: 30 } });
+  await engine.start();
+  const order = calls.flat();
+  assert.equal(order.indexOf('Main title of the page') < order.indexOf('<1>Home page link</1>'), true, order.join(' | '));
+  assert.ok(order.indexOf('Main paragraph content.') < order.indexOf('Sidebar text here.'));
+  assert.ok(order.indexOf('Main paragraph content.') < order.indexOf('Inner aside text.'));
+});
+
+test('limite par page : une limite basse réglée après coup est respectée', async () => {
+  const paras = Array.from({ length: 12 }, (_, i) => `<p>Paragraph ${i} ${'lorem ipsum dolor '.repeat(6)}</p>`).join('');
+  const dom = makeDom(`<html><body>${paras}</body></html>`);
+  const { engine } = makeEngine(dom, { settings: { batchChars: 150 } });   // créé avec la limite par défaut
+  engine.setSettings({ pageCap: 400 });                                     // puis réglée plus bas
+  await engine.start();
+  assert.equal(engine.status().state, 'paused');
+  assert.ok(engine.status().done < 12);
+});
