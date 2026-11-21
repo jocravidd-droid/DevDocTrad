@@ -1,0 +1,13 @@
+{
+  "name": "devdoctrad",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Faithfully translates developer documentation and programming websites, without ever touching the code.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "devDependencies": {
+    "jsdom": "^26.1.0"
+  }
+}

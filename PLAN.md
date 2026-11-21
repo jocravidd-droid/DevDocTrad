@@ -1,8 +1,14 @@
 # Plan : DevDocTrad, extension de traduction fidèle (Chromium + Firefox)
 
-Version 2.2 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 15 liste les questions encore ouvertes.
+Version 2.3 (21 novembre 2026). Document de passation pour Claude Code. Il contient les décisions validées par l'utilisateur, l'architecture, les algorithmes, les garde-fous de coût et les critères d'acceptation. Rien ici n'est à redécider : si un point manque, demander à l'utilisateur avant de choisir. La section 15 liste les questions encore ouvertes.
 
 ## 0. Changements
+
+### Version 2.3
+
+- Interface en français et en anglais, selon la langue du navigateur.
+- Style visuel inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces, police système. Pas de style minimal plat.
+- Site de présentation (GitHub Pages) inclus dans la première livraison.
 
 ### Version 2.2
 
@@ -57,6 +63,9 @@ L'utilisateur s'appelle Judley (pseudo : Ingénieur Fou), étudie la cybersécur
 | Extras de la version 1 | Raccourci clavier et glossaire personnel. Pas de traduction de sélection, pas d'original au survol dans cette version. |
 | Explication des termes | Désactivée par défaut. Fidélité stricte : on traduit, on n'explique pas. |
 | Licence | MIT. |
+| Langue de l'interface | Français et anglais, selon la langue du navigateur (`_locales/fr`, `_locales/en`). |
+| Style de l'interface | Inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces. Voir section 7. |
+| Site | Page de présentation sur GitHub Pages (`docs/`), livrée avec la première version. |
 | Publication | Chrome Web Store (frais d'inscription de 5 dollars, une seule fois, payés par l'utilisateur quand il le décide) et addons.mozilla.org (gratuit). |
 
 ## 3. Faits vérifiés sur les offres gratuites (novembre 2026)
@@ -178,7 +187,7 @@ Reconstruire les nœuds à partir de la sortie en réutilisant les éléments d'
 - Appliquer chaque lot dès qu'il revient (traduction progressive).
 - Un `MutationObserver` traduit le contenu ajouté plus tard (débouncé à 800 ms, déconnecté pendant les applications, utilise le cache).
 - Avant de commencer : mettre `translate="no"` sur `<html>` et une balise `<meta name="google" content="notranslate">`, pour empêcher la traduction automatique du navigateur de se lancer en parallèle et d'abîmer le DOM. Les retirer à la restauration. Mettre `lang` à la langue cible pendant l'affichage traduit, puis remettre l'ancien.
-- Badge d'état dans un shadow DOM fixé en bas à droite, sobre (pas d'emoji, une seule couleur neutre) : progression (unités faites / total), bouton Stop, bascule Original/Traduction, message d'erreur, nombre d'unités laissées en original. Le badge peut être réduit et ne doit jamais masquer un bouton de la page de façon permanente. Accessible au clavier, avec `aria-live="polite"` pour la progression.
+- Badge d'état dans un shadow DOM fixé en bas à droite, en verre dépoli translucide aux coins arrondis (section 7), sans emoji : progression (unités faites / total), bouton Stop, bascule Original/Traduction, message d'erreur, nombre d'unités laissées en original. Le badge peut être réduit et ne doit jamais masquer un bouton de la page de façon permanente. Accessible au clavier, avec `aria-live="polite"` pour la progression.
 
 ### 5.5 Pages sensibles et détection de langue
 
@@ -325,7 +334,17 @@ Envoi au modèle : seulement les entrées dont le terme apparaît dans le lot (c
 
 ## 7. Interface
 
-Sobre : pas d'emoji, pas de décoration superflue, une seule couleur d'accent, texte en français, termes techniques anglais gardés avec traduction à la première apparition. Thème clair et sombre selon le réglage du système (`prefers-color-scheme`).
+Style inspiré d'Apple (macOS, iOS), pas un style minimal plat :
+
+- verre dépoli : fonds translucides (`rgba` blanc ou noir à 55 à 75 %) avec `backdrop-filter: blur(24px) saturate(180%)` (et `-webkit-backdrop-filter`), fine bordure claire de 1 px, ombres douces et larges ;
+- coins arrondis : 14 à 22 px pour les cartes et panneaux, boutons en forme de pilule, interrupteurs (toggles) façon iOS ;
+- fond des pages de l'extension : dégradé doux et coloré (bleu, violet, rose pâle) pour que l'effet de verre se voie ;
+- police système : `-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif` ;
+- couleur d'accent bleu système (`#0a84ff`), animations courtes (150 à 250 ms) et respect de `prefers-reduced-motion` ;
+- thème clair et sombre selon le réglage du système (`prefers-color-scheme`) ;
+- si `backdrop-filter` n'est pas pris en charge, fond plus opaque pour rester lisible ;
+- pas d'emoji ; icônes dessinées en SVG simple ;
+- texte en français ou en anglais selon la langue du navigateur.
 
 ### 7.1 Popup
 
@@ -493,4 +512,4 @@ Une fois publiée, quelques messages honnêtes, sans spam, dans des endroits où
 
 ## 15. Questions ouvertes
 
-1. Langue de l'interface (popup, réglages, badge) : français seulement comme prévu, ou français et anglais (choisie selon la langue du navigateur) pour toucher aussi les non-francophones ? Le bilingue demande un peu plus de travail mais aide beaucoup la visibilité dans les boutiques.
+Aucune pour l'instant (la langue de l'interface est tranchée en version 2.3).
