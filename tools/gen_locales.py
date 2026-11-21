@@ -45,7 +45,7 @@ M = {
         "Ollama rejects the extension (403). Set the OLLAMA_ORIGINS environment variable to chrome-extension://*,moz-extension://* then restart Ollama."),
     "errOpenRouterFree": ("en mode gratuit, OpenRouter n'accepte que les modèles dont le nom finit par :free", "in free mode, OpenRouter only accepts models whose name ends with :free"),
     "errPaidUnset": ("clé payante bloquée : règle d'abord le plafond journalier et les deux prix dans les réglages.", "paid key blocked: first set the daily cap and both prices in the settings."),
-    "errPaidCap": ("plafond journalier atteint pour la clé payante ({0} $ sur {1} $).", "daily cap reached for the paid key (${0} of ${1})."),
+    "errPaidCap": ("plafond journalier atteint pour la clé payante ({0} $$ sur {1} $$).", "daily cap reached for the paid key ($${0} of $${1})."),
     "errUnknown": ("Erreur inconnue", "Unknown error"),
     # États de clé
     "keyAvailable": ("disponible", "available"),
@@ -95,9 +95,9 @@ M = {
     "optMaxChars": ("Taille d'un lot (caractères)", "Batch size (characters)"),
     "optInterval": ("Intervalle entre requêtes (ms)", "Interval between requests (ms)"),
     "optMaxReq": ("Requêtes maximum par jour (0 = sans limite)", "Max requests per day (0 = no limit)"),
-    "optPriceIn": ("Prix entrée ($ par million de jetons)", "Input price ($ per million tokens)"),
-    "optPriceOut": ("Prix sortie ($ par million de jetons)", "Output price ($ per million tokens)"),
-    "optDailyCap": ("Plafond journalier ($)", "Daily cap ($)"),
+    "optPriceIn": ("Prix entrée ($$ par million de jetons)", "Input price ($$ per million tokens)"),
+    "optPriceOut": ("Prix sortie ($$ par million de jetons)", "Output price ($$ per million tokens)"),
+    "optDailyCap": ("Plafond journalier ($$)", "Daily cap ($$)"),
     "optLoadModels": ("Charger les modèles", "Load models"),
     "optTest": ("Tester", "Test"),
     "optUp": ("Monter", "Move up"),
@@ -235,6 +235,10 @@ M = {
     "optThemeSystem": ("Système", "System"),
     "optThemeLight": ("Clair", "Light"),
     "optThemeDark": ("Sombre", "Dark"),
+    # « $$ » : un « $ » seul est interprété comme marqueur par chrome.i18n et disparaît
+    "optPriceInUsd": ("Prix entrée ($$ par million de jetons)", "Input price ($$ per million tokens)"),
+    "optPriceOutUsd": ("Prix sortie ($$ par million de jetons)", "Output price ($$ per million tokens)"),
+    "optDailyCapUsd": ("Plafond journalier ($$)", "Daily cap ($$)"),
 }
 
 root = Path(__file__).resolve().parent.parent / "src" / "_locales"

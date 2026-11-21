@@ -178,7 +178,7 @@ async function shot(page, name) {
     await opt.goto(`chrome-extension://${extId}/options.html`);
     await opt.waitForTimeout(800);
     const optTitle = await opt.textContent('h1');
-    check('page de réglages en français', optTitle === 'Réglages de DevDocTrad', optTitle);
+    check('page de réglages en français', optTitle === 'Fournisseurs et clés', optTitle);
     const keyShown = await opt.evaluate(() => document.querySelector('[data-f=key]').type);
     check('clé masquée par défaut', keyShown === 'password');
     await shot(opt, 'screenshot-3-reglages.png');

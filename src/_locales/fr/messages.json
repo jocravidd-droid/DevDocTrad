@@ -87,7 +87,7 @@
     "message": "clé payante bloquée : règle d'abord le plafond journalier et les deux prix dans les réglages."
   },
   "errPaidCap": {
-    "message": "plafond journalier atteint pour la clé payante ({0} $ sur {1} $)."
+    "message": "plafond journalier atteint pour la clé payante ({0} $$ sur {1} $$)."
   },
   "errUnknown": {
     "message": "Erreur inconnue"
@@ -219,13 +219,13 @@
     "message": "Requêtes maximum par jour (0 = sans limite)"
   },
   "optPriceIn": {
-    "message": "Prix entrée ($ par million de jetons)"
+    "message": "Prix entrée ($$ par million de jetons)"
   },
   "optPriceOut": {
-    "message": "Prix sortie ($ par million de jetons)"
+    "message": "Prix sortie ($$ par million de jetons)"
   },
   "optDailyCap": {
-    "message": "Plafond journalier ($)"
+    "message": "Plafond journalier ($$)"
   },
   "optLoadModels": {
     "message": "Charger les modèles"
@@ -595,5 +595,14 @@
   },
   "optThemeDark": {
     "message": "Sombre"
+  },
+  "optPriceInUsd": {
+    "message": "Prix entrée ($$ par million de jetons)"
+  },
+  "optPriceOutUsd": {
+    "message": "Prix sortie ($$ par million de jetons)"
+  },
+  "optDailyCapUsd": {
+    "message": "Plafond journalier ($$)"
   }
 }

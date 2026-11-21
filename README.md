@@ -17,6 +17,7 @@ Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : 
 - **Original ou bilingue** : remplace le texte, ou affiche la traduction sous chaque phrase. Un clic pour revenir à l'original exact.
 - **Gratuit** : utilise les paliers gratuits de Gemini, Groq, Mistral et OpenRouter avec tes propres clés, ou un modèle local avec Ollama. Une clé payante est bloquée tant que tu n'as pas réglé un plafond.
 - **Privé** : aucune statistique, aucun pistage. Tes clés restent dans ton navigateur.
+- **Agréable à utiliser** : interface en verre façon Apple, thème clair, sombre ou automatique, badge très discret sur les pages.
 
 ---
 
@@ -120,6 +121,7 @@ Ollama est utilisé en secours quand toutes les clés gratuites sont en pause, e
 - **Changer de langue** : Réglages, onglet **Traduction**, champ **Langue cible**. Par défaut : la langue de ton navigateur.
 - **Mode bilingue** : Réglages, onglet **Traduction**, **Affichage**, **Bilingue**.
 - **Glossaire** : Réglages, onglet **Glossaire**, pour les termes à ne jamais traduire ou à toujours traduire d'une certaine façon.
+- **Thème clair ou sombre** : Réglages, section **Apparence** (Système, Clair ou Sombre).
 - **Changer le raccourci** : Chrome, `chrome://extensions/shortcuts` ; Firefox, gestionnaire de modules, roue dentée, « Gérer les raccourcis ».
 
 Pages jamais traduites automatiquement : pages avec un champ mot de passe, banques, mails, pages de connexion (liste modifiable dans les réglages). Le bouton manuel fonctionne quand même.
@@ -152,9 +154,9 @@ Les tests automatiques (Node + jsdom) utilisent de faux fournisseurs : aucun app
 node tools/e2e.js
 ```
 
-Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo et un faux serveur Ollama local ; il produit aussi les captures d'écran de `store/screenshots/`.
+Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo et un faux serveur Ollama local ; il produit aussi les captures d'écran de `store/screenshots/`. Autres scripts : `node tools/qa_shots.js` (captures de contrôle du popup et du badge), `node tools/export_logo.js` (exports du logo), `node tools/promo.js` (images promotionnelles).
 
-Organisation : `src/` (code de l'extension), `manifests/` (manifestes Chrome et Firefox), `tests/`, `tools/` (icônes, textes de l'interface, démo, test de bout en bout), `docs/` (site), `store/` (fiches des boutiques), `PLAN.md` (cahier des charges), `design/` (direction artistique).
+Organisation : `src/` (code de l'extension), `manifests/` (manifestes Chrome et Firefox), `tests/`, `tools/` (icônes, textes de l'interface, démo, test de bout en bout), `docs/` (site), `store/` (fiches des boutiques), `PLAN.md` (cahier des charges), `design/` (direction artistique, spécification, logo, contrôle visuel).
 
 Les textes de l'interface (français et anglais) se modifient dans `tools/gen_locales.py`, puis `python3 tools/gen_locales.py`.
 

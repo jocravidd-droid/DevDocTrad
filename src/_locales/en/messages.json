@@ -87,7 +87,7 @@
     "message": "paid key blocked: first set the daily cap and both prices in the settings."
   },
   "errPaidCap": {
-    "message": "daily cap reached for the paid key (${0} of ${1})."
+    "message": "daily cap reached for the paid key ($${0} of $${1})."
   },
   "errUnknown": {
     "message": "Unknown error"
@@ -219,13 +219,13 @@
     "message": "Max requests per day (0 = no limit)"
   },
   "optPriceIn": {
-    "message": "Input price ($ per million tokens)"
+    "message": "Input price ($$ per million tokens)"
   },
   "optPriceOut": {
-    "message": "Output price ($ per million tokens)"
+    "message": "Output price ($$ per million tokens)"
   },
   "optDailyCap": {
-    "message": "Daily cap ($)"
+    "message": "Daily cap ($$)"
   },
   "optLoadModels": {
     "message": "Load models"
@@ -595,5 +595,14 @@
   },
   "optThemeDark": {
     "message": "Dark"
+  },
+  "optPriceInUsd": {
+    "message": "Input price ($$ per million tokens)"
+  },
+  "optPriceOutUsd": {
+    "message": "Output price ($$ per million tokens)"
+  },
+  "optDailyCapUsd": {
+    "message": "Daily cap ($$)"
   }
 }
