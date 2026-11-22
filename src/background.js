@@ -203,6 +203,18 @@
 
     function cleanModel(m) { return String(m || '').replace(/^models\//, ''); }
 
+    /* Ollama : sortie structurée imposée (schéma JSON), même nombre de textes en sortie qu'en entrée.
+     * Les petits modèles locaux cassent sinon souvent la structure de la réponse. */
+    function ollamaSchema(user) {
+      var n = 0;
+      var withGloss = false;
+      try { var u = JSON.parse(user); n = (u.texts || []).length; withGloss = Array.isArray(u.already_glossed); } catch (e) { /* format libre */ }
+      if (!n) return 'json';
+      var props = { translations: { type: 'array', items: { type: 'string' }, minItems: n, maxItems: n } };
+      if (withGloss) props.glossed = { type: 'array', items: { type: 'string' } };
+      return { type: 'object', properties: props, required: ['translations'] };
+    }
+
     function callProvider(key, model, system, user) {
       var p = key.provider;
       var timeout = Number(key.timeoutMs) || providerDefaults(key).timeoutMs || 60000;
@@ -231,7 +243,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            model: model, stream: false, format: 'json', options: { temperature: 0 },
+            model: model, stream: false, format: ollamaSchema(user), options: { temperature: 0 },
             messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
           })
         };
@@ -622,8 +634,24 @@
       });
     }
 
+    /* Ollama accepte les lectures (GET) d'une extension mais refuse ses envois (POST) tant que
+     * OLLAMA_ORIGINS n'est pas réglé : le test fait donc aussi un petit POST /api/show. */
+    function ollamaPostCheck(key, list) {
+      var model = key.modelEasy || (list[0] && list[0].id) || 'x';
+      return fetchWithTimeout(baseOf(key) + '/api/show', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: model })
+      }, 15000).then(function (res) {
+        if (res.status === 403) return readBody(res).then(function (b) { throw classify(key, res, b); });
+        return list;
+      }, function (err) {
+        throw new ProviderError('ollama_down', DDT.sanitize(err && err.message));
+      });
+    }
+
     function testKey(key) {
       return listModels(key).then(function (list) {
+        return key.provider === 'ollama' ? ollamaPostCheck(key, list) : list;
+      }).then(function (list) {
         return { ok: true, count: list.length, models: list };
       }, function (e) {
         var msg = e.kind === 'ollama_origin' ? DDT.t('errOllamaOrigin')
