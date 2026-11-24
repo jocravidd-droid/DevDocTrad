@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Oversætter udviklerdokumentation og programmeringssider tro mod originalen, uden nogensinde at røre koden."
+  },
+  "cmdToggle": {
+    "message": "Oversæt siden eller gå tilbage til originalen"
+  },
+  "badgeTranslating": {
+    "message": "Oversætter: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Oversat: {0} afsnit"
+  },
+  "badgeDoneFailed": {
+    "message": "Oversat: {0} afsnit, {1} efterladt i original"
+  },
+  "badgeStopped": {
+    "message": "Stoppet"
+  },
+  "badgeCap": {
+    "message": "Grænsen på {0} tegn er nået for denne side."
+  },
+  "badgeRateLimited": {
+    "message": "Grænsen for den gratis nøgle er nået. Nyt forsøg om {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Grænsen er nået for alle gratis nøgler. Prøv igen senere."
+  },
+  "badgeNoKey": {
+    "message": "Ingen nøgle tilgængelig. Tilføj en nøgle i indstillingerne."
+  },
+  "badgeError": {
+    "message": "Fejl: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "oversat lokalt (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "oversat online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Intet at oversætte på denne side."
+  },
+  "badgeKeyProblem": {
+    "message": "Problem med nøglen {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Stop"
+  },
+  "btnOriginal": {
+    "message": "Vis original"
+  },
+  "btnTranslation": {
+    "message": "Vis oversættelse"
+  },
+  "btnMinimize": {
+    "message": "Minimer"
+  },
+  "btnClose": {
+    "message": "Luk"
+  },
+  "btnContinue": {
+    "message": "Fortsæt"
+  },
+  "errAuth": {
+    "message": "nøglen blev afvist (ugyldig eller tilbagekaldt)"
+  },
+  "errPayment": {
+    "message": "utilstrækkelig saldo hos udbyderen; nøglen er stoppet"
+  },
+  "errRate": {
+    "message": "grænsen for forespørgsler er nået, prøv igen om et minut"
+  },
+  "errOllamaDown": {
+    "message": "Ollama svarer ikke på localhost:11434. Start Ollama, og prøv igen."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama afviser udvidelsen (403). Sæt miljøvariablen OLLAMA_ORIGINS til chrome-extension://*,moz-extension://* og genstart Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "i gratistilstand accepterer OpenRouter kun modeller, hvis navn ender på :free"
+  },
+  "errPaidUnset": {
+    "message": "betalt nøgle blokeret: angiv først dagsloftet og begge priser i indstillingerne."
+  },
+  "errPaidCap": {
+    "message": "dagsloftet er nået for den betalte nøgle ($${0} af $${1})."
+  },
+  "errUnknown": {
+    "message": "Ukendt fejl"
+  },
+  "keyAvailable": {
+    "message": "tilgængelig"
+  },
+  "keyDisabled": {
+    "message": "deaktiveret"
+  },
+  "keyNoModel": {
+    "message": "vælg en model"
+  },
+  "keyPausedUntil": {
+    "message": "sat på pause til {0}"
+  },
+  "keyProblem": {
+    "message": "problem"
+  },
+  "tier_free": {
+    "message": "gratis"
+  },
+  "tier_paid": {
+    "message": "betalt"
+  },
+  "tier_local": {
+    "message": "lokal"
+  },
+  "gl_never": {
+    "message": "Oversæt aldrig"
+  },
+  "gl_always": {
+    "message": "Oversæt altid som"
+  },
+  "popupTranslate": {
+    "message": "Oversæt siden"
+  },
+  "popupSettings": {
+    "message": "Indstillinger"
+  },
+  "popupUnsupported": {
+    "message": "Denne side kan ikke oversættes af en udvidelse (browserside, udvidelsesbutik eller PDF-fremviser)."
+  },
+  "popupKey": {
+    "message": "Nøgle"
+  },
+  "popupKeyAuto": {
+    "message": "Automatisk (gratis og lokal)"
+  },
+  "popupAuto": {
+    "message": "Oversæt dette websted automatisk"
+  },
+  "popupSensitive": {
+    "message": "Følsom side: oversættes aldrig automatisk. Knappen virker, Ollama bruges først, hvis det er sat op."
+  },
+  "popupKeys": {
+    "message": "Nøglestatus"
+  },
+  "popupNoKeys": {
+    "message": "Ingen nøgle endnu."
+  },
+  "popupAddKey": {
+    "message": "Tilføj en nøgle"
+  },
+  "popupShortcut": {
+    "message": "Genvej:"
+  },
+  "optTitle": {
+    "message": "Indstillinger for DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Browseren har endnu ikke tilladt adgang til oversættelsesudbyderne."
+  },
+  "optPermGrant": {
+    "message": "Tillad adgang til udbydere"
+  },
+  "optTabKeys": {
+    "message": "Nøgler"
+  },
+  "optTabTranslation": {
+    "message": "Oversættelse"
+  },
+  "optTabGlossary": {
+    "message": "Ordliste"
+  },
+  "optTabSites": {
+    "message": "Websteder"
+  },
+  "optTabData": {
+    "message": "Data"
+  },
+  "optKeysTitle": {
+    "message": "API-nøgler"
+  },
+  "optKeysLocal": {
+    "message": "Nøglerne bliver i denne browser (lokal lagring). De synkroniseres aldrig med din konto og sendes aldrig andre steder hen end til udbyderen. Kortenes rækkefølge er prioritetsrækkefølgen."
+  },
+  "optAddKey": {
+    "message": "Tilføj"
+  },
+  "optKey": {
+    "message": "Nøgle"
+  },
+  "optShow": {
+    "message": "Vis"
+  },
+  "optHide": {
+    "message": "Skjul"
+  },
+  "optBaseUrl": {
+    "message": "Ollama-adresse"
+  },
+  "optTier": {
+    "message": "Type"
+  },
+  "optModelEasy": {
+    "message": "Model (enkle sider)"
+  },
+  "optModelHard": {
+    "message": "Model til svære sider (valgfri)"
+  },
+  "optMaxChars": {
+    "message": "Batchstørrelse (tegn)"
+  },
+  "optInterval": {
+    "message": "Interval mellem forespørgsler (ms)"
+  },
+  "optMaxReq": {
+    "message": "Maks. forespørgsler pr. dag (0 = ingen grænse)"
+  },
+  "optPriceIn": {
+    "message": "Inputpris ($$ pr. million tokens)"
+  },
+  "optPriceOut": {
+    "message": "Outputpris ($$ pr. million tokens)"
+  },
+  "optDailyCap": {
+    "message": "Dagsloft ($$)"
+  },
+  "optLoadModels": {
+    "message": "Hent modeller"
+  },
+  "optTest": {
+    "message": "Test"
+  },
+  "optUp": {
+    "message": "Flyt op"
+  },
+  "optDown": {
+    "message": "Flyt ned"
+  },
+  "optDelete": {
+    "message": "Slet"
+  },
+  "optDeleteConfirm": {
+    "message": "Slet denne nøgle?"
+  },
+  "optWorking": {
+    "message": "Kontrollerer…"
+  },
+  "optTestOk": {
+    "message": "Gyldig nøgle, {0} modeller tilgængelige."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama svarer, {0} modeller installeret."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modeller hentet: vælg en på listen."
+  },
+  "optSaved": {
+    "message": "Gemt"
+  },
+  "optTarget": {
+    "message": "Målsprog"
+  },
+  "optTargetAuto": {
+    "message": "Browserens sprog ({0})"
+  },
+  "optMode": {
+    "message": "Visning"
+  },
+  "optModeReplace": {
+    "message": "Erstat teksten"
+  },
+  "optModeBilingual": {
+    "message": "Tosproget (oversættelsen under originalen)"
+  },
+  "optExplain": {
+    "message": "Tekniske termer: oversat + engelsk i parentes"
+  },
+  "optExplainHelp": {
+    "message": "Tekniske begreber oversættes, med den engelske term i parentes første gang de optræder. Fra: engelske tekniske termer forbliver på engelsk, uden parentes. Kode og navne (Path, npm…) oversættes aldrig."
+  },
+  "optComments": {
+    "message": "Oversæt kommentarer i kodeblokke"
+  },
+  "optCommentsHelp": {
+    "message": "Fra som standard. Kun kommentarer, som webstedets syntaksfremhævning genkender, oversættes; koden ændres aldrig, og originalen kommer uændret tilbage."
+  },
+  "optPageCap": {
+    "message": "Tegngrænse pr. side"
+  },
+  "optShortcut": {
+    "message": "Tastaturgenvej"
+  },
+  "optShortcutCurrent": {
+    "message": "Nuværende genvej: {0}."
+  },
+  "optShortcutNone": {
+    "message": "ingen"
+  },
+  "optShortcutWhereChrome": {
+    "message": "For at ændre den: åbn chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "For at ændre den: Tilføjelsesadministrator, tandhjulsikonet, »Håndter genveje til udvidelser«."
+  },
+  "optGlossaryHelp": {
+    "message": "Termer der aldrig skal oversættes, eller altid oversættes på en bestemt måde. Kun termer fundet i afsnittet sendes til modellen. Højst 500 poster."
+  },
+  "optGlTerm": {
+    "message": "Term"
+  },
+  "optGlType": {
+    "message": "Regel"
+  },
+  "optGlTranslation": {
+    "message": "Påtvunget oversættelse"
+  },
+  "optGlAdd": {
+    "message": "Tilføj en term"
+  },
+  "optGlExport": {
+    "message": "Eksportér (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importér (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Ugyldig fil: der forventes en JSON-liste med {term, type, translation}-objekter."
+  },
+  "optAutoTitle": {
+    "message": "Automatisk oversatte websteder"
+  },
+  "optAutoHelp": {
+    "message": "Tilføj et websted fra pop op-vinduet med »Oversæt dette websted automatisk«. Kun gratis nøgler og Ollama bruges automatisk."
+  },
+  "optAutoEmpty": {
+    "message": "Intet websted endnu."
+  },
+  "optAutoGranted": {
+    "message": "tilladt"
+  },
+  "optAutoRevoked": {
+    "message": "tilladelse fjernet"
+  },
+  "optSensitiveTitle": {
+    "message": "Følsomme sider"
+  },
+  "optSensitiveHelp": {
+    "message": "Oversættes aldrig automatisk (heller ikke sider med et adgangskodefelt). Den manuelle knap virker stadig."
+  },
+  "optSensitiveBase": {
+    "message": "Grundmønstre:"
+  },
+  "optSensitiveExtra": {
+    "message": "Ekstra mønstre (ét pr. linje, ord eller domæne)"
+  },
+  "optCacheTitle": {
+    "message": "Oversættelsescache"
+  },
+  "optCacheInfo": {
+    "message": "{0} afsnit i cachen ({1} MB). En allerede oversat side vises igen uden netværkskald."
+  },
+  "optCacheClear": {
+    "message": "Ryd cachen"
+  },
+  "optUsageTitle": {
+    "message": "Dagens forbrug"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} forespørgsler{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Privatliv"
+  },
+  "optPrivacyText": {
+    "message": "Teksten fra de sider, du oversætter, sendes kun til den udbyder, du har valgt, eller bliver på din computer med Ollama. Ingen statistik, ingen sporing, intet sendes til udvikleren. På gratisniveauer kan Gemini og Mistral genbruge den sendte tekst."
+  },
+  "warnGemini": {
+    "message": "Opret nøglen i Google AI Studio uden at tilknytte fakturering. På gratisniveauet kan Google genbruge den sendte tekst. To nøgler fra samme projekt deler samme grænse."
+  },
+  "warnGroq": {
+    "message": "Gratisniveau uden kort: over grænsen får du bare en 429-fejl, aldrig en regning."
+  },
+  "warnMistral": {
+    "message": "Gratistilstand uden kort. Forespørgsler kan bruges til træning: slå det fra i Mistral-konsollen, hvis du foretrækker det."
+  },
+  "warnOpenRouter": {
+    "message": "I gratistilstand accepteres kun modeller, der ender på :free (ca. 50 forespørgsler om dagen). Fyld aldrig kredit på til denne udvidelse."
+  },
+  "warnOllama": {
+    "message": "Model på din computer: gratis og privat, intet forlader din computer. En lille model laver flere fejl; tvivlsomme afsnit forbliver i original."
+  },
+  "popupView": {
+    "message": "Sidevisning"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Oversættelse"
+  },
+  "popupTranslating": {
+    "message": "Oversætter…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} afsnit"
+  },
+  "popupManage": {
+    "message": "Administrer"
+  },
+  "popupMoreKeys": {
+    "message": "og {0} nøgle(r) mere"
+  },
+  "popupNoKeysLong": {
+    "message": "Tilføj en gratis nøgle (Gemini, Groq, Mistral, OpenRouter) eller Ollama for at komme i gang."
+  },
+  "stateReady": {
+    "message": "Klar til at oversætte"
+  },
+  "stateNoKey": {
+    "message": "Ingen nøgle sat op"
+  },
+  "stateRunning": {
+    "message": "Oversætter"
+  },
+  "stateTranslated": {
+    "message": "Siden er oversat"
+  },
+  "stateOriginal": {
+    "message": "Originalen vises"
+  },
+  "stateStopped": {
+    "message": "Stoppet"
+  },
+  "statePaused": {
+    "message": "Sidens grænse er nået"
+  },
+  "stateError": {
+    "message": "Fejl"
+  },
+  "stateUnavailable": {
+    "message": "Siden kan ikke oversættes"
+  },
+  "toastAutoOn": {
+    "message": "Automatisk oversættelse slået til for {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatisk oversættelse slået fra for {0}."
+  },
+  "toastPermDenied": {
+    "message": "Tilladelse nægtet: webstedet blev ikke tilføjet."
+  },
+  "badgeShowBadge": {
+    "message": "Vis DevDocTrad-mærket"
+  },
+  "optNavLabel": {
+    "message": "Indstillingsafsnit"
+  },
+  "optNavKeys": {
+    "message": "Udbydere og nøgler"
+  },
+  "optNavPrivacy": {
+    "message": "Privatliv og omkostninger"
+  },
+  "optNavAppearance": {
+    "message": "Udseende"
+  },
+  "optDescKeys": {
+    "message": "Dine API-nøgler og Ollama, prøvet i kortenes rækkefølge, oppefra og ned."
+  },
+  "optDescTranslation": {
+    "message": "Sprog, visning og hvad udvidelsen må oversætte."
+  },
+  "optDescPrivacy": {
+    "message": "Hvad der forlader din browser, til hvem, og hvad det koster."
+  },
+  "optDescSites": {
+    "message": "Automatisk oversatte websteder og sider, der skal beskyttes."
+  },
+  "optDescGlossary": {
+    "message": "Termer, der skal bevares som de er, eller altid oversættes ens."
+  },
+  "optDescData": {
+    "message": "Oversættelsescache og data gemt i denne browser."
+  },
+  "optDescAppearance": {
+    "message": "Tema for indstillingerne, pop op-vinduet og mærket på siderne."
+  },
+  "optVersion": {
+    "message": "version {0}"
+  },
+  "optAddProvider": {
+    "message": "Tilføj en udbyder"
+  },
+  "optAddProviderHelp": {
+    "message": "Det nye kort placeres sidst. Kortenes rækkefølge er prioritetsrækkefølgen."
+  },
+  "optProvider": {
+    "message": "Udbyder"
+  },
+  "optKeysEmptyHint": {
+    "message": "Vælg en udbyder: der vises et kort, indsæt din nøgle, derefter »Hent modeller«, og vælg en model."
+  },
+  "optKeyName": {
+    "message": "Nøglens navn"
+  },
+  "optKeyEnabled": {
+    "message": "Brug denne nøgle"
+  },
+  "optPriority": {
+    "message": "prioritet {0}"
+  },
+  "optKeyHelp": {
+    "message": "Skjult som standard, gemt kun i denne browser."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama skal køre på din computer."
+  },
+  "optModelHelp": {
+    "message": "»Hent modeller« udfylder forslagslisten."
+  },
+  "optLimits": {
+    "message": "Grænser"
+  },
+  "optLimitsHelp": {
+    "message": "Tomt = udbyderens standard."
+  },
+  "optPaidTitle": {
+    "message": "Omkostninger"
+  },
+  "optPaidHelp": {
+    "message": "Bruges kun, når du vælger den i pop op-vinduet."
+  },
+  "optPaidOk": {
+    "message": "Loft og priser er angivet: nøglen kan bruges op til loftet."
+  },
+  "optPrivacyFlow": {
+    "message": "Hvor teksten sendes hen"
+  },
+  "optProviderNotes": {
+    "message": "Noter pr. udbyder"
+  },
+  "optProviderUsed": {
+    "message": "i brug"
+  },
+  "optUsageEmpty": {
+    "message": "Ingen nøgle sat op endnu."
+  },
+  "optUsageHelp": {
+    "message": "Nulstilles hver dag ved midnat (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Betalte nøgler"
+  },
+  "optPaidRule": {
+    "message": "En betalt nøgle bruges aldrig automatisk: du skal vælge den i pop op-vinduet. Den forbliver blokeret, indtil dagsloftet og begge priser er angivet, og stopper, så snart loftet er nået."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Intet automatisk websted endnu"
+  },
+  "optAutoEmptyLong": {
+    "message": "Sådan tilføjer du et: åbn webstedet, klik på DevDocTrad-ikonet i værktøjslinjen, og slå »Oversæt dette websted automatisk« til. Browseren beder kun om tilladelse til det websted."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Fjern {0} fra de automatisk oversatte websteder?"
+  },
+  "optGlEmpty": {
+    "message": "Ingen term endnu. Eksempel: »thread« med reglen »Oversæt aldrig«."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termer"
+  },
+  "optGlImported": {
+    "message": "{0} termer importeret."
+  },
+  "optCacheConfirm": {
+    "message": "Ryd cachen? Allerede oversatte sider skal oversættes igen (nye kald til udbyderne)."
+  },
+  "optCacheCleared": {
+    "message": "Cachen er ryddet."
+  },
+  "optStorageTitle": {
+    "message": "Lokal lagring"
+  },
+  "optTheme": {
+    "message": "Tema"
+  },
+  "optThemeHelp": {
+    "message": "»System« følger computerens lyse eller mørke indstilling."
+  },
+  "optThemeSystem": {
+    "message": "System"
+  },
+  "optThemeLight": {
+    "message": "Lyst"
+  },
+  "optThemeDark": {
+    "message": "Mørkt"
+  },
+  "optPriceInUsd": {
+    "message": "Inputpris ($$ pr. million tokens)"
+  },
+  "optPriceOutUsd": {
+    "message": "Outputpris ($$ pr. million tokens)"
+  },
+  "optDailyCapUsd": {
+    "message": "Dagsloft ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "dette Google-projekt bruger forudbetalt fakturering, og dets kreditter er brugt op. Fyld ikke noget på: opret en nøgle i et projekt uden fakturering i Google AI Studio (gratisniveau)."
+  }
+}

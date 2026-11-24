@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Kääntää kehittäjädokumentaation ja ohjelmointisivustot uskollisesti koskematta koskaan koodiin."
+  },
+  "cmdToggle": {
+    "message": "Käännä sivu tai palaa alkuperäiseen"
+  },
+  "badgeTranslating": {
+    "message": "Käännetään: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Käännetty: {0} kohtaa"
+  },
+  "badgeDoneFailed": {
+    "message": "Käännetty: {0} kohtaa, {1} jätetty alkuperäiseksi"
+  },
+  "badgeStopped": {
+    "message": "Pysäytetty"
+  },
+  "badgeCap": {
+    "message": "Tämän sivun {0} merkin raja on saavutettu."
+  },
+  "badgeRateLimited": {
+    "message": "Ilmaisen avaimen raja saavutettu. Uusi yritys {0} s kuluttua ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Raja saavutettu kaikilla ilmaisilla avaimilla. Yritä myöhemmin uudelleen."
+  },
+  "badgeNoKey": {
+    "message": "Avainta ei ole saatavilla. Lisää avain asetuksissa."
+  },
+  "badgeError": {
+    "message": "Virhe: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "käännetty paikallisesti (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "käännetty verkossa ({0})"
+  },
+  "badgeNothing": {
+    "message": "Tällä sivulla ei ole käännettävää."
+  },
+  "badgeKeyProblem": {
+    "message": "Ongelma avaimessa {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Pysäytä"
+  },
+  "btnOriginal": {
+    "message": "Näytä alkuperäinen"
+  },
+  "btnTranslation": {
+    "message": "Näytä käännös"
+  },
+  "btnMinimize": {
+    "message": "Pienennä"
+  },
+  "btnClose": {
+    "message": "Sulje"
+  },
+  "btnContinue": {
+    "message": "Jatka"
+  },
+  "errAuth": {
+    "message": "avain hylätty (virheellinen tai peruttu)"
+  },
+  "errPayment": {
+    "message": "palveluntarjoajan saldo ei riitä; avain pysäytetty"
+  },
+  "errRate": {
+    "message": "pyyntöraja saavutettu, yritä uudelleen minuutin kuluttua"
+  },
+  "errOllamaDown": {
+    "message": "Ollama ei vastaa osoitteessa localhost:11434. Käynnistä Ollama ja yritä uudelleen."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama hylkää laajennuksen (403). Aseta ympäristömuuttujan OLLAMA_ORIGINS arvoksi chrome-extension://*,moz-extension://* ja käynnistä Ollama uudelleen."
+  },
+  "errOpenRouterFree": {
+    "message": "ilmaistilassa OpenRouter hyväksyy vain mallit, joiden nimi päättyy :free"
+  },
+  "errPaidUnset": {
+    "message": "maksullinen avain estetty: aseta ensin päiväkatto ja molemmat hinnat asetuksissa."
+  },
+  "errPaidCap": {
+    "message": "maksullisen avaimen päiväkatto saavutettu ($${0} / $${1})."
+  },
+  "errUnknown": {
+    "message": "Tuntematon virhe"
+  },
+  "keyAvailable": {
+    "message": "käytettävissä"
+  },
+  "keyDisabled": {
+    "message": "pois käytöstä"
+  },
+  "keyNoModel": {
+    "message": "valitse malli"
+  },
+  "keyPausedUntil": {
+    "message": "tauolla klo {0} asti"
+  },
+  "keyProblem": {
+    "message": "ongelma"
+  },
+  "tier_free": {
+    "message": "ilmainen"
+  },
+  "tier_paid": {
+    "message": "maksullinen"
+  },
+  "tier_local": {
+    "message": "paikallinen"
+  },
+  "gl_never": {
+    "message": "Älä käännä koskaan"
+  },
+  "gl_always": {
+    "message": "Käännä aina muotoon"
+  },
+  "popupTranslate": {
+    "message": "Käännä tämä sivu"
+  },
+  "popupSettings": {
+    "message": "Asetukset"
+  },
+  "popupUnsupported": {
+    "message": "Laajennus ei voi kääntää tätä sivua (selaimen sivu, laajennuskauppa tai PDF-katseluohjelma)."
+  },
+  "popupKey": {
+    "message": "Avain"
+  },
+  "popupKeyAuto": {
+    "message": "Automaattinen (ilmaiset ja paikallinen)"
+  },
+  "popupAuto": {
+    "message": "Käännä tämä sivusto automaattisesti"
+  },
+  "popupSensitive": {
+    "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
+  },
+  "popupKeys": {
+    "message": "Avainten tila"
+  },
+  "popupNoKeys": {
+    "message": "Ei vielä avainta."
+  },
+  "popupAddKey": {
+    "message": "Lisää avain"
+  },
+  "popupShortcut": {
+    "message": "Pikanäppäin:"
+  },
+  "optTitle": {
+    "message": "DevDocTradin asetukset"
+  },
+  "optPermMissing": {
+    "message": "Selain ei ole vielä sallinut pääsyä käännöspalveluihin."
+  },
+  "optPermGrant": {
+    "message": "Salli pääsy palveluntarjoajiin"
+  },
+  "optTabKeys": {
+    "message": "Avaimet"
+  },
+  "optTabTranslation": {
+    "message": "Käännös"
+  },
+  "optTabGlossary": {
+    "message": "Sanasto"
+  },
+  "optTabSites": {
+    "message": "Sivustot"
+  },
+  "optTabData": {
+    "message": "Tiedot"
+  },
+  "optKeysTitle": {
+    "message": "API-avaimet"
+  },
+  "optKeysLocal": {
+    "message": "Avaimet pysyvät tässä selaimessa (paikallinen tallennustila). Niitä ei koskaan synkronoida tiliisi eikä lähetetä minnekään muualle kuin palveluntarjoajalle. Korttien järjestys on tärkeysjärjestys."
+  },
+  "optAddKey": {
+    "message": "Lisää"
+  },
+  "optKey": {
+    "message": "Avain"
+  },
+  "optShow": {
+    "message": "Näytä"
+  },
+  "optHide": {
+    "message": "Piilota"
+  },
+  "optBaseUrl": {
+    "message": "Ollaman osoite"
+  },
+  "optTier": {
+    "message": "Tyyppi"
+  },
+  "optModelEasy": {
+    "message": "Malli (helpot sivut)"
+  },
+  "optModelHard": {
+    "message": "Malli vaikeille sivuille (valinnainen)"
+  },
+  "optMaxChars": {
+    "message": "Erän koko (merkkiä)"
+  },
+  "optInterval": {
+    "message": "Pyyntöjen väli (ms)"
+  },
+  "optMaxReq": {
+    "message": "Pyyntöjä enintään päivässä (0 = ei rajaa)"
+  },
+  "optPriceIn": {
+    "message": "Syötteen hinta ($$ miljoonaa tokenia kohden)"
+  },
+  "optPriceOut": {
+    "message": "Tulosteen hinta ($$ miljoonaa tokenia kohden)"
+  },
+  "optDailyCap": {
+    "message": "Päiväkatto ($$)"
+  },
+  "optLoadModels": {
+    "message": "Lataa mallit"
+  },
+  "optTest": {
+    "message": "Testaa"
+  },
+  "optUp": {
+    "message": "Siirrä ylös"
+  },
+  "optDown": {
+    "message": "Siirrä alas"
+  },
+  "optDelete": {
+    "message": "Poista"
+  },
+  "optDeleteConfirm": {
+    "message": "Poistetaanko tämä avain?"
+  },
+  "optWorking": {
+    "message": "Tarkistetaan…"
+  },
+  "optTestOk": {
+    "message": "Kelvollinen avain, {0} mallia saatavilla."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama vastaa, asennettuja malleja: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "{0} mallia ladattu: valitse yksi luettelosta."
+  },
+  "optSaved": {
+    "message": "Tallennettu"
+  },
+  "optTarget": {
+    "message": "Kohdekieli"
+  },
+  "optTargetAuto": {
+    "message": "Selaimen kieli ({0})"
+  },
+  "optMode": {
+    "message": "Näyttö"
+  },
+  "optModeReplace": {
+    "message": "Korvaa teksti"
+  },
+  "optModeBilingual": {
+    "message": "Kaksikielinen (käännös alkuperäisen alla)"
+  },
+  "optExplain": {
+    "message": "Tekniset termit: käännös + englanti sulkeissa"
+  },
+  "optExplainHelp": {
+    "message": "Tekniset käsitteet käännetään, ja englanninkielinen termi näytetään sulkeissa ensimmäisellä kerralla. Pois: englanninkieliset tekniset termit jäävät englanniksi ilman sulkeita. Koodia ja nimiä (Path, npm…) ei koskaan käännetä."
+  },
+  "optComments": {
+    "message": "Käännä kommentit koodilohkoissa"
+  },
+  "optCommentsHelp": {
+    "message": "Oletuksena pois. Vain sivuston syntaksikorostuksen tunnistamat kommentit käännetään; koodia ei koskaan muuteta, ja alkuperäinen palautuu muuttumattomana."
+  },
+  "optPageCap": {
+    "message": "Merkkiraja sivua kohden"
+  },
+  "optShortcut": {
+    "message": "Pikanäppäin"
+  },
+  "optShortcutCurrent": {
+    "message": "Nykyinen pikanäppäin: {0}."
+  },
+  "optShortcutNone": {
+    "message": "ei mitään"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Muuttaminen: avaa chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Muuttaminen: Lisäosien hallinta, rataskuvake, ”Hallitse laajennusten pikanäppäimiä”."
+  },
+  "optGlossaryHelp": {
+    "message": "Termit, joita ei koskaan käännetä tai jotka käännetään aina tietyllä tavalla. Mallille lähetetään vain kohdasta löytyvät termit. Enintään 500 merkintää."
+  },
+  "optGlTerm": {
+    "message": "Termi"
+  },
+  "optGlType": {
+    "message": "Sääntö"
+  },
+  "optGlTranslation": {
+    "message": "Pakotettu käännös"
+  },
+  "optGlAdd": {
+    "message": "Lisää termi"
+  },
+  "optGlExport": {
+    "message": "Vie (JSON)"
+  },
+  "optGlImport": {
+    "message": "Tuo (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Virheellinen tiedosto: odotetaan JSON-luetteloa {term, type, translation} -objekteista."
+  },
+  "optAutoTitle": {
+    "message": "Automaattisesti käännettävät sivustot"
+  },
+  "optAutoHelp": {
+    "message": "Lisää sivusto ponnahdusikkunasta valinnalla ”Käännä tämä sivusto automaattisesti”. Automaattisesti käytetään vain ilmaisia avaimia ja Ollamaa."
+  },
+  "optAutoEmpty": {
+    "message": "Ei vielä sivustoja."
+  },
+  "optAutoGranted": {
+    "message": "sallittu"
+  },
+  "optAutoRevoked": {
+    "message": "lupa poistettu"
+  },
+  "optSensitiveTitle": {
+    "message": "Arkaluonteiset sivut"
+  },
+  "optSensitiveHelp": {
+    "message": "Ei koskaan käännetä automaattisesti (eikä mitään sivua, jolla on salasanakenttä). Manuaalinen painike toimii silti."
+  },
+  "optSensitiveBase": {
+    "message": "Perusmallit:"
+  },
+  "optSensitiveExtra": {
+    "message": "Lisämallit (yksi riviä kohden, sana tai verkkotunnus)"
+  },
+  "optCacheTitle": {
+    "message": "Käännösvälimuisti"
+  },
+  "optCacheInfo": {
+    "message": "{0} kohtaa välimuistissa ({1} Mt). Jo käännetty sivu näytetään uudelleen ilman verkkokutsua."
+  },
+  "optCacheClear": {
+    "message": "Tyhjennä välimuisti"
+  },
+  "optUsageTitle": {
+    "message": "Tämän päivän käyttö"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} pyyntöä{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Yksityisyys"
+  },
+  "optPrivacyText": {
+    "message": "Kääntämiesi sivujen teksti lähetetään vain valitsemallesi palveluntarjoajalle, tai se pysyy koneellasi Ollaman kanssa. Ei analytiikkaa, ei seurantaa, kehittäjälle ei lähetetä mitään. Ilmaistasoilla Gemini ja Mistral voivat käyttää lähetettyä tekstiä uudelleen."
+  },
+  "warnGemini": {
+    "message": "Luo avain Google AI Studiossa liittämättä laskutusta. Ilmaistasolla Google voi käyttää lähetettyä tekstiä uudelleen. Saman projektin kahdella avaimella on yhteinen raja."
+  },
+  "warnGroq": {
+    "message": "Ilmaistaso ilman korttia: rajan ylittyessä saat vain virheen 429, et koskaan laskua."
+  },
+  "warnMistral": {
+    "message": "Ilmaistila ilman korttia. Pyyntöjä voidaan käyttää koulutukseen: poista se käytöstä Mistral-konsolissa, jos haluat."
+  },
+  "warnOpenRouter": {
+    "message": "Ilmaistilassa hyväksytään vain :free-päätteiset mallit (noin 50 pyyntöä päivässä). Älä koskaan lataa saldoa tätä laajennusta varten."
+  },
+  "warnOllama": {
+    "message": "Malli omalla koneellasi: ilmainen ja yksityinen, mikään ei poistu koneelta. Pieni malli tekee enemmän virheitä; epävarmat kohdat jäävät alkuperäisiksi."
+  },
+  "popupView": {
+    "message": "Sivun näyttö"
+  },
+  "segOriginal": {
+    "message": "Alkuperäinen"
+  },
+  "segTranslation": {
+    "message": "Käännös"
+  },
+  "popupTranslating": {
+    "message": "Käännetään…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} kohtaa"
+  },
+  "popupManage": {
+    "message": "Hallitse"
+  },
+  "popupMoreKeys": {
+    "message": "ja {0} muuta avainta"
+  },
+  "popupNoKeysLong": {
+    "message": "Aloita lisäämällä ilmainen avain (Gemini, Groq, Mistral, OpenRouter) tai Ollama."
+  },
+  "stateReady": {
+    "message": "Valmis kääntämään"
+  },
+  "stateNoKey": {
+    "message": "Avainta ei ole määritetty"
+  },
+  "stateRunning": {
+    "message": "Käännetään"
+  },
+  "stateTranslated": {
+    "message": "Sivu käännetty"
+  },
+  "stateOriginal": {
+    "message": "Alkuperäinen näkyvissä"
+  },
+  "stateStopped": {
+    "message": "Pysäytetty"
+  },
+  "statePaused": {
+    "message": "Sivun raja saavutettu"
+  },
+  "stateError": {
+    "message": "Virhe"
+  },
+  "stateUnavailable": {
+    "message": "Sivua ei voi kääntää"
+  },
+  "toastAutoOn": {
+    "message": "Automaattinen käännös otettu käyttöön: {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automaattinen käännös poistettu käytöstä: {0}."
+  },
+  "toastPermDenied": {
+    "message": "Lupa evätty: sivustoa ei lisätty."
+  },
+  "badgeShowBadge": {
+    "message": "Näytä DevDocTrad-merkki"
+  },
+  "optNavLabel": {
+    "message": "Asetusten osiot"
+  },
+  "optNavKeys": {
+    "message": "Palveluntarjoajat ja avaimet"
+  },
+  "optNavPrivacy": {
+    "message": "Yksityisyys ja kustannukset"
+  },
+  "optNavAppearance": {
+    "message": "Ulkoasu"
+  },
+  "optDescKeys": {
+    "message": "API-avaimesi ja Ollama, kokeillaan korttien järjestyksessä ylhäältä alas."
+  },
+  "optDescTranslation": {
+    "message": "Kieli, näyttö ja se, mitä laajennus saa kääntää."
+  },
+  "optDescPrivacy": {
+    "message": "Mitä selaimestasi lähtee, kenelle ja mitä se maksaa."
+  },
+  "optDescSites": {
+    "message": "Automaattisesti käännettävät sivustot ja suojattavat sivut."
+  },
+  "optDescGlossary": {
+    "message": "Termit, jotka jätetään ennalleen tai käännetään aina samalla tavalla."
+  },
+  "optDescData": {
+    "message": "Käännösvälimuisti ja tähän selaimeen tallennetut tiedot."
+  },
+  "optDescAppearance": {
+    "message": "Asetusten, ponnahdusikkunan ja sivuilla näkyvän merkin teema."
+  },
+  "optVersion": {
+    "message": "versio {0}"
+  },
+  "optAddProvider": {
+    "message": "Lisää palveluntarjoaja"
+  },
+  "optAddProviderHelp": {
+    "message": "Uusi kortti lisätään viimeiseksi. Korttien järjestys on tärkeysjärjestys."
+  },
+  "optProvider": {
+    "message": "Palveluntarjoaja"
+  },
+  "optKeysEmptyHint": {
+    "message": "Valitse palveluntarjoaja: kortti ilmestyy, liitä avaimesi, sitten ”Lataa mallit” ja valitse malli."
+  },
+  "optKeyName": {
+    "message": "Avaimen nimi"
+  },
+  "optKeyEnabled": {
+    "message": "Käytä tätä avainta"
+  },
+  "optPriority": {
+    "message": "tärkeys {0}"
+  },
+  "optKeyHelp": {
+    "message": "Oletuksena piilotettu, tallennetaan vain tähän selaimeen."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollaman on oltava käynnissä koneellasi."
+  },
+  "optModelHelp": {
+    "message": "”Lataa mallit” täyttää ehdotusluettelon."
+  },
+  "optLimits": {
+    "message": "Rajat"
+  },
+  "optLimitsHelp": {
+    "message": "Tyhjä = palveluntarjoajan oletus."
+  },
+  "optPaidTitle": {
+    "message": "Kustannukset"
+  },
+  "optPaidHelp": {
+    "message": "Käytetään vain, kun valitset sen ponnahdusikkunassa."
+  },
+  "optPaidOk": {
+    "message": "Katto ja hinnat asetettu: avainta voi käyttää kattoon asti."
+  },
+  "optPrivacyFlow": {
+    "message": "Minne teksti menee"
+  },
+  "optProviderNotes": {
+    "message": "Huomioita palveluntarjoajista"
+  },
+  "optProviderUsed": {
+    "message": "käytössä"
+  },
+  "optUsageEmpty": {
+    "message": "Avainta ei ole vielä määritetty."
+  },
+  "optUsageHelp": {
+    "message": "Nollautuu joka päivä keskiyöllä (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Maksulliset avaimet"
+  },
+  "optPaidRule": {
+    "message": "Maksullista avainta ei koskaan käytetä automaattisesti: se on valittava ponnahdusikkunassa. Se pysyy estettynä, kunnes päiväkatto ja molemmat hinnat on asetettu, ja pysähtyy heti, kun katto saavutetaan."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Ei vielä automaattisia sivustoja"
+  },
+  "optAutoEmptyLong": {
+    "message": "Lisääminen: avaa sivusto, napsauta työkalupalkin DevDocTrad-kuvaketta ja ota käyttöön ”Käännä tämä sivusto automaattisesti”. Selain pyytää lupaa vain kyseiselle sivustolle."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Poistetaanko {0} automaattisesti käännettävistä sivustoista?"
+  },
+  "optGlEmpty": {
+    "message": "Ei vielä termejä. Esimerkki: ”thread” säännöllä ”Älä käännä koskaan”."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termiä"
+  },
+  "optGlImported": {
+    "message": "{0} termiä tuotu."
+  },
+  "optCacheConfirm": {
+    "message": "Tyhjennetäänkö välimuisti? Jo käännetyt sivut on käännettävä uudelleen (uusia kutsuja palveluntarjoajille)."
+  },
+  "optCacheCleared": {
+    "message": "Välimuisti tyhjennetty."
+  },
+  "optStorageTitle": {
+    "message": "Paikallinen tallennustila"
+  },
+  "optTheme": {
+    "message": "Teema"
+  },
+  "optThemeHelp": {
+    "message": "”Järjestelmä” noudattaa tietokoneesi vaaleaa tai tummaa asetusta."
+  },
+  "optThemeSystem": {
+    "message": "Järjestelmä"
+  },
+  "optThemeLight": {
+    "message": "Vaalea"
+  },
+  "optThemeDark": {
+    "message": "Tumma"
+  },
+  "optPriceInUsd": {
+    "message": "Syötteen hinta ($$ miljoonaa tokenia kohden)"
+  },
+  "optPriceOutUsd": {
+    "message": "Tulosteen hinta ($$ miljoonaa tokenia kohden)"
+  },
+  "optDailyCapUsd": {
+    "message": "Päiväkatto ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "tämä Google-projekti käyttää ennakkoon maksettua laskutusta, ja sen krediitit ovat loppuneet. Älä lataa mitään: luo avain projektiin ilman laskutusta Google AI Studiossa (ilmaistaso)."
+  }
+}

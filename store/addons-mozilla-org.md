@@ -79,7 +79,7 @@ Ce que fait l’extension
 - Retour à l’original exact en un clic, ou avec le raccourci Alt+Maj+T.
 - Traduction automatique sur les sites que tu choisis. Firefox demande l’autorisation site par site.
 - Glossaire personnel : termes à ne jamais traduire, ou à toujours traduire de la même façon.
-- Interface en français et en anglais.
+- Interface en 36 langues, selon la langue du navigateur (arabe, hébreu et persan de droite à gauche).
 
 Gratuit, avec tes propres clés
 - DevDocTrad est gratuite et open source (licence MIT).
@@ -127,7 +127,7 @@ What it does
 - One click, or the Alt+Shift+T shortcut, brings back the exact original.
 - Automatic translation on the sites you choose. Firefox asks for permission one site at a time.
 - Personal glossary: terms to never translate, or to always translate the same way.
-- Interface in English and French.
+- Interface in 36 languages, following the browser (Arabic, Hebrew and Persian right to left).
 
 Free, with your own keys
 - DevDocTrad is free and open source (MIT license).

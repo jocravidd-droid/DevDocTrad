@@ -32,7 +32,7 @@ function prepareExtension() {
   const ollama = spawn(process.execPath, [path.join(__dirname, 'fake_ollama.js')], { stdio: 'ignore', env: Object.assign({}, process.env, { FAKE_OLLAMA_DELAY: '2500' }) });
   await new Promise((r) => setTimeout(r, 400));
   const ctx = await chromium.launchPersistentContext(fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-qa-prof-')), {
-    channel: 'chromium', headless: true, viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2, locale: 'fr-FR',
+    channel: process.env.DDT_CHROMIUM ? undefined : 'chromium', executablePath: process.env.DDT_CHROMIUM || undefined, headless: true, viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2, locale: 'fr-FR',
     env: Object.assign({}, process.env, { LANGUAGE: 'fr', LANG: 'fr_FR.UTF-8' }),
     args: ['--disable-extensions-except=' + ext, '--load-extension=' + ext, '--lang=fr-FR']
   });

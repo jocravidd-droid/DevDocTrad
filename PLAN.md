@@ -11,7 +11,7 @@ Version 2.4 (21 novembre 2026). Document de passation pour Claude Code. Il conti
 
 ### Version 2.3
 
-- Interface en français et en anglais, selon la langue du navigateur.
+- Interface en 36 langues, selon la langue du navigateur (arabe, hébreu et persan de droite à gauche).
 - Style visuel inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces, police système. Pas de style minimal plat.
 - Site de présentation (GitHub Pages) inclus dans la première livraison.
 
@@ -21,7 +21,7 @@ Version 2.4 (21 novembre 2026). Document de passation pour Claude Code. Il conti
 
 ### Version 2.1
 
-- Fidélité stricte : l'extension traduit, elle n'explique pas. Les termes techniques anglais restent en anglais, sans traduction entre parenthèses. L'explication à la première apparition devient une option désactivée par défaut.
+- Fidélité et français naturel (décision de l'utilisateur, novembre 2026, qui remplace la règle de la version 2.1) : les notions techniques sont traduites par le terme établi, avec le terme anglais entre parenthèses à la première apparition (« les chemins purs (pure paths) », « entrées/sorties (I/O) »), sans calques (« calculatoire » et non « computationnel »), avec les bons accords (« la classe Path… Elle »). Les identifiants et le code restent intacts. Option activée par défaut ; désactivée, les termes anglais restent en anglais sans parenthèse.
 - Glossaire personnel simplifié à deux types d'entrée (le type "connu" disparaît, il ne servait qu'aux explications).
 - Page sensible traduite à la main : Ollama est utilisé en premier s'il est réglé et répond, sinon l'ordre normal des clés.
 - Licence MIT : tout le monde peut reprendre, modifier et redistribuer le code.
@@ -46,7 +46,7 @@ Une extension de navigateur qui traduit une page web entière vers le français 
 - traduction phrase par phrase, même ordre, sans omission, sans résumé, sans ajout ;
 - code, identifiants, noms de fonctions, méthodes, API, commandes, chemins et URL jamais traduits ;
 - structure et mise en forme de la page conservées (les vrais éléments `<code>`, liens, gras restent en place) ;
-- termes techniques anglais gardés en anglais, sans explication ajoutée : l'extension traduit, elle n'explique pas (une option désactivée par défaut permet d'ajouter la traduction française entre parenthèses à la première apparition, par exemple thread (fil d'exécution)).
+- notions techniques traduites en français naturel, avec le terme anglais entre parenthèses à la première apparition, par exemple « un fil d'exécution (thread) » (option activée par défaut ; désactivée, les termes anglais restent en anglais).
 
 Sites visés en priorité : documentations officielles (MDN, Python, Rust, docs générées par Sphinx, ReadTheDocs, Docusaurus, MkDocs), GitHub (README, issues, discussions), Stack Overflow et Stack Exchange, forums (Discourse, Reddit), blogs techniques, pages de frameworks JavaScript.
 
@@ -68,7 +68,7 @@ L'utilisateur s'appelle Judley (pseudo : Ingénieur Fou), étudie la cybersécur
 | Extras de la version 1 | Raccourci clavier et glossaire personnel. Pas de traduction de sélection, pas d'original au survol dans cette version. |
 | Explication des termes | Désactivée par défaut. Fidélité stricte : on traduit, on n'explique pas. |
 | Licence | MIT. |
-| Langue de l'interface | Français et anglais, selon la langue du navigateur (`_locales/fr`, `_locales/en`). |
+| Langue de l'interface | 36 langues, selon la langue du navigateur (`src/_locales/*`, générés par `tools/gen_locales.py`) ; repli sur l'anglais ; sens droite-à-gauche pour l'arabe, l'hébreu et le persan (clé `uiDir`). L'ourdou reste en anglais (Chrome refuse le dossier `ur`). |
 | Style de l'interface | Inspiré d'Apple : coins arrondis, verre dépoli translucide, ombres douces. Voir section 7. |
 | Site | Page de présentation sur GitHub Pages (`docs/`), livrée avec la première version. |
 | Publication | Chrome Web Store (frais d'inscription de 5 dollars, une seule fois, payés par l'utilisateur quand il le décide) et addons.mozilla.org (gratuit). |
@@ -257,7 +257,7 @@ Prompt système (à écrire en français, à partir de ces règles) :
 2. Traduction fidèle phrase par phrase, même ordre, sans omission, sans résumé, sans ajout, sans commentaire. La langue source peut être n'importe laquelle.
 3. Ne jamais traduire : code, identifiants, noms de fonctions, méthodes, classes, API, commandes, chemins, URL, variables, noms de produits ; ni ce qui est dans un atome `{n|...}`.
 4. Règle des marqueurs de la section 5.2, chaque marqueur exactement une fois, bien imbriqué ; `&lt; &gt; &amp; &#123; &#125;` conservés tels quels.
-5. Termes techniques : un terme technique écrit en anglais dans la source reste en anglais, sans explication ni parenthèse ajoutée. Un terme technique écrit dans une autre langue (par exemple allemand ou japonais) est traduit par le terme qu'utilisent les développeurs francophones, c'est-à-dire souvent le terme anglais. Variante, seulement si l'option "Expliquer les termes" est activée (désactivée par défaut) : à la première apparition seulement (selon `already_glossed`), ajouter la traduction française entre parenthèses et renvoyer le terme dans `glossed`. Quand l'option est désactivée, les champs `already_glossed` et `glossed` ne sont pas envoyés ni demandés.
+5. Termes techniques : un terme technique écrit en anglais dans la source reste en anglais, sans explication ni parenthèse ajoutée. Un terme technique écrit dans une autre langue (par exemple allemand ou japonais) est traduit par le terme qu'utilisent les développeurs francophones, c'est-à-dire souvent le terme anglais. Par défaut (option "Termes techniques : français + anglais entre parenthèses" activée) : la notion est traduite par le terme établi en français et, à la première apparition seulement (selon `already_glossed`), le terme anglais d'origine est ajouté entre parenthèses et renvoyé dans `glossed` ; les sigles courants sont traduits (I/O : entrées/sorties) ; un terme sans équivalent réellement employé (framework, commit) reste en anglais. Le prompt demande aussi un français idiomatique, sans calque, avec les bons accords. `PROMPT_VERSION` passe à 4. Quand l'option est désactivée, les champs `already_glossed` et `glossed` ne sont pas envoyés ni demandés.
 6. Glossaire personnel (`glossary`) : respecter strictement chaque entrée (section 6.11). Il prime sur la règle 5.
 7. Conserver chiffres, unités, ponctuation et typographie française (espaces avant `: ; ! ?`, guillemets « »).
 8. Si le texte est déjà dans la langue cible, le renvoyer inchangé.
@@ -351,7 +351,7 @@ Nom d'hôte, bouton "Traduire cette page", bascule "Voir l'original / Voir la tr
 
 ### 7.2 Réglages
 
-Cartes de clés (fournisseur, étiquette, clé masquée, gratuite/payante, activée, modèles facile/difficile avec liste chargée, taille de lot, intervalle, requêtes maximales par jour, champs payants, boutons Tester et Supprimer, ordre de priorité), carte Ollama (adresse, modèle, Tester), langue cible, mode d'affichage, explication des termes (désactivée par défaut), traduction des commentaires de code (désactivée par défaut), glossaire personnel, cap de caractères par page, liste des sites automatiques (avec suppression), motifs de pages sensibles supplémentaires, vider le cache, consommation du jour par clé. Rappel en haut de page : les clés restent dans ce navigateur (`storage.local`), elles ne sont jamais synchronisées.
+Cartes de clés (fournisseur, étiquette, clé masquée, gratuite/payante, activée, modèles facile/difficile avec liste chargée, taille de lot, intervalle, requêtes maximales par jour, champs payants, boutons Tester et Supprimer, ordre de priorité), carte Ollama (adresse, modèle, Tester), langue cible, mode d'affichage, termes techniques en français + anglais entre parenthèses (activé par défaut), traduction des commentaires de code (désactivée par défaut), glossaire personnel, cap de caractères par page, liste des sites automatiques (avec suppression), motifs de pages sensibles supplémentaires, vider le cache, consommation du jour par clé. Rappel en haut de page : les clés restent dans ce navigateur (`storage.local`), elles ne sont jamais synchronisées.
 
 ### 7.3 Raccourci clavier
 

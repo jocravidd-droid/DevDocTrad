@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "แปลเอกสารสำหรับนักพัฒนาและเว็บไซต์ด้านการเขียนโปรแกรมอย่างตรงความหมาย โดยไม่แตะต้องโค้ดเลย"
+  },
+  "cmdToggle": {
+    "message": "แปลหน้านี้หรือกลับไปที่ต้นฉบับ"
+  },
+  "badgeTranslating": {
+    "message": "กำลังแปล: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "แปลแล้ว: {0} ส่วน"
+  },
+  "badgeDoneFailed": {
+    "message": "แปลแล้ว: {0} ส่วน, คงต้นฉบับไว้ {1} ส่วน"
+  },
+  "badgeStopped": {
+    "message": "หยุดแล้ว"
+  },
+  "badgeCap": {
+    "message": "หน้านี้ถึงขีดจำกัด {0} อักขระแล้ว"
+  },
+  "badgeRateLimited": {
+    "message": "คีย์ฟรีถึงขีดจำกัดแล้ว จะลองใหม่ใน {0} วินาที ({1}/3)"
+  },
+  "badgeRateGiveUp": {
+    "message": "คีย์ฟรีทุกอันถึงขีดจำกัดแล้ว โปรดลองใหม่ภายหลัง"
+  },
+  "badgeNoKey": {
+    "message": "ไม่มีคีย์ที่ใช้ได้ เพิ่มคีย์ในการตั้งค่า"
+  },
+  "badgeError": {
+    "message": "ข้อผิดพลาด: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "แปลในเครื่อง (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "แปลออนไลน์ ({0})"
+  },
+  "badgeNothing": {
+    "message": "ไม่มีอะไรให้แปลในหน้านี้"
+  },
+  "badgeKeyProblem": {
+    "message": "คีย์ {0} มีปัญหา: {1}"
+  },
+  "btnStop": {
+    "message": "หยุด"
+  },
+  "btnOriginal": {
+    "message": "แสดงต้นฉบับ"
+  },
+  "btnTranslation": {
+    "message": "แสดงคำแปล"
+  },
+  "btnMinimize": {
+    "message": "ย่อ"
+  },
+  "btnClose": {
+    "message": "ปิด"
+  },
+  "btnContinue": {
+    "message": "ดำเนินการต่อ"
+  },
+  "errAuth": {
+    "message": "คีย์ถูกปฏิเสธ (ไม่ถูกต้องหรือถูกเพิกถอน)"
+  },
+  "errPayment": {
+    "message": "ยอดเงินกับผู้ให้บริการไม่พอ หยุดใช้คีย์แล้ว"
+  },
+  "errRate": {
+    "message": "ถึงขีดจำกัดคำขอแล้ว ลองใหม่ในอีกหนึ่งนาที"
+  },
+  "errOllamaDown": {
+    "message": "Ollama ไม่ตอบสนองที่ localhost:11434 เปิด Ollama แล้วลองอีกครั้ง"
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama ปฏิเสธส่วนขยาย (403) ตั้งค่าตัวแปรสภาพแวดล้อม OLLAMA_ORIGINS เป็น chrome-extension://*,moz-extension://* แล้วรีสตาร์ต Ollama"
+  },
+  "errOpenRouterFree": {
+    "message": "ในโหมดฟรี OpenRouter รับเฉพาะโมเดลที่ชื่อลงท้ายด้วย :free"
+  },
+  "errPaidUnset": {
+    "message": "คีย์แบบเสียเงินถูกบล็อก: ตั้งเพดานรายวันและราคาทั้งสองในการตั้งค่าก่อน"
+  },
+  "errPaidCap": {
+    "message": "คีย์แบบเสียเงินถึงเพดานรายวันแล้ว ($${0} จาก $${1})"
+  },
+  "errUnknown": {
+    "message": "ข้อผิดพลาดที่ไม่รู้จัก"
+  },
+  "keyAvailable": {
+    "message": "ใช้ได้"
+  },
+  "keyDisabled": {
+    "message": "ปิดอยู่"
+  },
+  "keyNoModel": {
+    "message": "เลือกโมเดล"
+  },
+  "keyPausedUntil": {
+    "message": "หยุดชั่วคราวถึง {0}"
+  },
+  "keyProblem": {
+    "message": "มีปัญหา"
+  },
+  "tier_free": {
+    "message": "ฟรี"
+  },
+  "tier_paid": {
+    "message": "เสียเงิน"
+  },
+  "tier_local": {
+    "message": "ในเครื่อง"
+  },
+  "gl_never": {
+    "message": "ห้ามแปล"
+  },
+  "gl_always": {
+    "message": "แปลเป็นคำนี้เสมอ"
+  },
+  "popupTranslate": {
+    "message": "แปลหน้านี้"
+  },
+  "popupSettings": {
+    "message": "การตั้งค่า"
+  },
+  "popupUnsupported": {
+    "message": "ส่วนขยายแปลหน้านี้ไม่ได้ (หน้าของเบราว์เซอร์ ร้านส่วนขยาย หรือตัวดู PDF)"
+  },
+  "popupKey": {
+    "message": "คีย์"
+  },
+  "popupKeyAuto": {
+    "message": "อัตโนมัติ (ฟรีและในเครื่อง)"
+  },
+  "popupAuto": {
+    "message": "แปลเว็บไซต์นี้อัตโนมัติ"
+  },
+  "popupSensitive": {
+    "message": "หน้าที่ละเอียดอ่อน: ไม่แปลอัตโนมัติเลย ปุ่มยังใช้ได้ และจะใช้ Ollama ก่อนหากตั้งค่าไว้"
+  },
+  "popupKeys": {
+    "message": "สถานะคีย์"
+  },
+  "popupNoKeys": {
+    "message": "ยังไม่มีคีย์"
+  },
+  "popupAddKey": {
+    "message": "เพิ่มคีย์"
+  },
+  "popupShortcut": {
+    "message": "ทางลัด:"
+  },
+  "optTitle": {
+    "message": "การตั้งค่า DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "เบราว์เซอร์ยังไม่อนุญาตให้เข้าถึงผู้ให้บริการแปลภาษา"
+  },
+  "optPermGrant": {
+    "message": "อนุญาตให้เข้าถึงผู้ให้บริการ"
+  },
+  "optTabKeys": {
+    "message": "คีย์"
+  },
+  "optTabTranslation": {
+    "message": "การแปล"
+  },
+  "optTabGlossary": {
+    "message": "อภิธานศัพท์"
+  },
+  "optTabSites": {
+    "message": "เว็บไซต์"
+  },
+  "optTabData": {
+    "message": "ข้อมูล"
+  },
+  "optKeysTitle": {
+    "message": "คีย์ API"
+  },
+  "optKeysLocal": {
+    "message": "คีย์อยู่ในเบราว์เซอร์นี้เท่านั้น (ที่เก็บข้อมูลในเครื่อง) ไม่มีการซิงค์กับบัญชีของคุณและไม่ส่งไปที่ใดนอกจากผู้ให้บริการ ลำดับของการ์ดคือลำดับความสำคัญ"
+  },
+  "optAddKey": {
+    "message": "เพิ่ม"
+  },
+  "optKey": {
+    "message": "คีย์"
+  },
+  "optShow": {
+    "message": "แสดง"
+  },
+  "optHide": {
+    "message": "ซ่อน"
+  },
+  "optBaseUrl": {
+    "message": "ที่อยู่ของ Ollama"
+  },
+  "optTier": {
+    "message": "ประเภท"
+  },
+  "optModelEasy": {
+    "message": "โมเดล (หน้าง่าย)"
+  },
+  "optModelHard": {
+    "message": "โมเดลสำหรับหน้ายาก (ไม่บังคับ)"
+  },
+  "optMaxChars": {
+    "message": "ขนาดชุด (อักขระ)"
+  },
+  "optInterval": {
+    "message": "ระยะห่างระหว่างคำขอ (ms)"
+  },
+  "optMaxReq": {
+    "message": "คำขอสูงสุดต่อวัน (0 = ไม่จำกัด)"
+  },
+  "optPriceIn": {
+    "message": "ราคาอินพุต ($$ ต่อล้านโทเค็น)"
+  },
+  "optPriceOut": {
+    "message": "ราคาเอาต์พุต ($$ ต่อล้านโทเค็น)"
+  },
+  "optDailyCap": {
+    "message": "เพดานรายวัน ($$)"
+  },
+  "optLoadModels": {
+    "message": "โหลดรายชื่อโมเดล"
+  },
+  "optTest": {
+    "message": "ทดสอบ"
+  },
+  "optUp": {
+    "message": "เลื่อนขึ้น"
+  },
+  "optDown": {
+    "message": "เลื่อนลง"
+  },
+  "optDelete": {
+    "message": "ลบ"
+  },
+  "optDeleteConfirm": {
+    "message": "ลบคีย์นี้หรือไม่"
+  },
+  "optWorking": {
+    "message": "กำลังตรวจสอบ…"
+  },
+  "optTestOk": {
+    "message": "คีย์ถูกต้อง มีโมเดลให้ใช้ {0} รายการ"
+  },
+  "optTestOkLocal": {
+    "message": "Ollama ตอบสนองแล้ว มีโมเดลที่ติดตั้ง {0} รายการ"
+  },
+  "optModelsLoaded": {
+    "message": "โหลดโมเดลแล้ว {0} รายการ: เลือกหนึ่งรายการจากรายชื่อ"
+  },
+  "optSaved": {
+    "message": "บันทึกแล้ว"
+  },
+  "optTarget": {
+    "message": "ภาษาปลายทาง"
+  },
+  "optTargetAuto": {
+    "message": "ภาษาของเบราว์เซอร์ ({0})"
+  },
+  "optMode": {
+    "message": "การแสดงผล"
+  },
+  "optModeReplace": {
+    "message": "แทนที่ข้อความ"
+  },
+  "optModeBilingual": {
+    "message": "สองภาษา (คำแปลอยู่ใต้ต้นฉบับ)"
+  },
+  "optExplain": {
+    "message": "ศัพท์เทคนิค: คำแปล + ภาษาอังกฤษในวงเล็บ"
+  },
+  "optExplainHelp": {
+    "message": "แนวคิดทางเทคนิคจะถูกแปล พร้อมคำภาษาอังกฤษในวงเล็บเมื่อปรากฏครั้งแรก ปิด: ศัพท์เทคนิคภาษาอังกฤษคงเป็นภาษาอังกฤษโดยไม่มีวงเล็บ โค้ดและชื่อ (Path, npm…) จะไม่ถูกแปลเลย"
+  },
+  "optComments": {
+    "message": "แปลคอมเมนต์ในบล็อกโค้ด"
+  },
+  "optCommentsHelp": {
+    "message": "ปิดโดยค่าเริ่มต้น แปลเฉพาะคอมเมนต์ที่การไฮไลต์ไวยากรณ์ของเว็บไซต์รู้จัก โค้ดจะไม่ถูกแก้ไขเลย และต้นฉบับกลับมาเหมือนเดิมทุกประการ"
+  },
+  "optPageCap": {
+    "message": "ขีดจำกัดอักขระต่อหน้า"
+  },
+  "optShortcut": {
+    "message": "แป้นพิมพ์ลัด"
+  },
+  "optShortcutCurrent": {
+    "message": "ทางลัดปัจจุบัน: {0}"
+  },
+  "optShortcutNone": {
+    "message": "ไม่มี"
+  },
+  "optShortcutWhereChrome": {
+    "message": "หากต้องการเปลี่ยน: เปิด chrome://extensions/shortcuts"
+  },
+  "optShortcutWhereFirefox": {
+    "message": "หากต้องการเปลี่ยน: ตัวจัดการส่วนเสริม ไอคอนรูปเฟือง \"จัดการทางลัดส่วนขยาย\""
+  },
+  "optGlossaryHelp": {
+    "message": "คำที่ห้ามแปล หรือต้องแปลแบบเดียวเสมอ ส่งให้โมเดลเฉพาะคำที่พบในส่วนข้อความ สูงสุด 500 รายการ"
+  },
+  "optGlTerm": {
+    "message": "คำศัพท์"
+  },
+  "optGlType": {
+    "message": "กฎ"
+  },
+  "optGlTranslation": {
+    "message": "คำแปลที่กำหนด"
+  },
+  "optGlAdd": {
+    "message": "เพิ่มคำศัพท์"
+  },
+  "optGlExport": {
+    "message": "ส่งออก (JSON)"
+  },
+  "optGlImport": {
+    "message": "นำเข้า (JSON)"
+  },
+  "optGlImportError": {
+    "message": "ไฟล์ไม่ถูกต้อง: ต้องเป็นรายการ JSON ของออบเจ็กต์ {term, type, translation}"
+  },
+  "optAutoTitle": {
+    "message": "เว็บไซต์ที่แปลอัตโนมัติ"
+  },
+  "optAutoHelp": {
+    "message": "เพิ่มเว็บไซต์จากป๊อปอัปด้วย \"แปลเว็บไซต์นี้อัตโนมัติ\" การแปลอัตโนมัติใช้เฉพาะคีย์ฟรีและ Ollama"
+  },
+  "optAutoEmpty": {
+    "message": "ยังไม่มีเว็บไซต์"
+  },
+  "optAutoGranted": {
+    "message": "อนุญาตแล้ว"
+  },
+  "optAutoRevoked": {
+    "message": "ถอนสิทธิ์แล้ว"
+  },
+  "optSensitiveTitle": {
+    "message": "หน้าที่ละเอียดอ่อน"
+  },
+  "optSensitiveHelp": {
+    "message": "ไม่แปลอัตโนมัติเลย (รวมถึงหน้าใดก็ตามที่มีช่องรหัสผ่าน) ปุ่มแปลด้วยตนเองยังใช้ได้"
+  },
+  "optSensitiveBase": {
+    "message": "รูปแบบพื้นฐาน:"
+  },
+  "optSensitiveExtra": {
+    "message": "รูปแบบเพิ่มเติม (บรรทัดละหนึ่งคำหรือโดเมน)"
+  },
+  "optCacheTitle": {
+    "message": "แคชคำแปล"
+  },
+  "optCacheInfo": {
+    "message": "มี {0} ส่วนในแคช ({1} MB) หน้าที่แปลแล้วจะแสดงอีกครั้งโดยไม่ต้องเรียกเครือข่าย"
+  },
+  "optCacheClear": {
+    "message": "ล้างแคช"
+  },
+  "optUsageTitle": {
+    "message": "การใช้งานวันนี้"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} คำขอ{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "ความเป็นส่วนตัว"
+  },
+  "optPrivacyText": {
+    "message": "ข้อความของหน้าที่คุณแปลจะถูกส่งไปยังผู้ให้บริการที่คุณเลือกเท่านั้น หรืออยู่ในเครื่องของคุณกับ Ollama ไม่มีสถิติ ไม่มีการติดตาม ไม่มีอะไรส่งถึงผู้พัฒนา ในแพ็กเกจฟรี Gemini และ Mistral อาจนำข้อความที่ส่งไปใช้ซ้ำ"
+  },
+  "warnGemini": {
+    "message": "สร้างคีย์ใน Google AI Studio โดยไม่ผูกการเรียกเก็บเงิน ในแพ็กเกจฟรี Google อาจนำข้อความที่ส่งไปใช้ซ้ำ คีย์สองอันจากโปรเจกต์เดียวกันใช้ขีดจำกัดร่วมกัน"
+  },
+  "warnGroq": {
+    "message": "แพ็กเกจฟรีไม่ต้องใช้บัตร: เมื่อเกินขีดจำกัดคุณจะได้แค่ข้อผิดพลาด 429 ไม่มีใบแจ้งหนี้"
+  },
+  "warnMistral": {
+    "message": "โหมดฟรีไม่ต้องใช้บัตร คำขออาจถูกนำไปฝึกโมเดล: ปิดได้ในคอนโซล Mistral หากต้องการ"
+  },
+  "warnOpenRouter": {
+    "message": "ในโหมดฟรีรับเฉพาะโมเดลที่ลงท้ายด้วย :free (ประมาณ 50 คำขอต่อวัน) อย่าเติมเครดิตให้ส่วนขยายนี้เด็ดขาด"
+  },
+  "warnOllama": {
+    "message": "โมเดลในคอมพิวเตอร์ของคุณ: ฟรีและเป็นส่วนตัว ไม่มีอะไรออกจากเครื่อง โมเดลเล็กผิดพลาดบ่อยกว่า ส่วนที่น่าสงสัยจะคงต้นฉบับไว้"
+  },
+  "popupView": {
+    "message": "การแสดงหน้า"
+  },
+  "segOriginal": {
+    "message": "ต้นฉบับ"
+  },
+  "segTranslation": {
+    "message": "คำแปล"
+  },
+  "popupTranslating": {
+    "message": "กำลังแปล…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} ส่วน"
+  },
+  "popupManage": {
+    "message": "จัดการ"
+  },
+  "popupMoreKeys": {
+    "message": "และคีย์อื่นอีก {0} อัน"
+  },
+  "popupNoKeysLong": {
+    "message": "เพิ่มคีย์ฟรี (Gemini, Groq, Mistral, OpenRouter) หรือ Ollama เพื่อเริ่มต้น"
+  },
+  "stateReady": {
+    "message": "พร้อมแปล"
+  },
+  "stateNoKey": {
+    "message": "ยังไม่ได้ตั้งค่าคีย์"
+  },
+  "stateRunning": {
+    "message": "กำลังแปล"
+  },
+  "stateTranslated": {
+    "message": "แปลหน้าแล้ว"
+  },
+  "stateOriginal": {
+    "message": "แสดงต้นฉบับ"
+  },
+  "stateStopped": {
+    "message": "หยุดแล้ว"
+  },
+  "statePaused": {
+    "message": "ถึงขีดจำกัดของหน้า"
+  },
+  "stateError": {
+    "message": "ข้อผิดพลาด"
+  },
+  "stateUnavailable": {
+    "message": "แปลหน้านี้ไม่ได้"
+  },
+  "toastAutoOn": {
+    "message": "เปิดการแปลอัตโนมัติสำหรับ {0} แล้ว"
+  },
+  "toastAutoOff": {
+    "message": "ปิดการแปลอัตโนมัติสำหรับ {0} แล้ว"
+  },
+  "toastPermDenied": {
+    "message": "สิทธิ์ถูกปฏิเสธ: ไม่ได้เพิ่มเว็บไซต์"
+  },
+  "badgeShowBadge": {
+    "message": "แสดงป้าย DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "หมวดการตั้งค่า"
+  },
+  "optNavKeys": {
+    "message": "ผู้ให้บริการและคีย์"
+  },
+  "optNavPrivacy": {
+    "message": "ความเป็นส่วนตัวและค่าใช้จ่าย"
+  },
+  "optNavAppearance": {
+    "message": "รูปลักษณ์"
+  },
+  "optDescKeys": {
+    "message": "คีย์ API ของคุณและ Ollama จะถูกลองตามลำดับการ์ด จากบนลงล่าง"
+  },
+  "optDescTranslation": {
+    "message": "ภาษา การแสดงผล และสิ่งที่ส่วนขยายได้รับอนุญาตให้แปล"
+  },
+  "optDescPrivacy": {
+    "message": "อะไรออกจากเบราว์เซอร์ของคุณ ไปถึงใคร และมีค่าใช้จ่ายเท่าไร"
+  },
+  "optDescSites": {
+    "message": "เว็บไซต์ที่แปลอัตโนมัติและหน้าที่ต้องปกป้อง"
+  },
+  "optDescGlossary": {
+    "message": "คำที่ต้องคงไว้ตามเดิมหรือแปลแบบเดียวกันเสมอ"
+  },
+  "optDescData": {
+    "message": "แคชคำแปลและข้อมูลที่เก็บไว้ในเบราว์เซอร์นี้"
+  },
+  "optDescAppearance": {
+    "message": "ธีมของการตั้งค่า ป๊อปอัป และป้ายที่แสดงบนหน้าเว็บ"
+  },
+  "optVersion": {
+    "message": "เวอร์ชัน {0}"
+  },
+  "optAddProvider": {
+    "message": "เพิ่มผู้ให้บริการ"
+  },
+  "optAddProviderHelp": {
+    "message": "การ์ดใหม่จะอยู่ท้ายสุด ลำดับของการ์ดคือลำดับความสำคัญ"
+  },
+  "optProvider": {
+    "message": "ผู้ให้บริการ"
+  },
+  "optKeysEmptyHint": {
+    "message": "เลือกผู้ให้บริการ: การ์ดจะปรากฏ วางคีย์ของคุณ แล้วกด \"โหลดรายชื่อโมเดล\" และเลือกโมเดล"
+  },
+  "optKeyName": {
+    "message": "ชื่อคีย์"
+  },
+  "optKeyEnabled": {
+    "message": "ใช้คีย์นี้"
+  },
+  "optPriority": {
+    "message": "ลำดับความสำคัญ {0}"
+  },
+  "optKeyHelp": {
+    "message": "ซ่อนไว้โดยค่าเริ่มต้น เก็บไว้ในเบราว์เซอร์นี้เท่านั้น"
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama ต้องทำงานอยู่ในคอมพิวเตอร์ของคุณ"
+  },
+  "optModelHelp": {
+    "message": "\"โหลดรายชื่อโมเดล\" จะเติมรายการคำแนะนำ"
+  },
+  "optLimits": {
+    "message": "ขีดจำกัด"
+  },
+  "optLimitsHelp": {
+    "message": "ว่าง = ค่าเริ่มต้นของผู้ให้บริการ"
+  },
+  "optPaidTitle": {
+    "message": "ค่าใช้จ่าย"
+  },
+  "optPaidHelp": {
+    "message": "ใช้เฉพาะเมื่อคุณเลือกในป๊อปอัป"
+  },
+  "optPaidOk": {
+    "message": "ตั้งเพดานและราคาแล้ว: ใช้คีย์ได้จนถึงเพดาน"
+  },
+  "optPrivacyFlow": {
+    "message": "ข้อความไปที่ใด"
+  },
+  "optProviderNotes": {
+    "message": "หมายเหตุตามผู้ให้บริการ"
+  },
+  "optProviderUsed": {
+    "message": "กำลังใช้"
+  },
+  "optUsageEmpty": {
+    "message": "ยังไม่ได้ตั้งค่าคีย์"
+  },
+  "optUsageHelp": {
+    "message": "รีเซ็ตทุกวันตอนเที่ยงคืน (UTC)"
+  },
+  "optPaidRuleTitle": {
+    "message": "คีย์แบบเสียเงิน"
+  },
+  "optPaidRule": {
+    "message": "คีย์แบบเสียเงินจะไม่ถูกใช้อัตโนมัติเลย: คุณต้องเลือกในป๊อปอัป คีย์จะถูกบล็อกจนกว่าจะตั้งเพดานรายวันและราคาทั้งสอง และจะหยุดทันทีเมื่อถึงเพดาน"
+  },
+  "optAutoEmptyTitle": {
+    "message": "ยังไม่มีเว็บไซต์อัตโนมัติ"
+  },
+  "optAutoEmptyLong": {
+    "message": "วิธีเพิ่ม: เปิดเว็บไซต์ คลิกไอคอน DevDocTrad ในแถบเครื่องมือ แล้วเปิด \"แปลเว็บไซต์นี้อัตโนมัติ\" เบราว์เซอร์จะขอสิทธิ์สำหรับเว็บไซต์นั้นเท่านั้น"
+  },
+  "optAutoRemoveConfirm": {
+    "message": "นำ {0} ออกจากเว็บไซต์ที่แปลอัตโนมัติหรือไม่"
+  },
+  "optGlEmpty": {
+    "message": "ยังไม่มีคำศัพท์ ตัวอย่าง: \"thread\" กับกฎ \"ห้ามแปล\""
+  },
+  "optGlCount": {
+    "message": "{0} / 500 คำ"
+  },
+  "optGlImported": {
+    "message": "นำเข้าแล้ว {0} คำ"
+  },
+  "optCacheConfirm": {
+    "message": "ล้างแคชหรือไม่ หน้าที่แปลแล้วจะต้องแปลใหม่ (เรียกผู้ให้บริการใหม่)"
+  },
+  "optCacheCleared": {
+    "message": "ล้างแคชแล้ว"
+  },
+  "optStorageTitle": {
+    "message": "ที่เก็บข้อมูลในเครื่อง"
+  },
+  "optTheme": {
+    "message": "ธีม"
+  },
+  "optThemeHelp": {
+    "message": "\"ระบบ\" จะตามการตั้งค่าสว่างหรือมืดของคอมพิวเตอร์"
+  },
+  "optThemeSystem": {
+    "message": "ระบบ"
+  },
+  "optThemeLight": {
+    "message": "สว่าง"
+  },
+  "optThemeDark": {
+    "message": "มืด"
+  },
+  "optPriceInUsd": {
+    "message": "ราคาอินพุต ($$ ต่อล้านโทเค็น)"
+  },
+  "optPriceOutUsd": {
+    "message": "ราคาเอาต์พุต ($$ ต่อล้านโทเค็น)"
+  },
+  "optDailyCapUsd": {
+    "message": "เพดานรายวัน ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "โปรเจกต์ Google นี้ใช้การเรียกเก็บเงินแบบเติมเงินล่วงหน้าและเครดิตหมดแล้ว อย่าเติมเงิน: สร้างคีย์ในโปรเจกต์ที่ไม่มีการเรียกเก็บเงินบน Google AI Studio (แพ็กเกจฟรี)"
+  }
+}

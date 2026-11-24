@@ -20,6 +20,7 @@
     'NAV', 'ASIDE', 'MAIN', 'BLOCKQUOTE', 'PRE', 'FIGURE', 'FIGCAPTION', 'DL', 'DT', 'DD', 'FORM', 'FIELDSET',
     'LEGEND', 'DETAILS', 'SUMMARY', 'HR', 'ADDRESS', 'DIALOG', 'MENU', 'CENTER', 'OPTION', 'OPTGROUP']);
   var ATTRS = ['title', 'alt', 'placeholder', 'aria-label'];
+  var REVEAL_ATTRS = ['class', 'style', 'hidden', 'open', 'aria-hidden', 'aria-expanded'];
   var COMMENT_SELECTOR = '.token.comment, .hljs-comment, .pl-c, .highlight .c, .highlight .c1, .highlight .cm, ' +
     '.highlight .cs, .highlight .ch, .highlight .cp, .cm-comment';
   var COMMENT_RE = /^(\s*(?:\/\/+|#+|\/\*+|--|<!--|;+|%+)\s*)([\s\S]*?)(\s*(?:\*+\/|-->)?\s*)$/;
@@ -609,6 +610,10 @@
     }
 
     function scan() {
+      // L'affichage a pu changer depuis le dernier passage (menu ouvert, section dépliée) :
+      // on oublie les styles mémorisés, sinon un élément caché hier le resterait pour toujours.
+      styleCache = new WeakMap();
+      blockDescCache = new WeakMap();
       var found = [];
       if (doc.body) collect(doc.body, found);
       collectTitle(found);
@@ -668,7 +673,7 @@
 
     function stop() {
       stopFlag = true;
-      if (state === 'running') state = 'stopped';
+      if (state === 'running') { state = 'stopped'; lastMessage = ''; }   // pas d'ancien message (attente de limite) sur « Arrêté »
       updateBadge();
     }
 
@@ -693,6 +698,7 @@
         observer = new win.MutationObserver(function (records) {
           if (applying) return;
           var relevant = records.some(function (r) {
+            if (r.type === 'attributes') return revealed(r.target);
             for (var i = 0; i < r.addedNodes.length; i++) {
               var n = r.addedNodes[i];
               if (built.has(n)) continue;
@@ -704,7 +710,16 @@
           if (relevant) onDomChange();
         });
       }
-      observer.observe(doc.body, { childList: true, subtree: true });
+      // Les attributs comptent aussi : beaucoup de pages montrent un texte déjà présent mais caché
+      // (menu, section repliée de la barre latérale, résultats de recherche) en changeant une classe.
+      observer.observe(doc.body, { childList: true, subtree: true, attributes: true, attributeFilter: REVEAL_ATTRS });
+    }
+    /* Un élément vient-il peut-être de devenir visible avec du texte à traduire ? */
+    function revealed(el) {
+      if (!el || el.nodeType !== 1 || built.has(el) || isUi(el)) return false;
+      if (el.closest && el.closest('[data-tr-ui],[data-tr-bi],pre,code,script,style,textarea')) return false;
+      if (!/[^\s\d]/.test(el.textContent || '')) return false;
+      try { return win.getComputedStyle(el).display !== 'none'; } catch (e) { return false; }
     }
     function observeStop() {
       if (observer) observer.disconnect();
@@ -889,7 +904,21 @@
       continueAfterCap: continueAfterCap, status: status, pageInfo: pageInfo, scan: scan,
       _units: function () { return units; }, _checkUrl: checkUrl, _built: built,
       setOnUrlChange: function (fn) { onUrlChange = fn; },
-      setSettings: function (s) { settings = Object.assign(settings, s || {}); applyBadgeTheme(); }
+      setSettings: function (s) {
+        var before = DDT.resolveTarget(settings.target);
+        settings = Object.assign(settings, s || {});
+        applyBadgeTheme();
+        // Nouvelle langue cible (choisie dans le popup) : on revient à l'original et on oublie les
+        // traductions déjà faites, pour que « Traduire » retraduise dans la nouvelle langue.
+        if (DDT.resolveTarget(settings.target) !== before && units.some(function (u) { return u.out; })) {
+          if (showing === 'translated') showOriginal();
+          units.forEach(function (u) { u.out = null; });
+          glossed = new Set();
+          failed = 0;
+          if (state !== 'running') state = 'idle';
+          updateBadge();
+        }
+      }
     };
   }
 
@@ -969,4 +998,6 @@
     }).catch(function (e) { sendResponse({ ok: false, error: String(e) }); });
     return true;
   });
-})(typeof window !== 'undefined' ? window : globalThis);
+// Même objet global que shared.js : dans un script de contenu Firefox, window et globalThis sont deux
+// objets différents ; avec window, DDT (posé sur globalThis) restait introuvable et rien ne marchait.
+})(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -23,7 +23,7 @@ const REFS = [
 ];
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const b = await chromium.launch();
+  const b = await chromium.launch(process.env.DDT_CHROMIUM ? { executablePath: process.env.DDT_CHROMIUM } : {});
   for (const scheme of ['light', 'dark']) {
     const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: scheme, locale: 'en-US' });
     for (const [name, url] of REFS) {

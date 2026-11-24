@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Översätter utvecklardokumentation och programmeringssajter troget, utan att någonsin röra koden."
+  },
+  "cmdToggle": {
+    "message": "Översätt sidan eller gå tillbaka till originalet"
+  },
+  "badgeTranslating": {
+    "message": "Översätter: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Översatt: {0} avsnitt"
+  },
+  "badgeDoneFailed": {
+    "message": "Översatt: {0} avsnitt, {1} kvar i original"
+  },
+  "badgeStopped": {
+    "message": "Stoppad"
+  },
+  "badgeCap": {
+    "message": "Gränsen på {0} tecken har nåtts för den här sidan."
+  },
+  "badgeRateLimited": {
+    "message": "Gränsen för den gratis nyckeln har nåtts. Nytt försök om {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Gränsen har nåtts för alla gratis nycklar. Försök igen senare."
+  },
+  "badgeNoKey": {
+    "message": "Ingen nyckel tillgänglig. Lägg till en nyckel i inställningarna."
+  },
+  "badgeError": {
+    "message": "Fel: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "översatt lokalt (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "översatt online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Inget att översätta på den här sidan."
+  },
+  "badgeKeyProblem": {
+    "message": "Problem med nyckeln {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Stoppa"
+  },
+  "btnOriginal": {
+    "message": "Visa original"
+  },
+  "btnTranslation": {
+    "message": "Visa översättning"
+  },
+  "btnMinimize": {
+    "message": "Minimera"
+  },
+  "btnClose": {
+    "message": "Stäng"
+  },
+  "btnContinue": {
+    "message": "Fortsätt"
+  },
+  "errAuth": {
+    "message": "nyckeln avvisades (ogiltig eller återkallad)"
+  },
+  "errPayment": {
+    "message": "otillräckligt saldo hos leverantören; nyckeln stoppad"
+  },
+  "errRate": {
+    "message": "gränsen för förfrågningar har nåtts, försök igen om en minut"
+  },
+  "errOllamaDown": {
+    "message": "Ollama svarar inte på localhost:11434. Starta Ollama och försök igen."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama avvisar tillägget (403). Sätt miljövariabeln OLLAMA_ORIGINS till chrome-extension://*,moz-extension://* och starta om Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "i gratisläge accepterar OpenRouter bara modeller vars namn slutar på :free"
+  },
+  "errPaidUnset": {
+    "message": "betald nyckel blockerad: ange först dagstaket och båda priserna i inställningarna."
+  },
+  "errPaidCap": {
+    "message": "dagstaket har nåtts för den betalda nyckeln ($${0} av $${1})."
+  },
+  "errUnknown": {
+    "message": "Okänt fel"
+  },
+  "keyAvailable": {
+    "message": "tillgänglig"
+  },
+  "keyDisabled": {
+    "message": "inaktiverad"
+  },
+  "keyNoModel": {
+    "message": "välj en modell"
+  },
+  "keyPausedUntil": {
+    "message": "pausad till {0}"
+  },
+  "keyProblem": {
+    "message": "problem"
+  },
+  "tier_free": {
+    "message": "gratis"
+  },
+  "tier_paid": {
+    "message": "betald"
+  },
+  "tier_local": {
+    "message": "lokal"
+  },
+  "gl_never": {
+    "message": "Översätt aldrig"
+  },
+  "gl_always": {
+    "message": "Översätt alltid som"
+  },
+  "popupTranslate": {
+    "message": "Översätt sidan"
+  },
+  "popupSettings": {
+    "message": "Inställningar"
+  },
+  "popupUnsupported": {
+    "message": "Den här sidan kan inte översättas av ett tillägg (webbläsarsida, tilläggsbutik eller PDF-visare)."
+  },
+  "popupKey": {
+    "message": "Nyckel"
+  },
+  "popupKeyAuto": {
+    "message": "Automatiskt (gratis och lokal)"
+  },
+  "popupAuto": {
+    "message": "Översätt den här webbplatsen automatiskt"
+  },
+  "popupSensitive": {
+    "message": "Känslig sida: översätts aldrig automatiskt. Knappen fungerar, Ollama används först om den är konfigurerad."
+  },
+  "popupKeys": {
+    "message": "Nyckelstatus"
+  },
+  "popupNoKeys": {
+    "message": "Ingen nyckel ännu."
+  },
+  "popupAddKey": {
+    "message": "Lägg till en nyckel"
+  },
+  "popupShortcut": {
+    "message": "Kortkommando:"
+  },
+  "optTitle": {
+    "message": "Inställningar för DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Webbläsaren har ännu inte tillåtit åtkomst till översättningsleverantörerna."
+  },
+  "optPermGrant": {
+    "message": "Tillåt åtkomst till leverantörer"
+  },
+  "optTabKeys": {
+    "message": "Nycklar"
+  },
+  "optTabTranslation": {
+    "message": "Översättning"
+  },
+  "optTabGlossary": {
+    "message": "Ordlista"
+  },
+  "optTabSites": {
+    "message": "Webbplatser"
+  },
+  "optTabData": {
+    "message": "Data"
+  },
+  "optKeysTitle": {
+    "message": "API-nycklar"
+  },
+  "optKeysLocal": {
+    "message": "Nycklarna stannar i den här webbläsaren (lokal lagring). De synkroniseras aldrig med ditt konto och skickas aldrig någon annanstans än till leverantören. Kortens ordning är prioritetsordningen."
+  },
+  "optAddKey": {
+    "message": "Lägg till"
+  },
+  "optKey": {
+    "message": "Nyckel"
+  },
+  "optShow": {
+    "message": "Visa"
+  },
+  "optHide": {
+    "message": "Dölj"
+  },
+  "optBaseUrl": {
+    "message": "Ollama-adress"
+  },
+  "optTier": {
+    "message": "Typ"
+  },
+  "optModelEasy": {
+    "message": "Modell (enkla sidor)"
+  },
+  "optModelHard": {
+    "message": "Modell för svåra sidor (valfritt)"
+  },
+  "optMaxChars": {
+    "message": "Batchstorlek (tecken)"
+  },
+  "optInterval": {
+    "message": "Intervall mellan förfrågningar (ms)"
+  },
+  "optMaxReq": {
+    "message": "Max förfrågningar per dag (0 = ingen gräns)"
+  },
+  "optPriceIn": {
+    "message": "Inmatningspris ($$ per miljon tokens)"
+  },
+  "optPriceOut": {
+    "message": "Utmatningspris ($$ per miljon tokens)"
+  },
+  "optDailyCap": {
+    "message": "Dagstak ($$)"
+  },
+  "optLoadModels": {
+    "message": "Hämta modeller"
+  },
+  "optTest": {
+    "message": "Testa"
+  },
+  "optUp": {
+    "message": "Flytta upp"
+  },
+  "optDown": {
+    "message": "Flytta ned"
+  },
+  "optDelete": {
+    "message": "Ta bort"
+  },
+  "optDeleteConfirm": {
+    "message": "Ta bort den här nyckeln?"
+  },
+  "optWorking": {
+    "message": "Kontrollerar…"
+  },
+  "optTestOk": {
+    "message": "Giltig nyckel, {0} modeller tillgängliga."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama svarar, {0} modeller installerade."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modeller hämtade: välj en i listan."
+  },
+  "optSaved": {
+    "message": "Sparat"
+  },
+  "optTarget": {
+    "message": "Målspråk"
+  },
+  "optTargetAuto": {
+    "message": "Webbläsarens språk ({0})"
+  },
+  "optMode": {
+    "message": "Visning"
+  },
+  "optModeReplace": {
+    "message": "Ersätt texten"
+  },
+  "optModeBilingual": {
+    "message": "Tvåspråkigt (översättningen under originalet)"
+  },
+  "optExplain": {
+    "message": "Tekniska termer: översatt + engelska inom parentes"
+  },
+  "optExplainHelp": {
+    "message": "Tekniska begrepp översätts, med den engelska termen inom parentes första gången den förekommer. Av: engelska tekniska termer förblir på engelska, utan parentes. Kod och namn (Path, npm…) översätts aldrig."
+  },
+  "optComments": {
+    "message": "Översätt kommentarer i kodblock"
+  },
+  "optCommentsHelp": {
+    "message": "Av som standard. Bara kommentarer som webbplatsens syntaxmarkering känner igen översätts; koden ändras aldrig och originalet kommer tillbaka oförändrat."
+  },
+  "optPageCap": {
+    "message": "Teckengräns per sida"
+  },
+  "optShortcut": {
+    "message": "Kortkommando"
+  },
+  "optShortcutCurrent": {
+    "message": "Nuvarande kortkommando: {0}."
+  },
+  "optShortcutNone": {
+    "message": "inget"
+  },
+  "optShortcutWhereChrome": {
+    "message": "För att ändra: öppna chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "För att ändra: Tilläggshanteraren, kugghjulsikonen, ”Hantera kortkommandon för tillägg”."
+  },
+  "optGlossaryHelp": {
+    "message": "Termer som aldrig ska översättas, eller alltid översättas på ett visst sätt. Bara termer som finns i avsnittet skickas till modellen. Högst 500 poster."
+  },
+  "optGlTerm": {
+    "message": "Term"
+  },
+  "optGlType": {
+    "message": "Regel"
+  },
+  "optGlTranslation": {
+    "message": "Tvingad översättning"
+  },
+  "optGlAdd": {
+    "message": "Lägg till en term"
+  },
+  "optGlExport": {
+    "message": "Exportera (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importera (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Ogiltig fil: en JSON-lista med {term, type, translation}-objekt förväntas."
+  },
+  "optAutoTitle": {
+    "message": "Automatiskt översatta webbplatser"
+  },
+  "optAutoHelp": {
+    "message": "Lägg till en webbplats från popup-fönstret med ”Översätt den här webbplatsen automatiskt”. Bara gratis nycklar och Ollama används automatiskt."
+  },
+  "optAutoEmpty": {
+    "message": "Ingen webbplats ännu."
+  },
+  "optAutoGranted": {
+    "message": "tillåten"
+  },
+  "optAutoRevoked": {
+    "message": "behörighet borttagen"
+  },
+  "optSensitiveTitle": {
+    "message": "Känsliga sidor"
+  },
+  "optSensitiveHelp": {
+    "message": "Översätts aldrig automatiskt (inte heller någon sida med ett lösenordsfält). Den manuella knappen fungerar ändå."
+  },
+  "optSensitiveBase": {
+    "message": "Grundmönster:"
+  },
+  "optSensitiveExtra": {
+    "message": "Extra mönster (ett per rad, ord eller domän)"
+  },
+  "optCacheTitle": {
+    "message": "Översättningscache"
+  },
+  "optCacheInfo": {
+    "message": "{0} avsnitt i cachen ({1} MB). En redan översatt sida visas igen utan nätverksanrop."
+  },
+  "optCacheClear": {
+    "message": "Töm cachen"
+  },
+  "optUsageTitle": {
+    "message": "Dagens användning"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} förfrågningar{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Integritet"
+  },
+  "optPrivacyText": {
+    "message": "Texten på sidorna du översätter skickas bara till leverantören du valt, eller stannar på din dator med Ollama. Ingen statistik, ingen spårning, inget skickas till utvecklaren. På gratisnivåer kan Gemini och Mistral återanvända den skickade texten."
+  },
+  "warnGemini": {
+    "message": "Skapa nyckeln i Google AI Studio utan att koppla fakturering. På gratisnivån kan Google återanvända den skickade texten. Två nycklar från samma projekt delar samma gräns."
+  },
+  "warnGroq": {
+    "message": "Gratisnivå utan kort: över gränsen får du bara ett 429-fel, aldrig en faktura."
+  },
+  "warnMistral": {
+    "message": "Gratisläge utan kort. Förfrågningar kan användas för träning: stäng av det i Mistral-konsolen om du föredrar det."
+  },
+  "warnOpenRouter": {
+    "message": "I gratisläge accepteras bara modeller som slutar på :free (cirka 50 förfrågningar per dag). Fyll aldrig på kredit för det här tillägget."
+  },
+  "warnOllama": {
+    "message": "Modell på din dator: gratis och privat, inget lämnar din dator. En liten modell gör fler fel; tveksamma avsnitt stannar i original."
+  },
+  "popupView": {
+    "message": "Sidvisning"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Översättning"
+  },
+  "popupTranslating": {
+    "message": "Översätter…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} avsnitt"
+  },
+  "popupManage": {
+    "message": "Hantera"
+  },
+  "popupMoreKeys": {
+    "message": "och {0} nyckel/nycklar till"
+  },
+  "popupNoKeysLong": {
+    "message": "Lägg till en gratis nyckel (Gemini, Groq, Mistral, OpenRouter) eller Ollama för att komma igång."
+  },
+  "stateReady": {
+    "message": "Redo att översätta"
+  },
+  "stateNoKey": {
+    "message": "Ingen nyckel konfigurerad"
+  },
+  "stateRunning": {
+    "message": "Översätter"
+  },
+  "stateTranslated": {
+    "message": "Sidan översatt"
+  },
+  "stateOriginal": {
+    "message": "Originalet visas"
+  },
+  "stateStopped": {
+    "message": "Stoppad"
+  },
+  "statePaused": {
+    "message": "Sidans gräns nådd"
+  },
+  "stateError": {
+    "message": "Fel"
+  },
+  "stateUnavailable": {
+    "message": "Sidan kan inte översättas"
+  },
+  "toastAutoOn": {
+    "message": "Automatisk översättning aktiverad för {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatisk översättning inaktiverad för {0}."
+  },
+  "toastPermDenied": {
+    "message": "Behörighet nekad: webbplatsen lades inte till."
+  },
+  "badgeShowBadge": {
+    "message": "Visa DevDocTrad-märket"
+  },
+  "optNavLabel": {
+    "message": "Inställningsavsnitt"
+  },
+  "optNavKeys": {
+    "message": "Leverantörer och nycklar"
+  },
+  "optNavPrivacy": {
+    "message": "Integritet och kostnader"
+  },
+  "optNavAppearance": {
+    "message": "Utseende"
+  },
+  "optDescKeys": {
+    "message": "Dina API-nycklar och Ollama, provas i kortens ordning uppifrån och ned."
+  },
+  "optDescTranslation": {
+    "message": "Språk, visning och vad tillägget får översätta."
+  },
+  "optDescPrivacy": {
+    "message": "Vad som lämnar din webbläsare, till vem och vad det kostar."
+  },
+  "optDescSites": {
+    "message": "Automatiskt översatta webbplatser och sidor att skydda."
+  },
+  "optDescGlossary": {
+    "message": "Termer som ska lämnas som de är eller alltid översättas på samma sätt."
+  },
+  "optDescData": {
+    "message": "Översättningscache och data som sparas i den här webbläsaren."
+  },
+  "optDescAppearance": {
+    "message": "Tema för inställningarna, popup-fönstret och märket som visas på sidor."
+  },
+  "optVersion": {
+    "message": "version {0}"
+  },
+  "optAddProvider": {
+    "message": "Lägg till en leverantör"
+  },
+  "optAddProviderHelp": {
+    "message": "Det nya kortet hamnar sist. Kortens ordning är prioritetsordningen."
+  },
+  "optProvider": {
+    "message": "Leverantör"
+  },
+  "optKeysEmptyHint": {
+    "message": "Välj en leverantör: ett kort visas, klistra in din nyckel, sedan ”Hämta modeller” och välj en modell."
+  },
+  "optKeyName": {
+    "message": "Nyckelns namn"
+  },
+  "optKeyEnabled": {
+    "message": "Använd den här nyckeln"
+  },
+  "optPriority": {
+    "message": "prioritet {0}"
+  },
+  "optKeyHelp": {
+    "message": "Dold som standard, sparas bara i den här webbläsaren."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama måste köras på din dator."
+  },
+  "optModelHelp": {
+    "message": "”Hämta modeller” fyller i förslagslistan."
+  },
+  "optLimits": {
+    "message": "Gränser"
+  },
+  "optLimitsHelp": {
+    "message": "Tomt = leverantörens standard."
+  },
+  "optPaidTitle": {
+    "message": "Kostnader"
+  },
+  "optPaidHelp": {
+    "message": "Används bara när du väljer den i popup-fönstret."
+  },
+  "optPaidOk": {
+    "message": "Tak och priser angivna: nyckeln kan användas upp till taket."
+  },
+  "optPrivacyFlow": {
+    "message": "Vart texten tar vägen"
+  },
+  "optProviderNotes": {
+    "message": "Anteckningar per leverantör"
+  },
+  "optProviderUsed": {
+    "message": "används"
+  },
+  "optUsageEmpty": {
+    "message": "Ingen nyckel konfigurerad ännu."
+  },
+  "optUsageHelp": {
+    "message": "Nollställs varje dag vid midnatt (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Betalda nycklar"
+  },
+  "optPaidRule": {
+    "message": "En betald nyckel används aldrig automatiskt: du måste välja den i popup-fönstret. Den förblir blockerad tills dagstaket och båda priserna är angivna, och stannar så fort taket nås."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Ingen automatisk webbplats ännu"
+  },
+  "optAutoEmptyLong": {
+    "message": "För att lägga till en: öppna webbplatsen, klicka på DevDocTrad-ikonen i verktygsfältet och slå på ”Översätt den här webbplatsen automatiskt”. Webbläsaren frågar om behörighet bara för den webbplatsen."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Ta bort {0} från automatiskt översatta webbplatser?"
+  },
+  "optGlEmpty": {
+    "message": "Ingen term ännu. Exempel: ”thread” med regeln ”Översätt aldrig”."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termer"
+  },
+  "optGlImported": {
+    "message": "{0} termer importerade."
+  },
+  "optCacheConfirm": {
+    "message": "Tömma cachen? Redan översatta sidor måste översättas igen (nya anrop till leverantörer)."
+  },
+  "optCacheCleared": {
+    "message": "Cachen tömd."
+  },
+  "optStorageTitle": {
+    "message": "Lokal lagring"
+  },
+  "optTheme": {
+    "message": "Tema"
+  },
+  "optThemeHelp": {
+    "message": "”System” följer datorns ljusa eller mörka inställning."
+  },
+  "optThemeSystem": {
+    "message": "System"
+  },
+  "optThemeLight": {
+    "message": "Ljust"
+  },
+  "optThemeDark": {
+    "message": "Mörkt"
+  },
+  "optPriceInUsd": {
+    "message": "Inmatningspris ($$ per miljon tokens)"
+  },
+  "optPriceOutUsd": {
+    "message": "Utmatningspris ($$ per miljon tokens)"
+  },
+  "optDailyCapUsd": {
+    "message": "Dagstak ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "det här Google-projektet använder förbetald fakturering och dess krediter är slut. Fyll inte på något: skapa en nyckel i ett projekt utan fakturering i Google AI Studio (gratisnivå)."
+  }
+}

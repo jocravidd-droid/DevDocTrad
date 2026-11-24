@@ -2,6 +2,9 @@
   "extName": {
     "message": "DevDocTrad"
   },
+  "uiDir": {
+    "message": "ltr"
+  },
   "extDescription": {
     "message": "Traduit fidèlement la documentation technique et les sites pour programmeurs, sans jamais toucher au code."
   },
@@ -251,6 +254,9 @@
   "optTestOk": {
     "message": "Clé valide, {0} modèles disponibles."
   },
+  "optTestOkLocal": {
+    "message": "Ollama répond, {0} modèles installés."
+  },
   "optModelsLoaded": {
     "message": "{0} modèles chargés : choisis-en un dans la liste."
   },
@@ -273,10 +279,10 @@
     "message": "Bilingue (traduction sous l'original)"
   },
   "optExplain": {
-    "message": "Expliquer les termes techniques"
+    "message": "Ajouter le terme anglais entre parenthèses"
   },
   "optExplainHelp": {
-    "message": "Désactivé par défaut : l'extension traduit, elle n'explique pas. Activé, elle ajoute la traduction entre parenthèses à la première apparition d'un terme, par exemple thread (fil d'exécution)."
+    "message": "Désactivé par défaut. Activé : à sa première apparition, une notion technique traduite est suivie du terme anglais entre parenthèses, par exemple « fil d'exécution (thread) ». Le code et les noms (Path, npm…) ne sont jamais traduits."
   },
   "optComments": {
     "message": "Traduire les commentaires dans les blocs de code"

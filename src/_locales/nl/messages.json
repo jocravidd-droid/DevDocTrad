@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Vertaalt technische documentatie en websites voor programmeurs nauwkeurig, zonder ooit de code aan te raken."
+  },
+  "cmdToggle": {
+    "message": "De pagina vertalen of terug naar het origineel"
+  },
+  "badgeTranslating": {
+    "message": "Bezig met vertalen: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Vertaald: {0} fragmenten"
+  },
+  "badgeDoneFailed": {
+    "message": "Vertaald: {0} fragmenten, {1} in het origineel gelaten"
+  },
+  "badgeStopped": {
+    "message": "Gestopt"
+  },
+  "badgeCap": {
+    "message": "Limiet van {0} tekens voor deze pagina bereikt."
+  },
+  "badgeRateLimited": {
+    "message": "Limiet van de gratis sleutels bereikt. Nieuwe poging over {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limiet bereikt op alle gratis sleutels. Probeer het later opnieuw."
+  },
+  "badgeNoKey": {
+    "message": "Geen sleutel beschikbaar. Voeg een sleutel toe in de instellingen."
+  },
+  "badgeError": {
+    "message": "Fout: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "lokaal vertaald (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "online vertaald ({0})"
+  },
+  "badgeNothing": {
+    "message": "Niets te vertalen op deze pagina."
+  },
+  "badgeKeyProblem": {
+    "message": "Probleem met sleutel {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Stop"
+  },
+  "btnOriginal": {
+    "message": "Origineel tonen"
+  },
+  "btnTranslation": {
+    "message": "Vertaling tonen"
+  },
+  "btnMinimize": {
+    "message": "Minimaliseren"
+  },
+  "btnClose": {
+    "message": "Sluiten"
+  },
+  "btnContinue": {
+    "message": "Doorgaan"
+  },
+  "errAuth": {
+    "message": "sleutel geweigerd (ongeldig of ingetrokken)"
+  },
+  "errPayment": {
+    "message": "onvoldoende saldo bij de aanbieder; sleutel gestopt"
+  },
+  "errRate": {
+    "message": "aanvraaglimiet bereikt, probeer het over een minuut opnieuw"
+  },
+  "errOllamaDown": {
+    "message": "Ollama reageert niet op localhost:11434. Start Ollama en probeer het opnieuw."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama weigert de extensie (403). Stel de omgevingsvariabele OLLAMA_ORIGINS in op chrome-extension://*,moz-extension://* en start Ollama opnieuw."
+  },
+  "errOpenRouterFree": {
+    "message": "in de gratis modus accepteert OpenRouter alleen modellen waarvan de naam eindigt op :free"
+  },
+  "errPaidUnset": {
+    "message": "betaalde sleutel geblokkeerd: stel eerst de daglimiet en beide prijzen in bij de instellingen."
+  },
+  "errPaidCap": {
+    "message": "daglimiet bereikt voor de betaalde sleutel ({0} $$ van {1} $$)."
+  },
+  "errUnknown": {
+    "message": "Onbekende fout"
+  },
+  "keyAvailable": {
+    "message": "beschikbaar"
+  },
+  "keyDisabled": {
+    "message": "uitgeschakeld"
+  },
+  "keyNoModel": {
+    "message": "kies een model"
+  },
+  "keyPausedUntil": {
+    "message": "gepauzeerd tot {0}"
+  },
+  "keyProblem": {
+    "message": "probleem"
+  },
+  "tier_free": {
+    "message": "gratis"
+  },
+  "tier_paid": {
+    "message": "betaald"
+  },
+  "tier_local": {
+    "message": "lokaal"
+  },
+  "gl_never": {
+    "message": "Nooit vertalen"
+  },
+  "gl_always": {
+    "message": "Altijd vertalen als"
+  },
+  "popupTranslate": {
+    "message": "Deze pagina vertalen"
+  },
+  "popupSettings": {
+    "message": "Instellingen"
+  },
+  "popupUnsupported": {
+    "message": "Deze pagina kan niet door een extensie worden vertaald (browserpagina, extensiewinkel of pdf-viewer)."
+  },
+  "popupKey": {
+    "message": "Sleutel"
+  },
+  "popupKeyAuto": {
+    "message": "Automatisch (gratis en lokaal)"
+  },
+  "popupAuto": {
+    "message": "Deze site automatisch vertalen"
+  },
+  "popupSensitive": {
+    "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
+  },
+  "popupKeys": {
+    "message": "Status van de sleutels"
+  },
+  "popupNoKeys": {
+    "message": "Nog geen sleutel."
+  },
+  "popupAddKey": {
+    "message": "Sleutel toevoegen"
+  },
+  "popupShortcut": {
+    "message": "Sneltoets:"
+  },
+  "optTitle": {
+    "message": "Instellingen van DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "De browser staat toegang tot de vertaalaanbieders nog niet toe."
+  },
+  "optPermGrant": {
+    "message": "Toegang tot aanbieders toestaan"
+  },
+  "optTabKeys": {
+    "message": "Sleutels"
+  },
+  "optTabTranslation": {
+    "message": "Vertaling"
+  },
+  "optTabGlossary": {
+    "message": "Woordenlijst"
+  },
+  "optTabSites": {
+    "message": "Sites"
+  },
+  "optTabData": {
+    "message": "Gegevens"
+  },
+  "optKeysTitle": {
+    "message": "API-sleutels"
+  },
+  "optKeysLocal": {
+    "message": "De sleutels blijven in deze browser (lokale opslag). Ze worden nooit met je account gesynchroniseerd en alleen naar de aanbieder verstuurd. De volgorde van de kaarten is de prioriteitsvolgorde."
+  },
+  "optAddKey": {
+    "message": "Toevoegen"
+  },
+  "optKey": {
+    "message": "Sleutel"
+  },
+  "optShow": {
+    "message": "Tonen"
+  },
+  "optHide": {
+    "message": "Verbergen"
+  },
+  "optBaseUrl": {
+    "message": "Adres van Ollama"
+  },
+  "optTier": {
+    "message": "Type"
+  },
+  "optModelEasy": {
+    "message": "Model (eenvoudige pagina's)"
+  },
+  "optModelHard": {
+    "message": "Model voor moeilijke pagina's (optioneel)"
+  },
+  "optMaxChars": {
+    "message": "Batchgrootte (tekens)"
+  },
+  "optInterval": {
+    "message": "Interval tussen aanvragen (ms)"
+  },
+  "optMaxReq": {
+    "message": "Max. aanvragen per dag (0 = geen limiet)"
+  },
+  "optPriceIn": {
+    "message": "Invoerprijs ($$ per miljoen tokens)"
+  },
+  "optPriceOut": {
+    "message": "Uitvoerprijs ($$ per miljoen tokens)"
+  },
+  "optDailyCap": {
+    "message": "Daglimiet ($$)"
+  },
+  "optLoadModels": {
+    "message": "Modellen laden"
+  },
+  "optTest": {
+    "message": "Testen"
+  },
+  "optUp": {
+    "message": "Omhoog"
+  },
+  "optDown": {
+    "message": "Omlaag"
+  },
+  "optDelete": {
+    "message": "Verwijderen"
+  },
+  "optDeleteConfirm": {
+    "message": "Deze sleutel verwijderen?"
+  },
+  "optWorking": {
+    "message": "Controleren…"
+  },
+  "optTestOk": {
+    "message": "Geldige sleutel, {0} modellen beschikbaar."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama reageert, {0} modellen geïnstalleerd."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modellen geladen: kies er een uit de lijst."
+  },
+  "optSaved": {
+    "message": "Opgeslagen"
+  },
+  "optTarget": {
+    "message": "Doeltaal"
+  },
+  "optTargetAuto": {
+    "message": "Browsertaal ({0})"
+  },
+  "optMode": {
+    "message": "Weergave"
+  },
+  "optModeReplace": {
+    "message": "De tekst vervangen"
+  },
+  "optModeBilingual": {
+    "message": "Tweetalig (vertaling onder het origineel)"
+  },
+  "optExplain": {
+    "message": "Technische termen: vertaald + Engels tussen haakjes"
+  },
+  "optExplainHelp": {
+    "message": "Technische begrippen worden vertaald, met de Engelse term tussen haakjes de eerste keer dat ze voorkomen. Uit: Engelse technische termen blijven Engels, zonder haakjes. Code en namen (Path, npm…) worden nooit vertaald."
+  },
+  "optComments": {
+    "message": "Opmerkingen in codeblokken vertalen"
+  },
+  "optCommentsHelp": {
+    "message": "Standaard uit. Alleen opmerkingen die door de syntaxiskleuring van de site worden herkend, worden vertaald; de code wordt nooit gewijzigd en het origineel komt ongewijzigd terug."
+  },
+  "optPageCap": {
+    "message": "Tekenlimiet per pagina"
+  },
+  "optShortcut": {
+    "message": "Sneltoets"
+  },
+  "optShortcutCurrent": {
+    "message": "Huidige sneltoets: {0}."
+  },
+  "optShortcutNone": {
+    "message": "geen"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Om hem te wijzigen: open chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Om hem te wijzigen: Add-onbeheer, tandwielpictogram, ‘Sneltoetsen voor extensies beheren’."
+  },
+  "optGlossaryHelp": {
+    "message": "Termen die nooit vertaald mogen worden, of altijd op een bepaalde manier. Alleen termen die in het fragment voorkomen, worden naar het model gestuurd. Maximaal 500 items."
+  },
+  "optGlTerm": {
+    "message": "Term"
+  },
+  "optGlType": {
+    "message": "Regel"
+  },
+  "optGlTranslation": {
+    "message": "Opgelegde vertaling"
+  },
+  "optGlAdd": {
+    "message": "Term toevoegen"
+  },
+  "optGlExport": {
+    "message": "Exporteren (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importeren (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Ongeldig bestand: verwacht een JSON-lijst van objecten {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Automatisch vertaalde sites"
+  },
+  "optAutoHelp": {
+    "message": "Voeg een site toe via de pop-up met ‘Deze site automatisch vertalen’. Automatisch worden alleen gratis sleutels en Ollama gebruikt."
+  },
+  "optAutoEmpty": {
+    "message": "Nog geen site."
+  },
+  "optAutoGranted": {
+    "message": "toegestaan"
+  },
+  "optAutoRevoked": {
+    "message": "toestemming ingetrokken"
+  },
+  "optSensitiveTitle": {
+    "message": "Gevoelige pagina's"
+  },
+  "optSensitiveHelp": {
+    "message": "Nooit automatisch vertaald (net als elke pagina met een wachtwoordveld). De handmatige knop werkt toch."
+  },
+  "optSensitiveBase": {
+    "message": "Basispatronen:"
+  },
+  "optSensitiveExtra": {
+    "message": "Extra patronen (één per regel, woord of domein)"
+  },
+  "optCacheTitle": {
+    "message": "Vertaalcache"
+  },
+  "optCacheInfo": {
+    "message": "{0} fragmenten in de cache ({1} MB). Een al vertaalde pagina wordt opnieuw getoond zonder netwerkaanvraag."
+  },
+  "optCacheClear": {
+    "message": "Cache wissen"
+  },
+  "optUsageTitle": {
+    "message": "Verbruik van vandaag"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} aanvragen{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Privacy"
+  },
+  "optPrivacyText": {
+    "message": "De tekst van de pagina's die je vertaalt, wordt alleen naar de door jou gekozen aanbieder verstuurd, of blijft op je computer met Ollama. Geen statistieken, geen tracking, er wordt niets naar de ontwikkelaar gestuurd. In de gratis abonnementen mogen Gemini en Mistral de verstuurde teksten hergebruiken."
+  },
+  "warnGemini": {
+    "message": "Maak de sleutel aan in Google AI Studio zonder facturering te koppelen. In het gratis abonnement mag Google de verstuurde teksten hergebruiken. Twee sleutels uit hetzelfde project delen dezelfde limiet."
+  },
+  "warnGroq": {
+    "message": "Gratis abonnement zonder kaart: boven de limiet krijg je alleen een 429-fout, nooit een rekening."
+  },
+  "warnMistral": {
+    "message": "Gratis modus zonder kaart. Aanvragen kunnen voor training worden gebruikt: schakel dit uit in de Mistral-console als je dat liever hebt."
+  },
+  "warnOpenRouter": {
+    "message": "In de gratis modus worden alleen modellen geaccepteerd die eindigen op :free (ongeveer 50 aanvragen per dag). Laad nooit tegoed op voor deze extensie."
+  },
+  "warnOllama": {
+    "message": "Model op je computer: gratis en privé, niets verlaat je machine. Een klein model maakt meer fouten; twijfelachtige fragmenten blijven in het origineel."
+  },
+  "popupView": {
+    "message": "Paginaweergave"
+  },
+  "segOriginal": {
+    "message": "Origineel"
+  },
+  "segTranslation": {
+    "message": "Vertaling"
+  },
+  "popupTranslating": {
+    "message": "Bezig met vertalen…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} fragmenten"
+  },
+  "popupManage": {
+    "message": "Beheren"
+  },
+  "popupMoreKeys": {
+    "message": "en nog {0} sleutel(s)"
+  },
+  "popupNoKeysLong": {
+    "message": "Voeg een gratis sleutel (Gemini, Groq, Mistral, OpenRouter) of Ollama toe om te beginnen."
+  },
+  "stateReady": {
+    "message": "Klaar om te vertalen"
+  },
+  "stateNoKey": {
+    "message": "Geen sleutel ingesteld"
+  },
+  "stateRunning": {
+    "message": "Bezig met vertalen"
+  },
+  "stateTranslated": {
+    "message": "Pagina vertaald"
+  },
+  "stateOriginal": {
+    "message": "Origineel getoond"
+  },
+  "stateStopped": {
+    "message": "Gestopt"
+  },
+  "statePaused": {
+    "message": "Paginalimiet bereikt"
+  },
+  "stateError": {
+    "message": "Fout"
+  },
+  "stateUnavailable": {
+    "message": "Pagina niet vertaalbaar"
+  },
+  "toastAutoOn": {
+    "message": "Automatische vertaling ingeschakeld voor {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatische vertaling uitgeschakeld voor {0}."
+  },
+  "toastPermDenied": {
+    "message": "Toestemming geweigerd: de site is niet toegevoegd."
+  },
+  "badgeShowBadge": {
+    "message": "De DevDocTrad-badge tonen"
+  },
+  "optNavLabel": {
+    "message": "Onderdelen van de instellingen"
+  },
+  "optNavKeys": {
+    "message": "Aanbieders en sleutels"
+  },
+  "optNavPrivacy": {
+    "message": "Privacy en kosten"
+  },
+  "optNavAppearance": {
+    "message": "Weergave"
+  },
+  "optDescKeys": {
+    "message": "Je API-sleutels en Ollama, geprobeerd in de volgorde van de kaarten, van boven naar beneden."
+  },
+  "optDescTranslation": {
+    "message": "Taal, weergave en wat de extensie mag vertalen."
+  },
+  "optDescPrivacy": {
+    "message": "Wat je browser verlaat, naar wie, en wat het kost."
+  },
+  "optDescSites": {
+    "message": "Automatisch vertaalde sites en te beschermen pagina's."
+  },
+  "optDescGlossary": {
+    "message": "Termen die ongewijzigd blijven of altijd op dezelfde manier worden vertaald."
+  },
+  "optDescData": {
+    "message": "Vertaalcache en gegevens die in deze browser worden bewaard."
+  },
+  "optDescAppearance": {
+    "message": "Thema van de instellingen, de pop-up en de badge op pagina's."
+  },
+  "optVersion": {
+    "message": "versie {0}"
+  },
+  "optAddProvider": {
+    "message": "Aanbieder toevoegen"
+  },
+  "optAddProviderHelp": {
+    "message": "De nieuwe kaart komt achteraan. De volgorde van de kaarten is de prioriteitsvolgorde."
+  },
+  "optProvider": {
+    "message": "Aanbieder"
+  },
+  "optKeysEmptyHint": {
+    "message": "Kies een aanbieder: er verschijnt een kaart, plak je sleutel, klik dan op ‘Modellen laden’ en kies een model."
+  },
+  "optKeyName": {
+    "message": "Naam van de sleutel"
+  },
+  "optKeyEnabled": {
+    "message": "Deze sleutel gebruiken"
+  },
+  "optPriority": {
+    "message": "prioriteit {0}"
+  },
+  "optKeyHelp": {
+    "message": "Standaard verborgen, alleen in deze browser bewaard."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama moet op je computer draaien."
+  },
+  "optModelHelp": {
+    "message": "‘Modellen laden’ vult de lijst met suggesties."
+  },
+  "optLimits": {
+    "message": "Limieten"
+  },
+  "optLimitsHelp": {
+    "message": "Leeg = standaardwaarde van de aanbieder."
+  },
+  "optPaidTitle": {
+    "message": "Kosten"
+  },
+  "optPaidHelp": {
+    "message": "Alleen gebruikt als je hem in de pop-up kiest."
+  },
+  "optPaidOk": {
+    "message": "Limiet en prijzen ingesteld: de sleutel kan tot de limiet worden gebruikt."
+  },
+  "optPrivacyFlow": {
+    "message": "Waar de tekst naartoe gaat"
+  },
+  "optProviderNotes": {
+    "message": "Opmerkingen per aanbieder"
+  },
+  "optProviderUsed": {
+    "message": "in gebruik"
+  },
+  "optUsageEmpty": {
+    "message": "Nog geen sleutel ingesteld."
+  },
+  "optUsageHelp": {
+    "message": "Elke dag om middernacht (UTC) op nul gezet."
+  },
+  "optPaidRuleTitle": {
+    "message": "Betaalde sleutels"
+  },
+  "optPaidRule": {
+    "message": "Een betaalde sleutel wordt nooit automatisch gebruikt: je moet hem in de pop-up kiezen. Hij blijft geblokkeerd tot de daglimiet en beide prijzen zijn ingesteld, en stopt zodra de limiet is bereikt."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Nog geen automatische site"
+  },
+  "optAutoEmptyLong": {
+    "message": "Om er een toe te voegen: open de site, klik op het DevDocTrad-pictogram in de werkbalk en schakel ‘Deze site automatisch vertalen’ in. De browser vraagt alleen voor die site om toestemming."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} verwijderen uit de automatisch vertaalde sites?"
+  },
+  "optGlEmpty": {
+    "message": "Nog geen term. Voorbeeld: ‘thread’ met de regel ‘Nooit vertalen’."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termen"
+  },
+  "optGlImported": {
+    "message": "{0} termen geïmporteerd."
+  },
+  "optCacheConfirm": {
+    "message": "Cache wissen? Al vertaalde pagina's moeten opnieuw worden vertaald (nieuwe aanvragen bij de aanbieders)."
+  },
+  "optCacheCleared": {
+    "message": "Cache gewist."
+  },
+  "optStorageTitle": {
+    "message": "Lokale opslag"
+  },
+  "optTheme": {
+    "message": "Thema"
+  },
+  "optThemeHelp": {
+    "message": "‘Systeem’ volgt de lichte of donkere instelling van je computer."
+  },
+  "optThemeSystem": {
+    "message": "Systeem"
+  },
+  "optThemeLight": {
+    "message": "Licht"
+  },
+  "optThemeDark": {
+    "message": "Donker"
+  },
+  "optPriceInUsd": {
+    "message": "Invoerprijs ($$ per miljoen tokens)"
+  },
+  "optPriceOutUsd": {
+    "message": "Uitvoerprijs ($$ per miljoen tokens)"
+  },
+  "optDailyCapUsd": {
+    "message": "Daglimiet ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "dit Google-project gebruikt prepaid facturering en het tegoed is op. Laad niets op: maak in Google AI Studio een sleutel aan in een project zonder facturering (gratis abonnement)."
+  }
+}

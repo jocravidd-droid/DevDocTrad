@@ -140,7 +140,7 @@ Ce que fait l’extension
 - La langue cible est celle du navigateur par défaut (37 langues disponibles) ; elle se change dans les réglages.
 - Deux affichages : remplacement du texte, ou mode bilingue avec la traduction sous chaque phrase.
 - Retour à l’original exact en un clic ou avec le raccourci Alt+Maj+T.
-- Navigateurs : Chrome, Edge, Brave et Firefox 140 ou plus récent. Interface en français et en anglais.
+- Navigateurs : Chrome, Edge, Brave et Firefox 140 ou plus récent. Interface en 36 langues.
 
 Fonctionnement et coût
 L’extension est gratuite et open source (licence MIT). Elle n’a pas de serveur : elle utilise vos propres clés d’API gratuites (Google Gemini, Groq, Mistral, ou OpenRouter avec les seuls modèles « :free »), ou un modèle local avec Ollama. Elle ne bascule jamais vers une clé payante ; une clé payante reste bloquée tant que vous n’avez pas réglé un plafond journalier et les prix.
@@ -204,7 +204,7 @@ The extension itself has no analytics and no tracking. Keys are kept in the brow
 - Chrome Web Store: <LIEN_CHROME_WEB_STORE>
 - Firefox Add-ons: <LIEN_AMO>
 
-The interface is available in English and French.
+The interface is available in 36 languages.
 
 ## Feedback welcome
 
@@ -276,7 +276,7 @@ DevDocTrad faithfully translates developer documentation and programming website
 - Code, commands, function names, APIs, paths and URLs are never translated. Links, bold text and code elements stay in place.
 - Target language: the browser language by default (37 languages), changeable in the settings.
 - Replace mode or bilingual mode. One click or Alt+Shift+T brings back the exact original.
-- Works on Chrome, Edge, Brave and Firefox 140+. Interface in English and French.
+- Works on Chrome, Edge, Brave and Firefox 140+. Interface in 36 languages.
 
 Free and open source (MIT), with no server of its own. It uses your own free keys for Google Gemini, Groq, Mistral or OpenRouter (:free models only), or a local model with Ollama. It never falls back to a paid key; paid keys are blocked until you set a daily cap and prices.
 

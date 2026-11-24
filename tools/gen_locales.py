@@ -31,6 +31,8 @@ CHROME_LOCALES = {
 M = {
     # Manifeste
     "extName": ("DevDocTrad", "DevDocTrad"),
+    # Sens d'écriture de l'interface ; rempli automatiquement pour chaque langue (voir RTL plus bas)
+    "uiDir": ("ltr", "ltr"),
     "extDescription": (
         "Traduit fidèlement la documentation technique et les sites pour programmeurs, sans jamais toucher au code.",
         "Faithfully translates developer documentation and programming websites, without ever touching the code."),
@@ -126,6 +128,7 @@ M = {
     "optDeleteConfirm": ("Supprimer cette clé ?", "Delete this key?"),
     "optWorking": ("Vérification…", "Checking…"),
     "optTestOk": ("Clé valide, {0} modèles disponibles.", "Valid key, {0} models available."),
+    "optTestOkLocal": ("Ollama répond, {0} modèles installés.", "Ollama is responding, {0} models installed."),
     "optModelsLoaded": ("{0} modèles chargés : choisis-en un dans la liste.", "{0} models loaded: pick one from the list."),
     "optSaved": ("Enregistré", "Saved"),
     "optTarget": ("Langue cible", "Target language"),
@@ -133,9 +136,9 @@ M = {
     "optMode": ("Affichage", "Display"),
     "optModeReplace": ("Remplacer le texte", "Replace the text"),
     "optModeBilingual": ("Bilingue (traduction sous l'original)", "Bilingual (translation below the original)"),
-    "optExplain": ("Expliquer les termes techniques", "Explain technical terms"),
-    "optExplainHelp": ("Désactivé par défaut : l'extension traduit, elle n'explique pas. Activé, elle ajoute la traduction entre parenthèses à la première apparition d'un terme, par exemple thread (fil d'exécution).",
-                       "Off by default: the extension translates, it does not explain. When on, it adds the translation in brackets the first time a term appears."),
+    "optExplain": ("Ajouter le terme anglais entre parenthèses", "Add the English term in brackets"),
+    "optExplainHelp": ("Désactivé par défaut. Activé : à sa première apparition, une notion technique traduite est suivie du terme anglais entre parenthèses, par exemple « fil d'exécution (thread) ». Le code et les noms (Path, npm…) ne sont jamais traduits.",
+                       "Off by default. On: the first time a translated technical concept appears, the English term follows in brackets. Code and names (Path, npm…) are never translated."),
     "optComments": ("Traduire les commentaires dans les blocs de code", "Translate comments inside code blocks"),
     "optCommentsHelp": ("Désactivé par défaut. Seuls les commentaires reconnus par la coloration du site sont traduits ; le code n'est jamais modifié, et l'original revient à l'identique.",
                         "Off by default. Only comments recognised by the site's syntax highlighting are translated; code is never changed and the original comes back unchanged."),
@@ -263,6 +266,9 @@ M = {
                         "this Google project uses prepaid billing and its credits are used up. Do not top up: create a key in a project without billing in Google AI Studio (free tier)."),
 }
 
+# Langues écrites de droite à gauche : uiDir = "rtl" (lu par localizePage, même source que les textes)
+RTL = {"ar", "he", "fa"}
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "_locales"
 EXTRA = Path(__file__).resolve().parent / "locales"
@@ -293,6 +299,7 @@ def main():
         unknown = sorted(set(data) - set(M))
         if unknown:
             errors.append(f"{f.name} : clés inconnues {', '.join(unknown)}")
+        data["uiDir"] = "rtl" if lang in RTL else "ltr"
         messages = {k: data[k] for k in M if isinstance(data.get(k), str) and data[k].strip()}
         missing = [k for k in M if k not in messages]
         n = write(lang, messages)

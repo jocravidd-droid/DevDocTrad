@@ -1,0 +1,36 @@
+[
+  {
+    "model": "qwen2.5:7b",
+    "lang": "fr",
+    "secs": 86,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "Travailler avec des chemins du système de fichiers",
+    "p": [
+      "Ce module propose des classes représentant des chemins du système de fichiers avec des sémantiques adaptées aux différents systèmes d'exploitation. Les classes de chemins sont divisées entre des chemins purs, qui fournissent des opérations purement computationnelles sans I/O, et des chemins concrets, qui héritent des chemins purs mais fournissent également des opérations I/O.",
+      "Si vous n'avez jamais utilisé ce module auparavant ou si vous n'êtes pas sûr de la classe qui convient à votre tâche, Path est probablement ce dont vous avez besoin. Il instancie un chemin concret pour la plateforme sur laquelle le code s'exécute.",
+      "Installez le package avec npm install is-online, puis appelez await isOnline() pour vérifier si la connexion Internet est active.",
+      "La méthode window.alert() fait instruire le navigateur d'afficher une boîte de dialogue avec un message optionnel, et de s'arrêter jusqu'à ce que l'utilisateur la ferme."
+    ]
+  },
+  {
+    "model": "qwen2.5:3b",
+    "lang": "fr",
+    "secs": 17,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "Travailler avec des chemins du système de fichiers",
+    "p": [
+      "Ce module offre des classes représentant des chemins du système de fichiers avec des sens appropriés pour différents systèmes d'exploitation. Les classes de chemins sont divisées entre des chemins purement calculatoires, qui fournissent des opérations purement computationnelles sans I/O, et des chemins concrets, qui héritent des chemins purement calculatoires mais fournissent également des opérations I/O.",
+      "Si vous n'avez jamais utilisé ce module auparavant ou si vous n'êtes simplement pas sûr de quelle classe est la plus appropriée pour votre tâche, Path est probablement ce que vous avez besoin. Il instancie un chemin concret pour le système d'exploitation sur lequel le code exécute.",
+      "Installez le paquet avec npm install is-online, puis appelez await isOnline() pour vérifier si la connexion à Internet est active.",
+      "La méthode window.alert() instruit le navigateur de montrer une boîte de dialogue avec un message optionnel et de patienter jusqu'à ce que l'utilisateur ferme la boîte de dialogue."
+    ]
+  }
+]

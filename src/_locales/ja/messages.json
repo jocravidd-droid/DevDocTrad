@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "開発者向けドキュメントやプログラミングサイトを、コードには一切触れずに忠実に翻訳します。"
+  },
+  "cmdToggle": {
+    "message": "ページを翻訳する、または原文に戻す"
+  },
+  "badgeTranslating": {
+    "message": "翻訳中：{0} / {1}"
+  },
+  "badgeDone": {
+    "message": "翻訳済み：{0} 件"
+  },
+  "badgeDoneFailed": {
+    "message": "翻訳済み：{0} 件、原文のまま：{1} 件"
+  },
+  "badgeStopped": {
+    "message": "停止しました"
+  },
+  "badgeCap": {
+    "message": "このページの上限（{0} 文字）に達しました。"
+  },
+  "badgeRateLimited": {
+    "message": "無料キーの上限に達しました。{0} 秒後に再試行します（{1}/3）。"
+  },
+  "badgeRateGiveUp": {
+    "message": "すべての無料キーが上限に達しました。しばらくしてからお試しください。"
+  },
+  "badgeNoKey": {
+    "message": "使用できるキーがありません。設定でキーを追加してください。"
+  },
+  "badgeError": {
+    "message": "エラー：{0}"
+  },
+  "badgeViaLocal": {
+    "message": "ローカルで翻訳（Ollama）"
+  },
+  "badgeViaOnline": {
+    "message": "オンラインで翻訳（{0}）"
+  },
+  "badgeNothing": {
+    "message": "このページには翻訳するものがありません。"
+  },
+  "badgeKeyProblem": {
+    "message": "キー {0} の問題：{1}"
+  },
+  "btnStop": {
+    "message": "停止"
+  },
+  "btnOriginal": {
+    "message": "原文を表示"
+  },
+  "btnTranslation": {
+    "message": "翻訳を表示"
+  },
+  "btnMinimize": {
+    "message": "最小化"
+  },
+  "btnClose": {
+    "message": "閉じる"
+  },
+  "btnContinue": {
+    "message": "続ける"
+  },
+  "errAuth": {
+    "message": "キーが拒否されました（無効または取り消し済み）"
+  },
+  "errPayment": {
+    "message": "プロバイダーの残高が不足しています。キーを停止しました"
+  },
+  "errRate": {
+    "message": "リクエスト上限に達しました。1 分後にもう一度お試しください"
+  },
+  "errOllamaDown": {
+    "message": "Ollama が localhost:11434 で応答しません。Ollama を起動してから再試行してください。"
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama が拡張機能を拒否しています（403）。環境変数 OLLAMA_ORIGINS を chrome-extension://*,moz-extension://* に設定し、Ollama を再起動してください。"
+  },
+  "errOpenRouterFree": {
+    "message": "無料モードの OpenRouter は、名前が :free で終わるモデルのみ受け付けます"
+  },
+  "errPaidUnset": {
+    "message": "有料キーはブロックされています：先に設定で 1 日の上限額と 2 つの料金を入力してください。"
+  },
+  "errPaidCap": {
+    "message": "有料キーが 1 日の上限額に達しました（$${0} / $${1}）。"
+  },
+  "errUnknown": {
+    "message": "不明なエラー"
+  },
+  "keyAvailable": {
+    "message": "利用可能"
+  },
+  "keyDisabled": {
+    "message": "無効"
+  },
+  "keyNoModel": {
+    "message": "モデルを選択"
+  },
+  "keyPausedUntil": {
+    "message": "{0} まで一時停止"
+  },
+  "keyProblem": {
+    "message": "問題あり"
+  },
+  "tier_free": {
+    "message": "無料"
+  },
+  "tier_paid": {
+    "message": "有料"
+  },
+  "tier_local": {
+    "message": "ローカル"
+  },
+  "gl_never": {
+    "message": "翻訳しない"
+  },
+  "gl_always": {
+    "message": "常にこの訳語にする"
+  },
+  "popupTranslate": {
+    "message": "このページを翻訳"
+  },
+  "popupSettings": {
+    "message": "設定"
+  },
+  "popupUnsupported": {
+    "message": "このページは拡張機能では翻訳できません（ブラウザーのページ、拡張機能ストア、PDF ビューアー）。"
+  },
+  "popupKey": {
+    "message": "キー"
+  },
+  "popupKeyAuto": {
+    "message": "自動（無料とローカル）"
+  },
+  "popupAuto": {
+    "message": "このサイトを自動で翻訳"
+  },
+  "popupSensitive": {
+    "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
+  },
+  "popupKeys": {
+    "message": "キーの状態"
+  },
+  "popupNoKeys": {
+    "message": "キーはまだありません。"
+  },
+  "popupAddKey": {
+    "message": "キーを追加"
+  },
+  "popupShortcut": {
+    "message": "ショートカット："
+  },
+  "optTitle": {
+    "message": "DevDocTrad の設定"
+  },
+  "optPermMissing": {
+    "message": "翻訳プロバイダーへのアクセスがまだブラウザーで許可されていません。"
+  },
+  "optPermGrant": {
+    "message": "プロバイダーへのアクセスを許可"
+  },
+  "optTabKeys": {
+    "message": "キー"
+  },
+  "optTabTranslation": {
+    "message": "翻訳"
+  },
+  "optTabGlossary": {
+    "message": "用語集"
+  },
+  "optTabSites": {
+    "message": "サイト"
+  },
+  "optTabData": {
+    "message": "データ"
+  },
+  "optKeysTitle": {
+    "message": "API キー"
+  },
+  "optKeysLocal": {
+    "message": "キーはこのブラウザー内（ローカルストレージ）にのみ保存されます。アカウントと同期されることはなく、プロバイダー以外に送信されることもありません。カードの順番が優先順位です。"
+  },
+  "optAddKey": {
+    "message": "追加"
+  },
+  "optKey": {
+    "message": "キー"
+  },
+  "optShow": {
+    "message": "表示"
+  },
+  "optHide": {
+    "message": "隠す"
+  },
+  "optBaseUrl": {
+    "message": "Ollama のアドレス"
+  },
+  "optTier": {
+    "message": "種類"
+  },
+  "optModelEasy": {
+    "message": "モデル（簡単なページ）"
+  },
+  "optModelHard": {
+    "message": "難しいページ用のモデル（任意）"
+  },
+  "optMaxChars": {
+    "message": "バッチサイズ（文字数）"
+  },
+  "optInterval": {
+    "message": "リクエスト間隔（ミリ秒）"
+  },
+  "optMaxReq": {
+    "message": "1 日の最大リクエスト数（0 = 無制限）"
+  },
+  "optPriceIn": {
+    "message": "入力料金（100 万トークンあたり $$）"
+  },
+  "optPriceOut": {
+    "message": "出力料金（100 万トークンあたり $$）"
+  },
+  "optDailyCap": {
+    "message": "1 日の上限額（$$）"
+  },
+  "optLoadModels": {
+    "message": "モデルを読み込む"
+  },
+  "optTest": {
+    "message": "テスト"
+  },
+  "optUp": {
+    "message": "上へ移動"
+  },
+  "optDown": {
+    "message": "下へ移動"
+  },
+  "optDelete": {
+    "message": "削除"
+  },
+  "optDeleteConfirm": {
+    "message": "このキーを削除しますか？"
+  },
+  "optWorking": {
+    "message": "確認中…"
+  },
+  "optTestOk": {
+    "message": "有効なキーです。{0} 個のモデルが使えます。"
+  },
+  "optTestOkLocal": {
+    "message": "Ollama は応答しています。インストール済みモデル: {0}。"
+  },
+  "optModelsLoaded": {
+    "message": "{0} 個のモデルを読み込みました：一覧から選んでください。"
+  },
+  "optSaved": {
+    "message": "保存しました"
+  },
+  "optTarget": {
+    "message": "翻訳先の言語"
+  },
+  "optTargetAuto": {
+    "message": "ブラウザーの言語（{0}）"
+  },
+  "optMode": {
+    "message": "表示"
+  },
+  "optModeReplace": {
+    "message": "テキストを置き換える"
+  },
+  "optModeBilingual": {
+    "message": "対訳（原文の下に翻訳）"
+  },
+  "optExplain": {
+    "message": "専門用語：訳語 + 括弧内に英語"
+  },
+  "optExplainHelp": {
+    "message": "技術的な概念は翻訳し、初出時に英語の用語を括弧内に添えます。オフ：英語の専門用語は括弧なしで英語のまま残します。コードや名前（Path、npm…）は決して翻訳しません。"
+  },
+  "optComments": {
+    "message": "コードブロック内のコメントを翻訳"
+  },
+  "optCommentsHelp": {
+    "message": "既定でオフ。サイトのシンタックスハイライトが認識したコメントだけを翻訳します。コードは一切変更されず、原文は完全に元に戻ります。"
+  },
+  "optPageCap": {
+    "message": "1 ページあたりの文字数の上限"
+  },
+  "optShortcut": {
+    "message": "キーボードショートカット"
+  },
+  "optShortcutCurrent": {
+    "message": "現在のショートカット：{0}。"
+  },
+  "optShortcutNone": {
+    "message": "なし"
+  },
+  "optShortcutWhereChrome": {
+    "message": "変更するには chrome://extensions/shortcuts を開いてください。"
+  },
+  "optShortcutWhereFirefox": {
+    "message": "変更するには：アドオンマネージャー、歯車アイコン、「拡張機能のショートカットキーの管理」。"
+  },
+  "optGlossaryHelp": {
+    "message": "翻訳しない用語、または常に決まった訳にする用語。モデルには段落内にある用語だけが送られます。最大 500 件。"
+  },
+  "optGlTerm": {
+    "message": "用語"
+  },
+  "optGlType": {
+    "message": "ルール"
+  },
+  "optGlTranslation": {
+    "message": "指定の訳語"
+  },
+  "optGlAdd": {
+    "message": "用語を追加"
+  },
+  "optGlExport": {
+    "message": "書き出し（JSON）"
+  },
+  "optGlImport": {
+    "message": "読み込み（JSON）"
+  },
+  "optGlImportError": {
+    "message": "無効なファイルです：{term, type, translation} オブジェクトの JSON リストが必要です。"
+  },
+  "optAutoTitle": {
+    "message": "自動翻訳するサイト"
+  },
+  "optAutoHelp": {
+    "message": "ポップアップの「このサイトを自動で翻訳」でサイトを追加します。自動翻訳では無料キーと Ollama だけを使います。"
+  },
+  "optAutoEmpty": {
+    "message": "サイトはまだありません。"
+  },
+  "optAutoGranted": {
+    "message": "許可済み"
+  },
+  "optAutoRevoked": {
+    "message": "権限が削除されました"
+  },
+  "optSensitiveTitle": {
+    "message": "機密性の高いページ"
+  },
+  "optSensitiveHelp": {
+    "message": "自動では翻訳しません（パスワード欄のあるページも同様）。手動のボタンは使えます。"
+  },
+  "optSensitiveBase": {
+    "message": "基本パターン："
+  },
+  "optSensitiveExtra": {
+    "message": "追加パターン（1 行に 1 つ、単語またはドメイン）"
+  },
+  "optCacheTitle": {
+    "message": "翻訳キャッシュ"
+  },
+  "optCacheInfo": {
+    "message": "キャッシュ内に {0} 件（{1} MB）。翻訳済みのページは通信なしで再表示されます。"
+  },
+  "optCacheClear": {
+    "message": "キャッシュを消去"
+  },
+  "optUsageTitle": {
+    "message": "今日の使用量"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} 件のリクエスト{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "プライバシー"
+  },
+  "optPrivacyText": {
+    "message": "翻訳するページのテキストは、選んだプロバイダーにだけ送信されるか、Ollama を使う場合はあなたのパソコン内にとどまります。統計も追跡もなく、開発者には何も送られません。無料プランでは、Gemini と Mistral が送信したテキストを再利用することがあります。"
+  },
+  "warnGemini": {
+    "message": "請求先を紐づけずに Google AI Studio でキーを作成してください。無料プランでは Google が送信したテキストを再利用することがあります。同じプロジェクトの 2 つのキーは同じ上限を共有します。"
+  },
+  "warnGroq": {
+    "message": "カード不要の無料プラン：上限を超えても 429 エラーになるだけで、請求は発生しません。"
+  },
+  "warnMistral": {
+    "message": "カード不要の無料モード。リクエストが学習に使われる場合があります。必要なら Mistral のコンソールで無効にしてください。"
+  },
+  "warnOpenRouter": {
+    "message": "無料モードでは :free で終わるモデルだけが使えます（1 日約 50 リクエスト）。この拡張機能のためにクレジットをチャージしないでください。"
+  },
+  "warnOllama": {
+    "message": "あなたのパソコン上のモデル：無料でプライベート、データは外に出ません。小さいモデルは誤りが多くなります。疑わしい部分は原文のまま残ります。"
+  },
+  "popupView": {
+    "message": "ページの表示"
+  },
+  "segOriginal": {
+    "message": "原文"
+  },
+  "segTranslation": {
+    "message": "翻訳"
+  },
+  "popupTranslating": {
+    "message": "翻訳中…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} 件"
+  },
+  "popupManage": {
+    "message": "管理"
+  },
+  "popupMoreKeys": {
+    "message": "ほか {0} 個のキー"
+  },
+  "popupNoKeysLong": {
+    "message": "始めるには無料のキー（Gemini、Groq、Mistral、OpenRouter）か Ollama を追加してください。"
+  },
+  "stateReady": {
+    "message": "翻訳できます"
+  },
+  "stateNoKey": {
+    "message": "キーが未設定です"
+  },
+  "stateRunning": {
+    "message": "翻訳中"
+  },
+  "stateTranslated": {
+    "message": "翻訳しました"
+  },
+  "stateOriginal": {
+    "message": "原文を表示中"
+  },
+  "stateStopped": {
+    "message": "停止しました"
+  },
+  "statePaused": {
+    "message": "ページの上限に達しました"
+  },
+  "stateError": {
+    "message": "エラー"
+  },
+  "stateUnavailable": {
+    "message": "翻訳できないページです"
+  },
+  "toastAutoOn": {
+    "message": "{0} の自動翻訳をオンにしました。"
+  },
+  "toastAutoOff": {
+    "message": "{0} の自動翻訳をオフにしました。"
+  },
+  "toastPermDenied": {
+    "message": "権限が拒否されました：サイトは追加されていません。"
+  },
+  "badgeShowBadge": {
+    "message": "DevDocTrad のバッジを表示"
+  },
+  "optNavLabel": {
+    "message": "設定のセクション"
+  },
+  "optNavKeys": {
+    "message": "プロバイダーとキー"
+  },
+  "optNavPrivacy": {
+    "message": "プライバシーと費用"
+  },
+  "optNavAppearance": {
+    "message": "外観"
+  },
+  "optDescKeys": {
+    "message": "API キーと Ollama。カードの順に上から試します。"
+  },
+  "optDescTranslation": {
+    "message": "言語、表示、拡張機能が翻訳してよいもの。"
+  },
+  "optDescPrivacy": {
+    "message": "ブラウザーから何が、どこへ送られ、いくらかかるか。"
+  },
+  "optDescSites": {
+    "message": "自動翻訳するサイトと保護するページ。"
+  },
+  "optDescGlossary": {
+    "message": "そのまま残す用語、または常に同じ訳にする用語。"
+  },
+  "optDescData": {
+    "message": "翻訳キャッシュとこのブラウザーに保存されたデータ。"
+  },
+  "optDescAppearance": {
+    "message": "設定画面、ポップアップ、ページ上のバッジのテーマ。"
+  },
+  "optVersion": {
+    "message": "バージョン {0}"
+  },
+  "optAddProvider": {
+    "message": "プロバイダーを追加"
+  },
+  "optAddProviderHelp": {
+    "message": "新しいカードは最後に追加されます。カードの順番が優先順位です。"
+  },
+  "optProvider": {
+    "message": "プロバイダー"
+  },
+  "optKeysEmptyHint": {
+    "message": "プロバイダーを選ぶとカードが表示されます。キーを貼り付けて「モデルを読み込む」を押し、モデルを選んでください。"
+  },
+  "optKeyName": {
+    "message": "キーの名前"
+  },
+  "optKeyEnabled": {
+    "message": "このキーを使う"
+  },
+  "optPriority": {
+    "message": "優先度 {0}"
+  },
+  "optKeyHelp": {
+    "message": "既定で非表示。このブラウザーにだけ保存されます。"
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama がパソコンで動いている必要があります。"
+  },
+  "optModelHelp": {
+    "message": "「モデルを読み込む」で候補一覧が埋まります。"
+  },
+  "optLimits": {
+    "message": "上限"
+  },
+  "optLimitsHelp": {
+    "message": "空欄 = プロバイダーの既定値。"
+  },
+  "optPaidTitle": {
+    "message": "費用"
+  },
+  "optPaidHelp": {
+    "message": "ポップアップで選んだときだけ使われます。"
+  },
+  "optPaidOk": {
+    "message": "上限額と料金が設定済み：上限額まで使えます。"
+  },
+  "optPrivacyFlow": {
+    "message": "テキストの送信先"
+  },
+  "optProviderNotes": {
+    "message": "プロバイダーごとの注意"
+  },
+  "optProviderUsed": {
+    "message": "使用中"
+  },
+  "optUsageEmpty": {
+    "message": "キーはまだ設定されていません。"
+  },
+  "optUsageHelp": {
+    "message": "毎日午前 0 時（UTC）にリセットされます。"
+  },
+  "optPaidRuleTitle": {
+    "message": "有料キー"
+  },
+  "optPaidRule": {
+    "message": "有料キーが自動で使われることはありません。ポップアップで選ぶ必要があります。1 日の上限額と 2 つの料金を設定するまではブロックされ、上限額に達するとすぐに停止します。"
+  },
+  "optAutoEmptyTitle": {
+    "message": "自動翻訳のサイトはまだありません"
+  },
+  "optAutoEmptyLong": {
+    "message": "追加するには、サイトを開き、ツールバーの DevDocTrad アイコンをクリックして「このサイトを自動で翻訳」をオンにします。ブラウザーはそのサイトの権限だけを求めます。"
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} を自動翻訳のサイトから外しますか？"
+  },
+  "optGlEmpty": {
+    "message": "用語はまだありません。例：「thread」にルール「翻訳しない」。"
+  },
+  "optGlCount": {
+    "message": "{0} / 500 語"
+  },
+  "optGlImported": {
+    "message": "{0} 語を読み込みました。"
+  },
+  "optCacheConfirm": {
+    "message": "キャッシュを消去しますか？翻訳済みのページはもう一度翻訳が必要になります（プロバイダーへの新しい呼び出し）。"
+  },
+  "optCacheCleared": {
+    "message": "キャッシュを消去しました。"
+  },
+  "optStorageTitle": {
+    "message": "ローカルストレージ"
+  },
+  "optTheme": {
+    "message": "テーマ"
+  },
+  "optThemeHelp": {
+    "message": "「システム」はパソコンのライト／ダーク設定に従います。"
+  },
+  "optThemeSystem": {
+    "message": "システム"
+  },
+  "optThemeLight": {
+    "message": "ライト"
+  },
+  "optThemeDark": {
+    "message": "ダーク"
+  },
+  "optPriceInUsd": {
+    "message": "入力料金（100 万トークンあたり $$）"
+  },
+  "optPriceOutUsd": {
+    "message": "出力料金（100 万トークンあたり $$）"
+  },
+  "optDailyCapUsd": {
+    "message": "1 日の上限額（$$）"
+  },
+  "errGeminiPrepay": {
+    "message": "この Google プロジェクトは前払い請求を使っており、クレジットを使い切りました。チャージはしないでください：Google AI Studio で請求先のないプロジェクトにキーを作成してください（無料プラン）。"
+  }
+}

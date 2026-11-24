@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "rtl"
+  },
+  "extDescription": {
+    "message": "מתרגם בנאמנות תיעוד למפתחים ואתרי תכנות, בלי לגעת אף פעם בקוד."
+  },
+  "cmdToggle": {
+    "message": "לתרגם את הדף או לחזור למקור"
+  },
+  "badgeTranslating": {
+    "message": "מתרגם: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "תורגמו: {0} קטעים"
+  },
+  "badgeDoneFailed": {
+    "message": "תורגמו: {0} קטעים, {1} נשארו במקור"
+  },
+  "badgeStopped": {
+    "message": "נעצר"
+  },
+  "badgeCap": {
+    "message": "הגעת למגבלה של {0} תווים בדף זה."
+  },
+  "badgeRateLimited": {
+    "message": "הגעת למגבלת המפתח החינמי. ניסיון חוזר בעוד {0} ש׳ ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "כל המפתחות החינמיים הגיעו למגבלה. נסה שוב מאוחר יותר."
+  },
+  "badgeNoKey": {
+    "message": "אין מפתח זמין. הוסף מפתח בהגדרות."
+  },
+  "badgeError": {
+    "message": "שגיאה: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "תורגם מקומית (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "תורגם באינטרנט ({0})"
+  },
+  "badgeNothing": {
+    "message": "אין מה לתרגם בדף זה."
+  },
+  "badgeKeyProblem": {
+    "message": "בעיה במפתח {0}: {1}"
+  },
+  "btnStop": {
+    "message": "עצור"
+  },
+  "btnOriginal": {
+    "message": "הצג מקור"
+  },
+  "btnTranslation": {
+    "message": "הצג תרגום"
+  },
+  "btnMinimize": {
+    "message": "מזער"
+  },
+  "btnClose": {
+    "message": "סגור"
+  },
+  "btnContinue": {
+    "message": "המשך"
+  },
+  "errAuth": {
+    "message": "המפתח נדחה (לא תקין או בוטל)"
+  },
+  "errPayment": {
+    "message": "יתרה לא מספיקה אצל הספק; המפתח נעצר"
+  },
+  "errRate": {
+    "message": "הגעת למגבלת הבקשות, נסה שוב בעוד דקה"
+  },
+  "errOllamaDown": {
+    "message": "Ollama לא עונה בכתובת localhost:11434. הפעל את Ollama ונסה שוב."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama דוחה את התוסף (403). הגדר את משתנה הסביבה OLLAMA_ORIGINS לערך chrome-extension://*,moz-extension://* ואז הפעל מחדש את Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "במצב חינמי, OpenRouter מקבל רק מודלים ששמם מסתיים ב-:free"
+  },
+  "errPaidUnset": {
+    "message": "המפתח בתשלום חסום: קודם הגדר בהגדרות את התקרה היומית ואת שני המחירים."
+  },
+  "errPaidCap": {
+    "message": "הגעת לתקרה היומית של המפתח בתשלום ($${0} מתוך $${1})."
+  },
+  "errUnknown": {
+    "message": "שגיאה לא ידועה"
+  },
+  "keyAvailable": {
+    "message": "זמין"
+  },
+  "keyDisabled": {
+    "message": "מושבת"
+  },
+  "keyNoModel": {
+    "message": "בחר מודל"
+  },
+  "keyPausedUntil": {
+    "message": "מושהה עד {0}"
+  },
+  "keyProblem": {
+    "message": "בעיה"
+  },
+  "tier_free": {
+    "message": "חינמי"
+  },
+  "tier_paid": {
+    "message": "בתשלום"
+  },
+  "tier_local": {
+    "message": "מקומי"
+  },
+  "gl_never": {
+    "message": "לעולם לא לתרגם"
+  },
+  "gl_always": {
+    "message": "תמיד לתרגם כ־"
+  },
+  "popupTranslate": {
+    "message": "תרגם דף זה"
+  },
+  "popupSettings": {
+    "message": "הגדרות"
+  },
+  "popupUnsupported": {
+    "message": "תוסף לא יכול לתרגם דף זה (דף דפדפן, חנות תוספים או מציג PDF)."
+  },
+  "popupKey": {
+    "message": "מפתח"
+  },
+  "popupKeyAuto": {
+    "message": "אוטומטי (חינמיים ומקומי)"
+  },
+  "popupAuto": {
+    "message": "לתרגם אתר זה אוטומטית"
+  },
+  "popupSensitive": {
+    "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
+  },
+  "popupKeys": {
+    "message": "מצב המפתחות"
+  },
+  "popupNoKeys": {
+    "message": "עדיין אין מפתח."
+  },
+  "popupAddKey": {
+    "message": "הוסף מפתח"
+  },
+  "popupShortcut": {
+    "message": "קיצור:"
+  },
+  "optTitle": {
+    "message": "הגדרות DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "הדפדפן עדיין לא התיר גישה לספקי התרגום."
+  },
+  "optPermGrant": {
+    "message": "התר גישה לספקים"
+  },
+  "optTabKeys": {
+    "message": "מפתחות"
+  },
+  "optTabTranslation": {
+    "message": "תרגום"
+  },
+  "optTabGlossary": {
+    "message": "מילון מונחים"
+  },
+  "optTabSites": {
+    "message": "אתרים"
+  },
+  "optTabData": {
+    "message": "נתונים"
+  },
+  "optKeysTitle": {
+    "message": "מפתחות API"
+  },
+  "optKeysLocal": {
+    "message": "המפתחות נשארים בדפדפן זה (אחסון מקומי). הם לעולם אינם מסונכרנים עם החשבון שלך ואינם נשלחים לשום מקום מלבד הספק. סדר הכרטיסים הוא סדר העדיפות."
+  },
+  "optAddKey": {
+    "message": "הוסף"
+  },
+  "optKey": {
+    "message": "מפתח"
+  },
+  "optShow": {
+    "message": "הצג"
+  },
+  "optHide": {
+    "message": "הסתר"
+  },
+  "optBaseUrl": {
+    "message": "כתובת Ollama"
+  },
+  "optTier": {
+    "message": "סוג"
+  },
+  "optModelEasy": {
+    "message": "מודל (דפים פשוטים)"
+  },
+  "optModelHard": {
+    "message": "מודל לדפים קשים (רשות)"
+  },
+  "optMaxChars": {
+    "message": "גודל אצווה (תווים)"
+  },
+  "optInterval": {
+    "message": "מרווח בין בקשות (מ״ש)"
+  },
+  "optMaxReq": {
+    "message": "מקסימום בקשות ביום (0 = ללא מגבלה)"
+  },
+  "optPriceIn": {
+    "message": "מחיר קלט ($$ למיליון טוקנים)"
+  },
+  "optPriceOut": {
+    "message": "מחיר פלט ($$ למיליון טוקנים)"
+  },
+  "optDailyCap": {
+    "message": "תקרה יומית ($$)"
+  },
+  "optLoadModels": {
+    "message": "טען מודלים"
+  },
+  "optTest": {
+    "message": "בדוק"
+  },
+  "optUp": {
+    "message": "הזז למעלה"
+  },
+  "optDown": {
+    "message": "הזז למטה"
+  },
+  "optDelete": {
+    "message": "מחק"
+  },
+  "optDeleteConfirm": {
+    "message": "למחוק מפתח זה?"
+  },
+  "optWorking": {
+    "message": "בודק…"
+  },
+  "optTestOk": {
+    "message": "מפתח תקין, {0} מודלים זמינים."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama מגיב, מודלים מותקנים: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "נטענו {0} מודלים: בחר אחד מהרשימה."
+  },
+  "optSaved": {
+    "message": "נשמר"
+  },
+  "optTarget": {
+    "message": "שפת יעד"
+  },
+  "optTargetAuto": {
+    "message": "שפת הדפדפן ({0})"
+  },
+  "optMode": {
+    "message": "תצוגה"
+  },
+  "optModeReplace": {
+    "message": "החלף את הטקסט"
+  },
+  "optModeBilingual": {
+    "message": "דו־לשוני (התרגום מתחת למקור)"
+  },
+  "optExplain": {
+    "message": "מונחים טכניים: תרגום + אנגלית בסוגריים"
+  },
+  "optExplainHelp": {
+    "message": "מושגים טכניים מתורגמים, והמונח באנגלית מופיע בסוגריים בהופעה הראשונה. כבוי: מונחים טכניים באנגלית נשארים באנגלית, בלי סוגריים. קוד ושמות (Path, npm…) לעולם אינם מתורגמים."
+  },
+  "optComments": {
+    "message": "תרגם הערות בתוך בלוקי קוד"
+  },
+  "optCommentsHelp": {
+    "message": "כבוי כברירת מחדל. מתורגמות רק הערות שהדגשת התחביר של האתר מזהה; הקוד לעולם אינו משתנה והמקור חוזר ללא שינוי."
+  },
+  "optPageCap": {
+    "message": "מגבלת תווים לדף"
+  },
+  "optShortcut": {
+    "message": "קיצור מקשים"
+  },
+  "optShortcutCurrent": {
+    "message": "הקיצור הנוכחי: {0}."
+  },
+  "optShortcutNone": {
+    "message": "אין"
+  },
+  "optShortcutWhereChrome": {
+    "message": "כדי לשנות: פתח את chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "כדי לשנות: מנהל התוספות, סמל גלגל השיניים, „ניהול קיצורי מקשים של הרחבות”."
+  },
+  "optGlossaryHelp": {
+    "message": "מונחים שלעולם לא מתרגמים, או שתמיד מתרגמים בצורה מסוימת. רק מונחים שנמצאים בקטע נשלחים למודל. עד 500 רשומות."
+  },
+  "optGlTerm": {
+    "message": "מונח"
+  },
+  "optGlType": {
+    "message": "כלל"
+  },
+  "optGlTranslation": {
+    "message": "תרגום מחייב"
+  },
+  "optGlAdd": {
+    "message": "הוסף מונח"
+  },
+  "optGlExport": {
+    "message": "ייצוא (JSON)"
+  },
+  "optGlImport": {
+    "message": "ייבוא (JSON)"
+  },
+  "optGlImportError": {
+    "message": "קובץ לא תקין: נדרשת רשימת JSON של אובייקטים {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "אתרים המתורגמים אוטומטית"
+  },
+  "optAutoHelp": {
+    "message": "הוסף אתר מהחלון הקופץ באמצעות „לתרגם אתר זה אוטומטית”. רק מפתחות חינמיים ו-Ollama משמשים אוטומטית."
+  },
+  "optAutoEmpty": {
+    "message": "עדיין אין אתר."
+  },
+  "optAutoGranted": {
+    "message": "מותר"
+  },
+  "optAutoRevoked": {
+    "message": "ההרשאה הוסרה"
+  },
+  "optSensitiveTitle": {
+    "message": "דפים רגישים"
+  },
+  "optSensitiveHelp": {
+    "message": "לעולם אינם מתורגמים אוטומטית (וגם לא דף עם שדה סיסמה). הכפתור הידני עדיין עובד."
+  },
+  "optSensitiveBase": {
+    "message": "תבניות בסיס:"
+  },
+  "optSensitiveExtra": {
+    "message": "תבניות נוספות (אחת בכל שורה, מילה או דומיין)"
+  },
+  "optCacheTitle": {
+    "message": "מטמון התרגומים"
+  },
+  "optCacheInfo": {
+    "message": "{0} קטעים במטמון ({1} MB). דף שכבר תורגם מוצג שוב בלי קריאת רשת."
+  },
+  "optCacheClear": {
+    "message": "נקה מטמון"
+  },
+  "optUsageTitle": {
+    "message": "השימוש היום"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} בקשות{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "פרטיות"
+  },
+  "optPrivacyText": {
+    "message": "טקסט הדפים שאתה מתרגם נשלח רק לספק שבחרת, או נשאר במחשב שלך עם Ollama. בלי סטטיסטיקות, בלי מעקב, שום דבר לא נשלח למפתח. במסלולים חינמיים, Gemini ו-Mistral עשויים לעשות שימוש חוזר בטקסט שנשלח."
+  },
+  "warnGemini": {
+    "message": "צור את המפתח ב-Google AI Studio בלי לקשר חיוב. במסלול החינמי Google עשויה לעשות שימוש חוזר בטקסט שנשלח. שני מפתחות מאותו פרויקט חולקים את אותה מגבלה."
+  },
+  "warnGroq": {
+    "message": "מסלול חינמי בלי כרטיס: מעבר למגבלה תקבל רק שגיאה 429, אף פעם לא חשבונית."
+  },
+  "warnMistral": {
+    "message": "מצב חינמי בלי כרטיס. הבקשות עשויות לשמש לאימון: כבה זאת במסוף של Mistral אם אתה מעדיף."
+  },
+  "warnOpenRouter": {
+    "message": "במצב חינמי מתקבלים רק מודלים שמסתיימים ב-:free (כ־50 בקשות ביום). לעולם אל תטען קרדיט עבור תוסף זה."
+  },
+  "warnOllama": {
+    "message": "מודל במחשב שלך: חינמי ופרטי, שום דבר לא יוצא מהמחשב. מודל קטן טועה יותר; קטעים מפוקפקים נשארים במקור."
+  },
+  "popupView": {
+    "message": "תצוגת הדף"
+  },
+  "segOriginal": {
+    "message": "מקור"
+  },
+  "segTranslation": {
+    "message": "תרגום"
+  },
+  "popupTranslating": {
+    "message": "מתרגם…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} קטעים"
+  },
+  "popupManage": {
+    "message": "ניהול"
+  },
+  "popupMoreKeys": {
+    "message": "ועוד {0} מפתחות"
+  },
+  "popupNoKeysLong": {
+    "message": "כדי להתחיל, הוסף מפתח חינמי (Gemini, Groq, Mistral, OpenRouter) או Ollama."
+  },
+  "stateReady": {
+    "message": "מוכן לתרגום"
+  },
+  "stateNoKey": {
+    "message": "לא הוגדר מפתח"
+  },
+  "stateRunning": {
+    "message": "מתרגם"
+  },
+  "stateTranslated": {
+    "message": "הדף תורגם"
+  },
+  "stateOriginal": {
+    "message": "המקור מוצג"
+  },
+  "stateStopped": {
+    "message": "נעצר"
+  },
+  "statePaused": {
+    "message": "הגעת למגבלת הדף"
+  },
+  "stateError": {
+    "message": "שגיאה"
+  },
+  "stateUnavailable": {
+    "message": "לא ניתן לתרגם את הדף"
+  },
+  "toastAutoOn": {
+    "message": "התרגום האוטומטי הופעל עבור {0}."
+  },
+  "toastAutoOff": {
+    "message": "התרגום האוטומטי כובה עבור {0}."
+  },
+  "toastPermDenied": {
+    "message": "ההרשאה נדחתה: האתר לא נוסף."
+  },
+  "badgeShowBadge": {
+    "message": "הצג את התג של DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "מקטעי ההגדרות"
+  },
+  "optNavKeys": {
+    "message": "ספקים ומפתחות"
+  },
+  "optNavPrivacy": {
+    "message": "פרטיות ועלויות"
+  },
+  "optNavAppearance": {
+    "message": "מראה"
+  },
+  "optDescKeys": {
+    "message": "מפתחות ה-API שלך ו-Ollama, נבדקים לפי סדר הכרטיסים מלמעלה למטה."
+  },
+  "optDescTranslation": {
+    "message": "שפה, תצוגה ומה מותר לתוסף לתרגם."
+  },
+  "optDescPrivacy": {
+    "message": "מה יוצא מהדפדפן שלך, אל מי, וכמה זה עולה."
+  },
+  "optDescSites": {
+    "message": "אתרים המתורגמים אוטומטית ודפים שיש להגן עליהם."
+  },
+  "optDescGlossary": {
+    "message": "מונחים שיש להשאיר כפי שהם או לתרגם תמיד באותו אופן."
+  },
+  "optDescData": {
+    "message": "מטמון התרגומים והנתונים השמורים בדפדפן זה."
+  },
+  "optDescAppearance": {
+    "message": "ערכת הנושא של ההגדרות, החלון הקופץ והתג המוצג בדפים."
+  },
+  "optVersion": {
+    "message": "גרסה {0}"
+  },
+  "optAddProvider": {
+    "message": "הוסף ספק"
+  },
+  "optAddProviderHelp": {
+    "message": "הכרטיס החדש נוסף בסוף. סדר הכרטיסים הוא סדר העדיפות."
+  },
+  "optProvider": {
+    "message": "ספק"
+  },
+  "optKeysEmptyHint": {
+    "message": "בחר ספק: מופיע כרטיס, הדבק את המפתח שלך, ואז „טען מודלים” ובחר מודל."
+  },
+  "optKeyName": {
+    "message": "שם המפתח"
+  },
+  "optKeyEnabled": {
+    "message": "השתמש במפתח זה"
+  },
+  "optPriority": {
+    "message": "עדיפות {0}"
+  },
+  "optKeyHelp": {
+    "message": "מוסתר כברירת מחדל, נשמר רק בדפדפן זה."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama צריך לרוץ במחשב שלך."
+  },
+  "optModelHelp": {
+    "message": "„טען מודלים” ממלא את רשימת ההצעות."
+  },
+  "optLimits": {
+    "message": "מגבלות"
+  },
+  "optLimitsHelp": {
+    "message": "ריק = ברירת המחדל של הספק."
+  },
+  "optPaidTitle": {
+    "message": "עלויות"
+  },
+  "optPaidHelp": {
+    "message": "משמש רק כשאתה בוחר בו בחלון הקופץ."
+  },
+  "optPaidOk": {
+    "message": "התקרה והמחירים הוגדרו: ניתן להשתמש במפתח עד התקרה."
+  },
+  "optPrivacyFlow": {
+    "message": "לאן הטקסט הולך"
+  },
+  "optProviderNotes": {
+    "message": "הערות לכל ספק"
+  },
+  "optProviderUsed": {
+    "message": "בשימוש"
+  },
+  "optUsageEmpty": {
+    "message": "עדיין לא הוגדר מפתח."
+  },
+  "optUsageHelp": {
+    "message": "מתאפס בכל יום בחצות (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "מפתחות בתשלום"
+  },
+  "optPaidRule": {
+    "message": "מפתח בתשלום לעולם אינו משמש אוטומטית: צריך לבחור בו בחלון הקופץ. הוא נשאר חסום עד שמוגדרים התקרה היומית ושני המחירים, ונעצר ברגע שמגיעים לתקרה."
+  },
+  "optAutoEmptyTitle": {
+    "message": "עדיין אין אתר אוטומטי"
+  },
+  "optAutoEmptyLong": {
+    "message": "כדי להוסיף: פתח את האתר, לחץ על סמל DevDocTrad בסרגל הכלים, ואז הפעל את „לתרגם אתר זה אוטומטית”. הדפדפן מבקש הרשאה לאתר זה בלבד."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "להסיר את {0} מהאתרים המתורגמים אוטומטית?"
+  },
+  "optGlEmpty": {
+    "message": "עדיין אין מונח. דוגמה: „thread” עם הכלל „לעולם לא לתרגם”."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 מונחים"
+  },
+  "optGlImported": {
+    "message": "יובאו {0} מונחים."
+  },
+  "optCacheConfirm": {
+    "message": "לנקות את המטמון? יהיה צורך לתרגם שוב דפים שכבר תורגמו (קריאות חדשות לספקים)."
+  },
+  "optCacheCleared": {
+    "message": "המטמון נוקה."
+  },
+  "optStorageTitle": {
+    "message": "אחסון מקומי"
+  },
+  "optTheme": {
+    "message": "ערכת נושא"
+  },
+  "optThemeHelp": {
+    "message": "„מערכת” עוקבת אחר ההגדרה הבהירה או הכהה של המחשב שלך."
+  },
+  "optThemeSystem": {
+    "message": "מערכת"
+  },
+  "optThemeLight": {
+    "message": "בהירה"
+  },
+  "optThemeDark": {
+    "message": "כהה"
+  },
+  "optPriceInUsd": {
+    "message": "מחיר קלט ($$ למיליון טוקנים)"
+  },
+  "optPriceOutUsd": {
+    "message": "מחיר פלט ($$ למיליון טוקנים)"
+  },
+  "optDailyCapUsd": {
+    "message": "תקרה יומית ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "פרויקט Google זה משתמש בחיוב בתשלום מראש והקרדיטים שלו אזלו. אל תטען דבר: צור מפתח בפרויקט ללא חיוב ב-Google AI Studio (מסלול חינמי)."
+  }
+}

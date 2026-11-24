@@ -8,6 +8,7 @@
   var $ = function (id) { return document.getElementById(id); };
 
   var keys = [];
+  var TEXT_MASK = !!(window.CSS && CSS.supports && CSS.supports('-webkit-text-security', 'disc'));
   var settings = Object.assign({}, DDT.DEFAULT_SETTINGS);
   var glossary = [];
   var publicKeys = {};
@@ -179,6 +180,17 @@
     card.querySelector('.kc-note-txt').textContent = WARN[k.provider] ? t(WARN[k.provider]) : '';
     card.querySelector('.kc-note').hidden = !WARN[k.provider];
     card.querySelector('.f-key').hidden = isOllama;
+    // Une clé d'API n'est pas un mot de passe : un champ « password » fait proposer par le navigateur
+    // les identifiants enregistrés (et parfois les écrire dedans). Si le navigateur sait masquer un champ
+    // texte, on l'utilise : plus aucune suggestion de mot de passe, la clé reste masquée par défaut.
+    var keyInp = card.querySelector('[data-f=key]');
+    if (TEXT_MASK) { keyInp.type = 'text'; keyInp.classList.add('masked'); }
+    else {
+      // Firefox ne sait pas masquer un champ texte : masqué au repos, champ texte pendant la saisie
+      // (sinon il propose « mot de passe généré », qui écraserait la clé).
+      keyInp.addEventListener('focus', function () { keyInp.type = 'text'; });
+      keyInp.addEventListener('blur', function () { if (!keyInp.dataset.shown) keyInp.type = 'password'; });
+    }
     card.querySelector('.f-url').hidden = !isOllama;
     card.querySelector('.f-tier').hidden = isOllama;
     card.querySelector('.f-paid').hidden = k.tier !== 'paid' || isOllama;
@@ -275,8 +287,13 @@
       var i = keys.indexOf(k);
       if (a === 'show') {
         var inp = card.querySelector('[data-f=key]');
-        var hidden = inp.type === 'password';
-        inp.type = hidden ? 'text' : 'password';
+        var hidden = TEXT_MASK ? inp.classList.contains('masked') : inp.type === 'password';
+        if (TEXT_MASK) inp.classList.toggle('masked', !hidden);
+        else {
+          if (document.activeElement === inp) hidden = !inp.dataset.shown;
+          inp.type = hidden ? 'text' : 'password';
+          if (hidden) inp.dataset.shown = '1'; else delete inp.dataset.shown;
+        }
         var lbl = hidden ? t('optHide') : t('optShow');
         b.setAttribute('aria-label', lbl);
         b.setAttribute('title', lbl);
@@ -311,7 +328,7 @@
             if (m.free) o.label = m.id + ' (' + t('tier_free') + ')';
             dl.appendChild(o);
           });
-          setResult(card, 'ok', a === 'test' ? t('optTestOk', [models.length]) : t('optModelsLoaded', [dl.children.length]));
+          setResult(card, 'ok', a === 'test' ? t(k.provider === 'ollama' ? 'optTestOkLocal' : 'optTestOk', [models.length]) : t('optModelsLoaded', [dl.children.length]));
         }, function (err) {
           b.disabled = false;
           var msg = String(err && err.message || err);

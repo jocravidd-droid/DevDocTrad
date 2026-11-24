@@ -26,7 +26,9 @@
   --edge: rgba(255, 255, 255, .85);         /* contour lumineux */
   --edge-inner: rgba(255, 255, 255, .9);    /* reflet spéculaire du haut */
   --hairline: rgba(24, 32, 84, .10);
-  --sheet-back: rgba(76, 66, 228, .30);     /* couche décalée (motif du logo) */
+  --sheet-back: #cfccf8;                    /* feuille arrière (motif du logo) */
+  --sheet-edge: rgba(76, 66, 228, .16);
+  --track-off: rgba(24, 32, 84, .18);       /* interrupteur éteint */
 
   /* Texte : 3 niveaux, le 3e réservé à l'inactif */
   --text-1: #12152b;
@@ -86,7 +88,9 @@
   --edge: rgba(170, 190, 255, .20);
   --edge-inner: rgba(255, 255, 255, .10);
   --hairline: rgba(170, 190, 255, .14);
-  --sheet-back: rgba(124, 92, 246, .42);
+  --sheet-back: #2e2a6e;
+  --sheet-edge: rgba(170, 150, 255, .30);
+  --track-off: rgba(170, 190, 255, .22);
   --text-1: #eef0ff;
   --text-2: #a9b0d8;
   --text-3: #6c7299;
@@ -120,7 +124,9 @@
     --edge: rgba(170, 190, 255, .20);
     --edge-inner: rgba(255, 255, 255, .10);
     --hairline: rgba(170, 190, 255, .14);
-    --sheet-back: rgba(124, 92, 246, .42);
+    --sheet-back: #2e2a6e;
+  --sheet-edge: rgba(170, 150, 255, .30);
+  --track-off: rgba(170, 190, 255, .22);
     --text-1: #eef0ff;
     --text-2: #a9b0d8;
     --text-3: #6c7299;

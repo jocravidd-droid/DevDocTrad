@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "忠實翻譯開發者文件與程式設計網站，絕不更動程式碼。"
+  },
+  "cmdToggle": {
+    "message": "翻譯頁面或返回原文"
+  },
+  "badgeTranslating": {
+    "message": "翻譯中：{0} / {1}"
+  },
+  "badgeDone": {
+    "message": "已翻譯：{0} 段"
+  },
+  "badgeDoneFailed": {
+    "message": "已翻譯：{0} 段，{1} 段保留原文"
+  },
+  "badgeStopped": {
+    "message": "已停止"
+  },
+  "badgeCap": {
+    "message": "此頁面已達 {0} 個字元的上限。"
+  },
+  "badgeRateLimited": {
+    "message": "免費金鑰已達上限。{0} 秒後重試（{1}/3）。"
+  },
+  "badgeRateGiveUp": {
+    "message": "所有免費金鑰皆已達上限。請稍後再試。"
+  },
+  "badgeNoKey": {
+    "message": "沒有可用的金鑰。請在設定中新增金鑰。"
+  },
+  "badgeError": {
+    "message": "錯誤：{0}"
+  },
+  "badgeViaLocal": {
+    "message": "本機翻譯（Ollama）"
+  },
+  "badgeViaOnline": {
+    "message": "線上翻譯（{0}）"
+  },
+  "badgeNothing": {
+    "message": "此頁面沒有需要翻譯的內容。"
+  },
+  "badgeKeyProblem": {
+    "message": "金鑰 {0} 發生問題：{1}"
+  },
+  "btnStop": {
+    "message": "停止"
+  },
+  "btnOriginal": {
+    "message": "檢視原文"
+  },
+  "btnTranslation": {
+    "message": "檢視譯文"
+  },
+  "btnMinimize": {
+    "message": "最小化"
+  },
+  "btnClose": {
+    "message": "關閉"
+  },
+  "btnContinue": {
+    "message": "繼續"
+  },
+  "errAuth": {
+    "message": "金鑰遭拒（無效或已撤銷）"
+  },
+  "errPayment": {
+    "message": "服務商餘額不足；金鑰已停用"
+  },
+  "errRate": {
+    "message": "已達請求上限，請一分鐘後再試"
+  },
+  "errOllamaDown": {
+    "message": "Ollama 在 localhost:11434 沒有回應。請啟動 Ollama 後再試一次。"
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama 拒絕了擴充功能（403）。請將環境變數 OLLAMA_ORIGINS 設為 chrome-extension://*,moz-extension://*，然後重新啟動 Ollama。"
+  },
+  "errOpenRouterFree": {
+    "message": "在免費模式下，OpenRouter 只接受名稱以 :free 結尾的模型"
+  },
+  "errPaidUnset": {
+    "message": "付費金鑰已封鎖：請先在設定中設定每日上限和兩個價格。"
+  },
+  "errPaidCap": {
+    "message": "付費金鑰已達每日上限（$${0} / $${1}）。"
+  },
+  "errUnknown": {
+    "message": "未知的錯誤"
+  },
+  "keyAvailable": {
+    "message": "可用"
+  },
+  "keyDisabled": {
+    "message": "已停用"
+  },
+  "keyNoModel": {
+    "message": "請選擇模型"
+  },
+  "keyPausedUntil": {
+    "message": "暫停至 {0}"
+  },
+  "keyProblem": {
+    "message": "有問題"
+  },
+  "tier_free": {
+    "message": "免費"
+  },
+  "tier_paid": {
+    "message": "付費"
+  },
+  "tier_local": {
+    "message": "本機"
+  },
+  "gl_never": {
+    "message": "一律不翻譯"
+  },
+  "gl_always": {
+    "message": "一律譯為"
+  },
+  "popupTranslate": {
+    "message": "翻譯此頁面"
+  },
+  "popupSettings": {
+    "message": "設定"
+  },
+  "popupUnsupported": {
+    "message": "擴充功能無法翻譯此頁面（瀏覽器頁面、擴充功能商店或 PDF 檢視器）。"
+  },
+  "popupKey": {
+    "message": "金鑰"
+  },
+  "popupKeyAuto": {
+    "message": "自動（免費與本機）"
+  },
+  "popupAuto": {
+    "message": "自動翻譯此網站"
+  },
+  "popupSensitive": {
+    "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
+  },
+  "popupKeys": {
+    "message": "金鑰狀態"
+  },
+  "popupNoKeys": {
+    "message": "尚無金鑰。"
+  },
+  "popupAddKey": {
+    "message": "新增金鑰"
+  },
+  "popupShortcut": {
+    "message": "快速鍵："
+  },
+  "optTitle": {
+    "message": "DevDocTrad 設定"
+  },
+  "optPermMissing": {
+    "message": "瀏覽器尚未允許存取翻譯服務商。"
+  },
+  "optPermGrant": {
+    "message": "允許存取服務商"
+  },
+  "optTabKeys": {
+    "message": "金鑰"
+  },
+  "optTabTranslation": {
+    "message": "翻譯"
+  },
+  "optTabGlossary": {
+    "message": "詞彙表"
+  },
+  "optTabSites": {
+    "message": "網站"
+  },
+  "optTabData": {
+    "message": "資料"
+  },
+  "optKeysTitle": {
+    "message": "API 金鑰"
+  },
+  "optKeysLocal": {
+    "message": "金鑰只保存在此瀏覽器中（本機儲存空間）。它們從不與你的帳戶同步，也只會傳送給對應的服務商。卡片順序即優先順序。"
+  },
+  "optAddKey": {
+    "message": "新增"
+  },
+  "optKey": {
+    "message": "金鑰"
+  },
+  "optShow": {
+    "message": "顯示"
+  },
+  "optHide": {
+    "message": "隱藏"
+  },
+  "optBaseUrl": {
+    "message": "Ollama 位址"
+  },
+  "optTier": {
+    "message": "類型"
+  },
+  "optModelEasy": {
+    "message": "模型（簡單頁面）"
+  },
+  "optModelHard": {
+    "message": "困難頁面模型（選填）"
+  },
+  "optMaxChars": {
+    "message": "批次大小（字元）"
+  },
+  "optInterval": {
+    "message": "請求間隔（毫秒）"
+  },
+  "optMaxReq": {
+    "message": "每日最多請求數（0 = 不限）"
+  },
+  "optPriceIn": {
+    "message": "輸入價格（每百萬 token $$）"
+  },
+  "optPriceOut": {
+    "message": "輸出價格（每百萬 token $$）"
+  },
+  "optDailyCap": {
+    "message": "每日上限（$$）"
+  },
+  "optLoadModels": {
+    "message": "載入模型"
+  },
+  "optTest": {
+    "message": "測試"
+  },
+  "optUp": {
+    "message": "上移"
+  },
+  "optDown": {
+    "message": "下移"
+  },
+  "optDelete": {
+    "message": "刪除"
+  },
+  "optDeleteConfirm": {
+    "message": "要刪除此金鑰嗎？"
+  },
+  "optWorking": {
+    "message": "檢查中…"
+  },
+  "optTestOk": {
+    "message": "金鑰有效，可用模型 {0} 個。"
+  },
+  "optTestOkLocal": {
+    "message": "Ollama 已回應，已安裝 {0} 個模型。"
+  },
+  "optModelsLoaded": {
+    "message": "已載入 {0} 個模型：請從清單中選擇一個。"
+  },
+  "optSaved": {
+    "message": "已儲存"
+  },
+  "optTarget": {
+    "message": "目標語言"
+  },
+  "optTargetAuto": {
+    "message": "瀏覽器語言（{0}）"
+  },
+  "optMode": {
+    "message": "顯示方式"
+  },
+  "optModeReplace": {
+    "message": "取代文字"
+  },
+  "optModeBilingual": {
+    "message": "雙語（譯文顯示於原文下方）"
+  },
+  "optExplain": {
+    "message": "技術術語：譯文 + 括號內英文"
+  },
+  "optExplainHelp": {
+    "message": "技術概念會被翻譯，並於首次出現時在括號內附上英文術語。關閉：英文技術術語維持英文，不加括號。程式碼與名稱（Path、npm…）一律不翻譯。"
+  },
+  "optComments": {
+    "message": "翻譯程式碼區塊中的註解"
+  },
+  "optCommentsHelp": {
+    "message": "預設關閉。只翻譯網站語法醒目提示能辨識的註解；程式碼從不更動，原文可完整還原。"
+  },
+  "optPageCap": {
+    "message": "每頁字元上限"
+  },
+  "optShortcut": {
+    "message": "鍵盤快速鍵"
+  },
+  "optShortcutCurrent": {
+    "message": "目前的快速鍵：{0}。"
+  },
+  "optShortcutNone": {
+    "message": "無"
+  },
+  "optShortcutWhereChrome": {
+    "message": "如需變更：開啟 chrome://extensions/shortcuts。"
+  },
+  "optShortcutWhereFirefox": {
+    "message": "如需變更：附加元件管理員，齒輪圖示，「管理擴充套件快速鍵」。"
+  },
+  "optGlossaryHelp": {
+    "message": "一律不翻譯或一律以特定方式翻譯的術語。只有段落中出現的術語才會傳送給模型。最多 500 筆。"
+  },
+  "optGlTerm": {
+    "message": "術語"
+  },
+  "optGlType": {
+    "message": "規則"
+  },
+  "optGlTranslation": {
+    "message": "指定譯法"
+  },
+  "optGlAdd": {
+    "message": "新增術語"
+  },
+  "optGlExport": {
+    "message": "匯出（JSON）"
+  },
+  "optGlImport": {
+    "message": "匯入（JSON）"
+  },
+  "optGlImportError": {
+    "message": "檔案無效：需要由 {term, type, translation} 物件組成的 JSON 清單。"
+  },
+  "optAutoTitle": {
+    "message": "自動翻譯的網站"
+  },
+  "optAutoHelp": {
+    "message": "在彈出視窗中透過「自動翻譯此網站」新增網站。自動翻譯只使用免費金鑰和 Ollama。"
+  },
+  "optAutoEmpty": {
+    "message": "尚無網站。"
+  },
+  "optAutoGranted": {
+    "message": "已允許"
+  },
+  "optAutoRevoked": {
+    "message": "權限已撤銷"
+  },
+  "optSensitiveTitle": {
+    "message": "敏感頁面"
+  },
+  "optSensitiveHelp": {
+    "message": "一律不自動翻譯（任何含密碼欄位的頁面也一樣）。手動按鈕仍可使用。"
+  },
+  "optSensitiveBase": {
+    "message": "基本規則："
+  },
+  "optSensitiveExtra": {
+    "message": "額外規則（每行一個字詞或網域）"
+  },
+  "optCacheTitle": {
+    "message": "翻譯快取"
+  },
+  "optCacheInfo": {
+    "message": "快取中有 {0} 段（{1} MB）。已翻譯過的頁面再次顯示時無須連網。"
+  },
+  "optCacheClear": {
+    "message": "清除快取"
+  },
+  "optUsageTitle": {
+    "message": "今日用量"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} 次請求{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "隱私權"
+  },
+  "optPrivacyText": {
+    "message": "你翻譯的頁面文字只會傳送給你選擇的服務商，或在使用 Ollama 時留在你的電腦上。沒有統計，沒有追蹤，不會傳送任何內容給開發者。在免費方案中，Gemini 和 Mistral 可能會再次使用傳送的文字。"
+  },
+  "warnGemini": {
+    "message": "請在 Google AI Studio 建立金鑰，不要綁定帳單。在免費方案中，Google 可能會再次使用傳送的文字。同一專案的兩個金鑰共用同一限額。"
+  },
+  "warnGroq": {
+    "message": "免信用卡的免費方案：超過限額只會收到 429 錯誤，絕不會產生帳單。"
+  },
+  "warnMistral": {
+    "message": "免信用卡的免費模式。請求可能用於訓練：如有需要，可在 Mistral 主控台關閉。"
+  },
+  "warnOpenRouter": {
+    "message": "免費模式只接受以 :free 結尾的模型（每天約 50 次請求）。切勿為此擴充功能儲值。"
+  },
+  "warnOllama": {
+    "message": "模型在你的電腦上執行：免費且私密，資料不會離開你的電腦。小模型較容易出錯；可疑的段落會保留原文。"
+  },
+  "popupView": {
+    "message": "頁面顯示"
+  },
+  "segOriginal": {
+    "message": "原文"
+  },
+  "segTranslation": {
+    "message": "譯文"
+  },
+  "popupTranslating": {
+    "message": "翻譯中…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} 段"
+  },
+  "popupManage": {
+    "message": "管理"
+  },
+  "popupMoreKeys": {
+    "message": "以及另外 {0} 個金鑰"
+  },
+  "popupNoKeysLong": {
+    "message": "新增一個免費金鑰（Gemini、Groq、Mistral、OpenRouter）或 Ollama 即可開始。"
+  },
+  "stateReady": {
+    "message": "可以翻譯"
+  },
+  "stateNoKey": {
+    "message": "尚未設定金鑰"
+  },
+  "stateRunning": {
+    "message": "翻譯中"
+  },
+  "stateTranslated": {
+    "message": "頁面已翻譯"
+  },
+  "stateOriginal": {
+    "message": "顯示原文中"
+  },
+  "stateStopped": {
+    "message": "已停止"
+  },
+  "statePaused": {
+    "message": "已達頁面上限"
+  },
+  "stateError": {
+    "message": "錯誤"
+  },
+  "stateUnavailable": {
+    "message": "無法翻譯此頁面"
+  },
+  "toastAutoOn": {
+    "message": "已為 {0} 開啟自動翻譯。"
+  },
+  "toastAutoOff": {
+    "message": "已為 {0} 關閉自動翻譯。"
+  },
+  "toastPermDenied": {
+    "message": "權限遭拒：未新增該網站。"
+  },
+  "badgeShowBadge": {
+    "message": "顯示 DevDocTrad 徽章"
+  },
+  "optNavLabel": {
+    "message": "設定區段"
+  },
+  "optNavKeys": {
+    "message": "服務商與金鑰"
+  },
+  "optNavPrivacy": {
+    "message": "隱私權與費用"
+  },
+  "optNavAppearance": {
+    "message": "外觀"
+  },
+  "optDescKeys": {
+    "message": "你的 API 金鑰和 Ollama，依卡片順序由上而下依序嘗試。"
+  },
+  "optDescTranslation": {
+    "message": "語言、顯示方式，以及擴充功能可以翻譯的內容。"
+  },
+  "optDescPrivacy": {
+    "message": "哪些內容離開瀏覽器、傳給誰、花費多少。"
+  },
+  "optDescSites": {
+    "message": "自動翻譯的網站與需要保護的頁面。"
+  },
+  "optDescGlossary": {
+    "message": "維持不變或一律以相同方式翻譯的術語。"
+  },
+  "optDescData": {
+    "message": "翻譯快取以及儲存在此瀏覽器中的資料。"
+  },
+  "optDescAppearance": {
+    "message": "設定頁、彈出視窗與頁面徽章的主題。"
+  },
+  "optVersion": {
+    "message": "版本 {0}"
+  },
+  "optAddProvider": {
+    "message": "新增服務商"
+  },
+  "optAddProviderHelp": {
+    "message": "新卡片會放在最後。卡片順序即優先順序。"
+  },
+  "optProvider": {
+    "message": "服務商"
+  },
+  "optKeysEmptyHint": {
+    "message": "選擇一個服務商：出現卡片後貼上你的金鑰，然後按「載入模型」並選擇一個模型。"
+  },
+  "optKeyName": {
+    "message": "金鑰名稱"
+  },
+  "optKeyEnabled": {
+    "message": "使用此金鑰"
+  },
+  "optPriority": {
+    "message": "優先順序 {0}"
+  },
+  "optKeyHelp": {
+    "message": "預設隱藏，只保存在此瀏覽器中。"
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama 必須在你的電腦上執行。"
+  },
+  "optModelHelp": {
+    "message": "「載入模型」會填入建議清單。"
+  },
+  "optLimits": {
+    "message": "限制"
+  },
+  "optLimitsHelp": {
+    "message": "留空 = 服務商預設值。"
+  },
+  "optPaidTitle": {
+    "message": "費用"
+  },
+  "optPaidHelp": {
+    "message": "只有在彈出視窗中選擇它時才會使用。"
+  },
+  "optPaidOk": {
+    "message": "已設定上限與價格：金鑰可使用到上限為止。"
+  },
+  "optPrivacyFlow": {
+    "message": "文字傳送到哪裡"
+  },
+  "optProviderNotes": {
+    "message": "各服務商說明"
+  },
+  "optProviderUsed": {
+    "message": "使用中"
+  },
+  "optUsageEmpty": {
+    "message": "尚未設定金鑰。"
+  },
+  "optUsageHelp": {
+    "message": "每天午夜（UTC）歸零。"
+  },
+  "optPaidRuleTitle": {
+    "message": "付費金鑰"
+  },
+  "optPaidRule": {
+    "message": "付費金鑰從不自動使用：必須在彈出視窗中手動選擇。在設定每日上限和兩個價格之前，它會一直被封鎖，一旦達到上限就會立即停止。"
+  },
+  "optAutoEmptyTitle": {
+    "message": "尚無自動翻譯的網站"
+  },
+  "optAutoEmptyLong": {
+    "message": "新增方式：開啟網站，點選工具列中的 DevDocTrad 圖示，然後開啟「自動翻譯此網站」。瀏覽器只會要求該網站的權限。"
+  },
+  "optAutoRemoveConfirm": {
+    "message": "要將 {0} 從自動翻譯的網站中移除嗎？"
+  },
+  "optGlEmpty": {
+    "message": "尚無術語。範例：「thread」，規則為「一律不翻譯」。"
+  },
+  "optGlCount": {
+    "message": "{0} / 500 個術語"
+  },
+  "optGlImported": {
+    "message": "已匯入 {0} 個術語。"
+  },
+  "optCacheConfirm": {
+    "message": "要清除快取嗎？已翻譯的頁面需要重新翻譯（會重新呼叫服務商）。"
+  },
+  "optCacheCleared": {
+    "message": "快取已清除。"
+  },
+  "optStorageTitle": {
+    "message": "本機儲存空間"
+  },
+  "optTheme": {
+    "message": "主題"
+  },
+  "optThemeHelp": {
+    "message": "「跟隨系統」會採用電腦的淺色或深色設定。"
+  },
+  "optThemeSystem": {
+    "message": "跟隨系統"
+  },
+  "optThemeLight": {
+    "message": "淺色"
+  },
+  "optThemeDark": {
+    "message": "深色"
+  },
+  "optPriceInUsd": {
+    "message": "輸入價格（每百萬 token $$）"
+  },
+  "optPriceOutUsd": {
+    "message": "輸出價格（每百萬 token $$）"
+  },
+  "optDailyCapUsd": {
+    "message": "每日上限（$$）"
+  },
+  "errGeminiPrepay": {
+    "message": "此 Google 專案使用預付帳單，額度已用完。請不要儲值：在 Google AI Studio 中於未啟用帳單的專案裡建立金鑰（免費方案）。"
+  }
+}

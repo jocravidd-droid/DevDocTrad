@@ -2,6 +2,9 @@
   "extName": {
     "message": "DevDocTrad"
   },
+  "uiDir": {
+    "message": "ltr"
+  },
   "extDescription": {
     "message": "Übersetzt Entwicklerdokumentation und Programmierseiten originalgetreu, ohne jemals den Code anzutasten."
   },
@@ -251,6 +254,9 @@
   "optTestOk": {
     "message": "Gültiger Schlüssel, {0} Modelle verfügbar."
   },
+  "optTestOkLocal": {
+    "message": "Ollama antwortet, {0} Modelle installiert."
+  },
   "optModelsLoaded": {
     "message": "{0} Modelle geladen: wähle eines aus der Liste."
   },
@@ -273,10 +279,10 @@
     "message": "Zweisprachig (Übersetzung unter dem Original)"
   },
   "optExplain": {
-    "message": "Fachbegriffe erklären"
+    "message": "Fachbegriffe: übersetzt + Englisch in Klammern"
   },
   "optExplainHelp": {
-    "message": "Standardmäßig aus: Die Erweiterung übersetzt, sie erklärt nicht. Wenn aktiviert, fügt sie beim ersten Vorkommen eines Begriffs die Übersetzung in Klammern hinzu."
+    "message": "Fachbegriffe werden übersetzt, der englische Begriff steht beim ersten Vorkommen in Klammern. Aus: Englische Fachbegriffe bleiben englisch, ohne Klammern. Code und Namen (Path, npm…) werden nie übersetzt."
   },
   "optComments": {
     "message": "Kommentare in Codeblöcken übersetzen"

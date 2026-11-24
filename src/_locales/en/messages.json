@@ -2,6 +2,9 @@
   "extName": {
     "message": "DevDocTrad"
   },
+  "uiDir": {
+    "message": "ltr"
+  },
   "extDescription": {
     "message": "Faithfully translates developer documentation and programming websites, without ever touching the code."
   },
@@ -251,6 +254,9 @@
   "optTestOk": {
     "message": "Valid key, {0} models available."
   },
+  "optTestOkLocal": {
+    "message": "Ollama is responding, {0} models installed."
+  },
   "optModelsLoaded": {
     "message": "{0} models loaded: pick one from the list."
   },
@@ -273,10 +279,10 @@
     "message": "Bilingual (translation below the original)"
   },
   "optExplain": {
-    "message": "Explain technical terms"
+    "message": "Add the English term in brackets"
   },
   "optExplainHelp": {
-    "message": "Off by default: the extension translates, it does not explain. When on, it adds the translation in brackets the first time a term appears."
+    "message": "Off by default. On: the first time a translated technical concept appears, the English term follows in brackets. Code and names (Path, npm…) are never translated."
   },
   "optComments": {
     "message": "Translate comments inside code blocks"

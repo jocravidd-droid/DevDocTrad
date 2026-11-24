@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Menerjemahkan dokumentasi pengembang dan situs pemrograman dengan setia, tanpa pernah menyentuh kode."
+  },
+  "cmdToggle": {
+    "message": "Terjemahkan halaman atau kembali ke aslinya"
+  },
+  "badgeTranslating": {
+    "message": "Menerjemahkan: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Diterjemahkan: {0} bagian"
+  },
+  "badgeDoneFailed": {
+    "message": "Diterjemahkan: {0} bagian, {1} dibiarkan dalam bahasa asli"
+  },
+  "badgeStopped": {
+    "message": "Dihentikan"
+  },
+  "badgeCap": {
+    "message": "Batas {0} karakter untuk halaman ini telah tercapai."
+  },
+  "badgeRateLimited": {
+    "message": "Batas kunci gratis tercapai. Mencoba lagi dalam {0} dtk ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Batas tercapai di semua kunci gratis. Coba lagi nanti."
+  },
+  "badgeNoKey": {
+    "message": "Tidak ada kunci yang tersedia. Tambahkan kunci di pengaturan."
+  },
+  "badgeError": {
+    "message": "Galat: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "diterjemahkan secara lokal (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "diterjemahkan secara daring ({0})"
+  },
+  "badgeNothing": {
+    "message": "Tidak ada yang perlu diterjemahkan di halaman ini."
+  },
+  "badgeKeyProblem": {
+    "message": "Masalah pada kunci {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Berhenti"
+  },
+  "btnOriginal": {
+    "message": "Tampilkan asli"
+  },
+  "btnTranslation": {
+    "message": "Tampilkan terjemahan"
+  },
+  "btnMinimize": {
+    "message": "Perkecil"
+  },
+  "btnClose": {
+    "message": "Tutup"
+  },
+  "btnContinue": {
+    "message": "Lanjutkan"
+  },
+  "errAuth": {
+    "message": "kunci ditolak (tidak valid atau dicabut)"
+  },
+  "errPayment": {
+    "message": "saldo di penyedia tidak cukup; kunci dihentikan"
+  },
+  "errRate": {
+    "message": "batas permintaan tercapai, coba lagi dalam satu menit"
+  },
+  "errOllamaDown": {
+    "message": "Ollama tidak merespons di localhost:11434. Jalankan Ollama lalu coba lagi."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama menolak ekstensi (403). Atur variabel lingkungan OLLAMA_ORIGINS ke chrome-extension://*,moz-extension://* lalu mulai ulang Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "dalam mode gratis, OpenRouter hanya menerima model yang namanya diakhiri :free"
+  },
+  "errPaidUnset": {
+    "message": "kunci berbayar diblokir: atur dulu batas harian dan kedua harga di pengaturan."
+  },
+  "errPaidCap": {
+    "message": "batas harian kunci berbayar tercapai ($${0} dari $${1})."
+  },
+  "errUnknown": {
+    "message": "Galat tidak dikenal"
+  },
+  "keyAvailable": {
+    "message": "tersedia"
+  },
+  "keyDisabled": {
+    "message": "nonaktif"
+  },
+  "keyNoModel": {
+    "message": "pilih model"
+  },
+  "keyPausedUntil": {
+    "message": "dijeda hingga {0}"
+  },
+  "keyProblem": {
+    "message": "masalah"
+  },
+  "tier_free": {
+    "message": "gratis"
+  },
+  "tier_paid": {
+    "message": "berbayar"
+  },
+  "tier_local": {
+    "message": "lokal"
+  },
+  "gl_never": {
+    "message": "Jangan pernah diterjemahkan"
+  },
+  "gl_always": {
+    "message": "Selalu terjemahkan sebagai"
+  },
+  "popupTranslate": {
+    "message": "Terjemahkan halaman ini"
+  },
+  "popupSettings": {
+    "message": "Pengaturan"
+  },
+  "popupUnsupported": {
+    "message": "Halaman ini tidak dapat diterjemahkan oleh ekstensi (halaman browser, toko ekstensi, atau penampil PDF)."
+  },
+  "popupKey": {
+    "message": "Kunci"
+  },
+  "popupKeyAuto": {
+    "message": "Otomatis (gratis dan lokal)"
+  },
+  "popupAuto": {
+    "message": "Terjemahkan situs ini secara otomatis"
+  },
+  "popupSensitive": {
+    "message": "Halaman sensitif: tidak pernah diterjemahkan otomatis. Tombol tetap berfungsi, Ollama dipakai lebih dulu jika sudah diatur."
+  },
+  "popupKeys": {
+    "message": "Status kunci"
+  },
+  "popupNoKeys": {
+    "message": "Belum ada kunci."
+  },
+  "popupAddKey": {
+    "message": "Tambahkan kunci"
+  },
+  "popupShortcut": {
+    "message": "Pintasan:"
+  },
+  "optTitle": {
+    "message": "Pengaturan DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Akses ke penyedia terjemahan belum diizinkan oleh browser."
+  },
+  "optPermGrant": {
+    "message": "Izinkan akses ke penyedia"
+  },
+  "optTabKeys": {
+    "message": "Kunci"
+  },
+  "optTabTranslation": {
+    "message": "Terjemahan"
+  },
+  "optTabGlossary": {
+    "message": "Glosarium"
+  },
+  "optTabSites": {
+    "message": "Situs"
+  },
+  "optTabData": {
+    "message": "Data"
+  },
+  "optKeysTitle": {
+    "message": "Kunci API"
+  },
+  "optKeysLocal": {
+    "message": "Kunci tetap berada di browser ini (penyimpanan lokal). Kunci tidak pernah disinkronkan dengan akun Anda dan tidak dikirim ke mana pun selain ke penyedia. Urutan kartu adalah urutan prioritas."
+  },
+  "optAddKey": {
+    "message": "Tambah"
+  },
+  "optKey": {
+    "message": "Kunci"
+  },
+  "optShow": {
+    "message": "Tampilkan"
+  },
+  "optHide": {
+    "message": "Sembunyikan"
+  },
+  "optBaseUrl": {
+    "message": "Alamat Ollama"
+  },
+  "optTier": {
+    "message": "Jenis"
+  },
+  "optModelEasy": {
+    "message": "Model (halaman sederhana)"
+  },
+  "optModelHard": {
+    "message": "Model untuk halaman sulit (opsional)"
+  },
+  "optMaxChars": {
+    "message": "Ukuran batch (karakter)"
+  },
+  "optInterval": {
+    "message": "Jeda antarpermintaan (ms)"
+  },
+  "optMaxReq": {
+    "message": "Maksimum permintaan per hari (0 = tanpa batas)"
+  },
+  "optPriceIn": {
+    "message": "Harga input ($$ per sejuta token)"
+  },
+  "optPriceOut": {
+    "message": "Harga output ($$ per sejuta token)"
+  },
+  "optDailyCap": {
+    "message": "Batas harian ($$)"
+  },
+  "optLoadModels": {
+    "message": "Muat model"
+  },
+  "optTest": {
+    "message": "Uji"
+  },
+  "optUp": {
+    "message": "Pindah ke atas"
+  },
+  "optDown": {
+    "message": "Pindah ke bawah"
+  },
+  "optDelete": {
+    "message": "Hapus"
+  },
+  "optDeleteConfirm": {
+    "message": "Hapus kunci ini?"
+  },
+  "optWorking": {
+    "message": "Memeriksa…"
+  },
+  "optTestOk": {
+    "message": "Kunci valid, {0} model tersedia."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama merespons, {0} model terpasang."
+  },
+  "optModelsLoaded": {
+    "message": "{0} model dimuat: pilih satu dari daftar."
+  },
+  "optSaved": {
+    "message": "Disimpan"
+  },
+  "optTarget": {
+    "message": "Bahasa tujuan"
+  },
+  "optTargetAuto": {
+    "message": "Bahasa browser ({0})"
+  },
+  "optMode": {
+    "message": "Tampilan"
+  },
+  "optModeReplace": {
+    "message": "Ganti teks"
+  },
+  "optModeBilingual": {
+    "message": "Dwibahasa (terjemahan di bawah aslinya)"
+  },
+  "optExplain": {
+    "message": "Istilah teknis: terjemahan + bahasa Inggris dalam kurung"
+  },
+  "optExplainHelp": {
+    "message": "Konsep teknis diterjemahkan, dengan istilah bahasa Inggris dalam kurung saat pertama muncul. Nonaktif: istilah teknis bahasa Inggris tetap dalam bahasa Inggris, tanpa kurung. Kode dan nama (Path, npm…) tidak pernah diterjemahkan."
+  },
+  "optComments": {
+    "message": "Terjemahkan komentar di dalam blok kode"
+  },
+  "optCommentsHelp": {
+    "message": "Nonaktif secara bawaan. Hanya komentar yang dikenali oleh penyorotan sintaks situs yang diterjemahkan; kode tidak pernah diubah dan aslinya kembali tanpa perubahan."
+  },
+  "optPageCap": {
+    "message": "Batas karakter per halaman"
+  },
+  "optShortcut": {
+    "message": "Pintasan keyboard"
+  },
+  "optShortcutCurrent": {
+    "message": "Pintasan saat ini: {0}."
+  },
+  "optShortcutNone": {
+    "message": "tidak ada"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Untuk mengubahnya: buka chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Untuk mengubahnya: Pengelola Pengaya, ikon roda gigi, \"Kelola Pintasan Ekstensi\"."
+  },
+  "optGlossaryHelp": {
+    "message": "Istilah yang tidak pernah diterjemahkan, atau selalu diterjemahkan dengan cara tertentu. Hanya istilah yang ada di bagian teks yang dikirim ke model. Maksimum 500 entri."
+  },
+  "optGlTerm": {
+    "message": "Istilah"
+  },
+  "optGlType": {
+    "message": "Aturan"
+  },
+  "optGlTranslation": {
+    "message": "Terjemahan wajib"
+  },
+  "optGlAdd": {
+    "message": "Tambahkan istilah"
+  },
+  "optGlExport": {
+    "message": "Ekspor (JSON)"
+  },
+  "optGlImport": {
+    "message": "Impor (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Berkas tidak valid: diharapkan daftar JSON berisi objek {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Situs yang diterjemahkan otomatis"
+  },
+  "optAutoHelp": {
+    "message": "Tambahkan situs dari popup dengan \"Terjemahkan situs ini secara otomatis\". Hanya kunci gratis dan Ollama yang dipakai secara otomatis."
+  },
+  "optAutoEmpty": {
+    "message": "Belum ada situs."
+  },
+  "optAutoGranted": {
+    "message": "diizinkan"
+  },
+  "optAutoRevoked": {
+    "message": "izin dicabut"
+  },
+  "optSensitiveTitle": {
+    "message": "Halaman sensitif"
+  },
+  "optSensitiveHelp": {
+    "message": "Tidak pernah diterjemahkan otomatis (begitu pula halaman dengan kolom kata sandi). Tombol manual tetap berfungsi."
+  },
+  "optSensitiveBase": {
+    "message": "Pola dasar:"
+  },
+  "optSensitiveExtra": {
+    "message": "Pola tambahan (satu per baris, kata atau domain)"
+  },
+  "optCacheTitle": {
+    "message": "Cache terjemahan"
+  },
+  "optCacheInfo": {
+    "message": "{0} bagian di cache ({1} MB). Halaman yang sudah diterjemahkan tampil lagi tanpa panggilan jaringan."
+  },
+  "optCacheClear": {
+    "message": "Kosongkan cache"
+  },
+  "optUsageTitle": {
+    "message": "Penggunaan hari ini"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} permintaan{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Privasi"
+  },
+  "optPrivacyText": {
+    "message": "Teks halaman yang Anda terjemahkan hanya dikirim ke penyedia yang Anda pilih, atau tetap di komputer Anda dengan Ollama. Tanpa statistik, tanpa pelacakan, tidak ada yang dikirim ke pengembang. Pada paket gratis, Gemini dan Mistral dapat menggunakan ulang teks yang dikirim."
+  },
+  "warnGemini": {
+    "message": "Buat kunci di Google AI Studio tanpa menautkan penagihan. Pada paket gratis, Google dapat menggunakan ulang teks yang dikirim. Dua kunci dari proyek yang sama berbagi batas yang sama."
+  },
+  "warnGroq": {
+    "message": "Paket gratis tanpa kartu: melewati batas Anda hanya mendapat galat 429, tidak pernah tagihan."
+  },
+  "warnMistral": {
+    "message": "Mode gratis tanpa kartu. Permintaan dapat dipakai untuk pelatihan: matikan di konsol Mistral jika Anda mau."
+  },
+  "warnOpenRouter": {
+    "message": "Dalam mode gratis, hanya model yang diakhiri :free yang diterima (sekitar 50 permintaan per hari). Jangan pernah mengisi saldo untuk ekstensi ini."
+  },
+  "warnOllama": {
+    "message": "Model di komputer Anda: gratis dan privat, tidak ada yang keluar dari komputer Anda. Model kecil lebih sering keliru; bagian yang meragukan tetap dalam bahasa asli."
+  },
+  "popupView": {
+    "message": "Tampilan halaman"
+  },
+  "segOriginal": {
+    "message": "Asli"
+  },
+  "segTranslation": {
+    "message": "Terjemahan"
+  },
+  "popupTranslating": {
+    "message": "Menerjemahkan…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} bagian"
+  },
+  "popupManage": {
+    "message": "Kelola"
+  },
+  "popupMoreKeys": {
+    "message": "dan {0} kunci lainnya"
+  },
+  "popupNoKeysLong": {
+    "message": "Tambahkan kunci gratis (Gemini, Groq, Mistral, OpenRouter) atau Ollama untuk memulai."
+  },
+  "stateReady": {
+    "message": "Siap menerjemahkan"
+  },
+  "stateNoKey": {
+    "message": "Belum ada kunci"
+  },
+  "stateRunning": {
+    "message": "Menerjemahkan"
+  },
+  "stateTranslated": {
+    "message": "Halaman diterjemahkan"
+  },
+  "stateOriginal": {
+    "message": "Menampilkan asli"
+  },
+  "stateStopped": {
+    "message": "Dihentikan"
+  },
+  "statePaused": {
+    "message": "Batas halaman tercapai"
+  },
+  "stateError": {
+    "message": "Galat"
+  },
+  "stateUnavailable": {
+    "message": "Halaman tidak bisa diterjemahkan"
+  },
+  "toastAutoOn": {
+    "message": "Terjemahan otomatis diaktifkan untuk {0}."
+  },
+  "toastAutoOff": {
+    "message": "Terjemahan otomatis dinonaktifkan untuk {0}."
+  },
+  "toastPermDenied": {
+    "message": "Izin ditolak: situs tidak ditambahkan."
+  },
+  "badgeShowBadge": {
+    "message": "Tampilkan lencana DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Bagian pengaturan"
+  },
+  "optNavKeys": {
+    "message": "Penyedia dan kunci"
+  },
+  "optNavPrivacy": {
+    "message": "Privasi dan biaya"
+  },
+  "optNavAppearance": {
+    "message": "Tampilan"
+  },
+  "optDescKeys": {
+    "message": "Kunci API Anda dan Ollama, dicoba sesuai urutan kartu, dari atas ke bawah."
+  },
+  "optDescTranslation": {
+    "message": "Bahasa, tampilan, dan apa yang boleh diterjemahkan ekstensi."
+  },
+  "optDescPrivacy": {
+    "message": "Apa yang keluar dari browser Anda, ke siapa, dan berapa biayanya."
+  },
+  "optDescSites": {
+    "message": "Situs yang diterjemahkan otomatis dan halaman yang perlu dilindungi."
+  },
+  "optDescGlossary": {
+    "message": "Istilah yang dibiarkan apa adanya atau selalu diterjemahkan dengan cara yang sama."
+  },
+  "optDescData": {
+    "message": "Cache terjemahan dan data yang disimpan di browser ini."
+  },
+  "optDescAppearance": {
+    "message": "Tema pengaturan, popup, dan lencana yang tampil di halaman."
+  },
+  "optVersion": {
+    "message": "versi {0}"
+  },
+  "optAddProvider": {
+    "message": "Tambahkan penyedia"
+  },
+  "optAddProviderHelp": {
+    "message": "Kartu baru ditempatkan paling akhir. Urutan kartu adalah urutan prioritas."
+  },
+  "optProvider": {
+    "message": "Penyedia"
+  },
+  "optKeysEmptyHint": {
+    "message": "Pilih penyedia: sebuah kartu muncul, tempel kunci Anda, lalu \"Muat model\" dan pilih model."
+  },
+  "optKeyName": {
+    "message": "Nama kunci"
+  },
+  "optKeyEnabled": {
+    "message": "Gunakan kunci ini"
+  },
+  "optPriority": {
+    "message": "prioritas {0}"
+  },
+  "optKeyHelp": {
+    "message": "Tersembunyi secara bawaan, hanya disimpan di browser ini."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama harus berjalan di komputer Anda."
+  },
+  "optModelHelp": {
+    "message": "\"Muat model\" mengisi daftar saran."
+  },
+  "optLimits": {
+    "message": "Batas"
+  },
+  "optLimitsHelp": {
+    "message": "Kosong = bawaan penyedia."
+  },
+  "optPaidTitle": {
+    "message": "Biaya"
+  },
+  "optPaidHelp": {
+    "message": "Hanya dipakai jika Anda memilihnya di popup."
+  },
+  "optPaidOk": {
+    "message": "Batas dan harga sudah diatur: kunci dapat dipakai hingga batasnya."
+  },
+  "optPrivacyFlow": {
+    "message": "Ke mana teks dikirim"
+  },
+  "optProviderNotes": {
+    "message": "Catatan per penyedia"
+  },
+  "optProviderUsed": {
+    "message": "dipakai"
+  },
+  "optUsageEmpty": {
+    "message": "Belum ada kunci yang diatur."
+  },
+  "optUsageHelp": {
+    "message": "Diatur ulang setiap hari pada tengah malam (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Kunci berbayar"
+  },
+  "optPaidRule": {
+    "message": "Kunci berbayar tidak pernah dipakai otomatis: Anda harus memilihnya di popup. Kunci tetap diblokir hingga batas harian dan kedua harga diatur, dan berhenti begitu batas tercapai."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Belum ada situs otomatis"
+  },
+  "optAutoEmptyLong": {
+    "message": "Untuk menambahkan: buka situsnya, klik ikon DevDocTrad di bilah alat, lalu aktifkan \"Terjemahkan situs ini secara otomatis\". Browser hanya meminta izin untuk situs itu."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Hapus {0} dari situs yang diterjemahkan otomatis?"
+  },
+  "optGlEmpty": {
+    "message": "Belum ada istilah. Contoh: \"thread\" dengan aturan \"Jangan pernah diterjemahkan\"."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 istilah"
+  },
+  "optGlImported": {
+    "message": "{0} istilah diimpor."
+  },
+  "optCacheConfirm": {
+    "message": "Kosongkan cache? Halaman yang sudah diterjemahkan harus diterjemahkan ulang (panggilan baru ke penyedia)."
+  },
+  "optCacheCleared": {
+    "message": "Cache dikosongkan."
+  },
+  "optStorageTitle": {
+    "message": "Penyimpanan lokal"
+  },
+  "optTheme": {
+    "message": "Tema"
+  },
+  "optThemeHelp": {
+    "message": "\"Sistem\" mengikuti pengaturan terang atau gelap komputer Anda."
+  },
+  "optThemeSystem": {
+    "message": "Sistem"
+  },
+  "optThemeLight": {
+    "message": "Terang"
+  },
+  "optThemeDark": {
+    "message": "Gelap"
+  },
+  "optPriceInUsd": {
+    "message": "Harga input ($$ per sejuta token)"
+  },
+  "optPriceOutUsd": {
+    "message": "Harga output ($$ per sejuta token)"
+  },
+  "optDailyCapUsd": {
+    "message": "Batas harian ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "proyek Google ini memakai penagihan prabayar dan kreditnya sudah habis. Jangan mengisi apa pun: buat kunci di proyek tanpa penagihan di Google AI Studio (paket gratis)."
+  }
+}

@@ -74,8 +74,8 @@ async function shot(page, name) {
   await new Promise((r) => setTimeout(r, 400));
   const userDir = fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-profile-'));
   const ctx = await chromium.launchPersistentContext(userDir, {
-    channel: 'chromium',
-    headless: true,
+    channel: process.env.DDT_CHROMIUM ? undefined : 'chromium', executablePath: process.env.DDT_CHROMIUM || undefined,
+    headless: !process.env.DDT_HEADFUL,
     viewport: { width: 1280, height: 800 },
     deviceScaleFactor: 1,
     locale: 'fr-FR',
@@ -91,7 +91,9 @@ async function shot(page, name) {
 
     const ollamaKey = { id: 'k-ollama', provider: 'ollama', label: 'Ollama', tier: 'local', enabled: true, modelEasy: 'demo-model:latest', baseUrl: 'http://127.0.0.1:11434', order: 1 };
     const demoKey = { id: 'k-gemini', provider: 'gemini', label: 'Gemini', key: 'AIzaSy-DEMO-NOT-A-REAL-KEY-000000', tier: 'free', enabled: false, modelEasy: 'gemini-flash-latest', order: 0 };
-    await sw.evaluate((k) => chrome.storage.local.set({ keys: k, settings: { target: 'auto', mode: 'replace', explainTerms: false, translateComments: false, pageCap: 150000, batchChars: 6000, sensitiveExtra: [], autoSites: [] } }), [demoKey, ollamaKey]);
+    // DDT_E2E_TARGET=fr : pour un Chromium sans paquet de langues (interface bloquée en anglais).
+    const TARGET = process.env.DDT_E2E_TARGET || 'auto';
+    await sw.evaluate(([k, tg]) => chrome.storage.local.set({ keys: k, settings: { target: tg, mode: 'replace', explainTerms: false, translateComments: false, pageCap: 150000, batchChars: 6000, sensitiveExtra: [], autoSites: [] } }), [[demoKey, ollamaKey], TARGET]);
 
     const page = await ctx.newPage();
     await page.goto('http://localhost:8123/');
@@ -173,7 +175,7 @@ async function shot(page, name) {
     await shot(page, 'screenshot-4-russe.png');
 
     // 7. Réglages
-    await sw.evaluate(() => chrome.storage.local.get('settings').then((r) => chrome.storage.local.set({ settings: Object.assign(r.settings, { target: 'auto' }), glossary: [{ term: 'payload', type: 'never' }, { term: 'buffer overflow', type: 'always', translation: 'dépassement de tampon' }] })));
+    await sw.evaluate((tg) => chrome.storage.local.get('settings').then((r) => chrome.storage.local.set({ settings: Object.assign(r.settings, { target: tg }), glossary: [{ term: 'payload', type: 'never' }, { term: 'buffer overflow', type: 'always', translation: 'dépassement de tampon' }] })), TARGET);
     const opt = await ctx.newPage();
     await opt.goto(`chrome-extension://${extId}/options.html`);
     await opt.waitForTimeout(800);

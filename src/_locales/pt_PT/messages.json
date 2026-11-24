@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Traduz fielmente a documentação técnica e os sites para programadores, sem nunca tocar no código."
+  },
+  "cmdToggle": {
+    "message": "Traduzir a página ou voltar ao original"
+  },
+  "badgeTranslating": {
+    "message": "A traduzir: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Traduzido: {0} excertos"
+  },
+  "badgeDoneFailed": {
+    "message": "Traduzido: {0} excertos, {1} deixados no original"
+  },
+  "badgeStopped": {
+    "message": "Parado"
+  },
+  "badgeCap": {
+    "message": "Limite de {0} carateres atingido para esta página."
+  },
+  "badgeRateLimited": {
+    "message": "Limite das chaves gratuitas atingido. Nova tentativa dentro de {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limite atingido em todas as chaves gratuitas. Tente novamente mais tarde."
+  },
+  "badgeNoKey": {
+    "message": "Nenhuma chave disponível. Adicione uma chave nas definições."
+  },
+  "badgeError": {
+    "message": "Erro: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "traduzido localmente (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "traduzido online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Nada a traduzir nesta página."
+  },
+  "badgeKeyProblem": {
+    "message": "Problema com a chave {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Parar"
+  },
+  "btnOriginal": {
+    "message": "Ver o original"
+  },
+  "btnTranslation": {
+    "message": "Ver a tradução"
+  },
+  "btnMinimize": {
+    "message": "Minimizar"
+  },
+  "btnClose": {
+    "message": "Fechar"
+  },
+  "btnContinue": {
+    "message": "Continuar"
+  },
+  "errAuth": {
+    "message": "chave recusada (inválida ou revogada)"
+  },
+  "errPayment": {
+    "message": "saldo insuficiente no fornecedor; chave parada"
+  },
+  "errRate": {
+    "message": "limite de pedidos atingido, tente novamente dentro de um minuto"
+  },
+  "errOllamaDown": {
+    "message": "O Ollama não responde em localhost:11434. Inicie o Ollama e tente novamente."
+  },
+  "errOllamaOrigin": {
+    "message": "O Ollama recusa a extensão (403). Defina a variável de ambiente OLLAMA_ORIGINS com o valor chrome-extension://*,moz-extension://* e reinicie o Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "no modo gratuito, o OpenRouter só aceita modelos cujo nome termina em :free"
+  },
+  "errPaidUnset": {
+    "message": "chave paga bloqueada: defina primeiro o limite diário e os dois preços nas definições."
+  },
+  "errPaidCap": {
+    "message": "limite diário atingido para a chave paga ({0} $$ de {1} $$)."
+  },
+  "errUnknown": {
+    "message": "Erro desconhecido"
+  },
+  "keyAvailable": {
+    "message": "disponível"
+  },
+  "keyDisabled": {
+    "message": "desativada"
+  },
+  "keyNoModel": {
+    "message": "escolha um modelo"
+  },
+  "keyPausedUntil": {
+    "message": "em pausa até às {0}"
+  },
+  "keyProblem": {
+    "message": "problema"
+  },
+  "tier_free": {
+    "message": "gratuita"
+  },
+  "tier_paid": {
+    "message": "paga"
+  },
+  "tier_local": {
+    "message": "local"
+  },
+  "gl_never": {
+    "message": "Nunca traduzir"
+  },
+  "gl_always": {
+    "message": "Traduzir sempre como"
+  },
+  "popupTranslate": {
+    "message": "Traduzir esta página"
+  },
+  "popupSettings": {
+    "message": "Definições"
+  },
+  "popupUnsupported": {
+    "message": "Esta página não pode ser traduzida por uma extensão (página do navegador, loja de extensões ou visualizador de PDF)."
+  },
+  "popupKey": {
+    "message": "Chave"
+  },
+  "popupKeyAuto": {
+    "message": "Automático (gratuitas e local)"
+  },
+  "popupAuto": {
+    "message": "Traduzir este site automaticamente"
+  },
+  "popupSensitive": {
+    "message": "Página sensível: nunca traduzida automaticamente. O botão funciona; se estiver configurado, o Ollama é usado primeiro."
+  },
+  "popupKeys": {
+    "message": "Estado das chaves"
+  },
+  "popupNoKeys": {
+    "message": "Ainda não há nenhuma chave."
+  },
+  "popupAddKey": {
+    "message": "Adicionar uma chave"
+  },
+  "popupShortcut": {
+    "message": "Atalho:"
+  },
+  "optTitle": {
+    "message": "Definições do DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "O acesso aos fornecedores de tradução ainda não foi autorizado pelo navegador."
+  },
+  "optPermGrant": {
+    "message": "Autorizar o acesso aos fornecedores"
+  },
+  "optTabKeys": {
+    "message": "Chaves"
+  },
+  "optTabTranslation": {
+    "message": "Tradução"
+  },
+  "optTabGlossary": {
+    "message": "Glossário"
+  },
+  "optTabSites": {
+    "message": "Sites"
+  },
+  "optTabData": {
+    "message": "Dados"
+  },
+  "optKeysTitle": {
+    "message": "Chaves de API"
+  },
+  "optKeysLocal": {
+    "message": "As chaves ficam neste navegador (armazenamento local). Nunca são sincronizadas com a sua conta nem enviadas para outro sítio além do fornecedor. A ordem dos cartões é a ordem de prioridade."
+  },
+  "optAddKey": {
+    "message": "Adicionar"
+  },
+  "optKey": {
+    "message": "Chave"
+  },
+  "optShow": {
+    "message": "Mostrar"
+  },
+  "optHide": {
+    "message": "Ocultar"
+  },
+  "optBaseUrl": {
+    "message": "Endereço do Ollama"
+  },
+  "optTier": {
+    "message": "Tipo"
+  },
+  "optModelEasy": {
+    "message": "Modelo (páginas simples)"
+  },
+  "optModelHard": {
+    "message": "Modelo para páginas difíceis (opcional)"
+  },
+  "optMaxChars": {
+    "message": "Tamanho do lote (carateres)"
+  },
+  "optInterval": {
+    "message": "Intervalo entre pedidos (ms)"
+  },
+  "optMaxReq": {
+    "message": "Máximo de pedidos por dia (0 = sem limite)"
+  },
+  "optPriceIn": {
+    "message": "Preço de entrada ($$ por milhão de tokens)"
+  },
+  "optPriceOut": {
+    "message": "Preço de saída ($$ por milhão de tokens)"
+  },
+  "optDailyCap": {
+    "message": "Limite diário ($$)"
+  },
+  "optLoadModels": {
+    "message": "Carregar modelos"
+  },
+  "optTest": {
+    "message": "Testar"
+  },
+  "optUp": {
+    "message": "Subir"
+  },
+  "optDown": {
+    "message": "Descer"
+  },
+  "optDelete": {
+    "message": "Eliminar"
+  },
+  "optDeleteConfirm": {
+    "message": "Eliminar esta chave?"
+  },
+  "optWorking": {
+    "message": "A verificar…"
+  },
+  "optTestOk": {
+    "message": "Chave válida, {0} modelos disponíveis."
+  },
+  "optTestOkLocal": {
+    "message": "O Ollama está a responder, {0} modelos instalados."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modelos carregados: escolha um na lista."
+  },
+  "optSaved": {
+    "message": "Guardado"
+  },
+  "optTarget": {
+    "message": "Idioma de destino"
+  },
+  "optTargetAuto": {
+    "message": "Idioma do navegador ({0})"
+  },
+  "optMode": {
+    "message": "Apresentação"
+  },
+  "optModeReplace": {
+    "message": "Substituir o texto"
+  },
+  "optModeBilingual": {
+    "message": "Bilingue (tradução por baixo do original)"
+  },
+  "optExplain": {
+    "message": "Termos técnicos: traduzidos + inglês entre parênteses"
+  },
+  "optExplainHelp": {
+    "message": "Os conceitos técnicos são traduzidos, com o termo em inglês entre parênteses na primeira ocorrência. Desativado: os termos técnicos em inglês ficam em inglês, sem parênteses. Código e nomes (Path, npm…) nunca são traduzidos."
+  },
+  "optComments": {
+    "message": "Traduzir os comentários nos blocos de código"
+  },
+  "optCommentsHelp": {
+    "message": "Desativado por predefinição. Só são traduzidos os comentários reconhecidos pelo realce de sintaxe do site; o código nunca é alterado e o original volta inalterado."
+  },
+  "optPageCap": {
+    "message": "Limite de carateres por página"
+  },
+  "optShortcut": {
+    "message": "Atalho de teclado"
+  },
+  "optShortcutCurrent": {
+    "message": "Atalho atual: {0}."
+  },
+  "optShortcutNone": {
+    "message": "nenhum"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Para o alterar: abra chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Para o alterar: Gestor de extras, ícone da roda dentada, «Gerir atalhos de extensões»."
+  },
+  "optGlossaryHelp": {
+    "message": "Termos a nunca traduzir, ou a traduzir sempre de uma determinada forma. Só os termos presentes no excerto são enviados ao modelo. Máximo de 500 entradas."
+  },
+  "optGlTerm": {
+    "message": "Termo"
+  },
+  "optGlType": {
+    "message": "Regra"
+  },
+  "optGlTranslation": {
+    "message": "Tradução imposta"
+  },
+  "optGlAdd": {
+    "message": "Adicionar um termo"
+  },
+  "optGlExport": {
+    "message": "Exportar (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importar (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Ficheiro inválido: é esperada uma lista JSON de objetos {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Sites traduzidos automaticamente"
+  },
+  "optAutoHelp": {
+    "message": "Adicione um site a partir do popup com «Traduzir este site automaticamente». No modo automático só são usadas as chaves gratuitas e o Ollama."
+  },
+  "optAutoEmpty": {
+    "message": "Ainda não há nenhum site."
+  },
+  "optAutoGranted": {
+    "message": "autorizado"
+  },
+  "optAutoRevoked": {
+    "message": "permissão retirada"
+  },
+  "optSensitiveTitle": {
+    "message": "Páginas sensíveis"
+  },
+  "optSensitiveHelp": {
+    "message": "Nunca traduzidas automaticamente (tal como qualquer página com um campo de palavra-passe). O botão manual continua a funcionar."
+  },
+  "optSensitiveBase": {
+    "message": "Padrões de base:"
+  },
+  "optSensitiveExtra": {
+    "message": "Padrões adicionais (um por linha, palavra ou domínio)"
+  },
+  "optCacheTitle": {
+    "message": "Cache das traduções"
+  },
+  "optCacheInfo": {
+    "message": "{0} excertos em cache ({1} MB). Uma página já traduzida volta a ser apresentada sem qualquer pedido de rede."
+  },
+  "optCacheClear": {
+    "message": "Limpar a cache"
+  },
+  "optUsageTitle": {
+    "message": "Consumo de hoje"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} pedidos{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Privacidade"
+  },
+  "optPrivacyText": {
+    "message": "O texto das páginas que traduz é enviado apenas para o fornecedor que escolheu, ou fica no seu computador com o Ollama. Sem estatísticas, sem rastreamento, nada é enviado ao programador. Nos planos gratuitos, o Gemini e o Mistral podem reutilizar os textos enviados."
+  },
+  "warnGemini": {
+    "message": "Crie a chave no Google AI Studio sem associar faturação. No plano gratuito, a Google pode reutilizar os textos enviados. Duas chaves do mesmo projeto partilham o mesmo limite."
+  },
+  "warnGroq": {
+    "message": "Plano gratuito sem cartão: acima do limite recebe apenas um erro 429, nunca uma fatura."
+  },
+  "warnMistral": {
+    "message": "Modo gratuito sem cartão. Os pedidos podem ser usados para treino: desative isso na consola da Mistral, se preferir."
+  },
+  "warnOpenRouter": {
+    "message": "No modo gratuito, só são aceites os modelos que terminam em :free (cerca de 50 pedidos por dia). Nunca carregue crédito para esta extensão."
+  },
+  "warnOllama": {
+    "message": "Modelo no seu computador: gratuito e privado, nada sai da sua máquina. Um modelo pequeno comete mais erros; os excertos duvidosos ficam no original."
+  },
+  "popupView": {
+    "message": "Apresentação da página"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Tradução"
+  },
+  "popupTranslating": {
+    "message": "A traduzir…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} excertos"
+  },
+  "popupManage": {
+    "message": "Gerir"
+  },
+  "popupMoreKeys": {
+    "message": "e mais {0} chave(s)"
+  },
+  "popupNoKeysLong": {
+    "message": "Adicione uma chave gratuita (Gemini, Groq, Mistral, OpenRouter) ou o Ollama para começar."
+  },
+  "stateReady": {
+    "message": "Pronta para traduzir"
+  },
+  "stateNoKey": {
+    "message": "Nenhuma chave configurada"
+  },
+  "stateRunning": {
+    "message": "A traduzir"
+  },
+  "stateTranslated": {
+    "message": "Página traduzida"
+  },
+  "stateOriginal": {
+    "message": "Original apresentado"
+  },
+  "stateStopped": {
+    "message": "Parada"
+  },
+  "statePaused": {
+    "message": "Limite da página atingido"
+  },
+  "stateError": {
+    "message": "Erro"
+  },
+  "stateUnavailable": {
+    "message": "Página não traduzível"
+  },
+  "toastAutoOn": {
+    "message": "Tradução automática ativada para {0}."
+  },
+  "toastAutoOff": {
+    "message": "Tradução automática desativada para {0}."
+  },
+  "toastPermDenied": {
+    "message": "Permissão recusada: o site não foi adicionado."
+  },
+  "badgeShowBadge": {
+    "message": "Mostrar o emblema do DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Secções das definições"
+  },
+  "optNavKeys": {
+    "message": "Fornecedores e chaves"
+  },
+  "optNavPrivacy": {
+    "message": "Privacidade e custos"
+  },
+  "optNavAppearance": {
+    "message": "Aspeto"
+  },
+  "optDescKeys": {
+    "message": "As suas chaves de API e o Ollama, experimentados pela ordem dos cartões, de cima para baixo."
+  },
+  "optDescTranslation": {
+    "message": "Idioma, apresentação e o que a extensão pode traduzir."
+  },
+  "optDescPrivacy": {
+    "message": "O que sai do seu navegador, para quem, e quanto custa."
+  },
+  "optDescSites": {
+    "message": "Sites traduzidos automaticamente e páginas a proteger."
+  },
+  "optDescGlossary": {
+    "message": "Termos a manter tal como estão ou a traduzir sempre da mesma forma."
+  },
+  "optDescData": {
+    "message": "Cache das traduções e dados guardados neste navegador."
+  },
+  "optDescAppearance": {
+    "message": "Tema das definições, do popup e do emblema apresentado nas páginas."
+  },
+  "optVersion": {
+    "message": "versão {0}"
+  },
+  "optAddProvider": {
+    "message": "Adicionar um fornecedor"
+  },
+  "optAddProviderHelp": {
+    "message": "O novo cartão fica em último lugar. A ordem dos cartões é a ordem de prioridade."
+  },
+  "optProvider": {
+    "message": "Fornecedor"
+  },
+  "optKeysEmptyHint": {
+    "message": "Escolha um fornecedor: aparece um cartão, cole a sua chave, depois «Carregar modelos» e escolha um modelo."
+  },
+  "optKeyName": {
+    "message": "Nome da chave"
+  },
+  "optKeyEnabled": {
+    "message": "Usar esta chave"
+  },
+  "optPriority": {
+    "message": "prioridade {0}"
+  },
+  "optKeyHelp": {
+    "message": "Oculta por predefinição, guardada apenas neste navegador."
+  },
+  "optBaseUrlHelp": {
+    "message": "O Ollama tem de estar em execução no seu computador."
+  },
+  "optModelHelp": {
+    "message": "«Carregar modelos» preenche a lista de sugestões."
+  },
+  "optLimits": {
+    "message": "Limites"
+  },
+  "optLimitsHelp": {
+    "message": "Vazio = valor predefinido do fornecedor."
+  },
+  "optPaidTitle": {
+    "message": "Custos"
+  },
+  "optPaidHelp": {
+    "message": "Usada apenas se a escolher no popup."
+  },
+  "optPaidOk": {
+    "message": "Limite e preços definidos: a chave pode ser usada até ao limite."
+  },
+  "optPrivacyFlow": {
+    "message": "Para onde vai o texto"
+  },
+  "optProviderNotes": {
+    "message": "Notas por fornecedor"
+  },
+  "optProviderUsed": {
+    "message": "em uso"
+  },
+  "optUsageEmpty": {
+    "message": "Ainda não há nenhuma chave configurada."
+  },
+  "optUsageHelp": {
+    "message": "Reposto todos os dias à meia-noite (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Chaves pagas"
+  },
+  "optPaidRule": {
+    "message": "Uma chave paga nunca é usada automaticamente: tem de a escolher no popup. Fica bloqueada enquanto o limite diário e os dois preços não estiverem definidos, e para assim que o limite é atingido."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Ainda nenhum site automático"
+  },
+  "optAutoEmptyLong": {
+    "message": "Para adicionar um: abra o site, clique no ícone do DevDocTrad na barra de ferramentas e ative «Traduzir este site automaticamente». O navegador pede permissão apenas para esse site."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Remover {0} dos sites traduzidos automaticamente?"
+  },
+  "optGlEmpty": {
+    "message": "Ainda não há nenhum termo. Exemplo: «thread» com a regra «Nunca traduzir»."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termos"
+  },
+  "optGlImported": {
+    "message": "{0} termos importados."
+  },
+  "optCacheConfirm": {
+    "message": "Limpar a cache? As páginas já traduzidas terão de ser traduzidas novamente (novos pedidos aos fornecedores)."
+  },
+  "optCacheCleared": {
+    "message": "Cache limpa."
+  },
+  "optStorageTitle": {
+    "message": "Armazenamento local"
+  },
+  "optTheme": {
+    "message": "Tema"
+  },
+  "optThemeHelp": {
+    "message": "«Sistema» segue a definição clara ou escura do seu computador."
+  },
+  "optThemeSystem": {
+    "message": "Sistema"
+  },
+  "optThemeLight": {
+    "message": "Claro"
+  },
+  "optThemeDark": {
+    "message": "Escuro"
+  },
+  "optPriceInUsd": {
+    "message": "Preço de entrada ($$ por milhão de tokens)"
+  },
+  "optPriceOutUsd": {
+    "message": "Preço de saída ($$ por milhão de tokens)"
+  },
+  "optDailyCapUsd": {
+    "message": "Limite diário ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "este projeto Google usa faturação pré-paga e os seus créditos estão esgotados. Não carregue nada: crie uma chave num projeto sem faturação no Google AI Studio (plano gratuito)."
+  }
+}
