@@ -1,0 +1,104 @@
+[
+  {
+    "model": "qwen2.5:7b",
+    "lang": "th",
+    "secs": 22,
+    "state": "done",
+    "done": 5,
+    "total": 6,
+    "failed": 1,
+    "codeOk": true,
+    "h1": "ทำงานกับเส้นทางระบบไฟล์",
+    "p": [
+      "This module offers classes representing filesystem paths with semantics appropriate for different operating systems. Path classes are divided between pure paths, which provide purely computational operations without I/O, and concrete paths, which inherit from pure paths but also provide I/O operations.",
+      "ถ้าคุณไม่เคยใช้โมดูลนี้มาก่อนหรือไม่แน่ใจว่าคลาสไหนเหมาะสมกับงานของคุณ Path น่าจะเป็นสิ่งที่คุณต้องการ มันสร้างเส้นทางเฉพาะสำหรับแพลตฟอร์มที่โค้ดกำลังทำงานอยู่",
+      "ติดตั้งแพคเกจด้วย npm install is-online แล้วเรียก await isOnline() เพื่อตรวจสอบว่าการเชื่อมต่ออินเทอร์เน็ตทำงานอยู่หรือไม่",
+      "วิธีการ window.alert() ทำให้เบราว์เซอร์แสดงช่องสนทนาพร้อมข้อความตัวเลือก และรอจนกว่าผู้ใช้จะปิดช่องสนทนา"
+    ]
+  },
+  {
+    "model": "qwen2.5:7b",
+    "lang": "zh",
+    "secs": 22,
+    "state": "done",
+    "done": 4,
+    "total": 6,
+    "failed": 2,
+    "codeOk": true,
+    "h1": "与文件系统路径交互",
+    "p": [
+      "This module offers classes representing filesystem paths with semantics appropriate for different operating systems. Path classes are divided between pure paths, which provide purely computational operations without I/O, and concrete paths, which inherit from pure paths but also provide I/O operations.",
+      "如果你以前从未使用过此模块或不确定哪个类适合你的任务，Path 最 likely 是你需要的。它为代码运行的平台实例化一个具体的路径。",
+      "Install the package with npm install is-online, then call await isOnline() to check whether the internet connection is up.",
+      "The window.alert() method instructs the browser to display a dialog with an optional message, and to wait until the user dismisses the dialog."
+    ]
+  },
+  {
+    "model": "qwen2.5:7b",
+    "lang": "zh-TW",
+    "secs": 18,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "與文件系統路徑共事",
+    "p": [
+      "此模組提供代表檔案系統路徑的類別，這些類別根據不同的作業系統具有適當的語義。路徑類別被分為純路徑，它們提供純粹的計算操作而不涉及 I/O，以及具體路徑，它們繼承自純路徑但還提供了 I/O 操作。",
+      "若你未曾使用過此模組或只是不确定哪種類別適合你的任務，Path 很可能是你需要的。它會為代碼運行的平台Instantiate 具體路徑。",
+      "使用 npm install is-online 安裝套件，然後調用 await isOnline() 來檢查網際網路連接是否正常。",
+      "The window.alert() method instructs the browser to display a dialog with an optional message, and to wait until the user dismisses the dialog."
+    ]
+  },
+  {
+    "model": "qwen2.5:7b",
+    "lang": "ja",
+    "secs": 16,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "ファイルシステムパスの使用",
+    "p": [
+      "このモジュールは、異なるオペレーティングシステムに適したファイルシステムパスを表現するためのクラスを提供します。パスのクラスは、純粋なパスと実際のパスに分かれ、純粋なパスはI/Oなしの純粋な計算操作を提供し、実際のパスは純粋なパスを継承しながらI/O操作も提供します。",
+      "このモジュールを初めて使用する場合や、どのクラスが適切か自信がない場合は、Pathが最も適している可能性が高いです。これは、コードが実行されているプラットフォームに合わせた実際のパスを生成します。",
+      "npm install is-onlineでパッケージをインストールし、await isOnline()を呼び出してインターネット接続が有効かどうかを確認します。",
+      "window.alert()メソッドは、オプションのメッセージと共にダイアログを表示し、ユーザーがダイアログを閉じるまで待機します。"
+    ]
+  },
+  {
+    "model": "qwen2.5:7b",
+    "lang": "ko",
+    "secs": 48,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "파일 시스템 경로와 작업",
+    "p": [
+      "이 모듈은 다양한 운영 체제에 적합한 의미를 가진 파일 시스템 경로를 나타내는 클래스를 제공합니다. 경로 클래스는 순수 경로와 구체적 경로로 나뉩니다. 순수 경로는 I/O 없이 순수히 계산적인 작업을 제공하고, 구체적 경로는 순수 경로를 상속하면서 I/O 작업도 제공합니다.",
+      "만약 이 모듈을 처음 사용하지 않았거나 어떤 클래스가适合自己当前场景的表达，请使用中文回答。如果您之前从未使用过此模块或不确定哪个类适合您的任务，Path很可能就是您需要的。它会为代码运行的平台实例化一个具体的路径。",
+      "npm install is-online를 설치한 후, 인터넷 연결이 되는지 확인하기 위해 await isOnline()을 호출하세요.",
+      "window.alert() 메서드는 브라우저에게 옵션 메시지와 함께 대화상자를 표시하고 사용자가 대화상자를 닫을 때까지 기다리도록 지시합니다."
+    ]
+  },
+  {
+    "model": "qwen2.5:7b",
+    "lang": "sw",
+    "secs": 83,
+    "state": "done",
+    "done": 6,
+    "total": 6,
+    "failed": 0,
+    "codeOk": true,
+    "h1": "Uweze kujifunza maeneo ya kipengele ya kipenyelea maeneo",
+    "p": [
+      "Muduli hii inaweza kubadilisha klasa za kipengele ya kipenyelea maeneo na semantiki zinazotolewa kwa maeneo mpya wa kipenyelea maeneo. Klasa za kipengele zinaulizwa kwa maeneo mpya, zinaweza kubadilisha kwa maeneo na hivi linalo, na kwa maeneo zinaweza kubadilisha kwa maeneo mpya lakini zinaweza kubadilisha kwa maeneo na hivi linalo.",
+      "Je kama unahitaji kujifunza kwenye muda hili kwa kawaida au kama unahitaji kujifunza kuhusu class ambavyo ni rahisi kwa umri yako, Path ni pia hata hivi unaweza kufanya. Wala kutoa instansia ya maelezo ya majani kwa platform ya kodi hii unayotaka.",
+      "Tafuta pakisharhi na npm install is-online, baadaye kujifunza await isOnline() kusaidia kusoma kama kodi hii inaweza kufanya internet.",
+      "Metode window.alert() inaweza kusaidia vijana vya kijamii kuelewa dialogu na kuelewa kifupi kwenye mafanikio, na kusaidia kuelewa kufuata kati ya kujifunza dialogu."
+    ]
+  }
+]

@@ -13,6 +13,8 @@
     </linearGradient>
     <clipPath id="ddt-front"><rect x="42" y="30" width="70" height="88" rx="15"/></clipPath>
   </defs>
+  <!-- Tout le dessin est décalé pour équilibrer le centre de l'ensemble et celui de la feuille avant (la plus visible). -->
+  <g transform="translate(-5.5 -4.8)">
   <!-- couche source, décalée -->
   <rect x="16" y="12" width="70" height="88" rx="15" fill="url(#ddt-back)" transform="rotate(-9 51 56)"/>
   <!-- couche traduite : verre prismatique -->
@@ -21,4 +23,5 @@
   <rect x="42" y="30" width="70" height="88" rx="15" fill="url(#ddt-spec)"/>
   <g fill="#fff"><rect x="56" y="52" width="42" height="9" rx="4.5"/><rect x="56" y="69" width="30" height="9" rx="4.5" opacity=".92"/><rect x="56" y="86" width="38" height="9" rx="4.5" opacity=".84"/></g>
   <rect x="42.75" y="30.75" width="68.5" height="86.5" rx="14.25" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+  </g>
 </svg>

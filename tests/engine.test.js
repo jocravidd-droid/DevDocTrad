@@ -202,6 +202,20 @@ test('contenu ajouté plus tard (MutationObserver) traduit sans retraduire l\'ex
   assert.equal(p.textContent, 'LOADED LATER BY THE SITE.');
 });
 
+test('texte caché puis montré par une classe (section dépliée, menu) : traduit quand il apparaît', async () => {
+  const dom = makeDom('<html><head><style>.fold{display:none}</style></head><body><p>Visible text.</p>' +
+    '<ol id="sub" class="fold"><li>Hidden chapter title</li></ol></body></html>');
+  const doc = dom.window.document;
+  const { engine, calls } = makeEngine(dom);
+  await engine.start();
+  assert.equal(calls.length, 1);
+  assert.equal(doc.querySelector('li').textContent, 'Hidden chapter title');
+  doc.getElementById('sub').className = 'open';
+  await new Promise((r) => setTimeout(r, 1000));
+  assert.deepEqual(calls[1], ['Hidden chapter title']);
+  assert.equal(doc.querySelector('li').textContent, 'HIDDEN CHAPTER TITLE');
+});
+
 test('commentaires de code : désactivé ne touche à rien ; activé traduit seulement le texte du commentaire', async () => {
   const html = '<html><body><pre><code class="language-js"><span class="token comment">// Create a new server</span>\n' +
     'const s = <span class="token function">create</span>();\n<span class="token comment">// foo(bar);</span></code></pre></body></html>';

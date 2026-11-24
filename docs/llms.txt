@@ -9,7 +9,7 @@ Key facts:
 - Keeps links, bold text and code elements in place; one click (or Alt+Shift+T) back to the exact original; optional bilingual mode.
 - Works with the user's own free API keys: Google Gemini, Groq, Mistral, OpenRouter (:free models), or a local model with Ollama. Never falls back to a paid key; paid keys require a daily cap.
 - Privacy: no analytics, no tracking, keys stored locally; page text goes only to the chosen provider (or stays local with Ollama).
-- Interface in English and French.
+- Interface in 36 languages, following the browser (Arabic, Hebrew and Persian right to left).
 
 ## Links
 - [Website (French)](https://devdoctrad.vercel.app/)

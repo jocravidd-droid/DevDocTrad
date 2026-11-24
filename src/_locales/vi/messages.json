@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Dịch trung thực tài liệu dành cho lập trình viên và các trang web lập trình, không bao giờ động vào mã."
+  },
+  "cmdToggle": {
+    "message": "Dịch trang hoặc quay lại bản gốc"
+  },
+  "badgeTranslating": {
+    "message": "Đang dịch: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Đã dịch: {0} đoạn"
+  },
+  "badgeDoneFailed": {
+    "message": "Đã dịch: {0} đoạn, {1} đoạn giữ nguyên bản gốc"
+  },
+  "badgeStopped": {
+    "message": "Đã dừng"
+  },
+  "badgeCap": {
+    "message": "Đã đạt giới hạn {0} ký tự cho trang này."
+  },
+  "badgeRateLimited": {
+    "message": "Khóa miễn phí đã đạt giới hạn. Thử lại sau {0} giây ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Tất cả khóa miễn phí đều đã đạt giới hạn. Hãy thử lại sau."
+  },
+  "badgeNoKey": {
+    "message": "Không có khóa khả dụng. Hãy thêm khóa trong phần cài đặt."
+  },
+  "badgeError": {
+    "message": "Lỗi: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "dịch cục bộ (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "dịch trực tuyến ({0})"
+  },
+  "badgeNothing": {
+    "message": "Trang này không có gì để dịch."
+  },
+  "badgeKeyProblem": {
+    "message": "Sự cố với khóa {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Dừng"
+  },
+  "btnOriginal": {
+    "message": "Xem bản gốc"
+  },
+  "btnTranslation": {
+    "message": "Xem bản dịch"
+  },
+  "btnMinimize": {
+    "message": "Thu nhỏ"
+  },
+  "btnClose": {
+    "message": "Đóng"
+  },
+  "btnContinue": {
+    "message": "Tiếp tục"
+  },
+  "errAuth": {
+    "message": "khóa bị từ chối (không hợp lệ hoặc đã thu hồi)"
+  },
+  "errPayment": {
+    "message": "số dư tại nhà cung cấp không đủ; đã dừng khóa"
+  },
+  "errRate": {
+    "message": "đã đạt giới hạn yêu cầu, hãy thử lại sau một phút"
+  },
+  "errOllamaDown": {
+    "message": "Ollama không phản hồi tại localhost:11434. Hãy khởi động Ollama rồi thử lại."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama từ chối tiện ích (403). Đặt biến môi trường OLLAMA_ORIGINS thành chrome-extension://*,moz-extension://* rồi khởi động lại Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "ở chế độ miễn phí, OpenRouter chỉ chấp nhận các mô hình có tên kết thúc bằng :free"
+  },
+  "errPaidUnset": {
+    "message": "khóa trả phí bị chặn: trước tiên hãy đặt hạn mức hằng ngày và cả hai mức giá trong cài đặt."
+  },
+  "errPaidCap": {
+    "message": "khóa trả phí đã đạt hạn mức hằng ngày ($${0} / $${1})."
+  },
+  "errUnknown": {
+    "message": "Lỗi không xác định"
+  },
+  "keyAvailable": {
+    "message": "khả dụng"
+  },
+  "keyDisabled": {
+    "message": "đã tắt"
+  },
+  "keyNoModel": {
+    "message": "chọn mô hình"
+  },
+  "keyPausedUntil": {
+    "message": "tạm dừng đến {0}"
+  },
+  "keyProblem": {
+    "message": "sự cố"
+  },
+  "tier_free": {
+    "message": "miễn phí"
+  },
+  "tier_paid": {
+    "message": "trả phí"
+  },
+  "tier_local": {
+    "message": "cục bộ"
+  },
+  "gl_never": {
+    "message": "Không bao giờ dịch"
+  },
+  "gl_always": {
+    "message": "Luôn dịch thành"
+  },
+  "popupTranslate": {
+    "message": "Dịch trang này"
+  },
+  "popupSettings": {
+    "message": "Cài đặt"
+  },
+  "popupUnsupported": {
+    "message": "Tiện ích không thể dịch trang này (trang của trình duyệt, cửa hàng tiện ích hoặc trình xem PDF)."
+  },
+  "popupKey": {
+    "message": "Khóa"
+  },
+  "popupKeyAuto": {
+    "message": "Tự động (miễn phí và cục bộ)"
+  },
+  "popupAuto": {
+    "message": "Tự động dịch trang web này"
+  },
+  "popupSensitive": {
+    "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
+  },
+  "popupKeys": {
+    "message": "Trạng thái khóa"
+  },
+  "popupNoKeys": {
+    "message": "Chưa có khóa."
+  },
+  "popupAddKey": {
+    "message": "Thêm khóa"
+  },
+  "popupShortcut": {
+    "message": "Phím tắt:"
+  },
+  "optTitle": {
+    "message": "Cài đặt DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Trình duyệt chưa cho phép truy cập các nhà cung cấp dịch."
+  },
+  "optPermGrant": {
+    "message": "Cho phép truy cập nhà cung cấp"
+  },
+  "optTabKeys": {
+    "message": "Khóa"
+  },
+  "optTabTranslation": {
+    "message": "Dịch"
+  },
+  "optTabGlossary": {
+    "message": "Bảng thuật ngữ"
+  },
+  "optTabSites": {
+    "message": "Trang web"
+  },
+  "optTabData": {
+    "message": "Dữ liệu"
+  },
+  "optKeysTitle": {
+    "message": "Khóa API"
+  },
+  "optKeysLocal": {
+    "message": "Khóa chỉ nằm trong trình duyệt này (bộ nhớ cục bộ). Chúng không bao giờ được đồng bộ với tài khoản của bạn và không được gửi đi đâu ngoài nhà cung cấp. Thứ tự thẻ là thứ tự ưu tiên."
+  },
+  "optAddKey": {
+    "message": "Thêm"
+  },
+  "optKey": {
+    "message": "Khóa"
+  },
+  "optShow": {
+    "message": "Hiện"
+  },
+  "optHide": {
+    "message": "Ẩn"
+  },
+  "optBaseUrl": {
+    "message": "Địa chỉ Ollama"
+  },
+  "optTier": {
+    "message": "Loại"
+  },
+  "optModelEasy": {
+    "message": "Mô hình (trang đơn giản)"
+  },
+  "optModelHard": {
+    "message": "Mô hình cho trang khó (không bắt buộc)"
+  },
+  "optMaxChars": {
+    "message": "Kích thước lô (ký tự)"
+  },
+  "optInterval": {
+    "message": "Khoảng cách giữa các yêu cầu (ms)"
+  },
+  "optMaxReq": {
+    "message": "Số yêu cầu tối đa mỗi ngày (0 = không giới hạn)"
+  },
+  "optPriceIn": {
+    "message": "Giá đầu vào ($$ mỗi triệu token)"
+  },
+  "optPriceOut": {
+    "message": "Giá đầu ra ($$ mỗi triệu token)"
+  },
+  "optDailyCap": {
+    "message": "Hạn mức hằng ngày ($$)"
+  },
+  "optLoadModels": {
+    "message": "Tải danh sách mô hình"
+  },
+  "optTest": {
+    "message": "Kiểm tra"
+  },
+  "optUp": {
+    "message": "Đưa lên"
+  },
+  "optDown": {
+    "message": "Đưa xuống"
+  },
+  "optDelete": {
+    "message": "Xóa"
+  },
+  "optDeleteConfirm": {
+    "message": "Xóa khóa này?"
+  },
+  "optWorking": {
+    "message": "Đang kiểm tra…"
+  },
+  "optTestOk": {
+    "message": "Khóa hợp lệ, có {0} mô hình."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama đang phản hồi, đã cài {0} mô hình."
+  },
+  "optModelsLoaded": {
+    "message": "Đã tải {0} mô hình: hãy chọn một mô hình trong danh sách."
+  },
+  "optSaved": {
+    "message": "Đã lưu"
+  },
+  "optTarget": {
+    "message": "Ngôn ngữ đích"
+  },
+  "optTargetAuto": {
+    "message": "Ngôn ngữ của trình duyệt ({0})"
+  },
+  "optMode": {
+    "message": "Hiển thị"
+  },
+  "optModeReplace": {
+    "message": "Thay thế văn bản"
+  },
+  "optModeBilingual": {
+    "message": "Song ngữ (bản dịch dưới bản gốc)"
+  },
+  "optExplain": {
+    "message": "Thuật ngữ kỹ thuật: bản dịch + tiếng Anh trong ngoặc"
+  },
+  "optExplainHelp": {
+    "message": "Các khái niệm kỹ thuật được dịch, kèm thuật ngữ tiếng Anh trong ngoặc ở lần xuất hiện đầu tiên. Tắt: thuật ngữ kỹ thuật tiếng Anh được giữ nguyên, không có ngoặc. Mã và tên (Path, npm…) không bao giờ được dịch."
+  },
+  "optComments": {
+    "message": "Dịch chú thích trong khối mã"
+  },
+  "optCommentsHelp": {
+    "message": "Tắt theo mặc định. Chỉ dịch các chú thích mà phần tô sáng cú pháp của trang nhận diện được; mã không bao giờ bị thay đổi và bản gốc được khôi phục nguyên vẹn."
+  },
+  "optPageCap": {
+    "message": "Giới hạn ký tự mỗi trang"
+  },
+  "optShortcut": {
+    "message": "Phím tắt"
+  },
+  "optShortcutCurrent": {
+    "message": "Phím tắt hiện tại: {0}."
+  },
+  "optShortcutNone": {
+    "message": "không có"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Để thay đổi: mở chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Để thay đổi: Trình quản lý tiện ích, biểu tượng bánh răng, \"Quản lý phím tắt tiện ích\"."
+  },
+  "optGlossaryHelp": {
+    "message": "Các thuật ngữ không bao giờ được dịch, hoặc luôn được dịch theo một cách nhất định. Chỉ những thuật ngữ có trong đoạn văn mới được gửi cho mô hình. Tối đa 500 mục."
+  },
+  "optGlTerm": {
+    "message": "Thuật ngữ"
+  },
+  "optGlType": {
+    "message": "Quy tắc"
+  },
+  "optGlTranslation": {
+    "message": "Bản dịch bắt buộc"
+  },
+  "optGlAdd": {
+    "message": "Thêm thuật ngữ"
+  },
+  "optGlExport": {
+    "message": "Xuất (JSON)"
+  },
+  "optGlImport": {
+    "message": "Nhập (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Tệp không hợp lệ: cần một danh sách JSON gồm các đối tượng {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Trang web tự động dịch"
+  },
+  "optAutoHelp": {
+    "message": "Thêm trang web từ cửa sổ bật lên bằng \"Tự động dịch trang web này\". Chỉ khóa miễn phí và Ollama được dùng tự động."
+  },
+  "optAutoEmpty": {
+    "message": "Chưa có trang web nào."
+  },
+  "optAutoGranted": {
+    "message": "được phép"
+  },
+  "optAutoRevoked": {
+    "message": "đã gỡ quyền"
+  },
+  "optSensitiveTitle": {
+    "message": "Trang nhạy cảm"
+  },
+  "optSensitiveHelp": {
+    "message": "Không bao giờ tự động dịch (kể cả mọi trang có ô mật khẩu). Nút dịch thủ công vẫn hoạt động."
+  },
+  "optSensitiveBase": {
+    "message": "Mẫu cơ bản:"
+  },
+  "optSensitiveExtra": {
+    "message": "Mẫu bổ sung (mỗi dòng một từ hoặc tên miền)"
+  },
+  "optCacheTitle": {
+    "message": "Bộ nhớ đệm bản dịch"
+  },
+  "optCacheInfo": {
+    "message": "{0} đoạn trong bộ nhớ đệm ({1} MB). Trang đã dịch được hiển thị lại mà không cần gọi mạng."
+  },
+  "optCacheClear": {
+    "message": "Xóa bộ nhớ đệm"
+  },
+  "optUsageTitle": {
+    "message": "Mức dùng hôm nay"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} yêu cầu{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Quyền riêng tư"
+  },
+  "optPrivacyText": {
+    "message": "Văn bản của các trang bạn dịch chỉ được gửi đến nhà cung cấp bạn chọn, hoặc ở lại trên máy của bạn với Ollama. Không thống kê, không theo dõi, không gửi gì cho nhà phát triển. Ở gói miễn phí, Gemini và Mistral có thể dùng lại văn bản được gửi."
+  },
+  "warnGemini": {
+    "message": "Tạo khóa trong Google AI Studio mà không liên kết thanh toán. Ở gói miễn phí, Google có thể dùng lại văn bản được gửi. Hai khóa cùng một dự án dùng chung một giới hạn."
+  },
+  "warnGroq": {
+    "message": "Gói miễn phí không cần thẻ: vượt giới hạn bạn chỉ nhận lỗi 429, không bao giờ có hóa đơn."
+  },
+  "warnMistral": {
+    "message": "Chế độ miễn phí không cần thẻ. Yêu cầu có thể được dùng để huấn luyện: hãy tắt trong bảng điều khiển Mistral nếu bạn muốn."
+  },
+  "warnOpenRouter": {
+    "message": "Ở chế độ miễn phí, chỉ chấp nhận mô hình kết thúc bằng :free (khoảng 50 yêu cầu mỗi ngày). Đừng bao giờ nạp tiền cho tiện ích này."
+  },
+  "warnOllama": {
+    "message": "Mô hình trên máy của bạn: miễn phí và riêng tư, không gì rời khỏi máy. Mô hình nhỏ sai nhiều hơn; các đoạn đáng ngờ được giữ nguyên bản gốc."
+  },
+  "popupView": {
+    "message": "Hiển thị trang"
+  },
+  "segOriginal": {
+    "message": "Bản gốc"
+  },
+  "segTranslation": {
+    "message": "Bản dịch"
+  },
+  "popupTranslating": {
+    "message": "Đang dịch…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} đoạn"
+  },
+  "popupManage": {
+    "message": "Quản lý"
+  },
+  "popupMoreKeys": {
+    "message": "và {0} khóa khác"
+  },
+  "popupNoKeysLong": {
+    "message": "Hãy thêm một khóa miễn phí (Gemini, Groq, Mistral, OpenRouter) hoặc Ollama để bắt đầu."
+  },
+  "stateReady": {
+    "message": "Sẵn sàng dịch"
+  },
+  "stateNoKey": {
+    "message": "Chưa thiết lập khóa"
+  },
+  "stateRunning": {
+    "message": "Đang dịch"
+  },
+  "stateTranslated": {
+    "message": "Đã dịch trang"
+  },
+  "stateOriginal": {
+    "message": "Đang hiện bản gốc"
+  },
+  "stateStopped": {
+    "message": "Đã dừng"
+  },
+  "statePaused": {
+    "message": "Đã đạt giới hạn trang"
+  },
+  "stateError": {
+    "message": "Lỗi"
+  },
+  "stateUnavailable": {
+    "message": "Không thể dịch trang"
+  },
+  "toastAutoOn": {
+    "message": "Đã bật tự động dịch cho {0}."
+  },
+  "toastAutoOff": {
+    "message": "Đã tắt tự động dịch cho {0}."
+  },
+  "toastPermDenied": {
+    "message": "Quyền bị từ chối: chưa thêm trang web."
+  },
+  "badgeShowBadge": {
+    "message": "Hiện huy hiệu DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Các mục cài đặt"
+  },
+  "optNavKeys": {
+    "message": "Nhà cung cấp và khóa"
+  },
+  "optNavPrivacy": {
+    "message": "Quyền riêng tư và chi phí"
+  },
+  "optNavAppearance": {
+    "message": "Giao diện"
+  },
+  "optDescKeys": {
+    "message": "Khóa API của bạn và Ollama, được thử theo thứ tự thẻ, từ trên xuống dưới."
+  },
+  "optDescTranslation": {
+    "message": "Ngôn ngữ, cách hiển thị và những gì tiện ích được phép dịch."
+  },
+  "optDescPrivacy": {
+    "message": "Những gì rời khỏi trình duyệt, gửi đến ai và tốn bao nhiêu."
+  },
+  "optDescSites": {
+    "message": "Trang web tự động dịch và các trang cần bảo vệ."
+  },
+  "optDescGlossary": {
+    "message": "Thuật ngữ cần giữ nguyên hoặc luôn dịch theo một cách."
+  },
+  "optDescData": {
+    "message": "Bộ nhớ đệm bản dịch và dữ liệu lưu trong trình duyệt này."
+  },
+  "optDescAppearance": {
+    "message": "Giao diện của phần cài đặt, cửa sổ bật lên và huy hiệu trên trang."
+  },
+  "optVersion": {
+    "message": "phiên bản {0}"
+  },
+  "optAddProvider": {
+    "message": "Thêm nhà cung cấp"
+  },
+  "optAddProviderHelp": {
+    "message": "Thẻ mới được đặt cuối cùng. Thứ tự thẻ là thứ tự ưu tiên."
+  },
+  "optProvider": {
+    "message": "Nhà cung cấp"
+  },
+  "optKeysEmptyHint": {
+    "message": "Chọn nhà cung cấp: một thẻ xuất hiện, dán khóa của bạn, rồi \"Tải danh sách mô hình\" và chọn một mô hình."
+  },
+  "optKeyName": {
+    "message": "Tên khóa"
+  },
+  "optKeyEnabled": {
+    "message": "Dùng khóa này"
+  },
+  "optPriority": {
+    "message": "ưu tiên {0}"
+  },
+  "optKeyHelp": {
+    "message": "Ẩn theo mặc định, chỉ lưu trong trình duyệt này."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama phải đang chạy trên máy của bạn."
+  },
+  "optModelHelp": {
+    "message": "\"Tải danh sách mô hình\" sẽ điền danh sách gợi ý."
+  },
+  "optLimits": {
+    "message": "Giới hạn"
+  },
+  "optLimitsHelp": {
+    "message": "Để trống = mặc định của nhà cung cấp."
+  },
+  "optPaidTitle": {
+    "message": "Chi phí"
+  },
+  "optPaidHelp": {
+    "message": "Chỉ dùng khi bạn chọn nó trong cửa sổ bật lên."
+  },
+  "optPaidOk": {
+    "message": "Đã đặt hạn mức và giá: có thể dùng khóa đến hạn mức."
+  },
+  "optPrivacyFlow": {
+    "message": "Văn bản được gửi đi đâu"
+  },
+  "optProviderNotes": {
+    "message": "Ghi chú theo nhà cung cấp"
+  },
+  "optProviderUsed": {
+    "message": "đang dùng"
+  },
+  "optUsageEmpty": {
+    "message": "Chưa thiết lập khóa nào."
+  },
+  "optUsageHelp": {
+    "message": "Đặt lại mỗi ngày lúc nửa đêm (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Khóa trả phí"
+  },
+  "optPaidRule": {
+    "message": "Khóa trả phí không bao giờ được dùng tự động: bạn phải chọn nó trong cửa sổ bật lên. Khóa bị chặn cho đến khi đặt hạn mức hằng ngày và cả hai mức giá, và dừng ngay khi đạt hạn mức."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Chưa có trang web tự động"
+  },
+  "optAutoEmptyLong": {
+    "message": "Để thêm: mở trang web, nhấp biểu tượng DevDocTrad trên thanh công cụ, rồi bật \"Tự động dịch trang web này\". Trình duyệt chỉ xin quyền cho trang web đó."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Gỡ {0} khỏi danh sách trang web tự động dịch?"
+  },
+  "optGlEmpty": {
+    "message": "Chưa có thuật ngữ. Ví dụ: \"thread\" với quy tắc \"Không bao giờ dịch\"."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 thuật ngữ"
+  },
+  "optGlImported": {
+    "message": "Đã nhập {0} thuật ngữ."
+  },
+  "optCacheConfirm": {
+    "message": "Xóa bộ nhớ đệm? Các trang đã dịch sẽ phải dịch lại (gọi lại nhà cung cấp)."
+  },
+  "optCacheCleared": {
+    "message": "Đã xóa bộ nhớ đệm."
+  },
+  "optStorageTitle": {
+    "message": "Bộ nhớ cục bộ"
+  },
+  "optTheme": {
+    "message": "Chủ đề"
+  },
+  "optThemeHelp": {
+    "message": "\"Hệ thống\" theo thiết lập sáng hoặc tối của máy tính."
+  },
+  "optThemeSystem": {
+    "message": "Hệ thống"
+  },
+  "optThemeLight": {
+    "message": "Sáng"
+  },
+  "optThemeDark": {
+    "message": "Tối"
+  },
+  "optPriceInUsd": {
+    "message": "Giá đầu vào ($$ mỗi triệu token)"
+  },
+  "optPriceOutUsd": {
+    "message": "Giá đầu ra ($$ mỗi triệu token)"
+  },
+  "optDailyCapUsd": {
+    "message": "Hạn mức hằng ngày ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "dự án Google này dùng thanh toán trả trước và đã hết tín dụng. Đừng nạp gì cả: hãy tạo khóa trong một dự án không có thanh toán trên Google AI Studio (gói miễn phí)."
+  }
+}

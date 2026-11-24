@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Hutafsiri kwa uaminifu nyaraka za wasanidi programu na tovuti za upangaji programu, bila kugusa msimbo kamwe."
+  },
+  "cmdToggle": {
+    "message": "Tafsiri ukurasa au rudi kwenye asili"
+  },
+  "badgeTranslating": {
+    "message": "Inatafsiri: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Imetafsiriwa: vifungu {0}"
+  },
+  "badgeDoneFailed": {
+    "message": "Imetafsiriwa: vifungu {0}, {1} vimeachwa kwa lugha asili"
+  },
+  "badgeStopped": {
+    "message": "Imesimamishwa"
+  },
+  "badgeCap": {
+    "message": "Kikomo cha herufi {0} kimefikiwa kwa ukurasa huu."
+  },
+  "badgeRateLimited": {
+    "message": "Kikomo cha ufunguo wa bure kimefikiwa. Itajaribu tena baada ya sekunde {0} ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Funguo zote za bure zimefikia kikomo. Jaribu tena baadaye."
+  },
+  "badgeNoKey": {
+    "message": "Hakuna ufunguo unaopatikana. Ongeza ufunguo kwenye mipangilio."
+  },
+  "badgeError": {
+    "message": "Hitilafu: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "imetafsiriwa kwenye kompyuta (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "imetafsiriwa mtandaoni ({0})"
+  },
+  "badgeNothing": {
+    "message": "Hakuna cha kutafsiri kwenye ukurasa huu."
+  },
+  "badgeKeyProblem": {
+    "message": "Tatizo kwenye ufunguo {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Simamisha"
+  },
+  "btnOriginal": {
+    "message": "Onyesha asili"
+  },
+  "btnTranslation": {
+    "message": "Onyesha tafsiri"
+  },
+  "btnMinimize": {
+    "message": "Punguza"
+  },
+  "btnClose": {
+    "message": "Funga"
+  },
+  "btnContinue": {
+    "message": "Endelea"
+  },
+  "errAuth": {
+    "message": "ufunguo umekataliwa (si sahihi au umebatilishwa)"
+  },
+  "errPayment": {
+    "message": "salio halitoshi kwa mtoa huduma; ufunguo umesimamishwa"
+  },
+  "errRate": {
+    "message": "kikomo cha maombi kimefikiwa, jaribu tena baada ya dakika moja"
+  },
+  "errOllamaDown": {
+    "message": "Ollama haijibu kwenye localhost:11434. Washa Ollama kisha ujaribu tena."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama inakataa kiendelezi (403). Weka kigezo cha mazingira OLLAMA_ORIGINS kuwa chrome-extension://*,moz-extension://* kisha uwashe upya Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "katika hali ya bure, OpenRouter inakubali tu miundo ambayo jina lake linaishia na :free"
+  },
+  "errPaidUnset": {
+    "message": "ufunguo wa kulipia umezuiwa: kwanza weka kikomo cha kila siku na bei zote mbili kwenye mipangilio."
+  },
+  "errPaidCap": {
+    "message": "kikomo cha kila siku cha ufunguo wa kulipia kimefikiwa ($${0} kati ya $${1})."
+  },
+  "errUnknown": {
+    "message": "Hitilafu isiyojulikana"
+  },
+  "keyAvailable": {
+    "message": "unapatikana"
+  },
+  "keyDisabled": {
+    "message": "umezimwa"
+  },
+  "keyNoModel": {
+    "message": "chagua muundo"
+  },
+  "keyPausedUntil": {
+    "message": "umesitishwa hadi {0}"
+  },
+  "keyProblem": {
+    "message": "tatizo"
+  },
+  "tier_free": {
+    "message": "bure"
+  },
+  "tier_paid": {
+    "message": "kulipia"
+  },
+  "tier_local": {
+    "message": "ya ndani"
+  },
+  "gl_never": {
+    "message": "Usitafsiri kamwe"
+  },
+  "gl_always": {
+    "message": "Tafsiri kila mara kama"
+  },
+  "popupTranslate": {
+    "message": "Tafsiri ukurasa huu"
+  },
+  "popupSettings": {
+    "message": "Mipangilio"
+  },
+  "popupUnsupported": {
+    "message": "Ukurasa huu hauwezi kutafsiriwa na kiendelezi (ukurasa wa kivinjari, duka la viendelezi au kisomaji cha PDF)."
+  },
+  "popupKey": {
+    "message": "Ufunguo"
+  },
+  "popupKeyAuto": {
+    "message": "Kiotomatiki (za bure na ya ndani)"
+  },
+  "popupAuto": {
+    "message": "Tafsiri tovuti hii kiotomatiki"
+  },
+  "popupSensitive": {
+    "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
+  },
+  "popupKeys": {
+    "message": "Hali ya funguo"
+  },
+  "popupNoKeys": {
+    "message": "Bado hakuna ufunguo."
+  },
+  "popupAddKey": {
+    "message": "Ongeza ufunguo"
+  },
+  "popupShortcut": {
+    "message": "Njia ya mkato:"
+  },
+  "optTitle": {
+    "message": "Mipangilio ya DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Kivinjari bado hakijaruhusu ufikiaji wa watoa huduma wa tafsiri."
+  },
+  "optPermGrant": {
+    "message": "Ruhusu ufikiaji wa watoa huduma"
+  },
+  "optTabKeys": {
+    "message": "Funguo"
+  },
+  "optTabTranslation": {
+    "message": "Tafsiri"
+  },
+  "optTabGlossary": {
+    "message": "Faharasa"
+  },
+  "optTabSites": {
+    "message": "Tovuti"
+  },
+  "optTabData": {
+    "message": "Data"
+  },
+  "optKeysTitle": {
+    "message": "Funguo za API"
+  },
+  "optKeysLocal": {
+    "message": "Funguo zinabaki kwenye kivinjari hiki (hifadhi ya ndani). Hazisawazishwi kamwe na akaunti yako wala kutumwa popote isipokuwa kwa mtoa huduma. Mpangilio wa kadi ndio mpangilio wa kipaumbele."
+  },
+  "optAddKey": {
+    "message": "Ongeza"
+  },
+  "optKey": {
+    "message": "Ufunguo"
+  },
+  "optShow": {
+    "message": "Onyesha"
+  },
+  "optHide": {
+    "message": "Ficha"
+  },
+  "optBaseUrl": {
+    "message": "Anwani ya Ollama"
+  },
+  "optTier": {
+    "message": "Aina"
+  },
+  "optModelEasy": {
+    "message": "Muundo (kurasa rahisi)"
+  },
+  "optModelHard": {
+    "message": "Muundo wa kurasa ngumu (si lazima)"
+  },
+  "optMaxChars": {
+    "message": "Ukubwa wa kundi (herufi)"
+  },
+  "optInterval": {
+    "message": "Muda kati ya maombi (ms)"
+  },
+  "optMaxReq": {
+    "message": "Idadi ya juu ya maombi kwa siku (0 = bila kikomo)"
+  },
+  "optPriceIn": {
+    "message": "Bei ya ingizo ($$ kwa tokeni milioni)"
+  },
+  "optPriceOut": {
+    "message": "Bei ya matokeo ($$ kwa tokeni milioni)"
+  },
+  "optDailyCap": {
+    "message": "Kikomo cha kila siku ($$)"
+  },
+  "optLoadModels": {
+    "message": "Pakia miundo"
+  },
+  "optTest": {
+    "message": "Jaribu"
+  },
+  "optUp": {
+    "message": "Sogeza juu"
+  },
+  "optDown": {
+    "message": "Sogeza chini"
+  },
+  "optDelete": {
+    "message": "Futa"
+  },
+  "optDeleteConfirm": {
+    "message": "Ufute ufunguo huu?"
+  },
+  "optWorking": {
+    "message": "Inakagua…"
+  },
+  "optTestOk": {
+    "message": "Ufunguo ni sahihi, miundo {0} inapatikana."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama inajibu, modeli {0} zimesakinishwa."
+  },
+  "optModelsLoaded": {
+    "message": "Miundo {0} imepakiwa: chagua mmoja kwenye orodha."
+  },
+  "optSaved": {
+    "message": "Imehifadhiwa"
+  },
+  "optTarget": {
+    "message": "Lugha lengwa"
+  },
+  "optTargetAuto": {
+    "message": "Lugha ya kivinjari ({0})"
+  },
+  "optMode": {
+    "message": "Mwonekano"
+  },
+  "optModeReplace": {
+    "message": "Badilisha maandishi"
+  },
+  "optModeBilingual": {
+    "message": "Lugha mbili (tafsiri chini ya asili)"
+  },
+  "optExplain": {
+    "message": "Istilahi za kiufundi: tafsiri + Kiingereza kwenye mabano"
+  },
+  "optExplainHelp": {
+    "message": "Dhana za kiufundi hutafsiriwa, na istilahi ya Kiingereza huwekwa kwenye mabano inapoonekana mara ya kwanza. Imezimwa: istilahi za kiufundi za Kiingereza hubaki kwa Kiingereza, bila mabano. Msimbo na majina (Path, npm…) hayatafsiriwi kamwe."
+  },
+  "optComments": {
+    "message": "Tafsiri maoni ndani ya vizuizi vya msimbo"
+  },
+  "optCommentsHelp": {
+    "message": "Imezimwa kwa chaguo-msingi. Ni maoni tu yanayotambuliwa na uangaziaji wa sintaksia wa tovuti ndiyo hutafsiriwa; msimbo haubadilishwi kamwe na asili hurudi bila mabadiliko."
+  },
+  "optPageCap": {
+    "message": "Kikomo cha herufi kwa ukurasa"
+  },
+  "optShortcut": {
+    "message": "Njia ya mkato ya kibodi"
+  },
+  "optShortcutCurrent": {
+    "message": "Njia ya mkato ya sasa: {0}."
+  },
+  "optShortcutNone": {
+    "message": "hakuna"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Ili kuibadilisha: fungua chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Ili kuibadilisha: Kidhibiti cha viongezi, ikoni ya gia, \"Dhibiti njia za mkato za viendelezi\"."
+  },
+  "optGlossaryHelp": {
+    "message": "Istilahi zisizotafsiriwa kamwe, au zinazotafsiriwa kila mara kwa namna fulani. Ni istilahi zilizo kwenye kifungu tu ndizo hutumwa kwa muundo. Kiwango cha juu ni maingizo 500."
+  },
+  "optGlTerm": {
+    "message": "Istilahi"
+  },
+  "optGlType": {
+    "message": "Kanuni"
+  },
+  "optGlTranslation": {
+    "message": "Tafsiri ya lazima"
+  },
+  "optGlAdd": {
+    "message": "Ongeza istilahi"
+  },
+  "optGlExport": {
+    "message": "Hamisha (JSON)"
+  },
+  "optGlImport": {
+    "message": "Leta (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Faili si sahihi: inahitajika orodha ya JSON ya vipengee {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Tovuti zinazotafsiriwa kiotomatiki"
+  },
+  "optAutoHelp": {
+    "message": "Ongeza tovuti kutoka dirisha ibukizi kwa \"Tafsiri tovuti hii kiotomatiki\". Ni funguo za bure na Ollama tu ndizo hutumika kiotomatiki."
+  },
+  "optAutoEmpty": {
+    "message": "Bado hakuna tovuti."
+  },
+  "optAutoGranted": {
+    "message": "imeruhusiwa"
+  },
+  "optAutoRevoked": {
+    "message": "ruhusa imeondolewa"
+  },
+  "optSensitiveTitle": {
+    "message": "Kurasa nyeti"
+  },
+  "optSensitiveHelp": {
+    "message": "Hazitafsiriwi kiotomatiki kamwe (wala ukurasa wowote wenye sehemu ya nenosiri). Kitufe cha kutafsiri mwenyewe bado kinafanya kazi."
+  },
+  "optSensitiveBase": {
+    "message": "Ruwaza za msingi:"
+  },
+  "optSensitiveExtra": {
+    "message": "Ruwaza za ziada (moja kwa kila mstari, neno au kikoa)"
+  },
+  "optCacheTitle": {
+    "message": "Akiba ya tafsiri"
+  },
+  "optCacheInfo": {
+    "message": "Vifungu {0} kwenye akiba ({1} MB). Ukurasa uliokwisha tafsiriwa huonyeshwa tena bila kuunganisha mtandao."
+  },
+  "optCacheClear": {
+    "message": "Futa akiba"
+  },
+  "optUsageTitle": {
+    "message": "Matumizi ya leo"
+  },
+  "optUsageLine": {
+    "message": "maombi {0}{1}{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Faragha"
+  },
+  "optPrivacyText": {
+    "message": "Maandishi ya kurasa unazotafsiri hutumwa tu kwa mtoa huduma uliyemchagua, au hubaki kwenye kompyuta yako ukitumia Ollama. Hakuna takwimu, hakuna ufuatiliaji, hakuna kinachotumwa kwa msanidi programu. Kwenye mipango ya bure, Gemini na Mistral wanaweza kutumia tena maandishi yaliyotumwa."
+  },
+  "warnGemini": {
+    "message": "Unda ufunguo kwenye Google AI Studio bila kuunganisha malipo. Kwenye mpango wa bure, Google inaweza kutumia tena maandishi yaliyotumwa. Funguo mbili za mradi mmoja hushiriki kikomo kimoja."
+  },
+  "warnGroq": {
+    "message": "Mpango wa bure bila kadi: ukipita kikomo unapata tu hitilafu 429, kamwe si bili."
+  },
+  "warnMistral": {
+    "message": "Hali ya bure bila kadi. Maombi yanaweza kutumika kwa mafunzo: izime kwenye dashibodi ya Mistral ukipenda."
+  },
+  "warnOpenRouter": {
+    "message": "Katika hali ya bure, ni miundo inayoishia na :free tu inayokubaliwa (takriban maombi 50 kwa siku). Usiongeze salio kamwe kwa ajili ya kiendelezi hiki."
+  },
+  "warnOllama": {
+    "message": "Muundo kwenye kompyuta yako: bure na wa faragha, hakuna kinachotoka kwenye kompyuta. Muundo mdogo hukosea zaidi; vifungu vyenye shaka hubaki kwa lugha asili."
+  },
+  "popupView": {
+    "message": "Mwonekano wa ukurasa"
+  },
+  "segOriginal": {
+    "message": "Asili"
+  },
+  "segTranslation": {
+    "message": "Tafsiri"
+  },
+  "popupTranslating": {
+    "message": "Inatafsiri…"
+  },
+  "popupCount": {
+    "message": "vifungu {0} / {1}"
+  },
+  "popupManage": {
+    "message": "Dhibiti"
+  },
+  "popupMoreKeys": {
+    "message": "na funguo {0} zaidi"
+  },
+  "popupNoKeysLong": {
+    "message": "Ongeza ufunguo wa bure (Gemini, Groq, Mistral, OpenRouter) au Ollama ili kuanza."
+  },
+  "stateReady": {
+    "message": "Tayari kutafsiri"
+  },
+  "stateNoKey": {
+    "message": "Hakuna ufunguo uliowekwa"
+  },
+  "stateRunning": {
+    "message": "Inatafsiri"
+  },
+  "stateTranslated": {
+    "message": "Ukurasa umetafsiriwa"
+  },
+  "stateOriginal": {
+    "message": "Asili inaonyeshwa"
+  },
+  "stateStopped": {
+    "message": "Imesimamishwa"
+  },
+  "statePaused": {
+    "message": "Kikomo cha ukurasa kimefikiwa"
+  },
+  "stateError": {
+    "message": "Hitilafu"
+  },
+  "stateUnavailable": {
+    "message": "Ukurasa hauwezi kutafsiriwa"
+  },
+  "toastAutoOn": {
+    "message": "Tafsiri ya kiotomatiki imewashwa kwa {0}."
+  },
+  "toastAutoOff": {
+    "message": "Tafsiri ya kiotomatiki imezimwa kwa {0}."
+  },
+  "toastPermDenied": {
+    "message": "Ruhusa imekataliwa: tovuti haijaongezwa."
+  },
+  "badgeShowBadge": {
+    "message": "Onyesha beji ya DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Sehemu za mipangilio"
+  },
+  "optNavKeys": {
+    "message": "Watoa huduma na funguo"
+  },
+  "optNavPrivacy": {
+    "message": "Faragha na gharama"
+  },
+  "optNavAppearance": {
+    "message": "Mwonekano"
+  },
+  "optDescKeys": {
+    "message": "Funguo zako za API na Ollama, hujaribiwa kwa mpangilio wa kadi, kutoka juu hadi chini."
+  },
+  "optDescTranslation": {
+    "message": "Lugha, mwonekano na kile kiendelezi kinaruhusiwa kutafsiri."
+  },
+  "optDescPrivacy": {
+    "message": "Kinachotoka kwenye kivinjari chako, kwenda kwa nani, na gharama yake."
+  },
+  "optDescSites": {
+    "message": "Tovuti zinazotafsiriwa kiotomatiki na kurasa za kulinda."
+  },
+  "optDescGlossary": {
+    "message": "Istilahi za kuacha jinsi zilivyo au kutafsiri kila mara kwa namna ileile."
+  },
+  "optDescData": {
+    "message": "Akiba ya tafsiri na data iliyohifadhiwa kwenye kivinjari hiki."
+  },
+  "optDescAppearance": {
+    "message": "Mandhari ya mipangilio, dirisha ibukizi na beji inayoonekana kwenye kurasa."
+  },
+  "optVersion": {
+    "message": "toleo {0}"
+  },
+  "optAddProvider": {
+    "message": "Ongeza mtoa huduma"
+  },
+  "optAddProviderHelp": {
+    "message": "Kadi mpya huwekwa mwishoni. Mpangilio wa kadi ndio mpangilio wa kipaumbele."
+  },
+  "optProvider": {
+    "message": "Mtoa huduma"
+  },
+  "optKeysEmptyHint": {
+    "message": "Chagua mtoa huduma: kadi itaonekana, bandika ufunguo wako, kisha \"Pakia miundo\" na uchague muundo."
+  },
+  "optKeyName": {
+    "message": "Jina la ufunguo"
+  },
+  "optKeyEnabled": {
+    "message": "Tumia ufunguo huu"
+  },
+  "optPriority": {
+    "message": "kipaumbele {0}"
+  },
+  "optKeyHelp": {
+    "message": "Umefichwa kwa chaguo-msingi, umehifadhiwa kwenye kivinjari hiki tu."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama lazima iwe inaendeshwa kwenye kompyuta yako."
+  },
+  "optModelHelp": {
+    "message": "\"Pakia miundo\" hujaza orodha ya mapendekezo."
+  },
+  "optLimits": {
+    "message": "Vikomo"
+  },
+  "optLimitsHelp": {
+    "message": "Tupu = chaguo-msingi la mtoa huduma."
+  },
+  "optPaidTitle": {
+    "message": "Gharama"
+  },
+  "optPaidHelp": {
+    "message": "Hutumika tu unapouchagua kwenye dirisha ibukizi."
+  },
+  "optPaidOk": {
+    "message": "Kikomo na bei zimewekwa: ufunguo unaweza kutumika hadi kikomo."
+  },
+  "optPrivacyFlow": {
+    "message": "Maandishi yanakwenda wapi"
+  },
+  "optProviderNotes": {
+    "message": "Maelezo kwa kila mtoa huduma"
+  },
+  "optProviderUsed": {
+    "message": "unatumika"
+  },
+  "optUsageEmpty": {
+    "message": "Bado hakuna ufunguo uliowekwa."
+  },
+  "optUsageHelp": {
+    "message": "Huanza upya kila siku saa sita usiku (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Funguo za kulipia"
+  },
+  "optPaidRule": {
+    "message": "Ufunguo wa kulipia hautumiki kiotomatiki kamwe: lazima uuchague kwenye dirisha ibukizi. Hubaki umezuiwa hadi kikomo cha kila siku na bei zote mbili ziwekwe, na husimama mara tu kikomo kinapofikiwa."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Bado hakuna tovuti ya kiotomatiki"
+  },
+  "optAutoEmptyLong": {
+    "message": "Ili kuongeza: fungua tovuti, bofya ikoni ya DevDocTrad kwenye upau wa zana, kisha uwashe \"Tafsiri tovuti hii kiotomatiki\". Kivinjari huomba ruhusa kwa tovuti hiyo tu."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Uondoe {0} kwenye tovuti zinazotafsiriwa kiotomatiki?"
+  },
+  "optGlEmpty": {
+    "message": "Bado hakuna istilahi. Mfano: \"thread\" yenye kanuni \"Usitafsiri kamwe\"."
+  },
+  "optGlCount": {
+    "message": "istilahi {0} / 500"
+  },
+  "optGlImported": {
+    "message": "Istilahi {0} zimeletwa."
+  },
+  "optCacheConfirm": {
+    "message": "Ufute akiba? Kurasa zilizokwisha tafsiriwa zitahitaji kutafsiriwa upya (maombi mapya kwa watoa huduma)."
+  },
+  "optCacheCleared": {
+    "message": "Akiba imefutwa."
+  },
+  "optStorageTitle": {
+    "message": "Hifadhi ya ndani"
+  },
+  "optTheme": {
+    "message": "Mandhari"
+  },
+  "optThemeHelp": {
+    "message": "\"Mfumo\" hufuata mpangilio wa mwanga au giza wa kompyuta yako."
+  },
+  "optThemeSystem": {
+    "message": "Mfumo"
+  },
+  "optThemeLight": {
+    "message": "Mwanga"
+  },
+  "optThemeDark": {
+    "message": "Giza"
+  },
+  "optPriceInUsd": {
+    "message": "Bei ya ingizo ($$ kwa tokeni milioni)"
+  },
+  "optPriceOutUsd": {
+    "message": "Bei ya matokeo ($$ kwa tokeni milioni)"
+  },
+  "optDailyCapUsd": {
+    "message": "Kikomo cha kila siku ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "mradi huu wa Google unatumia malipo ya kabla na salio lake limekwisha. Usiongeze chochote: unda ufunguo kwenye mradi usio na malipo katika Google AI Studio (mpango wa bure)."
+  }
+}

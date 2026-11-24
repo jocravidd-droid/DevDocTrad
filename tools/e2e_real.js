@@ -34,7 +34,7 @@ const mask = (s) => (KEY ? String(s).split(KEY).join('[clé]') : String(s));
   const html = fs.readFileSync(path.join(__dirname, 'demo', 'index.html'));
   const server = http.createServer((q, r) => { r.setHeader('Content-Type', 'text/html; charset=utf-8'); r.end(html); }).listen(8124, '127.0.0.1');
   const ctx = await chromium.launchPersistentContext(fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-real-prof-')), {
-    channel: 'chromium', headless: true, viewport: { width: 1280, height: 800 }, locale: 'fr-FR',
+    channel: process.env.DDT_CHROMIUM ? undefined : 'chromium', executablePath: process.env.DDT_CHROMIUM || undefined, headless: true, viewport: { width: 1280, height: 800 }, locale: 'fr-FR',
     env: Object.assign({}, process.env, { LANGUAGE: 'fr', LANG: 'fr_FR.UTF-8' }),
     args: ['--disable-extensions-except=' + ext, '--load-extension=' + ext, '--lang=fr-FR']
   });

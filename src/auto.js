@@ -32,4 +32,6 @@
       if (ok) engine.start({ sensitive: false });
     });
   }).catch(function () { /* extension rechargée ou page fermée */ });
-})(typeof window !== 'undefined' ? window : globalThis);
+// Même objet global que shared.js : dans un script de contenu Firefox, window et globalThis sont deux
+// objets différents ; avec window, DDT (posé sur globalThis) restait introuvable et rien ne marchait.
+})(typeof globalThis !== 'undefined' ? globalThis : window);

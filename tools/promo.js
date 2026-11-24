@@ -22,7 +22,7 @@ function page(w, h, big) {
   ${big ? `<div class="shot"><img src="${shot}"></div>` : ''}</body></html>`;
 }
 (async () => {
-  const b = await chromium.launch();
+  const b = await chromium.launch(process.env.DDT_CHROMIUM ? { executablePath: process.env.DDT_CHROMIUM } : {});
   const p = await b.newPage();
   for (const [w, h, big, out] of [[440, 280, false, 'store/promo-440x280.png'], [1400, 560, true, 'store/promo-1400x560.png']]) {
     await p.setViewportSize({ width: w, height: h });

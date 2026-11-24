@@ -81,6 +81,8 @@ L'extension a besoin d'au moins une clé d'API (ou d'Ollama). Toutes les options
 
 Au-delà de la limite gratuite, Groq renvoie simplement une erreur, jamais une facture.
 
+Modèle conseillé : `openai/gpt-oss-120b` (le meilleur en test réel) ; `openai/gpt-oss-20b` est plus rapide, un peu moins juste. Attention : la limite est **par compte Groq**, pas par clé. Plusieurs clés du même compte partagent la même limite ; pour que la bascule automatique serve à quelque chose, il faut des clés de comptes ou de fournisseurs différents.
+
 ### Mistral
 
 1. Va sur [console.mistral.ai](https://console.mistral.ai/) et crée un compte.
@@ -104,7 +106,7 @@ Limite gratuite : environ 50 requêtes par jour. N'achète jamais de crédit pou
 Ollama fait tourner un modèle sur ton ordinateur : gratuit, rien ne quitte ta machine, mais il faut un ordinateur assez puissant.
 
 1. Installe Ollama depuis [ollama.com](https://ollama.com/download).
-2. Ouvre un terminal et télécharge un modèle, par exemple : `ollama pull qwen3:8b`
+2. Ouvre un terminal et télécharge un modèle, par exemple : `ollama pull qwen2.5:7b`. Testés en vrai (carte graphique de 6 Go) : `qwen2.5:7b` (le meilleur, 36 langues), `qwen2.5:3b` (le plus rapide), `mistral:7b`, `llama3.2:3b`, `gemma3:4b`. Un petit modèle se trompe plus souvent ; l'extension laisse alors le passage en original plutôt que d'afficher une traduction douteuse.
 3. Dans les réglages de l'extension, choisis **Ollama (local)** puis **Ajouter**, et accepte la permission demandée par le navigateur.
 4. Clique sur **Charger les modèles**, choisis ton modèle, puis **Tester**.
 5. Si le test affiche une erreur 403 : définis la variable d'environnement `OLLAMA_ORIGINS` avec la valeur `chrome-extension://*,moz-extension://*`, redémarre Ollama, puis clique à nouveau sur **Tester**.
@@ -118,7 +120,7 @@ Ollama est utilisé en secours quand toutes les clés gratuites sont en pause, e
 - **Traduire une page** : clique sur l'icône DevDocTrad, puis sur **Traduire cette page**. Ou utilise le raccourci **Alt+Maj+T**.
 - **Revenir à l'original** : bouton **Voir l'original** dans le petit badge en bas à droite de la page, dans le popup, ou de nouveau **Alt+Maj+T**.
 - **Traduire automatiquement un site** : sur un site que tu lis souvent, ouvre le popup et active **Traduire automatiquement ce site**. Le navigateur te demande la permission pour ce site uniquement.
-- **Changer de langue** : Réglages, onglet **Traduction**, champ **Langue cible**. Par défaut : la langue de ton navigateur.
+- **Changer de langue** : directement dans le popup (menu **Langue cible**, 37 langues), ou dans Réglages > **Traduction**. Par défaut : la langue de ton navigateur.
 - **Mode bilingue** : Réglages, onglet **Traduction**, **Affichage**, **Bilingue**.
 - **Glossaire** : Réglages, onglet **Glossaire**, pour les termes à ne jamais traduire ou à toujours traduire d'une certaine façon.
 - **Thème clair ou sombre** : Réglages, section **Apparence** (Système, Clair ou Sombre).
@@ -158,7 +160,7 @@ Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo 
 
 Organisation : `src/` (code de l'extension), `manifests/` (manifestes Chrome et Firefox), `tests/`, `tools/` (icônes, textes de l'interface, démo, test de bout en bout), `docs/` (site), `store/` (fiches des boutiques), `PLAN.md` (cahier des charges), `design/` (direction artistique, spécification, logo, contrôle visuel).
 
-Les textes de l'interface (français et anglais) se modifient dans `tools/gen_locales.py`, puis `python3 tools/gen_locales.py`.
+Les textes de l'interface se modifient dans `tools/gen_locales.py` (français et anglais) et `tools/locales/<langue>.json` (34 autres langues), puis `python3 tools/gen_locales.py`.
 
 ## Licence
 

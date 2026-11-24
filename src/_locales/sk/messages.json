@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Verne prekladá dokumentáciu pre vývojárov a weby o programovaní bez toho, aby sa kedy dotkol kódu."
+  },
+  "cmdToggle": {
+    "message": "Preložiť stránku alebo sa vrátiť k originálu"
+  },
+  "badgeTranslating": {
+    "message": "Prekladá sa: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Preložené úseky: {0}"
+  },
+  "badgeDoneFailed": {
+    "message": "Preložené úseky: {0}, ponechané v origináli: {1}"
+  },
+  "badgeStopped": {
+    "message": "Zastavené"
+  },
+  "badgeCap": {
+    "message": "Pre túto stránku sa dosiahol limit {0} znakov."
+  },
+  "badgeRateLimited": {
+    "message": "Dosiahnutý limit bezplatného kľúča. Nový pokus o {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limit sa dosiahol pri všetkých bezplatných kľúčoch. Skúste to neskôr."
+  },
+  "badgeNoKey": {
+    "message": "Nie je k dispozícii žiadny kľúč. Pridajte kľúč v nastaveniach."
+  },
+  "badgeError": {
+    "message": "Chyba: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "preložené lokálne (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "preložené online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Na tejto stránke nie je čo prekladať."
+  },
+  "badgeKeyProblem": {
+    "message": "Problém s kľúčom {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Zastaviť"
+  },
+  "btnOriginal": {
+    "message": "Zobraziť originál"
+  },
+  "btnTranslation": {
+    "message": "Zobraziť preklad"
+  },
+  "btnMinimize": {
+    "message": "Minimalizovať"
+  },
+  "btnClose": {
+    "message": "Zavrieť"
+  },
+  "btnContinue": {
+    "message": "Pokračovať"
+  },
+  "errAuth": {
+    "message": "kľúč odmietnutý (neplatný alebo zrušený)"
+  },
+  "errPayment": {
+    "message": "nedostatočný zostatok u poskytovateľa; kľúč zastavený"
+  },
+  "errRate": {
+    "message": "dosiahnutý limit požiadaviek, skúste to o minútu"
+  },
+  "errOllamaDown": {
+    "message": "Ollama neodpovedá na localhost:11434. Spustite Ollama a skúste to znova."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama odmieta rozšírenie (403). Nastavte premennú prostredia OLLAMA_ORIGINS na chrome-extension://*,moz-extension://* a reštartujte Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "v bezplatnom režime OpenRouter prijíma len modely, ktorých názov končí na :free"
+  },
+  "errPaidUnset": {
+    "message": "platený kľúč je zablokovaný: najprv v nastaveniach zadajte denný limit a obe ceny."
+  },
+  "errPaidCap": {
+    "message": "denný limit plateného kľúča dosiahnutý ($${0} z $${1})."
+  },
+  "errUnknown": {
+    "message": "Neznáma chyba"
+  },
+  "keyAvailable": {
+    "message": "dostupný"
+  },
+  "keyDisabled": {
+    "message": "vypnutý"
+  },
+  "keyNoModel": {
+    "message": "vyberte model"
+  },
+  "keyPausedUntil": {
+    "message": "pozastavené do {0}"
+  },
+  "keyProblem": {
+    "message": "problém"
+  },
+  "tier_free": {
+    "message": "bezplatný"
+  },
+  "tier_paid": {
+    "message": "platený"
+  },
+  "tier_local": {
+    "message": "lokálny"
+  },
+  "gl_never": {
+    "message": "Nikdy neprekladať"
+  },
+  "gl_always": {
+    "message": "Vždy preložiť ako"
+  },
+  "popupTranslate": {
+    "message": "Preložiť túto stránku"
+  },
+  "popupSettings": {
+    "message": "Nastavenia"
+  },
+  "popupUnsupported": {
+    "message": "Túto stránku nemožno preložiť rozšírením (stránka prehliadača, obchod s rozšíreniami alebo zobrazovač PDF)."
+  },
+  "popupKey": {
+    "message": "Kľúč"
+  },
+  "popupKeyAuto": {
+    "message": "Automaticky (bezplatné a lokálny)"
+  },
+  "popupAuto": {
+    "message": "Prekladať tento web automaticky"
+  },
+  "popupSensitive": {
+    "message": "Citlivá stránka: nikdy sa neprekladá automaticky. Tlačidlo funguje, Ollama sa použije ako prvá, ak je nastavená."
+  },
+  "popupKeys": {
+    "message": "Stav kľúčov"
+  },
+  "popupNoKeys": {
+    "message": "Zatiaľ žiadny kľúč."
+  },
+  "popupAddKey": {
+    "message": "Pridať kľúč"
+  },
+  "popupShortcut": {
+    "message": "Skratka:"
+  },
+  "optTitle": {
+    "message": "Nastavenia DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Prehliadač zatiaľ nepovolil prístup k poskytovateľom prekladu."
+  },
+  "optPermGrant": {
+    "message": "Povoliť prístup k poskytovateľom"
+  },
+  "optTabKeys": {
+    "message": "Kľúče"
+  },
+  "optTabTranslation": {
+    "message": "Preklad"
+  },
+  "optTabGlossary": {
+    "message": "Glosár"
+  },
+  "optTabSites": {
+    "message": "Weby"
+  },
+  "optTabData": {
+    "message": "Údaje"
+  },
+  "optKeysTitle": {
+    "message": "Kľúče API"
+  },
+  "optKeysLocal": {
+    "message": "Kľúče zostávajú v tomto prehliadači (lokálne úložisko). Nikdy sa nesynchronizujú s vaším účtom ani sa neposielajú nikam inam než poskytovateľovi. Poradie kariet je poradie priority."
+  },
+  "optAddKey": {
+    "message": "Pridať"
+  },
+  "optKey": {
+    "message": "Kľúč"
+  },
+  "optShow": {
+    "message": "Zobraziť"
+  },
+  "optHide": {
+    "message": "Skryť"
+  },
+  "optBaseUrl": {
+    "message": "Adresa Ollama"
+  },
+  "optTier": {
+    "message": "Typ"
+  },
+  "optModelEasy": {
+    "message": "Model (jednoduché stránky)"
+  },
+  "optModelHard": {
+    "message": "Model pre náročné stránky (voliteľné)"
+  },
+  "optMaxChars": {
+    "message": "Veľkosť dávky (znaky)"
+  },
+  "optInterval": {
+    "message": "Interval medzi požiadavkami (ms)"
+  },
+  "optMaxReq": {
+    "message": "Maximum požiadaviek za deň (0 = bez limitu)"
+  },
+  "optPriceIn": {
+    "message": "Cena vstupu ($$ za milión tokenov)"
+  },
+  "optPriceOut": {
+    "message": "Cena výstupu ($$ za milión tokenov)"
+  },
+  "optDailyCap": {
+    "message": "Denný limit ($$)"
+  },
+  "optLoadModels": {
+    "message": "Načítať modely"
+  },
+  "optTest": {
+    "message": "Otestovať"
+  },
+  "optUp": {
+    "message": "Posunúť nahor"
+  },
+  "optDown": {
+    "message": "Posunúť nadol"
+  },
+  "optDelete": {
+    "message": "Odstrániť"
+  },
+  "optDeleteConfirm": {
+    "message": "Odstrániť tento kľúč?"
+  },
+  "optWorking": {
+    "message": "Overuje sa…"
+  },
+  "optTestOk": {
+    "message": "Kľúč je platný, dostupné modely: {0}."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama odpovedá, nainštalované modely: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "Načítané modely: {0}. Vyberte jeden zo zoznamu."
+  },
+  "optSaved": {
+    "message": "Uložené"
+  },
+  "optTarget": {
+    "message": "Cieľový jazyk"
+  },
+  "optTargetAuto": {
+    "message": "Jazyk prehliadača ({0})"
+  },
+  "optMode": {
+    "message": "Zobrazenie"
+  },
+  "optModeReplace": {
+    "message": "Nahradiť text"
+  },
+  "optModeBilingual": {
+    "message": "Dvojjazyčne (preklad pod originálom)"
+  },
+  "optExplain": {
+    "message": "Odborné termíny: preklad + angličtina v zátvorke"
+  },
+  "optExplainHelp": {
+    "message": "Odborné pojmy sa prekladajú a anglický termín sa pri prvom výskyte uvedie v zátvorke. Vypnuté: anglické odborné termíny zostanú po anglicky, bez zátvoriek. Kód a názvy (Path, npm…) sa nikdy neprekladajú."
+  },
+  "optComments": {
+    "message": "Prekladať komentáre v blokoch kódu"
+  },
+  "optCommentsHelp": {
+    "message": "Predvolene vypnuté. Prekladajú sa len komentáre rozpoznané zvýrazňovaním syntaxe webu; kód sa nikdy nemení a originál sa vráti bez zmeny."
+  },
+  "optPageCap": {
+    "message": "Limit znakov na stránku"
+  },
+  "optShortcut": {
+    "message": "Klávesová skratka"
+  },
+  "optShortcutCurrent": {
+    "message": "Aktuálna skratka: {0}."
+  },
+  "optShortcutNone": {
+    "message": "žiadna"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Zmena: otvorte chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Zmena: Správca doplnkov, ikona ozubeného kolesa, „Spravovať klávesové skratky rozšírení“."
+  },
+  "optGlossaryHelp": {
+    "message": "Termíny, ktoré sa nikdy neprekladajú, alebo sa vždy prekladajú určitým spôsobom. Modelu sa posielajú len termíny nájdené v úseku. Najviac 500 položiek."
+  },
+  "optGlTerm": {
+    "message": "Termín"
+  },
+  "optGlType": {
+    "message": "Pravidlo"
+  },
+  "optGlTranslation": {
+    "message": "Vynútený preklad"
+  },
+  "optGlAdd": {
+    "message": "Pridať termín"
+  },
+  "optGlExport": {
+    "message": "Exportovať (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importovať (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Neplatný súbor: očakáva sa zoznam JSON objektov {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Automaticky prekladané weby"
+  },
+  "optAutoHelp": {
+    "message": "Web pridáte z vyskakovacieho okna voľbou „Prekladať tento web automaticky“. Automaticky sa používajú len bezplatné kľúče a Ollama."
+  },
+  "optAutoEmpty": {
+    "message": "Zatiaľ žiadny web."
+  },
+  "optAutoGranted": {
+    "message": "povolené"
+  },
+  "optAutoRevoked": {
+    "message": "povolenie odobraté"
+  },
+  "optSensitiveTitle": {
+    "message": "Citlivé stránky"
+  },
+  "optSensitiveHelp": {
+    "message": "Nikdy sa neprekladajú automaticky (ani žiadna stránka s poľom na heslo). Ručné tlačidlo napriek tomu funguje."
+  },
+  "optSensitiveBase": {
+    "message": "Základné vzory:"
+  },
+  "optSensitiveExtra": {
+    "message": "Ďalšie vzory (jeden na riadok, slovo alebo doména)"
+  },
+  "optCacheTitle": {
+    "message": "Vyrovnávacia pamäť prekladov"
+  },
+  "optCacheInfo": {
+    "message": "Úseky vo vyrovnávacej pamäti: {0} ({1} MB). Už preložená stránka sa znova zobrazí bez sieťovej požiadavky."
+  },
+  "optCacheClear": {
+    "message": "Vymazať vyrovnávaciu pamäť"
+  },
+  "optUsageTitle": {
+    "message": "Dnešná spotreba"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} požiadaviek{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Súkromie"
+  },
+  "optPrivacyText": {
+    "message": "Text prekladaných stránok sa posiela len poskytovateľovi, ktorého ste zvolili, alebo zostáva vo vašom počítači s Ollama. Žiadna analytika, žiadne sledovanie, vývojárovi sa nič neposiela. V bezplatných tarifoch môžu Gemini a Mistral odoslaný text znova použiť."
+  },
+  "warnGemini": {
+    "message": "Kľúč vytvorte v Google AI Studio bez prepojenia fakturácie. V bezplatnom tarife môže Google odoslaný text znova použiť. Dva kľúče z rovnakého projektu zdieľajú rovnaký limit."
+  },
+  "warnGroq": {
+    "message": "Bezplatný tarif bez karty: po prekročení limitu dostanete len chybu 429, nikdy faktúru."
+  },
+  "warnMistral": {
+    "message": "Bezplatný režim bez karty. Požiadavky môžu slúžiť na trénovanie: ak chcete, vypnite to v konzole Mistral."
+  },
+  "warnOpenRouter": {
+    "message": "V bezplatnom režime sa prijímajú len modely končiace na :free (asi 50 požiadaviek denne). Nikdy kvôli tomuto rozšíreniu nedobíjajte kredit."
+  },
+  "warnOllama": {
+    "message": "Model vo vašom počítači: zadarmo a súkromne, nič neopúšťa váš počítač. Malý model robí viac chýb; sporné úseky zostanú v origináli."
+  },
+  "popupView": {
+    "message": "Zobrazenie stránky"
+  },
+  "segOriginal": {
+    "message": "Originál"
+  },
+  "segTranslation": {
+    "message": "Preklad"
+  },
+  "popupTranslating": {
+    "message": "Prekladá sa…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} úsekov"
+  },
+  "popupManage": {
+    "message": "Spravovať"
+  },
+  "popupMoreKeys": {
+    "message": "a ďalšie kľúče: {0}"
+  },
+  "popupNoKeysLong": {
+    "message": "Na začiatok pridajte bezplatný kľúč (Gemini, Groq, Mistral, OpenRouter) alebo Ollama."
+  },
+  "stateReady": {
+    "message": "Pripravené na preklad"
+  },
+  "stateNoKey": {
+    "message": "Nie je nastavený žiadny kľúč"
+  },
+  "stateRunning": {
+    "message": "Prekladá sa"
+  },
+  "stateTranslated": {
+    "message": "Stránka preložená"
+  },
+  "stateOriginal": {
+    "message": "Zobrazený originál"
+  },
+  "stateStopped": {
+    "message": "Zastavené"
+  },
+  "statePaused": {
+    "message": "Dosiahnutý limit stránky"
+  },
+  "stateError": {
+    "message": "Chyba"
+  },
+  "stateUnavailable": {
+    "message": "Stránku nemožno preložiť"
+  },
+  "toastAutoOn": {
+    "message": "Automatický preklad zapnutý pre {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatický preklad vypnutý pre {0}."
+  },
+  "toastPermDenied": {
+    "message": "Povolenie zamietnuté: web nebol pridaný."
+  },
+  "badgeShowBadge": {
+    "message": "Zobraziť odznak DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Sekcie nastavení"
+  },
+  "optNavKeys": {
+    "message": "Poskytovatelia a kľúče"
+  },
+  "optNavPrivacy": {
+    "message": "Súkromie a náklady"
+  },
+  "optNavAppearance": {
+    "message": "Vzhľad"
+  },
+  "optDescKeys": {
+    "message": "Vaše kľúče API a Ollama, skúšané v poradí kariet zhora nadol."
+  },
+  "optDescTranslation": {
+    "message": "Jazyk, zobrazenie a to, čo smie rozšírenie prekladať."
+  },
+  "optDescPrivacy": {
+    "message": "Čo opúšťa váš prehliadač, komu to ide a koľko to stojí."
+  },
+  "optDescSites": {
+    "message": "Automaticky prekladané weby a stránky na ochranu."
+  },
+  "optDescGlossary": {
+    "message": "Termíny, ktoré sa majú ponechať, alebo vždy prekladať rovnako."
+  },
+  "optDescData": {
+    "message": "Vyrovnávacia pamäť prekladov a údaje uložené v tomto prehliadači."
+  },
+  "optDescAppearance": {
+    "message": "Motív nastavení, vyskakovacieho okna a odznaku na stránkach."
+  },
+  "optVersion": {
+    "message": "verzia {0}"
+  },
+  "optAddProvider": {
+    "message": "Pridať poskytovateľa"
+  },
+  "optAddProviderHelp": {
+    "message": "Nová karta sa pridá na koniec. Poradie kariet je poradie priority."
+  },
+  "optProvider": {
+    "message": "Poskytovateľ"
+  },
+  "optKeysEmptyHint": {
+    "message": "Vyberte poskytovateľa: objaví sa karta, vložte kľúč, potom kliknite na „Načítať modely“ a vyberte model."
+  },
+  "optKeyName": {
+    "message": "Názov kľúča"
+  },
+  "optKeyEnabled": {
+    "message": "Používať tento kľúč"
+  },
+  "optPriority": {
+    "message": "priorita {0}"
+  },
+  "optKeyHelp": {
+    "message": "Predvolene skrytý, uložený len v tomto prehliadači."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama musí bežať vo vašom počítači."
+  },
+  "optModelHelp": {
+    "message": "„Načítať modely“ vyplní zoznam návrhov."
+  },
+  "optLimits": {
+    "message": "Limity"
+  },
+  "optLimitsHelp": {
+    "message": "Prázdne = predvolená hodnota poskytovateľa."
+  },
+  "optPaidTitle": {
+    "message": "Náklady"
+  },
+  "optPaidHelp": {
+    "message": "Použije sa len vtedy, keď ho vyberiete vo vyskakovacom okne."
+  },
+  "optPaidOk": {
+    "message": "Limit a ceny sú nastavené: kľúč možno používať až do limitu."
+  },
+  "optPrivacyFlow": {
+    "message": "Kam putuje text"
+  },
+  "optProviderNotes": {
+    "message": "Poznámky k poskytovateľom"
+  },
+  "optProviderUsed": {
+    "message": "používa sa"
+  },
+  "optUsageEmpty": {
+    "message": "Zatiaľ nie je nastavený žiadny kľúč."
+  },
+  "optUsageHelp": {
+    "message": "Nuluje sa každý deň o polnoci (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Platené kľúče"
+  },
+  "optPaidRule": {
+    "message": "Platený kľúč sa nikdy nepoužije automaticky: musíte ho vybrať vo vyskakovacom okne. Zostane zablokovaný, kým nenastavíte denný limit a obe ceny, a zastaví sa, len čo sa limit dosiahne."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Zatiaľ žiadny automatický web"
+  },
+  "optAutoEmptyLong": {
+    "message": "Pridanie webu: otvorte ho, kliknite na ikonu DevDocTrad na paneli nástrojov a zapnite „Prekladať tento web automaticky“. Prehliadač požiada o povolenie len pre tento web."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Odstrániť {0} z automaticky prekladaných webov?"
+  },
+  "optGlEmpty": {
+    "message": "Zatiaľ žiadny termín. Príklad: „thread“ s pravidlom „Nikdy neprekladať“."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termínov"
+  },
+  "optGlImported": {
+    "message": "Importované termíny: {0}."
+  },
+  "optCacheConfirm": {
+    "message": "Vymazať vyrovnávaciu pamäť? Už preložené stránky bude treba preložiť znova (nové požiadavky na poskytovateľov)."
+  },
+  "optCacheCleared": {
+    "message": "Vyrovnávacia pamäť vymazaná."
+  },
+  "optStorageTitle": {
+    "message": "Lokálne úložisko"
+  },
+  "optTheme": {
+    "message": "Motív"
+  },
+  "optThemeHelp": {
+    "message": "„Systém“ sa riadi svetlým alebo tmavým nastavením vášho počítača."
+  },
+  "optThemeSystem": {
+    "message": "Systém"
+  },
+  "optThemeLight": {
+    "message": "Svetlý"
+  },
+  "optThemeDark": {
+    "message": "Tmavý"
+  },
+  "optPriceInUsd": {
+    "message": "Cena vstupu ($$ za milión tokenov)"
+  },
+  "optPriceOutUsd": {
+    "message": "Cena výstupu ($$ za milión tokenov)"
+  },
+  "optDailyCapUsd": {
+    "message": "Denný limit ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "tento projekt Google používa predplatenú fakturáciu a jeho kredity sú vyčerpané. Nič nedobíjajte: vytvorte kľúč v projekte bez fakturácie v Google AI Studio (bezplatný tarif)."
+  }
+}

@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "ডেভেলপার ডকুমেন্টেশন ও প্রোগ্রামিং ওয়েবসাইট নিখুঁতভাবে অনুবাদ করে, কোডে কখনও হাত না দিয়ে।"
+  },
+  "cmdToggle": {
+    "message": "পেজ অনুবাদ করুন বা মূলে ফিরে যান"
+  },
+  "badgeTranslating": {
+    "message": "অনুবাদ চলছে: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "অনুবাদ হয়েছে: {0}টি অংশ"
+  },
+  "badgeDoneFailed": {
+    "message": "অনুবাদ হয়েছে: {0}টি অংশ, {1}টি মূল অবস্থায় রাখা হয়েছে"
+  },
+  "badgeStopped": {
+    "message": "থামানো হয়েছে"
+  },
+  "badgeCap": {
+    "message": "এই পেজের জন্য {0} অক্ষরের সীমা পূর্ণ হয়েছে।"
+  },
+  "badgeRateLimited": {
+    "message": "ফ্রি কী-এর সীমা পূর্ণ। {0} সেকেন্ড পরে আবার চেষ্টা ({1}/3)।"
+  },
+  "badgeRateGiveUp": {
+    "message": "সব ফ্রি কী-এর সীমা পূর্ণ। পরে আবার চেষ্টা করুন।"
+  },
+  "badgeNoKey": {
+    "message": "কোনো কী উপলব্ধ নেই। সেটিংসে একটি কী যোগ করুন।"
+  },
+  "badgeError": {
+    "message": "ত্রুটি: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "স্থানীয়ভাবে অনুবাদিত (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "অনলাইনে অনুবাদিত ({0})"
+  },
+  "badgeNothing": {
+    "message": "এই পেজে অনুবাদ করার কিছু নেই।"
+  },
+  "badgeKeyProblem": {
+    "message": "কী {0}-এ সমস্যা: {1}"
+  },
+  "btnStop": {
+    "message": "থামান"
+  },
+  "btnOriginal": {
+    "message": "মূল দেখান"
+  },
+  "btnTranslation": {
+    "message": "অনুবাদ দেখান"
+  },
+  "btnMinimize": {
+    "message": "ছোট করুন"
+  },
+  "btnClose": {
+    "message": "বন্ধ করুন"
+  },
+  "btnContinue": {
+    "message": "চালিয়ে যান"
+  },
+  "errAuth": {
+    "message": "কী প্রত্যাখ্যাত (অবৈধ বা বাতিল)"
+  },
+  "errPayment": {
+    "message": "প্রদানকারীর কাছে পর্যাপ্ত ব্যালান্স নেই; কী থামানো হয়েছে"
+  },
+  "errRate": {
+    "message": "অনুরোধের সীমা পূর্ণ, এক মিনিট পরে আবার চেষ্টা করুন"
+  },
+  "errOllamaDown": {
+    "message": "Ollama localhost:11434-এ সাড়া দিচ্ছে না। Ollama চালু করে আবার চেষ্টা করুন।"
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama এক্সটেনশনটি প্রত্যাখ্যান করছে (403)। এনভায়রনমেন্ট ভেরিয়েবল OLLAMA_ORIGINS-এর মান chrome-extension://*,moz-extension://* দিন, তারপর Ollama আবার চালু করুন।"
+  },
+  "errOpenRouterFree": {
+    "message": "ফ্রি মোডে OpenRouter শুধু সেই মডেল নেয় যার নাম :free দিয়ে শেষ হয়"
+  },
+  "errPaidUnset": {
+    "message": "পেইড কী আটকানো: আগে সেটিংসে দৈনিক সীমা ও দুটি দাম সেট করুন।"
+  },
+  "errPaidCap": {
+    "message": "পেইড কী-এর দৈনিক সীমা পূর্ণ ($${1}-এর মধ্যে $${0})।"
+  },
+  "errUnknown": {
+    "message": "অজানা ত্রুটি"
+  },
+  "keyAvailable": {
+    "message": "উপলব্ধ"
+  },
+  "keyDisabled": {
+    "message": "বন্ধ"
+  },
+  "keyNoModel": {
+    "message": "একটি মডেল বেছে নিন"
+  },
+  "keyPausedUntil": {
+    "message": "{0} পর্যন্ত বিরতি"
+  },
+  "keyProblem": {
+    "message": "সমস্যা"
+  },
+  "tier_free": {
+    "message": "ফ্রি"
+  },
+  "tier_paid": {
+    "message": "পেইড"
+  },
+  "tier_local": {
+    "message": "স্থানীয়"
+  },
+  "gl_never": {
+    "message": "কখনও অনুবাদ করবেন না"
+  },
+  "gl_always": {
+    "message": "সবসময় এভাবে অনুবাদ করুন"
+  },
+  "popupTranslate": {
+    "message": "এই পেজ অনুবাদ করুন"
+  },
+  "popupSettings": {
+    "message": "সেটিংস"
+  },
+  "popupUnsupported": {
+    "message": "এই পেজ কোনো এক্সটেনশন অনুবাদ করতে পারে না (ব্রাউজার পেজ, এক্সটেনশন স্টোর বা PDF ভিউয়ার)।"
+  },
+  "popupKey": {
+    "message": "কী"
+  },
+  "popupKeyAuto": {
+    "message": "স্বয়ংক্রিয় (ফ্রি ও স্থানীয়)"
+  },
+  "popupAuto": {
+    "message": "এই সাইট স্বয়ংক্রিয়ভাবে অনুবাদ করুন"
+  },
+  "popupSensitive": {
+    "message": "সংবেদনশীল পেজ: কখনও স্বয়ংক্রিয় অনুবাদ হয় না। বোতাম কাজ করে, সেট থাকলে Ollama আগে ব্যবহৃত হয়।"
+  },
+  "popupKeys": {
+    "message": "কী-এর অবস্থা"
+  },
+  "popupNoKeys": {
+    "message": "এখনও কোনো কী নেই।"
+  },
+  "popupAddKey": {
+    "message": "কী যোগ করুন"
+  },
+  "popupShortcut": {
+    "message": "শর্টকাট:"
+  },
+  "optTitle": {
+    "message": "DevDocTrad সেটিংস"
+  },
+  "optPermMissing": {
+    "message": "ব্রাউজার এখনও অনুবাদ প্রদানকারীদের কাছে প্রবেশের অনুমতি দেয়নি।"
+  },
+  "optPermGrant": {
+    "message": "প্রদানকারীদের কাছে প্রবেশের অনুমতি দিন"
+  },
+  "optTabKeys": {
+    "message": "কী"
+  },
+  "optTabTranslation": {
+    "message": "অনুবাদ"
+  },
+  "optTabGlossary": {
+    "message": "পরিভাষা"
+  },
+  "optTabSites": {
+    "message": "সাইট"
+  },
+  "optTabData": {
+    "message": "ডেটা"
+  },
+  "optKeysTitle": {
+    "message": "API কী"
+  },
+  "optKeysLocal": {
+    "message": "কী এই ব্রাউজারেই থাকে (স্থানীয় স্টোরেজ)। এগুলো কখনও আপনার অ্যাকাউন্টের সঙ্গে সিঙ্ক হয় না এবং প্রদানকারী ছাড়া কোথাও পাঠানো হয় না। কার্ডের ক্রমই অগ্রাধিকারের ক্রম।"
+  },
+  "optAddKey": {
+    "message": "যোগ করুন"
+  },
+  "optKey": {
+    "message": "কী"
+  },
+  "optShow": {
+    "message": "দেখান"
+  },
+  "optHide": {
+    "message": "লুকান"
+  },
+  "optBaseUrl": {
+    "message": "Ollama-র ঠিকানা"
+  },
+  "optTier": {
+    "message": "ধরন"
+  },
+  "optModelEasy": {
+    "message": "মডেল (সহজ পেজ)"
+  },
+  "optModelHard": {
+    "message": "কঠিন পেজের মডেল (ঐচ্ছিক)"
+  },
+  "optMaxChars": {
+    "message": "ব্যাচের আকার (অক্ষর)"
+  },
+  "optInterval": {
+    "message": "অনুরোধের মধ্যে ব্যবধান (ms)"
+  },
+  "optMaxReq": {
+    "message": "দৈনিক সর্বোচ্চ অনুরোধ (0 = সীমাহীন)"
+  },
+  "optPriceIn": {
+    "message": "ইনপুটের দাম (প্রতি দশ লক্ষ টোকেনে $$)"
+  },
+  "optPriceOut": {
+    "message": "আউটপুটের দাম (প্রতি দশ লক্ষ টোকেনে $$)"
+  },
+  "optDailyCap": {
+    "message": "দৈনিক সীমা ($$)"
+  },
+  "optLoadModels": {
+    "message": "মডেল লোড করুন"
+  },
+  "optTest": {
+    "message": "পরীক্ষা করুন"
+  },
+  "optUp": {
+    "message": "উপরে সরান"
+  },
+  "optDown": {
+    "message": "নিচে সরান"
+  },
+  "optDelete": {
+    "message": "মুছুন"
+  },
+  "optDeleteConfirm": {
+    "message": "এই কী মুছবেন?"
+  },
+  "optWorking": {
+    "message": "যাচাই চলছে…"
+  },
+  "optTestOk": {
+    "message": "বৈধ কী, {0}টি মডেল উপলব্ধ।"
+  },
+  "optTestOkLocal": {
+    "message": "Ollama সাড়া দিচ্ছে, ইনস্টল করা মডেল: {0}।"
+  },
+  "optModelsLoaded": {
+    "message": "{0}টি মডেল লোড হয়েছে: তালিকা থেকে একটি বেছে নিন।"
+  },
+  "optSaved": {
+    "message": "সংরক্ষিত"
+  },
+  "optTarget": {
+    "message": "লক্ষ্য ভাষা"
+  },
+  "optTargetAuto": {
+    "message": "ব্রাউজারের ভাষা ({0})"
+  },
+  "optMode": {
+    "message": "প্রদর্শন"
+  },
+  "optModeReplace": {
+    "message": "লেখা প্রতিস্থাপন করুন"
+  },
+  "optModeBilingual": {
+    "message": "দ্বিভাষিক (মূলের নিচে অনুবাদ)"
+  },
+  "optExplain": {
+    "message": "প্রযুক্তিগত শব্দ: অনুবাদ + বন্ধনীতে ইংরেজি"
+  },
+  "optExplainHelp": {
+    "message": "প্রযুক্তিগত ধারণা অনুবাদ হয়, আর প্রথমবার আসার সময় ইংরেজি শব্দটি বন্ধনীতে দেওয়া হয়। বন্ধ: ইংরেজি প্রযুক্তিগত শব্দ বন্ধনী ছাড়াই ইংরেজিতে থাকে। কোড ও নাম (Path, npm…) কখনও অনুবাদ হয় না।"
+  },
+  "optComments": {
+    "message": "কোড ব্লকের ভেতরের মন্তব্য অনুবাদ করুন"
+  },
+  "optCommentsHelp": {
+    "message": "ডিফল্টভাবে বন্ধ। শুধু সাইটের সিনট্যাক্স হাইলাইটিং যেসব মন্তব্য চেনে সেগুলোই অনুবাদ হয়; কোড কখনও বদলায় না, মূল অপরিবর্তিত ফিরে আসে।"
+  },
+  "optPageCap": {
+    "message": "প্রতি পেজে অক্ষর সীমা"
+  },
+  "optShortcut": {
+    "message": "কীবোর্ড শর্টকাট"
+  },
+  "optShortcutCurrent": {
+    "message": "বর্তমান শর্টকাট: {0}।"
+  },
+  "optShortcutNone": {
+    "message": "নেই"
+  },
+  "optShortcutWhereChrome": {
+    "message": "পরিবর্তন করতে: chrome://extensions/shortcuts খুলুন।"
+  },
+  "optShortcutWhereFirefox": {
+    "message": "পরিবর্তন করতে: অ্যাড-অন ম্যানেজার, গিয়ার আইকন, \"এক্সটেনশন শর্টকাট পরিচালনা\"।"
+  },
+  "optGlossaryHelp": {
+    "message": "যে শব্দ কখনও অনুবাদ হবে না, বা সবসময় নির্দিষ্টভাবে অনুবাদ হবে। মডেলে শুধু অংশে পাওয়া শব্দগুলো পাঠানো হয়। সর্বোচ্চ 500টি এন্ট্রি।"
+  },
+  "optGlTerm": {
+    "message": "শব্দ"
+  },
+  "optGlType": {
+    "message": "নিয়ম"
+  },
+  "optGlTranslation": {
+    "message": "বাধ্যতামূলক অনুবাদ"
+  },
+  "optGlAdd": {
+    "message": "শব্দ যোগ করুন"
+  },
+  "optGlExport": {
+    "message": "রপ্তানি (JSON)"
+  },
+  "optGlImport": {
+    "message": "আমদানি (JSON)"
+  },
+  "optGlImportError": {
+    "message": "অবৈধ ফাইল: {term, type, translation} অবজেক্টের একটি JSON তালিকা প্রত্যাশিত।"
+  },
+  "optAutoTitle": {
+    "message": "স্বয়ংক্রিয়ভাবে অনুবাদিত সাইট"
+  },
+  "optAutoHelp": {
+    "message": "পপআপে \"এই সাইট স্বয়ংক্রিয়ভাবে অনুবাদ করুন\" দিয়ে সাইট যোগ করুন। স্বয়ংক্রিয়ভাবে শুধু ফ্রি কী ও Ollama ব্যবহৃত হয়।"
+  },
+  "optAutoEmpty": {
+    "message": "এখনও কোনো সাইট নেই।"
+  },
+  "optAutoGranted": {
+    "message": "অনুমোদিত"
+  },
+  "optAutoRevoked": {
+    "message": "অনুমতি সরানো হয়েছে"
+  },
+  "optSensitiveTitle": {
+    "message": "সংবেদনশীল পেজ"
+  },
+  "optSensitiveHelp": {
+    "message": "কখনও স্বয়ংক্রিয় অনুবাদ হয় না (পাসওয়ার্ড ফিল্ড থাকা কোনো পেজেরও না)। ম্যানুয়াল বোতাম তবুও কাজ করে।"
+  },
+  "optSensitiveBase": {
+    "message": "মূল প্যাটার্ন:"
+  },
+  "optSensitiveExtra": {
+    "message": "অতিরিক্ত প্যাটার্ন (প্রতি লাইনে একটি, শব্দ বা ডোমেইন)"
+  },
+  "optCacheTitle": {
+    "message": "অনুবাদ ক্যাশ"
+  },
+  "optCacheInfo": {
+    "message": "ক্যাশে {0}টি অংশ ({1} MB)। আগে অনুবাদ করা পেজ নেটওয়ার্ক কল ছাড়াই আবার দেখায়।"
+  },
+  "optCacheClear": {
+    "message": "ক্যাশ মুছুন"
+  },
+  "optUsageTitle": {
+    "message": "আজকের ব্যবহার"
+  },
+  "optUsageLine": {
+    "message": "{0}{1}টি অনুরোধ{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "গোপনীয়তা"
+  },
+  "optPrivacyText": {
+    "message": "আপনি যেসব পেজ অনুবাদ করেন তার লেখা শুধু আপনার বেছে নেওয়া প্রদানকারীর কাছে যায়, অথবা Ollama-র সঙ্গে আপনার কম্পিউটারেই থাকে। কোনো পরিসংখ্যান নেই, ট্র্যাকিং নেই, ডেভেলপারের কাছে কিছুই যায় না। ফ্রি প্ল্যানে Gemini ও Mistral পাঠানো লেখা আবার ব্যবহার করতে পারে।"
+  },
+  "warnGemini": {
+    "message": "বিলিং যুক্ত না করে Google AI Studio-তে কী তৈরি করুন। ফ্রি প্ল্যানে Google পাঠানো লেখা আবার ব্যবহার করতে পারে। একই প্রজেক্টের দুটি কী একই সীমা ভাগ করে।"
+  },
+  "warnGroq": {
+    "message": "কার্ড ছাড়া ফ্রি প্ল্যান: সীমার পরে শুধু 429 ত্রুটি পাবেন, কখনও বিল নয়।"
+  },
+  "warnMistral": {
+    "message": "কার্ড ছাড়া ফ্রি মোড। অনুরোধ প্রশিক্ষণের জন্য ব্যবহৃত হতে পারে: চাইলে Mistral কনসোলে এটি বন্ধ করুন।"
+  },
+  "warnOpenRouter": {
+    "message": "ফ্রি মোডে শুধু :free দিয়ে শেষ হওয়া মডেল গ্রহণ করা হয় (দিনে প্রায় 50টি অনুরোধ)। এই এক্সটেনশনের জন্য কখনও ক্রেডিট রিচার্জ করবেন না।"
+  },
+  "warnOllama": {
+    "message": "আপনার কম্পিউটারে মডেল: ফ্রি ও ব্যক্তিগত, কিছুই আপনার কম্পিউটার ছাড়ে না। ছোট মডেল বেশি ভুল করে; সন্দেহজনক অংশ মূল অবস্থায় থাকে।"
+  },
+  "popupView": {
+    "message": "পেজ প্রদর্শন"
+  },
+  "segOriginal": {
+    "message": "মূল"
+  },
+  "segTranslation": {
+    "message": "অনুবাদ"
+  },
+  "popupTranslating": {
+    "message": "অনুবাদ হচ্ছে…"
+  },
+  "popupCount": {
+    "message": "{0} / {1}টি অংশ"
+  },
+  "popupManage": {
+    "message": "পরিচালনা"
+  },
+  "popupMoreKeys": {
+    "message": "এবং আরও {0}টি কী"
+  },
+  "popupNoKeysLong": {
+    "message": "শুরু করতে একটি ফ্রি কী (Gemini, Groq, Mistral, OpenRouter) বা Ollama যোগ করুন।"
+  },
+  "stateReady": {
+    "message": "অনুবাদের জন্য প্রস্তুত"
+  },
+  "stateNoKey": {
+    "message": "কোনো কী সেট নেই"
+  },
+  "stateRunning": {
+    "message": "অনুবাদ চলছে"
+  },
+  "stateTranslated": {
+    "message": "পেজ অনুবাদ হয়েছে"
+  },
+  "stateOriginal": {
+    "message": "মূল দেখানো হচ্ছে"
+  },
+  "stateStopped": {
+    "message": "থামানো হয়েছে"
+  },
+  "statePaused": {
+    "message": "পেজের সীমা পূর্ণ"
+  },
+  "stateError": {
+    "message": "ত্রুটি"
+  },
+  "stateUnavailable": {
+    "message": "পেজ অনুবাদ করা যাবে না"
+  },
+  "toastAutoOn": {
+    "message": "{0}-এর জন্য স্বয়ংক্রিয় অনুবাদ চালু হয়েছে।"
+  },
+  "toastAutoOff": {
+    "message": "{0}-এর জন্য স্বয়ংক্রিয় অনুবাদ বন্ধ হয়েছে।"
+  },
+  "toastPermDenied": {
+    "message": "অনুমতি প্রত্যাখ্যাত: সাইট যোগ হয়নি।"
+  },
+  "badgeShowBadge": {
+    "message": "DevDocTrad ব্যাজ দেখান"
+  },
+  "optNavLabel": {
+    "message": "সেটিংসের অংশ"
+  },
+  "optNavKeys": {
+    "message": "প্রদানকারী ও কী"
+  },
+  "optNavPrivacy": {
+    "message": "গোপনীয়তা ও খরচ"
+  },
+  "optNavAppearance": {
+    "message": "চেহারা"
+  },
+  "optDescKeys": {
+    "message": "আপনার API কী ও Ollama, কার্ডের ক্রমে উপর থেকে নিচে চেষ্টা করা হয়।"
+  },
+  "optDescTranslation": {
+    "message": "ভাষা, প্রদর্শন এবং এক্সটেনশন কী অনুবাদ করতে পারবে।"
+  },
+  "optDescPrivacy": {
+    "message": "আপনার ব্রাউজার থেকে কী বের হয়, কার কাছে যায়, আর খরচ কত।"
+  },
+  "optDescSites": {
+    "message": "স্বয়ংক্রিয়ভাবে অনুবাদিত সাইট ও সুরক্ষিত রাখার পেজ।"
+  },
+  "optDescGlossary": {
+    "message": "যে শব্দ যেমন আছে তেমন রাখতে হবে বা সবসময় একইভাবে অনুবাদ করতে হবে।"
+  },
+  "optDescData": {
+    "message": "অনুবাদ ক্যাশ ও এই ব্রাউজারে রাখা ডেটা।"
+  },
+  "optDescAppearance": {
+    "message": "সেটিংস, পপআপ ও পেজে দেখানো ব্যাজের থিম।"
+  },
+  "optVersion": {
+    "message": "সংস্করণ {0}"
+  },
+  "optAddProvider": {
+    "message": "প্রদানকারী যোগ করুন"
+  },
+  "optAddProviderHelp": {
+    "message": "নতুন কার্ড সবার শেষে যায়। কার্ডের ক্রমই অগ্রাধিকারের ক্রম।"
+  },
+  "optProvider": {
+    "message": "প্রদানকারী"
+  },
+  "optKeysEmptyHint": {
+    "message": "একটি প্রদানকারী বেছে নিন: একটি কার্ড আসবে, আপনার কী পেস্ট করুন, তারপর \"মডেল লোড করুন\" ও একটি মডেল বেছে নিন।"
+  },
+  "optKeyName": {
+    "message": "কী-এর নাম"
+  },
+  "optKeyEnabled": {
+    "message": "এই কী ব্যবহার করুন"
+  },
+  "optPriority": {
+    "message": "অগ্রাধিকার {0}"
+  },
+  "optKeyHelp": {
+    "message": "ডিফল্টভাবে লুকানো, শুধু এই ব্রাউজারে রাখা হয়।"
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama আপনার কম্পিউটারে চালু থাকতে হবে।"
+  },
+  "optModelHelp": {
+    "message": "\"মডেল লোড করুন\" প্রস্তাবনার তালিকা পূরণ করে।"
+  },
+  "optLimits": {
+    "message": "সীমা"
+  },
+  "optLimitsHelp": {
+    "message": "খালি = প্রদানকারীর ডিফল্ট।"
+  },
+  "optPaidTitle": {
+    "message": "খরচ"
+  },
+  "optPaidHelp": {
+    "message": "শুধু পপআপে বেছে নিলেই ব্যবহৃত হয়।"
+  },
+  "optPaidOk": {
+    "message": "সীমা ও দাম সেট আছে: সীমা পর্যন্ত কী ব্যবহার করা যাবে।"
+  },
+  "optPrivacyFlow": {
+    "message": "লেখা কোথায় যায়"
+  },
+  "optProviderNotes": {
+    "message": "প্রদানকারী অনুযায়ী নোট"
+  },
+  "optProviderUsed": {
+    "message": "ব্যবহৃত"
+  },
+  "optUsageEmpty": {
+    "message": "এখনও কোনো কী সেট নেই।"
+  },
+  "optUsageHelp": {
+    "message": "প্রতিদিন মধ্যরাতে (UTC) শূন্য হয়।"
+  },
+  "optPaidRuleTitle": {
+    "message": "পেইড কী"
+  },
+  "optPaidRule": {
+    "message": "পেইড কী কখনও স্বয়ংক্রিয়ভাবে ব্যবহৃত হয় না: পপআপে আপনাকে বেছে নিতে হয়। দৈনিক সীমা ও দুটি দাম সেট না হওয়া পর্যন্ত এটি আটকে থাকে, এবং সীমা পূর্ণ হলেই থেমে যায়।"
+  },
+  "optAutoEmptyTitle": {
+    "message": "এখনও কোনো স্বয়ংক্রিয় সাইট নেই"
+  },
+  "optAutoEmptyLong": {
+    "message": "যোগ করতে: সাইটটি খুলুন, টুলবারে DevDocTrad আইকনে ক্লিক করুন, তারপর \"এই সাইট স্বয়ংক্রিয়ভাবে অনুবাদ করুন\" চালু করুন। ব্রাউজার শুধু সেই সাইটের জন্য অনুমতি চায়।"
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} স্বয়ংক্রিয় অনুবাদের সাইট থেকে সরাবেন?"
+  },
+  "optGlEmpty": {
+    "message": "এখনও কোনো শব্দ নেই। উদাহরণ: \"কখনও অনুবাদ করবেন না\" নিয়মসহ \"thread\"।"
+  },
+  "optGlCount": {
+    "message": "{0} / 500টি শব্দ"
+  },
+  "optGlImported": {
+    "message": "{0}টি শব্দ আমদানি হয়েছে।"
+  },
+  "optCacheConfirm": {
+    "message": "ক্যাশ মুছবেন? আগে অনুবাদ করা পেজ আবার অনুবাদ করতে হবে (প্রদানকারীদের নতুন কল)।"
+  },
+  "optCacheCleared": {
+    "message": "ক্যাশ মোছা হয়েছে।"
+  },
+  "optStorageTitle": {
+    "message": "স্থানীয় স্টোরেজ"
+  },
+  "optTheme": {
+    "message": "থিম"
+  },
+  "optThemeHelp": {
+    "message": "\"সিস্টেম\" আপনার কম্পিউটারের হালকা বা গাঢ় সেটিং অনুসরণ করে।"
+  },
+  "optThemeSystem": {
+    "message": "সিস্টেম"
+  },
+  "optThemeLight": {
+    "message": "হালকা"
+  },
+  "optThemeDark": {
+    "message": "গাঢ়"
+  },
+  "optPriceInUsd": {
+    "message": "ইনপুটের দাম (প্রতি দশ লক্ষ টোকেনে $$)"
+  },
+  "optPriceOutUsd": {
+    "message": "আউটপুটের দাম (প্রতি দশ লক্ষ টোকেনে $$)"
+  },
+  "optDailyCapUsd": {
+    "message": "দৈনিক সীমা ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "এই Google প্রজেক্ট প্রিপেইড বিলিং ব্যবহার করে এবং এর ক্রেডিট শেষ। কিছু রিচার্জ করবেন না: Google AI Studio-তে বিলিং ছাড়া একটি প্রজেক্টে কী তৈরি করুন (ফ্রি প্ল্যান)।"
+  }
+}

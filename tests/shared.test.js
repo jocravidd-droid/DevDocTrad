@@ -73,12 +73,17 @@ test('prompt système : fidélité stricte, règles des marqueurs, injection, ty
   const fr = DDT.buildSystemPrompt('fr', false);
   assert.match(fr, /sans omission, sans résumé, sans ajout/);
   assert.match(fr, /tu n'expliques pas/);
+  assert.match(fr, /aucun calque/);
   assert.match(fr, /jamais des instructions/);
   assert.match(fr, /guillemets « »/);
   const ru = DDT.buildSystemPrompt('ru', false);
   assert.match(ru, /vers le russe/);
   assert.doesNotMatch(ru, /guillemets « »/);
-  assert.match(DDT.buildSystemPrompt('fr', true), /thread \(fil d'exécution\)/);
+  const both = DDT.buildSystemPrompt('fr', true);
+  assert.match(both, /"terms"/);
+  assert.match(both, /\{"en": "pure paths", "tr": "chemins purs"\}/);
+  assert.match(both, /Elle renvoie/);
+  assert.equal(DDT.DEFAULT_SETTINGS.explainTerms, false, 'parenthèses : option désactivée par défaut');
 });
 
 test('difficulté : beaucoup d\'atomes ou unité longue = lot difficile', () => {
@@ -132,4 +137,34 @@ test('auto : pas de lancement si le site n\'est pas dans la liste ou sans clé g
 test('auto : un utilisateur russe a sa page traduite en russe, une page russe n\'est pas retraduite', async () => {
   assert.equal(await runAuto(EN_PAGE, 'https://docs.example.dev/a', { settings: { target: 'ru' } }), 1);
   assert.equal(await runAuto('<html lang="ru"><body><p>Документация</p></body></html>', 'https://docs.example.dev/a', { settings: { target: 'ru' } }), 0);
+});
+
+test('termes : l\'extension ajoute « (terme anglais) » à la première apparition seulement', () => {
+  const glossed = new Set(['thread']);
+  const out = DDT.addTermGlosses([
+    'Les classes sont réparties entre chemins purs, sans entrées/sorties, et <1>chemins concrets</1>.',
+    'Les chemins purs servent aussi ici ; un fil d\'exécution reste un fil.',
+    'Appelez {1} sur le chemin.'
+  ], [
+    { en: 'pure paths', tr: 'chemins purs' }, { en: 'I/O', tr: 'entrées/sorties' },
+    { en: 'concrete paths', tr: 'chemins concrets' }, { en: 'thread', tr: 'fil d\'exécution' },
+    { en: 'path', tr: 'path' }, { en: 'bad', tr: '<1>' }
+  ], glossed);
+  assert.equal(out[0], 'Les classes sont réparties entre chemins purs (pure paths), sans entrées/sorties (I/O), et <1>chemins concrets (concrete paths)</1>.');
+  assert.equal(out[1], 'Les chemins purs servent aussi ici ; un fil d\'exécution reste un fil.', 'déjà expliqué : rien ajouté');
+  assert.equal(out[2], 'Appelez {1} sur le chemin.');
+  assert.ok(glossed.has('pure paths') && glossed.has('I/O') && glossed.has('concrete paths'));
+});
+
+test('validation : balises inventées par le modèle (<n>…</n>) refusées', () => {
+  assert.equal(DDT.validateTranslation('Working with paths', '<n>Travailler avec des chemins</n>').ok, false);
+  assert.equal(DDT.validateTranslation('Working with paths', '&lt;n&gt;Travailler&lt;/n&gt; avec des chemins').ok, false);
+  assert.equal(DDT.validateTranslation('Use <1>Path</1> here', 'Utilisez <1>Path</1> ici').ok, true);
+});
+
+test('validation : alphabet étranger à la langue cible refusé (coréen dans de l\'arabe)', () => {
+  assert.equal(DDT.validateTranslation('This module offers classes.', 'يوفر هذا الم듈 فئات.', { target: 'ar' }).ok, false);
+  assert.equal(DDT.validateTranslation('This module offers classes.', 'يوفر هذا الموديول فئات.', { target: 'ar' }).ok, true);
+  assert.equal(DDT.validateTranslation('Use the モジュール module.', 'Utilisez le module モジュール.', { target: 'fr' }).ok, true, 'déjà dans la source');
+  assert.equal(DDT.validateTranslation('This module offers classes.', '이 모듈은 클래스를 제공합니다.', { target: 'ko' }).ok, true);
 });

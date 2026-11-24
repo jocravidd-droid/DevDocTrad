@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "rtl"
+  },
+  "extDescription": {
+    "message": "مستندات برنامه‌نویسان و سایت‌های برنامه‌نویسی را دقیق ترجمه می‌کند، بی‌آنکه هرگز به کد دست بزند."
+  },
+  "cmdToggle": {
+    "message": "ترجمهٔ صفحه یا بازگشت به متن اصلی"
+  },
+  "badgeTranslating": {
+    "message": "در حال ترجمه: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "ترجمه شد: {0} بخش"
+  },
+  "badgeDoneFailed": {
+    "message": "ترجمه شد: {0} بخش، {1} بخش به زبان اصلی ماند"
+  },
+  "badgeStopped": {
+    "message": "متوقف شد"
+  },
+  "badgeCap": {
+    "message": "سقف {0} نویسه برای این صفحه پر شد."
+  },
+  "badgeRateLimited": {
+    "message": "سقف کلید رایگان پر شد. تلاش دوباره تا {0} ثانیهٔ دیگر ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "سقف همهٔ کلیدهای رایگان پر شده است. بعداً دوباره تلاش کنید."
+  },
+  "badgeNoKey": {
+    "message": "هیچ کلیدی در دسترس نیست. در تنظیمات یک کلید اضافه کنید."
+  },
+  "badgeError": {
+    "message": "خطا: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "به‌صورت محلی ترجمه شد (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "به‌صورت آنلاین ترجمه شد ({0})"
+  },
+  "badgeNothing": {
+    "message": "در این صفحه چیزی برای ترجمه نیست."
+  },
+  "badgeKeyProblem": {
+    "message": "مشکل در کلید {0}: {1}"
+  },
+  "btnStop": {
+    "message": "توقف"
+  },
+  "btnOriginal": {
+    "message": "نمایش متن اصلی"
+  },
+  "btnTranslation": {
+    "message": "نمایش ترجمه"
+  },
+  "btnMinimize": {
+    "message": "کوچک کردن"
+  },
+  "btnClose": {
+    "message": "بستن"
+  },
+  "btnContinue": {
+    "message": "ادامه"
+  },
+  "errAuth": {
+    "message": "کلید رد شد (نامعتبر یا باطل‌شده)"
+  },
+  "errPayment": {
+    "message": "موجودی نزد ارائه‌دهنده کافی نیست؛ کلید متوقف شد"
+  },
+  "errRate": {
+    "message": "سقف درخواست‌ها پر شد، یک دقیقهٔ دیگر دوباره تلاش کنید"
+  },
+  "errOllamaDown": {
+    "message": "Ollama روی localhost:11434 پاسخ نمی‌دهد. Ollama را اجرا کنید و دوباره تلاش کنید."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama افزونه را رد می‌کند (403). متغیر محیطی OLLAMA_ORIGINS را روی chrome-extension://*,moz-extension://* تنظیم کنید و Ollama را دوباره راه‌اندازی کنید."
+  },
+  "errOpenRouterFree": {
+    "message": "در حالت رایگان، OpenRouter فقط مدل‌هایی را می‌پذیرد که نامشان به :free ختم شود"
+  },
+  "errPaidUnset": {
+    "message": "کلید پولی مسدود است: ابتدا در تنظیمات سقف روزانه و هر دو قیمت را تعیین کنید."
+  },
+  "errPaidCap": {
+    "message": "سقف روزانهٔ کلید پولی پر شد ($${0} از $${1})."
+  },
+  "errUnknown": {
+    "message": "خطای ناشناخته"
+  },
+  "keyAvailable": {
+    "message": "در دسترس"
+  },
+  "keyDisabled": {
+    "message": "غیرفعال"
+  },
+  "keyNoModel": {
+    "message": "یک مدل انتخاب کنید"
+  },
+  "keyPausedUntil": {
+    "message": "متوقف تا {0}"
+  },
+  "keyProblem": {
+    "message": "مشکل"
+  },
+  "tier_free": {
+    "message": "رایگان"
+  },
+  "tier_paid": {
+    "message": "پولی"
+  },
+  "tier_local": {
+    "message": "محلی"
+  },
+  "gl_never": {
+    "message": "هرگز ترجمه نشود"
+  },
+  "gl_always": {
+    "message": "همیشه این‌طور ترجمه شود"
+  },
+  "popupTranslate": {
+    "message": "ترجمهٔ این صفحه"
+  },
+  "popupSettings": {
+    "message": "تنظیمات"
+  },
+  "popupUnsupported": {
+    "message": "این صفحه را افزونه نمی‌تواند ترجمه کند (صفحهٔ مرورگر، فروشگاه افزونه یا نمایشگر PDF)."
+  },
+  "popupKey": {
+    "message": "کلید"
+  },
+  "popupKeyAuto": {
+    "message": "خودکار (رایگان و محلی)"
+  },
+  "popupAuto": {
+    "message": "ترجمهٔ خودکار این سایت"
+  },
+  "popupSensitive": {
+    "message": "صفحهٔ حساس: هرگز به‌طور خودکار ترجمه نمی‌شود. دکمه کار می‌کند و اگر Ollama تنظیم شده باشد، اول از آن استفاده می‌شود."
+  },
+  "popupKeys": {
+    "message": "وضعیت کلیدها"
+  },
+  "popupNoKeys": {
+    "message": "هنوز کلیدی نیست."
+  },
+  "popupAddKey": {
+    "message": "افزودن کلید"
+  },
+  "popupShortcut": {
+    "message": "میان‌بر:"
+  },
+  "optTitle": {
+    "message": "تنظیمات DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "مرورگر هنوز اجازهٔ دسترسی به ارائه‌دهندگان ترجمه را نداده است."
+  },
+  "optPermGrant": {
+    "message": "اجازهٔ دسترسی به ارائه‌دهندگان"
+  },
+  "optTabKeys": {
+    "message": "کلیدها"
+  },
+  "optTabTranslation": {
+    "message": "ترجمه"
+  },
+  "optTabGlossary": {
+    "message": "واژه‌نامه"
+  },
+  "optTabSites": {
+    "message": "سایت‌ها"
+  },
+  "optTabData": {
+    "message": "داده‌ها"
+  },
+  "optKeysTitle": {
+    "message": "کلیدهای API"
+  },
+  "optKeysLocal": {
+    "message": "کلیدها در همین مرورگر می‌مانند (ذخیره‌سازی محلی). هرگز با حساب شما همگام نمی‌شوند و جز به ارائه‌دهنده به جای دیگری فرستاده نمی‌شوند. ترتیب کارت‌ها همان ترتیب اولویت است."
+  },
+  "optAddKey": {
+    "message": "افزودن"
+  },
+  "optKey": {
+    "message": "کلید"
+  },
+  "optShow": {
+    "message": "نمایش"
+  },
+  "optHide": {
+    "message": "پنهان کردن"
+  },
+  "optBaseUrl": {
+    "message": "نشانی Ollama"
+  },
+  "optTier": {
+    "message": "نوع"
+  },
+  "optModelEasy": {
+    "message": "مدل (صفحه‌های ساده)"
+  },
+  "optModelHard": {
+    "message": "مدل برای صفحه‌های دشوار (اختیاری)"
+  },
+  "optMaxChars": {
+    "message": "اندازهٔ دسته (نویسه)"
+  },
+  "optInterval": {
+    "message": "فاصلهٔ میان درخواست‌ها (میلی‌ثانیه)"
+  },
+  "optMaxReq": {
+    "message": "بیشینهٔ درخواست در روز (0 = بدون سقف)"
+  },
+  "optPriceIn": {
+    "message": "قیمت ورودی ($$ برای هر میلیون توکن)"
+  },
+  "optPriceOut": {
+    "message": "قیمت خروجی ($$ برای هر میلیون توکن)"
+  },
+  "optDailyCap": {
+    "message": "سقف روزانه ($$)"
+  },
+  "optLoadModels": {
+    "message": "بارگیری مدل‌ها"
+  },
+  "optTest": {
+    "message": "آزمایش"
+  },
+  "optUp": {
+    "message": "بالا بردن"
+  },
+  "optDown": {
+    "message": "پایین بردن"
+  },
+  "optDelete": {
+    "message": "حذف"
+  },
+  "optDeleteConfirm": {
+    "message": "این کلید حذف شود؟"
+  },
+  "optWorking": {
+    "message": "در حال بررسی…"
+  },
+  "optTestOk": {
+    "message": "کلید معتبر است، {0} مدل در دسترس است."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama پاسخ می‌دهد، مدل‌های نصب‌شده: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "{0} مدل بارگیری شد: یکی را از فهرست انتخاب کنید."
+  },
+  "optSaved": {
+    "message": "ذخیره شد"
+  },
+  "optTarget": {
+    "message": "زبان مقصد"
+  },
+  "optTargetAuto": {
+    "message": "زبان مرورگر ({0})"
+  },
+  "optMode": {
+    "message": "نمایش"
+  },
+  "optModeReplace": {
+    "message": "جایگزینی متن"
+  },
+  "optModeBilingual": {
+    "message": "دوزبانه (ترجمه زیر متن اصلی)"
+  },
+  "optExplain": {
+    "message": "اصطلاحات فنی: ترجمه + انگلیسی در پرانتز"
+  },
+  "optExplainHelp": {
+    "message": "مفاهیم فنی ترجمه می‌شوند و اصطلاح انگلیسی در نخستین کاربرد داخل پرانتز می‌آید. غیرفعال: اصطلاحات فنی انگلیسی بدون پرانتز به همان انگلیسی می‌مانند. کد و نام‌ها (Path، npm…) هرگز ترجمه نمی‌شوند."
+  },
+  "optComments": {
+    "message": "ترجمهٔ توضیحات داخل بلوک‌های کد"
+  },
+  "optCommentsHelp": {
+    "message": "به‌طور پیش‌فرض غیرفعال. فقط توضیحاتی ترجمه می‌شوند که رنگ‌آمیزی نحو سایت تشخیص دهد؛ کد هرگز تغییر نمی‌کند و متن اصلی بی‌تغییر برمی‌گردد."
+  },
+  "optPageCap": {
+    "message": "سقف نویسه برای هر صفحه"
+  },
+  "optShortcut": {
+    "message": "میان‌بر صفحه‌کلید"
+  },
+  "optShortcutCurrent": {
+    "message": "میان‌بر کنونی: {0}."
+  },
+  "optShortcutNone": {
+    "message": "هیچ"
+  },
+  "optShortcutWhereChrome": {
+    "message": "برای تغییر: chrome://extensions/shortcuts را باز کنید."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "برای تغییر: مدیر افزونه‌ها، نماد چرخ‌دنده، «مدیریت میان‌برهای افزونه‌ها»."
+  },
+  "optGlossaryHelp": {
+    "message": "اصطلاحاتی که هرگز ترجمه نمی‌شوند یا همیشه به شکل معینی ترجمه می‌شوند. فقط اصطلاحاتی که در بخش وجود دارند برای مدل فرستاده می‌شوند. حداکثر ۵۰۰ مورد."
+  },
+  "optGlTerm": {
+    "message": "اصطلاح"
+  },
+  "optGlType": {
+    "message": "قاعده"
+  },
+  "optGlTranslation": {
+    "message": "ترجمهٔ اجباری"
+  },
+  "optGlAdd": {
+    "message": "افزودن اصطلاح"
+  },
+  "optGlExport": {
+    "message": "برون‌بری (JSON)"
+  },
+  "optGlImport": {
+    "message": "درون‌بری (JSON)"
+  },
+  "optGlImportError": {
+    "message": "پرونده نامعتبر است: فهرست JSON از اشیای {term, type, translation} لازم است."
+  },
+  "optAutoTitle": {
+    "message": "سایت‌های با ترجمهٔ خودکار"
+  },
+  "optAutoHelp": {
+    "message": "از پنجرهٔ بازشو با «ترجمهٔ خودکار این سایت» یک سایت اضافه کنید. در حالت خودکار فقط کلیدهای رایگان و Ollama به کار می‌روند."
+  },
+  "optAutoEmpty": {
+    "message": "هنوز سایتی نیست."
+  },
+  "optAutoGranted": {
+    "message": "مجاز"
+  },
+  "optAutoRevoked": {
+    "message": "اجازه پس گرفته شد"
+  },
+  "optSensitiveTitle": {
+    "message": "صفحه‌های حساس"
+  },
+  "optSensitiveHelp": {
+    "message": "هرگز به‌طور خودکار ترجمه نمی‌شوند (همچنین هر صفحه‌ای که فیلد گذرواژه دارد). دکمهٔ دستی همچنان کار می‌کند."
+  },
+  "optSensitiveBase": {
+    "message": "الگوهای پایه:"
+  },
+  "optSensitiveExtra": {
+    "message": "الگوهای بیشتر (در هر خط یکی، واژه یا دامنه)"
+  },
+  "optCacheTitle": {
+    "message": "حافظهٔ نهان ترجمه‌ها"
+  },
+  "optCacheInfo": {
+    "message": "{0} بخش در حافظهٔ نهان ({1} مگابایت). صفحه‌ای که قبلاً ترجمه شده بدون هیچ درخواست شبکه دوباره نمایش داده می‌شود."
+  },
+  "optCacheClear": {
+    "message": "پاک کردن حافظهٔ نهان"
+  },
+  "optUsageTitle": {
+    "message": "مصرف امروز"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} درخواست{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "حریم خصوصی"
+  },
+  "optPrivacyText": {
+    "message": "متن صفحه‌هایی که ترجمه می‌کنید فقط برای ارائه‌دهندهٔ انتخابی شما فرستاده می‌شود، یا با Ollama روی رایانهٔ شما می‌ماند. بدون آمار، بدون ردیابی، هیچ چیز برای توسعه‌دهنده فرستاده نمی‌شود. در طرح‌های رایگان، Gemini و Mistral ممکن است از متن فرستاده‌شده دوباره استفاده کنند."
+  },
+  "warnGemini": {
+    "message": "کلید را در Google AI Studio بدون اتصال صورت‌حساب بسازید. در طرح رایگان، Google ممکن است از متن فرستاده‌شده دوباره استفاده کند. دو کلید از یک پروژه سقف مشترک دارند."
+  },
+  "warnGroq": {
+    "message": "طرح رایگان بدون کارت: پس از سقف فقط خطای 429 می‌گیرید، هرگز صورت‌حساب."
+  },
+  "warnMistral": {
+    "message": "حالت رایگان بدون کارت. درخواست‌ها ممکن است برای آموزش به کار روند: اگر ترجیح می‌دهید، در کنسول Mistral غیرفعالش کنید."
+  },
+  "warnOpenRouter": {
+    "message": "در حالت رایگان فقط مدل‌هایی که به :free ختم می‌شوند پذیرفته می‌شوند (حدود ۵۰ درخواست در روز). هرگز برای این افزونه اعتبار شارژ نکنید."
+  },
+  "warnOllama": {
+    "message": "مدل روی رایانهٔ شما: رایگان و خصوصی، هیچ چیز از رایانه بیرون نمی‌رود. مدل کوچک بیشتر اشتباه می‌کند؛ بخش‌های مشکوک به زبان اصلی می‌مانند."
+  },
+  "popupView": {
+    "message": "نمایش صفحه"
+  },
+  "segOriginal": {
+    "message": "متن اصلی"
+  },
+  "segTranslation": {
+    "message": "ترجمه"
+  },
+  "popupTranslating": {
+    "message": "در حال ترجمه…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} بخش"
+  },
+  "popupManage": {
+    "message": "مدیریت"
+  },
+  "popupMoreKeys": {
+    "message": "و {0} کلید دیگر"
+  },
+  "popupNoKeysLong": {
+    "message": "برای شروع، یک کلید رایگان (Gemini، Groq، Mistral، OpenRouter) یا Ollama اضافه کنید."
+  },
+  "stateReady": {
+    "message": "آمادهٔ ترجمه"
+  },
+  "stateNoKey": {
+    "message": "هیچ کلیدی تنظیم نشده"
+  },
+  "stateRunning": {
+    "message": "در حال ترجمه"
+  },
+  "stateTranslated": {
+    "message": "صفحه ترجمه شد"
+  },
+  "stateOriginal": {
+    "message": "متن اصلی نمایش داده می‌شود"
+  },
+  "stateStopped": {
+    "message": "متوقف شد"
+  },
+  "statePaused": {
+    "message": "سقف صفحه پر شد"
+  },
+  "stateError": {
+    "message": "خطا"
+  },
+  "stateUnavailable": {
+    "message": "صفحه ترجمه‌پذیر نیست"
+  },
+  "toastAutoOn": {
+    "message": "ترجمهٔ خودکار برای {0} روشن شد."
+  },
+  "toastAutoOff": {
+    "message": "ترجمهٔ خودکار برای {0} خاموش شد."
+  },
+  "toastPermDenied": {
+    "message": "اجازه رد شد: سایت اضافه نشد."
+  },
+  "badgeShowBadge": {
+    "message": "نمایش نشان DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "بخش‌های تنظیمات"
+  },
+  "optNavKeys": {
+    "message": "ارائه‌دهندگان و کلیدها"
+  },
+  "optNavPrivacy": {
+    "message": "حریم خصوصی و هزینه‌ها"
+  },
+  "optNavAppearance": {
+    "message": "ظاهر"
+  },
+  "optDescKeys": {
+    "message": "کلیدهای API شما و Ollama، به ترتیب کارت‌ها از بالا به پایین امتحان می‌شوند."
+  },
+  "optDescTranslation": {
+    "message": "زبان، نمایش و آنچه افزونه اجازهٔ ترجمه‌اش را دارد."
+  },
+  "optDescPrivacy": {
+    "message": "چه چیزی از مرورگر شما بیرون می‌رود، به کجا، و چقدر هزینه دارد."
+  },
+  "optDescSites": {
+    "message": "سایت‌های با ترجمهٔ خودکار و صفحه‌هایی که باید محافظت شوند."
+  },
+  "optDescGlossary": {
+    "message": "اصطلاحاتی که باید دست‌نخورده بمانند یا همیشه یکسان ترجمه شوند."
+  },
+  "optDescData": {
+    "message": "حافظهٔ نهان ترجمه‌ها و داده‌های نگه‌داشته‌شده در این مرورگر."
+  },
+  "optDescAppearance": {
+    "message": "پوستهٔ تنظیمات، پنجرهٔ بازشو و نشانی که روی صفحه‌ها نمایش داده می‌شود."
+  },
+  "optVersion": {
+    "message": "نسخهٔ {0}"
+  },
+  "optAddProvider": {
+    "message": "افزودن ارائه‌دهنده"
+  },
+  "optAddProviderHelp": {
+    "message": "کارت تازه در انتها قرار می‌گیرد. ترتیب کارت‌ها همان ترتیب اولویت است."
+  },
+  "optProvider": {
+    "message": "ارائه‌دهنده"
+  },
+  "optKeysEmptyHint": {
+    "message": "یک ارائه‌دهنده انتخاب کنید: کارتی ظاهر می‌شود، کلیدتان را بچسبانید، سپس «بارگیری مدل‌ها» و یک مدل انتخاب کنید."
+  },
+  "optKeyName": {
+    "message": "نام کلید"
+  },
+  "optKeyEnabled": {
+    "message": "استفاده از این کلید"
+  },
+  "optPriority": {
+    "message": "اولویت {0}"
+  },
+  "optKeyHelp": {
+    "message": "به‌طور پیش‌فرض پنهان است و فقط در این مرورگر نگه داشته می‌شود."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama باید روی رایانهٔ شما در حال اجرا باشد."
+  },
+  "optModelHelp": {
+    "message": "«بارگیری مدل‌ها» فهرست پیشنهادها را پر می‌کند."
+  },
+  "optLimits": {
+    "message": "محدودیت‌ها"
+  },
+  "optLimitsHelp": {
+    "message": "خالی = مقدار پیش‌فرض ارائه‌دهنده."
+  },
+  "optPaidTitle": {
+    "message": "هزینه‌ها"
+  },
+  "optPaidHelp": {
+    "message": "فقط وقتی به کار می‌رود که آن را در پنجرهٔ بازشو انتخاب کنید."
+  },
+  "optPaidOk": {
+    "message": "سقف و قیمت‌ها تعیین شده‌اند: کلید تا سقف قابل استفاده است."
+  },
+  "optPrivacyFlow": {
+    "message": "متن به کجا می‌رود"
+  },
+  "optProviderNotes": {
+    "message": "یادداشت‌های هر ارائه‌دهنده"
+  },
+  "optProviderUsed": {
+    "message": "در حال استفاده"
+  },
+  "optUsageEmpty": {
+    "message": "هنوز هیچ کلیدی تنظیم نشده است."
+  },
+  "optUsageHelp": {
+    "message": "هر روز نیمه‌شب (UTC) صفر می‌شود."
+  },
+  "optPaidRuleTitle": {
+    "message": "کلیدهای پولی"
+  },
+  "optPaidRule": {
+    "message": "کلید پولی هرگز به‌طور خودکار به کار نمی‌رود: باید آن را در پنجرهٔ بازشو انتخاب کنید. تا وقتی سقف روزانه و هر دو قیمت تعیین نشوند مسدود می‌ماند و به محض رسیدن به سقف متوقف می‌شود."
+  },
+  "optAutoEmptyTitle": {
+    "message": "هنوز سایت خودکاری نیست"
+  },
+  "optAutoEmptyLong": {
+    "message": "برای افزودن: سایت را باز کنید، روی نماد DevDocTrad در نوار ابزار بزنید، سپس «ترجمهٔ خودکار این سایت» را روشن کنید. مرورگر فقط برای همان سایت اجازه می‌خواهد."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} از سایت‌های با ترجمهٔ خودکار حذف شود؟"
+  },
+  "optGlEmpty": {
+    "message": "هنوز اصطلاحی نیست. مثال: «thread» با قاعدهٔ «هرگز ترجمه نشود»."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 اصطلاح"
+  },
+  "optGlImported": {
+    "message": "{0} اصطلاح درون‌بری شد."
+  },
+  "optCacheConfirm": {
+    "message": "حافظهٔ نهان پاک شود؟ صفحه‌هایی که قبلاً ترجمه شده‌اند باید دوباره ترجمه شوند (درخواست‌های تازه به ارائه‌دهندگان)."
+  },
+  "optCacheCleared": {
+    "message": "حافظهٔ نهان پاک شد."
+  },
+  "optStorageTitle": {
+    "message": "ذخیره‌سازی محلی"
+  },
+  "optTheme": {
+    "message": "پوسته"
+  },
+  "optThemeHelp": {
+    "message": "«سیستم» از تنظیم روشن یا تیرهٔ رایانهٔ شما پیروی می‌کند."
+  },
+  "optThemeSystem": {
+    "message": "سیستم"
+  },
+  "optThemeLight": {
+    "message": "روشن"
+  },
+  "optThemeDark": {
+    "message": "تیره"
+  },
+  "optPriceInUsd": {
+    "message": "قیمت ورودی ($$ برای هر میلیون توکن)"
+  },
+  "optPriceOutUsd": {
+    "message": "قیمت خروجی ($$ برای هر میلیون توکن)"
+  },
+  "optDailyCapUsd": {
+    "message": "سقف روزانه ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "این پروژهٔ Google صورت‌حساب پیش‌پرداخت دارد و اعتبارش تمام شده است. چیزی شارژ نکنید: در Google AI Studio یک کلید در پروژه‌ای بدون صورت‌حساب بسازید (طرح رایگان)."
+  }
+}

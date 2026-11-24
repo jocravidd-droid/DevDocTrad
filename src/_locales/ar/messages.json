@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "rtl"
+  },
+  "extDescription": {
+    "message": "يترجم توثيق المطورين ومواقع البرمجة بأمانة، من دون أن يلمس الشيفرة أبدًا."
+  },
+  "cmdToggle": {
+    "message": "ترجمة الصفحة أو العودة إلى الأصل"
+  },
+  "badgeTranslating": {
+    "message": "جارٍ الترجمة: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "تمت الترجمة: {0} مقطع"
+  },
+  "badgeDoneFailed": {
+    "message": "تمت الترجمة: {0} مقطع، و{1} بقي بلغته الأصلية"
+  },
+  "badgeStopped": {
+    "message": "متوقف"
+  },
+  "badgeCap": {
+    "message": "بلغت هذه الصفحة حد {0} حرف."
+  },
+  "badgeRateLimited": {
+    "message": "بلغ المفتاح المجاني حده. إعادة المحاولة بعد {0} ث ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "بلغت كل المفاتيح المجانية حدها. حاول لاحقًا."
+  },
+  "badgeNoKey": {
+    "message": "لا يوجد مفتاح متاح. أضف مفتاحًا في الإعدادات."
+  },
+  "badgeError": {
+    "message": "خطأ: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "تُرجم محليًا (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "تُرجم عبر الإنترنت ({0})"
+  },
+  "badgeNothing": {
+    "message": "لا يوجد ما يُترجم في هذه الصفحة."
+  },
+  "badgeKeyProblem": {
+    "message": "مشكلة في المفتاح {0}: {1}"
+  },
+  "btnStop": {
+    "message": "إيقاف"
+  },
+  "btnOriginal": {
+    "message": "عرض الأصل"
+  },
+  "btnTranslation": {
+    "message": "عرض الترجمة"
+  },
+  "btnMinimize": {
+    "message": "تصغير"
+  },
+  "btnClose": {
+    "message": "إغلاق"
+  },
+  "btnContinue": {
+    "message": "متابعة"
+  },
+  "errAuth": {
+    "message": "رُفض المفتاح (غير صالح أو ملغى)"
+  },
+  "errPayment": {
+    "message": "الرصيد غير كافٍ لدى المزوّد؛ أُوقف المفتاح"
+  },
+  "errRate": {
+    "message": "بُلغ حد الطلبات، حاول مجددًا بعد دقيقة"
+  },
+  "errOllamaDown": {
+    "message": "لا يستجيب Ollama على localhost:11434. شغّل Ollama ثم حاول مجددًا."
+  },
+  "errOllamaOrigin": {
+    "message": "يرفض Ollama الإضافة (403). اضبط متغير البيئة OLLAMA_ORIGINS على القيمة chrome-extension://*,moz-extension://* ثم أعد تشغيل Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "في الوضع المجاني، لا يقبل OpenRouter إلا النماذج التي ينتهي اسمها بـ :free"
+  },
+  "errPaidUnset": {
+    "message": "المفتاح المدفوع محظور: اضبط أولًا الحد اليومي والسعرين في الإعدادات."
+  },
+  "errPaidCap": {
+    "message": "بُلغ الحد اليومي للمفتاح المدفوع ($${0} من $${1})."
+  },
+  "errUnknown": {
+    "message": "خطأ غير معروف"
+  },
+  "keyAvailable": {
+    "message": "متاح"
+  },
+  "keyDisabled": {
+    "message": "معطّل"
+  },
+  "keyNoModel": {
+    "message": "اختر نموذجًا"
+  },
+  "keyPausedUntil": {
+    "message": "متوقف مؤقتًا حتى {0}"
+  },
+  "keyProblem": {
+    "message": "مشكلة"
+  },
+  "tier_free": {
+    "message": "مجاني"
+  },
+  "tier_paid": {
+    "message": "مدفوع"
+  },
+  "tier_local": {
+    "message": "محلي"
+  },
+  "gl_never": {
+    "message": "لا تترجم أبدًا"
+  },
+  "gl_always": {
+    "message": "ترجم دائمًا إلى"
+  },
+  "popupTranslate": {
+    "message": "ترجمة هذه الصفحة"
+  },
+  "popupSettings": {
+    "message": "الإعدادات"
+  },
+  "popupUnsupported": {
+    "message": "لا يمكن لإضافة ترجمة هذه الصفحة (صفحة متصفح أو متجر إضافات أو عارض PDF)."
+  },
+  "popupKey": {
+    "message": "المفتاح"
+  },
+  "popupKeyAuto": {
+    "message": "تلقائي (المجانية والمحلي)"
+  },
+  "popupAuto": {
+    "message": "ترجمة هذا الموقع تلقائيًا"
+  },
+  "popupSensitive": {
+    "message": "صفحة حساسة: لا تُترجم تلقائيًا أبدًا. الزر يعمل، ويُستخدم Ollama أولًا إن كان مُعدًّا."
+  },
+  "popupKeys": {
+    "message": "حالة المفاتيح"
+  },
+  "popupNoKeys": {
+    "message": "لا يوجد مفتاح بعد."
+  },
+  "popupAddKey": {
+    "message": "إضافة مفتاح"
+  },
+  "popupShortcut": {
+    "message": "الاختصار:"
+  },
+  "optTitle": {
+    "message": "إعدادات DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "لم يسمح المتصفح بعد بالوصول إلى مزوّدي الترجمة."
+  },
+  "optPermGrant": {
+    "message": "السماح بالوصول إلى المزوّدين"
+  },
+  "optTabKeys": {
+    "message": "المفاتيح"
+  },
+  "optTabTranslation": {
+    "message": "الترجمة"
+  },
+  "optTabGlossary": {
+    "message": "المسرد"
+  },
+  "optTabSites": {
+    "message": "المواقع"
+  },
+  "optTabData": {
+    "message": "البيانات"
+  },
+  "optKeysTitle": {
+    "message": "مفاتيح API"
+  },
+  "optKeysLocal": {
+    "message": "تبقى المفاتيح في هذا المتصفح (تخزين محلي). لا تُزامَن أبدًا مع حسابك ولا تُرسل إلى أي مكان غير المزوّد. ترتيب البطاقات هو ترتيب الأولوية."
+  },
+  "optAddKey": {
+    "message": "إضافة"
+  },
+  "optKey": {
+    "message": "المفتاح"
+  },
+  "optShow": {
+    "message": "إظهار"
+  },
+  "optHide": {
+    "message": "إخفاء"
+  },
+  "optBaseUrl": {
+    "message": "عنوان Ollama"
+  },
+  "optTier": {
+    "message": "النوع"
+  },
+  "optModelEasy": {
+    "message": "النموذج (الصفحات البسيطة)"
+  },
+  "optModelHard": {
+    "message": "نموذج للصفحات الصعبة (اختياري)"
+  },
+  "optMaxChars": {
+    "message": "حجم الدفعة (أحرف)"
+  },
+  "optInterval": {
+    "message": "الفاصل بين الطلبات (ملّي ثانية)"
+  },
+  "optMaxReq": {
+    "message": "الحد الأقصى للطلبات يوميًا (0 = بلا حد)"
+  },
+  "optPriceIn": {
+    "message": "سعر الإدخال ($$ لكل مليون رمز)"
+  },
+  "optPriceOut": {
+    "message": "سعر الإخراج ($$ لكل مليون رمز)"
+  },
+  "optDailyCap": {
+    "message": "الحد اليومي ($$)"
+  },
+  "optLoadModels": {
+    "message": "تحميل النماذج"
+  },
+  "optTest": {
+    "message": "اختبار"
+  },
+  "optUp": {
+    "message": "نقل للأعلى"
+  },
+  "optDown": {
+    "message": "نقل للأسفل"
+  },
+  "optDelete": {
+    "message": "حذف"
+  },
+  "optDeleteConfirm": {
+    "message": "حذف هذا المفتاح؟"
+  },
+  "optWorking": {
+    "message": "جارٍ التحقق…"
+  },
+  "optTestOk": {
+    "message": "مفتاح صالح، {0} نموذج متاح."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama يستجيب، النماذج المثبتة: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "حُمّل {0} نموذج: اختر واحدًا من القائمة."
+  },
+  "optSaved": {
+    "message": "حُفظ"
+  },
+  "optTarget": {
+    "message": "اللغة الهدف"
+  },
+  "optTargetAuto": {
+    "message": "لغة المتصفح ({0})"
+  },
+  "optMode": {
+    "message": "العرض"
+  },
+  "optModeReplace": {
+    "message": "استبدال النص"
+  },
+  "optModeBilingual": {
+    "message": "ثنائي اللغة (الترجمة تحت الأصل)"
+  },
+  "optExplain": {
+    "message": "المصطلحات التقنية: الترجمة + الإنجليزية بين قوسين"
+  },
+  "optExplainHelp": {
+    "message": "تُترجم المفاهيم التقنية، مع ذكر المصطلح الإنجليزي بين قوسين عند أول ظهور له. معطّل: تبقى المصطلحات التقنية الإنجليزية بالإنجليزية، بلا أقواس. لا تُترجم الشيفرة والأسماء (Path، npm…) أبدًا."
+  },
+  "optComments": {
+    "message": "ترجمة التعليقات داخل كتل الشيفرة"
+  },
+  "optCommentsHelp": {
+    "message": "معطّل افتراضيًا. لا تُترجم إلا التعليقات التي يتعرّف عليها تلوين الصياغة في الموقع؛ لا تتغير الشيفرة أبدًا ويعود الأصل كما هو."
+  },
+  "optPageCap": {
+    "message": "حد الأحرف لكل صفحة"
+  },
+  "optShortcut": {
+    "message": "اختصار لوحة المفاتيح"
+  },
+  "optShortcutCurrent": {
+    "message": "الاختصار الحالي: {0}."
+  },
+  "optShortcutNone": {
+    "message": "لا يوجد"
+  },
+  "optShortcutWhereChrome": {
+    "message": "لتغييره: افتح chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "لتغييره: مدير الإضافات، أيقونة الترس، «إدارة اختصارات الإضافات»."
+  },
+  "optGlossaryHelp": {
+    "message": "مصطلحات لا تُترجم أبدًا، أو تُترجم دائمًا بطريقة محددة. لا يُرسل إلى النموذج إلا المصطلحات الموجودة في المقطع. 500 إدخال كحد أقصى."
+  },
+  "optGlTerm": {
+    "message": "المصطلح"
+  },
+  "optGlType": {
+    "message": "القاعدة"
+  },
+  "optGlTranslation": {
+    "message": "الترجمة المفروضة"
+  },
+  "optGlAdd": {
+    "message": "إضافة مصطلح"
+  },
+  "optGlExport": {
+    "message": "تصدير (JSON)"
+  },
+  "optGlImport": {
+    "message": "استيراد (JSON)"
+  },
+  "optGlImportError": {
+    "message": "ملف غير صالح: يُنتظر قائمة JSON من كائنات {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "المواقع المترجمة تلقائيًا"
+  },
+  "optAutoHelp": {
+    "message": "أضف موقعًا من النافذة المنبثقة عبر «ترجمة هذا الموقع تلقائيًا». لا تُستخدم تلقائيًا إلا المفاتيح المجانية وOllama."
+  },
+  "optAutoEmpty": {
+    "message": "لا يوجد موقع بعد."
+  },
+  "optAutoGranted": {
+    "message": "مسموح"
+  },
+  "optAutoRevoked": {
+    "message": "سُحب الإذن"
+  },
+  "optSensitiveTitle": {
+    "message": "الصفحات الحساسة"
+  },
+  "optSensitiveHelp": {
+    "message": "لا تُترجم تلقائيًا أبدًا (ولا أي صفحة فيها حقل كلمة مرور). يظل الزر اليدوي يعمل."
+  },
+  "optSensitiveBase": {
+    "message": "الأنماط الأساسية:"
+  },
+  "optSensitiveExtra": {
+    "message": "أنماط إضافية (واحد في كل سطر، كلمة أو نطاق)"
+  },
+  "optCacheTitle": {
+    "message": "ذاكرة الترجمات المؤقتة"
+  },
+  "optCacheInfo": {
+    "message": "{0} مقطع في الذاكرة المؤقتة ({1} م.ب). تُعرض الصفحة المترجمة مسبقًا مجددًا دون أي اتصال بالشبكة."
+  },
+  "optCacheClear": {
+    "message": "مسح الذاكرة المؤقتة"
+  },
+  "optUsageTitle": {
+    "message": "استهلاك اليوم"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} طلب{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "الخصوصية"
+  },
+  "optPrivacyText": {
+    "message": "يُرسل نص الصفحات التي تترجمها إلى المزوّد الذي اخترته فقط، أو يبقى على جهازك مع Ollama. لا إحصاءات ولا تتبّع، ولا يُرسل أي شيء إلى المطوّر. في الباقات المجانية، قد يعيد Gemini وMistral استخدام النص المرسل."
+  },
+  "warnGemini": {
+    "message": "أنشئ المفتاح في Google AI Studio دون ربط الفوترة. في الباقة المجانية قد تعيد Google استخدام النص المرسل. يتشارك مفتاحان من المشروع نفسه الحد نفسه."
+  },
+  "warnGroq": {
+    "message": "باقة مجانية بلا بطاقة: بعد الحد تحصل فقط على خطأ 429، ولا فاتورة أبدًا."
+  },
+  "warnMistral": {
+    "message": "وضع مجاني بلا بطاقة. قد تُستخدم الطلبات للتدريب: عطّل ذلك من وحدة تحكم Mistral إن أردت."
+  },
+  "warnOpenRouter": {
+    "message": "في الوضع المجاني لا تُقبل إلا النماذج المنتهية بـ :free (نحو 50 طلبًا يوميًا). لا تشحن رصيدًا أبدًا لهذه الإضافة."
+  },
+  "warnOllama": {
+    "message": "نموذج على جهازك: مجاني وخاص، لا يغادر شيء جهازك. النموذج الصغير يخطئ أكثر؛ تبقى المقاطع المشكوك فيها بلغتها الأصلية."
+  },
+  "popupView": {
+    "message": "عرض الصفحة"
+  },
+  "segOriginal": {
+    "message": "الأصل"
+  },
+  "segTranslation": {
+    "message": "الترجمة"
+  },
+  "popupTranslating": {
+    "message": "جارٍ الترجمة…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} مقطع"
+  },
+  "popupManage": {
+    "message": "إدارة"
+  },
+  "popupMoreKeys": {
+    "message": "و{0} مفتاح آخر"
+  },
+  "popupNoKeysLong": {
+    "message": "للبدء، أضف مفتاحًا مجانيًا (Gemini أو Groq أو Mistral أو OpenRouter) أو Ollama."
+  },
+  "stateReady": {
+    "message": "جاهزة للترجمة"
+  },
+  "stateNoKey": {
+    "message": "لا يوجد مفتاح مُعدّ"
+  },
+  "stateRunning": {
+    "message": "جارٍ الترجمة"
+  },
+  "stateTranslated": {
+    "message": "تُرجمت الصفحة"
+  },
+  "stateOriginal": {
+    "message": "يُعرض الأصل"
+  },
+  "stateStopped": {
+    "message": "متوقفة"
+  },
+  "statePaused": {
+    "message": "بُلغ حد الصفحة"
+  },
+  "stateError": {
+    "message": "خطأ"
+  },
+  "stateUnavailable": {
+    "message": "لا يمكن ترجمة الصفحة"
+  },
+  "toastAutoOn": {
+    "message": "فُعّلت الترجمة التلقائية لـ {0}."
+  },
+  "toastAutoOff": {
+    "message": "عُطّلت الترجمة التلقائية لـ {0}."
+  },
+  "toastPermDenied": {
+    "message": "رُفض الإذن: لم يُضف الموقع."
+  },
+  "badgeShowBadge": {
+    "message": "إظهار شارة DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "أقسام الإعدادات"
+  },
+  "optNavKeys": {
+    "message": "المزوّدون والمفاتيح"
+  },
+  "optNavPrivacy": {
+    "message": "الخصوصية والتكاليف"
+  },
+  "optNavAppearance": {
+    "message": "المظهر"
+  },
+  "optDescKeys": {
+    "message": "مفاتيح API الخاصة بك وOllama، تُجرَّب بترتيب البطاقات من الأعلى إلى الأسفل."
+  },
+  "optDescTranslation": {
+    "message": "اللغة والعرض وما يُسمح للإضافة بترجمته."
+  },
+  "optDescPrivacy": {
+    "message": "ما يغادر متصفحك، وإلى من، وكم يكلّف."
+  },
+  "optDescSites": {
+    "message": "المواقع المترجمة تلقائيًا والصفحات التي يجب حمايتها."
+  },
+  "optDescGlossary": {
+    "message": "مصطلحات تُترك كما هي أو تُترجم دائمًا بالطريقة نفسها."
+  },
+  "optDescData": {
+    "message": "ذاكرة الترجمات المؤقتة والبيانات المحفوظة في هذا المتصفح."
+  },
+  "optDescAppearance": {
+    "message": "سمة الإعدادات والنافذة المنبثقة والشارة المعروضة على الصفحات."
+  },
+  "optVersion": {
+    "message": "الإصدار {0}"
+  },
+  "optAddProvider": {
+    "message": "إضافة مزوّد"
+  },
+  "optAddProviderHelp": {
+    "message": "تُضاف البطاقة الجديدة في الأخير. ترتيب البطاقات هو ترتيب الأولوية."
+  },
+  "optProvider": {
+    "message": "المزوّد"
+  },
+  "optKeysEmptyHint": {
+    "message": "اختر مزوّدًا: تظهر بطاقة، الصق مفتاحك، ثم «تحميل النماذج» واختر نموذجًا."
+  },
+  "optKeyName": {
+    "message": "اسم المفتاح"
+  },
+  "optKeyEnabled": {
+    "message": "استخدام هذا المفتاح"
+  },
+  "optPriority": {
+    "message": "الأولوية {0}"
+  },
+  "optKeyHelp": {
+    "message": "مخفي افتراضيًا، محفوظ في هذا المتصفح فقط."
+  },
+  "optBaseUrlHelp": {
+    "message": "يجب أن يعمل Ollama على جهازك."
+  },
+  "optModelHelp": {
+    "message": "«تحميل النماذج» يملأ قائمة الاقتراحات."
+  },
+  "optLimits": {
+    "message": "الحدود"
+  },
+  "optLimitsHelp": {
+    "message": "فارغ = القيمة الافتراضية للمزوّد."
+  },
+  "optPaidTitle": {
+    "message": "التكاليف"
+  },
+  "optPaidHelp": {
+    "message": "لا يُستخدم إلا عندما تختاره في النافذة المنبثقة."
+  },
+  "optPaidOk": {
+    "message": "الحد والأسعار مضبوطة: يمكن استخدام المفتاح حتى الحد."
+  },
+  "optPrivacyFlow": {
+    "message": "إلى أين يذهب النص"
+  },
+  "optProviderNotes": {
+    "message": "ملاحظات حسب المزوّد"
+  },
+  "optProviderUsed": {
+    "message": "قيد الاستخدام"
+  },
+  "optUsageEmpty": {
+    "message": "لا يوجد مفتاح مُعدّ بعد."
+  },
+  "optUsageHelp": {
+    "message": "يُصفَّر كل يوم عند منتصف الليل (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "المفاتيح المدفوعة"
+  },
+  "optPaidRule": {
+    "message": "لا يُستخدم المفتاح المدفوع تلقائيًا أبدًا: يجب اختياره في النافذة المنبثقة. يبقى محظورًا حتى يُضبط الحد اليومي والسعران، ويتوقف فور بلوغ الحد."
+  },
+  "optAutoEmptyTitle": {
+    "message": "لا يوجد موقع تلقائي بعد"
+  },
+  "optAutoEmptyLong": {
+    "message": "لإضافة موقع: افتحه، وانقر أيقونة DevDocTrad في شريط الأدوات، ثم فعّل «ترجمة هذا الموقع تلقائيًا». يطلب المتصفح الإذن لهذا الموقع فقط."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "إزالة {0} من المواقع المترجمة تلقائيًا؟"
+  },
+  "optGlEmpty": {
+    "message": "لا يوجد مصطلح بعد. مثال: «thread» مع القاعدة «لا تترجم أبدًا»."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 مصطلح"
+  },
+  "optGlImported": {
+    "message": "استُورد {0} مصطلح."
+  },
+  "optCacheConfirm": {
+    "message": "مسح الذاكرة المؤقتة؟ يجب ترجمة الصفحات المترجمة مسبقًا من جديد (اتصالات جديدة بالمزوّدين)."
+  },
+  "optCacheCleared": {
+    "message": "مُسحت الذاكرة المؤقتة."
+  },
+  "optStorageTitle": {
+    "message": "التخزين المحلي"
+  },
+  "optTheme": {
+    "message": "السمة"
+  },
+  "optThemeHelp": {
+    "message": "«النظام» يتبع الإعداد الفاتح أو الداكن لجهازك."
+  },
+  "optThemeSystem": {
+    "message": "النظام"
+  },
+  "optThemeLight": {
+    "message": "فاتحة"
+  },
+  "optThemeDark": {
+    "message": "داكنة"
+  },
+  "optPriceInUsd": {
+    "message": "سعر الإدخال ($$ لكل مليون رمز)"
+  },
+  "optPriceOutUsd": {
+    "message": "سعر الإخراج ($$ لكل مليون رمز)"
+  },
+  "optDailyCapUsd": {
+    "message": "الحد اليومي ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "يستخدم مشروع Google هذا فوترة مسبقة الدفع ونفد رصيده. لا تشحن شيئًا: أنشئ مفتاحًا في مشروع بلا فوترة في Google AI Studio (الباقة المجانية)."
+  }
+}

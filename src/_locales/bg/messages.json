@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Превежда точно документацията за разработчици и сайтовете за програмиране, без никога да докосва кода."
+  },
+  "cmdToggle": {
+    "message": "Преведи страницата или се върни към оригинала"
+  },
+  "badgeTranslating": {
+    "message": "Превод: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Преведени откъси: {0}"
+  },
+  "badgeDoneFailed": {
+    "message": "Преведени откъси: {0}, оставени в оригинал: {1}"
+  },
+  "badgeStopped": {
+    "message": "Спряно"
+  },
+  "badgeCap": {
+    "message": "Достигнат е лимитът от {0} знака за тази страница."
+  },
+  "badgeRateLimited": {
+    "message": "Достигнат е лимитът на безплатния ключ. Нов опит след {0} с ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Лимитът е достигнат за всички безплатни ключове. Опитайте по-късно."
+  },
+  "badgeNoKey": {
+    "message": "Няма наличен ключ. Добавете ключ в настройките."
+  },
+  "badgeError": {
+    "message": "Грешка: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "преведено локално (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "преведено онлайн ({0})"
+  },
+  "badgeNothing": {
+    "message": "Няма какво да се превежда на тази страница."
+  },
+  "badgeKeyProblem": {
+    "message": "Проблем с ключ {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Стоп"
+  },
+  "btnOriginal": {
+    "message": "Покажи оригинала"
+  },
+  "btnTranslation": {
+    "message": "Покажи превода"
+  },
+  "btnMinimize": {
+    "message": "Смали"
+  },
+  "btnClose": {
+    "message": "Затвори"
+  },
+  "btnContinue": {
+    "message": "Продължи"
+  },
+  "errAuth": {
+    "message": "ключът е отхвърлен (невалиден или отменен)"
+  },
+  "errPayment": {
+    "message": "недостатъчна наличност при доставчика; ключът е спрян"
+  },
+  "errRate": {
+    "message": "достигнат е лимитът на заявките, опитайте след минута"
+  },
+  "errOllamaDown": {
+    "message": "Ollama не отговаря на localhost:11434. Стартирайте Ollama и опитайте отново."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama отхвърля разширението (403). Задайте на променливата на средата OLLAMA_ORIGINS стойност chrome-extension://*,moz-extension://* и рестартирайте Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "в безплатен режим OpenRouter приема само модели, чието име завършва на :free"
+  },
+  "errPaidUnset": {
+    "message": "платеният ключ е блокиран: първо задайте дневния лимит и двете цени в настройките."
+  },
+  "errPaidCap": {
+    "message": "достигнат е дневният лимит на платения ключ ($${0} от $${1})."
+  },
+  "errUnknown": {
+    "message": "Неизвестна грешка"
+  },
+  "keyAvailable": {
+    "message": "наличен"
+  },
+  "keyDisabled": {
+    "message": "изключен"
+  },
+  "keyNoModel": {
+    "message": "изберете модел"
+  },
+  "keyPausedUntil": {
+    "message": "на пауза до {0}"
+  },
+  "keyProblem": {
+    "message": "проблем"
+  },
+  "tier_free": {
+    "message": "безплатен"
+  },
+  "tier_paid": {
+    "message": "платен"
+  },
+  "tier_local": {
+    "message": "локален"
+  },
+  "gl_never": {
+    "message": "Никога не превеждай"
+  },
+  "gl_always": {
+    "message": "Винаги превеждай като"
+  },
+  "popupTranslate": {
+    "message": "Преведи страницата"
+  },
+  "popupSettings": {
+    "message": "Настройки"
+  },
+  "popupUnsupported": {
+    "message": "Тази страница не може да бъде преведена от разширение (страница на браузъра, магазин за разширения или визуализатор на PDF)."
+  },
+  "popupKey": {
+    "message": "Ключ"
+  },
+  "popupKeyAuto": {
+    "message": "Автоматично (безплатни и локален)"
+  },
+  "popupAuto": {
+    "message": "Превеждай този сайт автоматично"
+  },
+  "popupSensitive": {
+    "message": "Чувствителна страница: никога не се превежда автоматично. Бутонът работи, Ollama се използва първа, ако е настроена."
+  },
+  "popupKeys": {
+    "message": "Състояние на ключовете"
+  },
+  "popupNoKeys": {
+    "message": "Все още няма ключ."
+  },
+  "popupAddKey": {
+    "message": "Добави ключ"
+  },
+  "popupShortcut": {
+    "message": "Клавишна комбинация:"
+  },
+  "optTitle": {
+    "message": "Настройки на DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Браузърът все още не е разрешил достъп до доставчиците на превод."
+  },
+  "optPermGrant": {
+    "message": "Разреши достъп до доставчиците"
+  },
+  "optTabKeys": {
+    "message": "Ключове"
+  },
+  "optTabTranslation": {
+    "message": "Превод"
+  },
+  "optTabGlossary": {
+    "message": "Речник"
+  },
+  "optTabSites": {
+    "message": "Сайтове"
+  },
+  "optTabData": {
+    "message": "Данни"
+  },
+  "optKeysTitle": {
+    "message": "API ключове"
+  },
+  "optKeysLocal": {
+    "message": "Ключовете остават в този браузър (локално хранилище). Никога не се синхронизират с акаунта ви и не се изпращат никъде освен до доставчика. Редът на картите е редът на приоритет."
+  },
+  "optAddKey": {
+    "message": "Добави"
+  },
+  "optKey": {
+    "message": "Ключ"
+  },
+  "optShow": {
+    "message": "Покажи"
+  },
+  "optHide": {
+    "message": "Скрий"
+  },
+  "optBaseUrl": {
+    "message": "Адрес на Ollama"
+  },
+  "optTier": {
+    "message": "Тип"
+  },
+  "optModelEasy": {
+    "message": "Модел (прости страници)"
+  },
+  "optModelHard": {
+    "message": "Модел за трудни страници (по избор)"
+  },
+  "optMaxChars": {
+    "message": "Размер на пакета (знаци)"
+  },
+  "optInterval": {
+    "message": "Интервал между заявките (мс)"
+  },
+  "optMaxReq": {
+    "message": "Максимум заявки на ден (0 = без лимит)"
+  },
+  "optPriceIn": {
+    "message": "Цена на входа ($$ за милион токена)"
+  },
+  "optPriceOut": {
+    "message": "Цена на изхода ($$ за милион токена)"
+  },
+  "optDailyCap": {
+    "message": "Дневен лимит ($$)"
+  },
+  "optLoadModels": {
+    "message": "Зареди моделите"
+  },
+  "optTest": {
+    "message": "Тествай"
+  },
+  "optUp": {
+    "message": "Нагоре"
+  },
+  "optDown": {
+    "message": "Надолу"
+  },
+  "optDelete": {
+    "message": "Изтрий"
+  },
+  "optDeleteConfirm": {
+    "message": "Да се изтрие ли този ключ?"
+  },
+  "optWorking": {
+    "message": "Проверка…"
+  },
+  "optTestOk": {
+    "message": "Валиден ключ, налични модели: {0}."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama отговаря, инсталирани модели: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "Заредени модели: {0}. Изберете един от списъка."
+  },
+  "optSaved": {
+    "message": "Запазено"
+  },
+  "optTarget": {
+    "message": "Целеви език"
+  },
+  "optTargetAuto": {
+    "message": "Език на браузъра ({0})"
+  },
+  "optMode": {
+    "message": "Показване"
+  },
+  "optModeReplace": {
+    "message": "Замени текста"
+  },
+  "optModeBilingual": {
+    "message": "Двуезично (преводът под оригинала)"
+  },
+  "optExplain": {
+    "message": "Технически термини: превод + английски в скоби"
+  },
+  "optExplainHelp": {
+    "message": "Техническите понятия се превеждат, а английският термин се дава в скоби при първата поява. Изключено: английските технически термини остават на английски, без скоби. Кодът и имената (Path, npm…) никога не се превеждат."
+  },
+  "optComments": {
+    "message": "Превеждай коментарите в блоковете с код"
+  },
+  "optCommentsHelp": {
+    "message": "Изключено по подразбиране. Превеждат се само коментарите, разпознати от оцветяването на синтаксиса на сайта; кодът никога не се променя, а оригиналът се връща непроменен."
+  },
+  "optPageCap": {
+    "message": "Лимит на знаците на страница"
+  },
+  "optShortcut": {
+    "message": "Клавишна комбинация"
+  },
+  "optShortcutCurrent": {
+    "message": "Текуща комбинация: {0}."
+  },
+  "optShortcutNone": {
+    "message": "няма"
+  },
+  "optShortcutWhereChrome": {
+    "message": "За да я промените: отворете chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "За да я промените: Управление на добавките, иконата със зъбно колело, „Управление на клавишните комбинации на разширенията“."
+  },
+  "optGlossaryHelp": {
+    "message": "Термини, които никога не се превеждат или винаги се превеждат по определен начин. До модела се изпращат само термините, открити в откъса. Най-много 500 записа."
+  },
+  "optGlTerm": {
+    "message": "Термин"
+  },
+  "optGlType": {
+    "message": "Правило"
+  },
+  "optGlTranslation": {
+    "message": "Задължителен превод"
+  },
+  "optGlAdd": {
+    "message": "Добави термин"
+  },
+  "optGlExport": {
+    "message": "Експорт (JSON)"
+  },
+  "optGlImport": {
+    "message": "Импорт (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Невалиден файл: очаква се JSON списък от обекти {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Автоматично превеждани сайтове"
+  },
+  "optAutoHelp": {
+    "message": "Добавете сайт от изскачащия прозорец с „Превеждай този сайт автоматично“. Автоматично се използват само безплатни ключове и Ollama."
+  },
+  "optAutoEmpty": {
+    "message": "Все още няма сайт."
+  },
+  "optAutoGranted": {
+    "message": "разрешено"
+  },
+  "optAutoRevoked": {
+    "message": "разрешението е оттеглено"
+  },
+  "optSensitiveTitle": {
+    "message": "Чувствителни страници"
+  },
+  "optSensitiveHelp": {
+    "message": "Никога не се превеждат автоматично (нито която и да е страница с поле за парола). Ръчният бутон все пак работи."
+  },
+  "optSensitiveBase": {
+    "message": "Основни шаблони:"
+  },
+  "optSensitiveExtra": {
+    "message": "Допълнителни шаблони (по един на ред, дума или домейн)"
+  },
+  "optCacheTitle": {
+    "message": "Кеш на преводите"
+  },
+  "optCacheInfo": {
+    "message": "Откъси в кеша: {0} ({1} МБ). Вече преведена страница се показва отново без мрежова заявка."
+  },
+  "optCacheClear": {
+    "message": "Изчисти кеша"
+  },
+  "optUsageTitle": {
+    "message": "Използване днес"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} заявки{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Поверителност"
+  },
+  "optPrivacyText": {
+    "message": "Текстът на страниците, които превеждате, се изпраща само до избрания от вас доставчик или остава на компютъра ви с Ollama. Без статистика, без проследяване, нищо не се изпраща до разработчика. При безплатните планове Gemini и Mistral може да използват повторно изпратения текст."
+  },
+  "warnGemini": {
+    "message": "Създайте ключа в Google AI Studio, без да свързвате плащане. При безплатния план Google може да използва повторно изпратения текст. Два ключа от един проект споделят един и същ лимит."
+  },
+  "warnGroq": {
+    "message": "Безплатен план без карта: над лимита получавате само грешка 429, никога сметка."
+  },
+  "warnMistral": {
+    "message": "Безплатен режим без карта. Заявките може да се използват за обучение: изключете това в конзолата на Mistral, ако предпочитате."
+  },
+  "warnOpenRouter": {
+    "message": "В безплатен режим се приемат само модели, завършващи на :free (около 50 заявки на ден). Никога не зареждайте кредит за това разширение."
+  },
+  "warnOllama": {
+    "message": "Модел на вашия компютър: безплатно и поверително, нищо не напуска компютъра. Малкият модел греши по-често; съмнителните откъси остават в оригинал."
+  },
+  "popupView": {
+    "message": "Показване на страницата"
+  },
+  "segOriginal": {
+    "message": "Оригинал"
+  },
+  "segTranslation": {
+    "message": "Превод"
+  },
+  "popupTranslating": {
+    "message": "Превежда се…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} откъса"
+  },
+  "popupManage": {
+    "message": "Управление"
+  },
+  "popupMoreKeys": {
+    "message": "и още ключове: {0}"
+  },
+  "popupNoKeysLong": {
+    "message": "За да започнете, добавете безплатен ключ (Gemini, Groq, Mistral, OpenRouter) или Ollama."
+  },
+  "stateReady": {
+    "message": "Готово за превод"
+  },
+  "stateNoKey": {
+    "message": "Няма настроен ключ"
+  },
+  "stateRunning": {
+    "message": "Превежда се"
+  },
+  "stateTranslated": {
+    "message": "Страницата е преведена"
+  },
+  "stateOriginal": {
+    "message": "Показан е оригиналът"
+  },
+  "stateStopped": {
+    "message": "Спряно"
+  },
+  "statePaused": {
+    "message": "Достигнат лимит на страницата"
+  },
+  "stateError": {
+    "message": "Грешка"
+  },
+  "stateUnavailable": {
+    "message": "Страницата не може да се преведе"
+  },
+  "toastAutoOn": {
+    "message": "Автоматичният превод е включен за {0}."
+  },
+  "toastAutoOff": {
+    "message": "Автоматичният превод е изключен за {0}."
+  },
+  "toastPermDenied": {
+    "message": "Разрешението е отказано: сайтът не е добавен."
+  },
+  "badgeShowBadge": {
+    "message": "Покажи значката на DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Раздели на настройките"
+  },
+  "optNavKeys": {
+    "message": "Доставчици и ключове"
+  },
+  "optNavPrivacy": {
+    "message": "Поверителност и разходи"
+  },
+  "optNavAppearance": {
+    "message": "Външен вид"
+  },
+  "optDescKeys": {
+    "message": "Вашите API ключове и Ollama, опитвани по реда на картите, отгоре надолу."
+  },
+  "optDescTranslation": {
+    "message": "Език, показване и какво разширението има право да превежда."
+  },
+  "optDescPrivacy": {
+    "message": "Какво напуска браузъра ви, към кого и колко струва."
+  },
+  "optDescSites": {
+    "message": "Автоматично превеждани сайтове и страници за защита."
+  },
+  "optDescGlossary": {
+    "message": "Термини, които да останат непроменени или винаги да се превеждат еднакво."
+  },
+  "optDescData": {
+    "message": "Кеш на преводите и данни, пазени в този браузър."
+  },
+  "optDescAppearance": {
+    "message": "Тема на настройките, изскачащия прозорец и значката по страниците."
+  },
+  "optVersion": {
+    "message": "версия {0}"
+  },
+  "optAddProvider": {
+    "message": "Добави доставчик"
+  },
+  "optAddProviderHelp": {
+    "message": "Новата карта се добавя последна. Редът на картите е редът на приоритет."
+  },
+  "optProvider": {
+    "message": "Доставчик"
+  },
+  "optKeysEmptyHint": {
+    "message": "Изберете доставчик: появява се карта, поставете ключа си, след това „Зареди моделите“ и изберете модел."
+  },
+  "optKeyName": {
+    "message": "Име на ключа"
+  },
+  "optKeyEnabled": {
+    "message": "Използвай този ключ"
+  },
+  "optPriority": {
+    "message": "приоритет {0}"
+  },
+  "optKeyHelp": {
+    "message": "Скрит по подразбиране, пази се само в този браузър."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama трябва да работи на вашия компютър."
+  },
+  "optModelHelp": {
+    "message": "„Зареди моделите“ попълва списъка с предложения."
+  },
+  "optLimits": {
+    "message": "Лимити"
+  },
+  "optLimitsHelp": {
+    "message": "Празно = стойността по подразбиране на доставчика."
+  },
+  "optPaidTitle": {
+    "message": "Разходи"
+  },
+  "optPaidHelp": {
+    "message": "Използва се само когато го изберете в изскачащия прозорец."
+  },
+  "optPaidOk": {
+    "message": "Лимитът и цените са зададени: ключът може да се използва до лимита."
+  },
+  "optPrivacyFlow": {
+    "message": "Къде отива текстът"
+  },
+  "optProviderNotes": {
+    "message": "Бележки за доставчиците"
+  },
+  "optProviderUsed": {
+    "message": "използва се"
+  },
+  "optUsageEmpty": {
+    "message": "Все още няма настроен ключ."
+  },
+  "optUsageHelp": {
+    "message": "Нулира се всеки ден в полунощ (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Платени ключове"
+  },
+  "optPaidRule": {
+    "message": "Платен ключ никога не се използва автоматично: трябва да го изберете в изскачащия прозорец. Остава блокиран, докато не зададете дневния лимит и двете цени, и спира веднага щом лимитът бъде достигнат."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Все още няма автоматичен сайт"
+  },
+  "optAutoEmptyLong": {
+    "message": "За да добавите: отворете сайта, щракнете върху иконата на DevDocTrad в лентата с инструменти и включете „Превеждай този сайт автоматично“. Браузърът иска разрешение само за този сайт."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Да се премахне ли {0} от автоматично превежданите сайтове?"
+  },
+  "optGlEmpty": {
+    "message": "Все още няма термин. Пример: „thread“ с правилото „Никога не превеждай“."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 термина"
+  },
+  "optGlImported": {
+    "message": "Импортирани термини: {0}."
+  },
+  "optCacheConfirm": {
+    "message": "Да се изчисти ли кешът? Вече преведените страници ще трябва да се преведат отново (нови заявки към доставчиците)."
+  },
+  "optCacheCleared": {
+    "message": "Кешът е изчистен."
+  },
+  "optStorageTitle": {
+    "message": "Локално хранилище"
+  },
+  "optTheme": {
+    "message": "Тема"
+  },
+  "optThemeHelp": {
+    "message": "„Системна“ следва светлата или тъмната настройка на компютъра ви."
+  },
+  "optThemeSystem": {
+    "message": "Системна"
+  },
+  "optThemeLight": {
+    "message": "Светла"
+  },
+  "optThemeDark": {
+    "message": "Тъмна"
+  },
+  "optPriceInUsd": {
+    "message": "Цена на входа ($$ за милион токена)"
+  },
+  "optPriceOutUsd": {
+    "message": "Цена на изхода ($$ за милион токена)"
+  },
+  "optDailyCapUsd": {
+    "message": "Дневен лимит ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "този проект на Google използва предплатено таксуване и кредитите му са изчерпани. Не зареждайте нищо: създайте ключ в проект без таксуване в Google AI Studio (безплатен план)."
+  }
+}

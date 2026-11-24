@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Точно перекладає документацію для розробників і сайти про програмування, ніколи не торкаючись коду."
+  },
+  "cmdToggle": {
+    "message": "Перекласти сторінку або повернутися до оригіналу"
+  },
+  "badgeTranslating": {
+    "message": "Переклад: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Перекладено фрагментів: {0}"
+  },
+  "badgeDoneFailed": {
+    "message": "Перекладено фрагментів: {0}, залишено в оригіналі: {1}"
+  },
+  "badgeStopped": {
+    "message": "Зупинено"
+  },
+  "badgeCap": {
+    "message": "Досягнуто ліміту в {0} символів для цієї сторінки."
+  },
+  "badgeRateLimited": {
+    "message": "Досягнуто ліміту безкоштовного ключа. Повтор через {0} с ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Ліміт вичерпано на всіх безкоштовних ключах. Спробуйте пізніше."
+  },
+  "badgeNoKey": {
+    "message": "Немає доступного ключа. Додайте ключ у налаштуваннях."
+  },
+  "badgeError": {
+    "message": "Помилка: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "перекладено локально (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "перекладено онлайн ({0})"
+  },
+  "badgeNothing": {
+    "message": "На цій сторінці нічого перекладати."
+  },
+  "badgeKeyProblem": {
+    "message": "Проблема з ключем {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Стоп"
+  },
+  "btnOriginal": {
+    "message": "Показати оригінал"
+  },
+  "btnTranslation": {
+    "message": "Показати переклад"
+  },
+  "btnMinimize": {
+    "message": "Згорнути"
+  },
+  "btnClose": {
+    "message": "Закрити"
+  },
+  "btnContinue": {
+    "message": "Продовжити"
+  },
+  "errAuth": {
+    "message": "ключ відхилено (недійсний або відкликаний)"
+  },
+  "errPayment": {
+    "message": "недостатньо коштів у провайдера; ключ зупинено"
+  },
+  "errRate": {
+    "message": "досягнуто ліміту запитів, спробуйте за хвилину"
+  },
+  "errOllamaDown": {
+    "message": "Ollama не відповідає на localhost:11434. Запустіть Ollama і спробуйте знову."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama відхиляє розширення (403). Задайте змінній середовища OLLAMA_ORIGINS значення chrome-extension://*,moz-extension://* і перезапустіть Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "у безкоштовному режимі OpenRouter приймає лише моделі, назва яких закінчується на :free"
+  },
+  "errPaidUnset": {
+    "message": "платний ключ заблоковано: спочатку задайте денний ліміт і обидві ціни в налаштуваннях."
+  },
+  "errPaidCap": {
+    "message": "досягнуто денного ліміту платного ключа ($${0} із $${1})."
+  },
+  "errUnknown": {
+    "message": "Невідома помилка"
+  },
+  "keyAvailable": {
+    "message": "доступний"
+  },
+  "keyDisabled": {
+    "message": "вимкнений"
+  },
+  "keyNoModel": {
+    "message": "оберіть модель"
+  },
+  "keyPausedUntil": {
+    "message": "пауза до {0}"
+  },
+  "keyProblem": {
+    "message": "проблема"
+  },
+  "tier_free": {
+    "message": "безкоштовний"
+  },
+  "tier_paid": {
+    "message": "платний"
+  },
+  "tier_local": {
+    "message": "локальний"
+  },
+  "gl_never": {
+    "message": "Ніколи не перекладати"
+  },
+  "gl_always": {
+    "message": "Завжди перекладати як"
+  },
+  "popupTranslate": {
+    "message": "Перекласти сторінку"
+  },
+  "popupSettings": {
+    "message": "Налаштування"
+  },
+  "popupUnsupported": {
+    "message": "Цю сторінку не можна перекласти розширенням (сторінка браузера, магазин розширень або переглядач PDF)."
+  },
+  "popupKey": {
+    "message": "Ключ"
+  },
+  "popupKeyAuto": {
+    "message": "Автоматично (безкоштовні та локальний)"
+  },
+  "popupAuto": {
+    "message": "Перекладати цей сайт автоматично"
+  },
+  "popupSensitive": {
+    "message": "Конфіденційна сторінка: автоматичний переклад вимкнено. Кнопка працює, Ollama використовується першою, якщо налаштована."
+  },
+  "popupKeys": {
+    "message": "Стан ключів"
+  },
+  "popupNoKeys": {
+    "message": "Ключів поки немає."
+  },
+  "popupAddKey": {
+    "message": "Додати ключ"
+  },
+  "popupShortcut": {
+    "message": "Комбінація клавіш:"
+  },
+  "optTitle": {
+    "message": "Налаштування DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Браузер ще не дозволив доступ до провайдерів перекладу."
+  },
+  "optPermGrant": {
+    "message": "Дозволити доступ до провайдерів"
+  },
+  "optTabKeys": {
+    "message": "Ключі"
+  },
+  "optTabTranslation": {
+    "message": "Переклад"
+  },
+  "optTabGlossary": {
+    "message": "Глосарій"
+  },
+  "optTabSites": {
+    "message": "Сайти"
+  },
+  "optTabData": {
+    "message": "Дані"
+  },
+  "optKeysTitle": {
+    "message": "API-ключі"
+  },
+  "optKeysLocal": {
+    "message": "Ключі зберігаються лише в цьому браузері (локальне сховище). Вони ніколи не синхронізуються з вашим обліковим записом і не надсилаються нікуди, крім провайдера. Порядок карток — це порядок пріоритету."
+  },
+  "optAddKey": {
+    "message": "Додати"
+  },
+  "optKey": {
+    "message": "Ключ"
+  },
+  "optShow": {
+    "message": "Показати"
+  },
+  "optHide": {
+    "message": "Сховати"
+  },
+  "optBaseUrl": {
+    "message": "Адреса Ollama"
+  },
+  "optTier": {
+    "message": "Тип"
+  },
+  "optModelEasy": {
+    "message": "Модель (прості сторінки)"
+  },
+  "optModelHard": {
+    "message": "Модель для складних сторінок (необов'язково)"
+  },
+  "optMaxChars": {
+    "message": "Розмір пакета (символів)"
+  },
+  "optInterval": {
+    "message": "Інтервал між запитами (мс)"
+  },
+  "optMaxReq": {
+    "message": "Максимум запитів на день (0 = без ліміту)"
+  },
+  "optPriceIn": {
+    "message": "Ціна введення ($$ за мільйон токенів)"
+  },
+  "optPriceOut": {
+    "message": "Ціна виведення ($$ за мільйон токенів)"
+  },
+  "optDailyCap": {
+    "message": "Денний ліміт ($$)"
+  },
+  "optLoadModels": {
+    "message": "Завантажити моделі"
+  },
+  "optTest": {
+    "message": "Перевірити"
+  },
+  "optUp": {
+    "message": "Вище"
+  },
+  "optDown": {
+    "message": "Нижче"
+  },
+  "optDelete": {
+    "message": "Видалити"
+  },
+  "optDeleteConfirm": {
+    "message": "Видалити цей ключ?"
+  },
+  "optWorking": {
+    "message": "Перевірка…"
+  },
+  "optTestOk": {
+    "message": "Ключ дійсний, доступно моделей: {0}."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama відповідає, встановлено моделей: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "Завантажено моделей: {0}. Оберіть одну зі списку."
+  },
+  "optSaved": {
+    "message": "Збережено"
+  },
+  "optTarget": {
+    "message": "Мова перекладу"
+  },
+  "optTargetAuto": {
+    "message": "Мова браузера ({0})"
+  },
+  "optMode": {
+    "message": "Відображення"
+  },
+  "optModeReplace": {
+    "message": "Замінити текст"
+  },
+  "optModeBilingual": {
+    "message": "Двомовно (переклад під оригіналом)"
+  },
+  "optExplain": {
+    "message": "Технічні терміни: переклад + англійська в дужках"
+  },
+  "optExplainHelp": {
+    "message": "Технічні поняття перекладаються, а англійський термін подається в дужках під час першої появи. Вимкнено: англійські технічні терміни залишаються англійською, без дужок. Код і назви (Path, npm…) ніколи не перекладаються."
+  },
+  "optComments": {
+    "message": "Перекладати коментарі в блоках коду"
+  },
+  "optCommentsHelp": {
+    "message": "Вимкнено за замовчуванням. Перекладаються лише коментарі, розпізнані підсвічуванням синтаксису сайту; код ніколи не змінюється, а оригінал повертається без змін."
+  },
+  "optPageCap": {
+    "message": "Ліміт символів на сторінку"
+  },
+  "optShortcut": {
+    "message": "Комбінація клавіш"
+  },
+  "optShortcutCurrent": {
+    "message": "Поточна комбінація: {0}."
+  },
+  "optShortcutNone": {
+    "message": "немає"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Щоб змінити: відкрийте chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Щоб змінити: Керування додатками, значок шестерні, «Керувати комбінаціями клавіш розширень»."
+  },
+  "optGlossaryHelp": {
+    "message": "Терміни, які ніколи не слід перекладати або завжди слід перекладати певним чином. Моделі надсилаються лише терміни, знайдені у фрагменті. Не більше 500 записів."
+  },
+  "optGlTerm": {
+    "message": "Термін"
+  },
+  "optGlType": {
+    "message": "Правило"
+  },
+  "optGlTranslation": {
+    "message": "Обов'язковий переклад"
+  },
+  "optGlAdd": {
+    "message": "Додати термін"
+  },
+  "optGlExport": {
+    "message": "Експорт (JSON)"
+  },
+  "optGlImport": {
+    "message": "Імпорт (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Неправильний файл: очікується JSON-список об'єктів {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Сайти з автоматичним перекладом"
+  },
+  "optAutoHelp": {
+    "message": "Додайте сайт зі спливного вікна кнопкою «Перекладати цей сайт автоматично». Автоматично використовуються лише безкоштовні ключі та Ollama."
+  },
+  "optAutoEmpty": {
+    "message": "Сайтів поки немає."
+  },
+  "optAutoGranted": {
+    "message": "дозволено"
+  },
+  "optAutoRevoked": {
+    "message": "дозвіл відкликано"
+  },
+  "optSensitiveTitle": {
+    "message": "Конфіденційні сторінки"
+  },
+  "optSensitiveHelp": {
+    "message": "Ніколи не перекладаються автоматично (як і будь-яка сторінка з полем пароля). Ручна кнопка все одно працює."
+  },
+  "optSensitiveBase": {
+    "message": "Базові шаблони:"
+  },
+  "optSensitiveExtra": {
+    "message": "Додаткові шаблони (по одному в рядку, слово або домен)"
+  },
+  "optCacheTitle": {
+    "message": "Кеш перекладів"
+  },
+  "optCacheInfo": {
+    "message": "Фрагментів у кеші: {0} ({1} МБ). Уже перекладена сторінка показується знову без звернення до мережі."
+  },
+  "optCacheClear": {
+    "message": "Очистити кеш"
+  },
+  "optUsageTitle": {
+    "message": "Витрати за сьогодні"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} запитів{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Конфіденційність"
+  },
+  "optPrivacyText": {
+    "message": "Текст сторінок, які ви перекладаєте, надсилається лише обраному вами провайдеру або залишається на вашому комп'ютері з Ollama. Жодної аналітики, жодного стеження, розробнику нічого не надсилається. На безкоштовних тарифах Gemini і Mistral можуть повторно використовувати надісланий текст."
+  },
+  "warnGemini": {
+    "message": "Створіть ключ у Google AI Studio без прив'язки платіжних даних. На безкоштовному тарифі Google може повторно використовувати надісланий текст. Два ключі одного проєкту мають спільний ліміт."
+  },
+  "warnGroq": {
+    "message": "Безкоштовний тариф без картки: після перевищення ліміту ви просто отримуєте помилку 429, ніколи не рахунок."
+  },
+  "warnMistral": {
+    "message": "Безкоштовний режим без картки. Запити можуть використовуватися для навчання: вимкніть це в консолі Mistral, якщо бажаєте."
+  },
+  "warnOpenRouter": {
+    "message": "У безкоштовному режимі приймаються лише моделі, що закінчуються на :free (близько 50 запитів на день). Ніколи не поповнюйте баланс заради цього розширення."
+  },
+  "warnOllama": {
+    "message": "Модель на вашому комп'ютері: безкоштовно й приватно, ніщо не залишає ваш комп'ютер. Невелика модель помиляється частіше; сумнівні фрагменти залишаються в оригіналі."
+  },
+  "popupView": {
+    "message": "Відображення сторінки"
+  },
+  "segOriginal": {
+    "message": "Оригінал"
+  },
+  "segTranslation": {
+    "message": "Переклад"
+  },
+  "popupTranslating": {
+    "message": "Переклад…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} фрагментів"
+  },
+  "popupManage": {
+    "message": "Керувати"
+  },
+  "popupMoreKeys": {
+    "message": "і ще ключів: {0}"
+  },
+  "popupNoKeysLong": {
+    "message": "Щоб почати, додайте безкоштовний ключ (Gemini, Groq, Mistral, OpenRouter) або Ollama."
+  },
+  "stateReady": {
+    "message": "Готово до перекладу"
+  },
+  "stateNoKey": {
+    "message": "Ключ не налаштовано"
+  },
+  "stateRunning": {
+    "message": "Триває переклад"
+  },
+  "stateTranslated": {
+    "message": "Сторінку перекладено"
+  },
+  "stateOriginal": {
+    "message": "Показано оригінал"
+  },
+  "stateStopped": {
+    "message": "Зупинено"
+  },
+  "statePaused": {
+    "message": "Досягнуто ліміту сторінки"
+  },
+  "stateError": {
+    "message": "Помилка"
+  },
+  "stateUnavailable": {
+    "message": "Сторінку не можна перекласти"
+  },
+  "toastAutoOn": {
+    "message": "Автоматичний переклад увімкнено для {0}."
+  },
+  "toastAutoOff": {
+    "message": "Автоматичний переклад вимкнено для {0}."
+  },
+  "toastPermDenied": {
+    "message": "Дозвіл відхилено: сайт не додано."
+  },
+  "badgeShowBadge": {
+    "message": "Показати значок DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Розділи налаштувань"
+  },
+  "optNavKeys": {
+    "message": "Провайдери та ключі"
+  },
+  "optNavPrivacy": {
+    "message": "Конфіденційність і витрати"
+  },
+  "optNavAppearance": {
+    "message": "Вигляд"
+  },
+  "optDescKeys": {
+    "message": "Ваші API-ключі та Ollama, використовуються в порядку карток згори донизу."
+  },
+  "optDescTranslation": {
+    "message": "Мова, відображення і те, що розширенню дозволено перекладати."
+  },
+  "optDescPrivacy": {
+    "message": "Що залишає ваш браузер, кому надсилається і скільки це коштує."
+  },
+  "optDescSites": {
+    "message": "Сайти з автоматичним перекладом і сторінки, які слід захистити."
+  },
+  "optDescGlossary": {
+    "message": "Терміни, які слід залишити як є або завжди перекладати однаково."
+  },
+  "optDescData": {
+    "message": "Кеш перекладів і дані, що зберігаються в цьому браузері."
+  },
+  "optDescAppearance": {
+    "message": "Тема налаштувань, спливного вікна і значка на сторінках."
+  },
+  "optVersion": {
+    "message": "версія {0}"
+  },
+  "optAddProvider": {
+    "message": "Додати провайдера"
+  },
+  "optAddProviderHelp": {
+    "message": "Нова картка додається останньою. Порядок карток — це порядок пріоритету."
+  },
+  "optProvider": {
+    "message": "Провайдер"
+  },
+  "optKeysEmptyHint": {
+    "message": "Оберіть провайдера: з'явиться картка, вставте ключ, потім натисніть «Завантажити моделі» й оберіть модель."
+  },
+  "optKeyName": {
+    "message": "Назва ключа"
+  },
+  "optKeyEnabled": {
+    "message": "Використовувати цей ключ"
+  },
+  "optPriority": {
+    "message": "пріоритет {0}"
+  },
+  "optKeyHelp": {
+    "message": "Прихований за замовчуванням, зберігається лише в цьому браузері."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama має працювати на вашому комп'ютері."
+  },
+  "optModelHelp": {
+    "message": "«Завантажити моделі» заповнює список підказок."
+  },
+  "optLimits": {
+    "message": "Ліміти"
+  },
+  "optLimitsHelp": {
+    "message": "Порожньо = значення провайдера за замовчуванням."
+  },
+  "optPaidTitle": {
+    "message": "Витрати"
+  },
+  "optPaidHelp": {
+    "message": "Використовується лише тоді, коли ви оберете його у спливному вікні."
+  },
+  "optPaidOk": {
+    "message": "Ліміт і ціни задано: ключ можна використовувати до ліміту."
+  },
+  "optPrivacyFlow": {
+    "message": "Куди надсилається текст"
+  },
+  "optProviderNotes": {
+    "message": "Примітки щодо провайдерів"
+  },
+  "optProviderUsed": {
+    "message": "використовується"
+  },
+  "optUsageEmpty": {
+    "message": "Ключі поки не налаштовано."
+  },
+  "optUsageHelp": {
+    "message": "Скидається щодня опівночі (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Платні ключі"
+  },
+  "optPaidRule": {
+    "message": "Платний ключ ніколи не використовується автоматично: його треба обрати у спливному вікні. Він заблокований, доки не задано денний ліміт і обидві ціни, і зупиняється, щойно ліміт досягнуто."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Автоматичних сайтів поки немає"
+  },
+  "optAutoEmptyLong": {
+    "message": "Щоб додати сайт: відкрийте його, натисніть значок DevDocTrad на панелі інструментів і увімкніть «Перекладати цей сайт автоматично». Браузер попросить дозвіл лише для цього сайту."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Прибрати {0} із сайтів з автоматичним перекладом?"
+  },
+  "optGlEmpty": {
+    "message": "Термінів поки немає. Приклад: «thread» із правилом «Ніколи не перекладати»."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 термінів"
+  },
+  "optGlImported": {
+    "message": "Імпортовано термінів: {0}."
+  },
+  "optCacheConfirm": {
+    "message": "Очистити кеш? Уже перекладені сторінки доведеться перекладати знову (нові звернення до провайдерів)."
+  },
+  "optCacheCleared": {
+    "message": "Кеш очищено."
+  },
+  "optStorageTitle": {
+    "message": "Локальне сховище"
+  },
+  "optTheme": {
+    "message": "Тема"
+  },
+  "optThemeHelp": {
+    "message": "«Системна» відповідає світлому або темному режиму вашого комп'ютера."
+  },
+  "optThemeSystem": {
+    "message": "Системна"
+  },
+  "optThemeLight": {
+    "message": "Світла"
+  },
+  "optThemeDark": {
+    "message": "Темна"
+  },
+  "optPriceInUsd": {
+    "message": "Ціна введення ($$ за мільйон токенів)"
+  },
+  "optPriceOutUsd": {
+    "message": "Ціна виведення ($$ за мільйон токенів)"
+  },
+  "optDailyCapUsd": {
+    "message": "Денний ліміт ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "цей проєкт Google використовує передоплату, і його кредити вичерпано. Нічого не поповнюйте: створіть ключ у проєкті без платіжних даних у Google AI Studio (безкоштовний тариф)."
+  }
+}

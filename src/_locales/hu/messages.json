@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Hűen lefordítja a fejlesztői dokumentációt és a programozási oldalakat, a kódhoz soha nem nyúl."
+  },
+  "cmdToggle": {
+    "message": "Oldal fordítása vagy vissza az eredetihez"
+  },
+  "badgeTranslating": {
+    "message": "Fordítás: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Lefordítva: {0} szakasz"
+  },
+  "badgeDoneFailed": {
+    "message": "Lefordítva: {0} szakasz, {1} eredetiben hagyva"
+  },
+  "badgeStopped": {
+    "message": "Leállítva"
+  },
+  "badgeCap": {
+    "message": "Elérte az oldal {0} karakteres korlátját."
+  },
+  "badgeRateLimited": {
+    "message": "Elérte az ingyenes kulcs korlátját. Új próbálkozás {0} mp múlva ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Minden ingyenes kulcs elérte a korlátot. Próbálja újra később."
+  },
+  "badgeNoKey": {
+    "message": "Nincs elérhető kulcs. Adjon meg egy kulcsot a beállításokban."
+  },
+  "badgeError": {
+    "message": "Hiba: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "helyben fordítva (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "online fordítva ({0})"
+  },
+  "badgeNothing": {
+    "message": "Ezen az oldalon nincs mit fordítani."
+  },
+  "badgeKeyProblem": {
+    "message": "Probléma a(z) {0} kulccsal: {1}"
+  },
+  "btnStop": {
+    "message": "Leállítás"
+  },
+  "btnOriginal": {
+    "message": "Eredeti megjelenítése"
+  },
+  "btnTranslation": {
+    "message": "Fordítás megjelenítése"
+  },
+  "btnMinimize": {
+    "message": "Kis méret"
+  },
+  "btnClose": {
+    "message": "Bezárás"
+  },
+  "btnContinue": {
+    "message": "Folytatás"
+  },
+  "errAuth": {
+    "message": "kulcs elutasítva (érvénytelen vagy visszavont)"
+  },
+  "errPayment": {
+    "message": "nincs elég egyenleg a szolgáltatónál; kulcs leállítva"
+  },
+  "errRate": {
+    "message": "elérte a kérések korlátját, próbálja újra egy perc múlva"
+  },
+  "errOllamaDown": {
+    "message": "Az Ollama nem válaszol a localhost:11434 címen. Indítsa el az Ollamát, és próbálja újra."
+  },
+  "errOllamaOrigin": {
+    "message": "Az Ollama elutasítja a bővítményt (403). Állítsa az OLLAMA_ORIGINS környezeti változót chrome-extension://*,moz-extension://* értékre, majd indítsa újra az Ollamát."
+  },
+  "errOpenRouterFree": {
+    "message": "ingyenes módban az OpenRouter csak olyan modelleket fogad el, amelyek neve :free végződésű"
+  },
+  "errPaidUnset": {
+    "message": "fizetős kulcs letiltva: előbb állítsa be a beállításokban a napi keretet és mindkét árat."
+  },
+  "errPaidCap": {
+    "message": "a fizetős kulcs elérte a napi keretet ($${0} / $${1})."
+  },
+  "errUnknown": {
+    "message": "Ismeretlen hiba"
+  },
+  "keyAvailable": {
+    "message": "elérhető"
+  },
+  "keyDisabled": {
+    "message": "kikapcsolva"
+  },
+  "keyNoModel": {
+    "message": "válasszon modellt"
+  },
+  "keyPausedUntil": {
+    "message": "szünetel eddig: {0}"
+  },
+  "keyProblem": {
+    "message": "probléma"
+  },
+  "tier_free": {
+    "message": "ingyenes"
+  },
+  "tier_paid": {
+    "message": "fizetős"
+  },
+  "tier_local": {
+    "message": "helyi"
+  },
+  "gl_never": {
+    "message": "Soha ne fordítsa"
+  },
+  "gl_always": {
+    "message": "Mindig így fordítsa"
+  },
+  "popupTranslate": {
+    "message": "Oldal fordítása"
+  },
+  "popupSettings": {
+    "message": "Beállítások"
+  },
+  "popupUnsupported": {
+    "message": "Ezt az oldalt bővítmény nem fordíthatja le (böngészőoldal, bővítménybolt vagy PDF-megjelenítő)."
+  },
+  "popupKey": {
+    "message": "Kulcs"
+  },
+  "popupKeyAuto": {
+    "message": "Automatikus (ingyenes és helyi)"
+  },
+  "popupAuto": {
+    "message": "Webhely automatikus fordítása"
+  },
+  "popupSensitive": {
+    "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
+  },
+  "popupKeys": {
+    "message": "Kulcsok állapota"
+  },
+  "popupNoKeys": {
+    "message": "Még nincs kulcs."
+  },
+  "popupAddKey": {
+    "message": "Kulcs hozzáadása"
+  },
+  "popupShortcut": {
+    "message": "Billentyűparancs:"
+  },
+  "optTitle": {
+    "message": "DevDocTrad beállításai"
+  },
+  "optPermMissing": {
+    "message": "A böngésző még nem engedélyezte a hozzáférést a fordítási szolgáltatókhoz."
+  },
+  "optPermGrant": {
+    "message": "Hozzáférés engedélyezése"
+  },
+  "optTabKeys": {
+    "message": "Kulcsok"
+  },
+  "optTabTranslation": {
+    "message": "Fordítás"
+  },
+  "optTabGlossary": {
+    "message": "Szójegyzék"
+  },
+  "optTabSites": {
+    "message": "Webhelyek"
+  },
+  "optTabData": {
+    "message": "Adatok"
+  },
+  "optKeysTitle": {
+    "message": "API-kulcsok"
+  },
+  "optKeysLocal": {
+    "message": "A kulcsok ebben a böngészőben maradnak (helyi tárhely). Soha nem szinkronizálódnak a fiókjával, és csak a szolgáltatóhoz kerülnek. A kártyák sorrendje a prioritási sorrend."
+  },
+  "optAddKey": {
+    "message": "Hozzáadás"
+  },
+  "optKey": {
+    "message": "Kulcs"
+  },
+  "optShow": {
+    "message": "Megjelenítés"
+  },
+  "optHide": {
+    "message": "Elrejtés"
+  },
+  "optBaseUrl": {
+    "message": "Ollama címe"
+  },
+  "optTier": {
+    "message": "Típus"
+  },
+  "optModelEasy": {
+    "message": "Modell (egyszerű oldalak)"
+  },
+  "optModelHard": {
+    "message": "Modell nehéz oldalakhoz (nem kötelező)"
+  },
+  "optMaxChars": {
+    "message": "Kötegméret (karakter)"
+  },
+  "optInterval": {
+    "message": "Kérések közötti idő (ms)"
+  },
+  "optMaxReq": {
+    "message": "Napi kérések maximuma (0 = korlátlan)"
+  },
+  "optPriceIn": {
+    "message": "Bemeneti ár ($$ / millió token)"
+  },
+  "optPriceOut": {
+    "message": "Kimeneti ár ($$ / millió token)"
+  },
+  "optDailyCap": {
+    "message": "Napi keret ($$)"
+  },
+  "optLoadModels": {
+    "message": "Modellek betöltése"
+  },
+  "optTest": {
+    "message": "Tesztelés"
+  },
+  "optUp": {
+    "message": "Feljebb"
+  },
+  "optDown": {
+    "message": "Lejjebb"
+  },
+  "optDelete": {
+    "message": "Törlés"
+  },
+  "optDeleteConfirm": {
+    "message": "Törli ezt a kulcsot?"
+  },
+  "optWorking": {
+    "message": "Ellenőrzés…"
+  },
+  "optTestOk": {
+    "message": "Érvényes kulcs, {0} modell érhető el."
+  },
+  "optTestOkLocal": {
+    "message": "Az Ollama válaszol, telepített modellek: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modell betöltve: válasszon egyet a listából."
+  },
+  "optSaved": {
+    "message": "Mentve"
+  },
+  "optTarget": {
+    "message": "Célnyelv"
+  },
+  "optTargetAuto": {
+    "message": "Böngésző nyelve ({0})"
+  },
+  "optMode": {
+    "message": "Megjelenítés"
+  },
+  "optModeReplace": {
+    "message": "Szöveg cseréje"
+  },
+  "optModeBilingual": {
+    "message": "Kétnyelvű (fordítás az eredeti alatt)"
+  },
+  "optExplain": {
+    "message": "Szakkifejezések: fordítás + angol zárójelben"
+  },
+  "optExplainHelp": {
+    "message": "A szakmai fogalmak lefordulnak, az angol kifejezés pedig első előfordulásakor zárójelben áll. Kikapcsolva: az angol szakkifejezések angolul maradnak, zárójel nélkül. A kód és a nevek (Path, npm…) soha nem fordítódnak."
+  },
+  "optComments": {
+    "message": "Megjegyzések fordítása a kódblokkokban"
+  },
+  "optCommentsHelp": {
+    "message": "Alapértelmezés szerint kikapcsolva. Csak a webhely szintaxiskiemelése által felismert megjegyzések fordítódnak; a kód soha nem változik, és az eredeti változatlanul visszaáll."
+  },
+  "optPageCap": {
+    "message": "Karakterkorlát oldalanként"
+  },
+  "optShortcut": {
+    "message": "Billentyűparancs"
+  },
+  "optShortcutCurrent": {
+    "message": "Jelenlegi billentyűparancs: {0}."
+  },
+  "optShortcutNone": {
+    "message": "nincs"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Módosítás: nyissa meg a chrome://extensions/shortcuts oldalt."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Módosítás: Kiegészítőkezelő, fogaskerék ikon, „Bővítmények billentyűparancsainak kezelése”."
+  },
+  "optGlossaryHelp": {
+    "message": "Kifejezések, amelyeket soha nem kell fordítani, vagy mindig adott módon kell fordítani. Csak a szakaszban talált kifejezések kerülnek a modellhez. Legfeljebb 500 bejegyzés."
+  },
+  "optGlTerm": {
+    "message": "Kifejezés"
+  },
+  "optGlType": {
+    "message": "Szabály"
+  },
+  "optGlTranslation": {
+    "message": "Kötelező fordítás"
+  },
+  "optGlAdd": {
+    "message": "Kifejezés hozzáadása"
+  },
+  "optGlExport": {
+    "message": "Exportálás (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importálás (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Érvénytelen fájl: {term, type, translation} objektumokat tartalmazó JSON-lista szükséges."
+  },
+  "optAutoTitle": {
+    "message": "Automatikusan fordított webhelyek"
+  },
+  "optAutoHelp": {
+    "message": "Webhelyet a felugró ablakban a „Webhely automatikus fordítása” kapcsolóval adhat hozzá. Automatikusan csak ingyenes kulcsok és az Ollama használatosak."
+  },
+  "optAutoEmpty": {
+    "message": "Még nincs webhely."
+  },
+  "optAutoGranted": {
+    "message": "engedélyezve"
+  },
+  "optAutoRevoked": {
+    "message": "engedély visszavonva"
+  },
+  "optSensitiveTitle": {
+    "message": "Érzékeny oldalak"
+  },
+  "optSensitiveHelp": {
+    "message": "Soha nem fordítódnak automatikusan (és egyetlen jelszómezős oldal sem). A kézi gomb ettől még működik."
+  },
+  "optSensitiveBase": {
+    "message": "Alapminták:"
+  },
+  "optSensitiveExtra": {
+    "message": "További minták (soronként egy szó vagy domain)"
+  },
+  "optCacheTitle": {
+    "message": "Fordítási gyorsítótár"
+  },
+  "optCacheInfo": {
+    "message": "{0} szakasz a gyorsítótárban ({1} MB). Egy már lefordított oldal hálózati hívás nélkül jelenik meg újra."
+  },
+  "optCacheClear": {
+    "message": "Gyorsítótár ürítése"
+  },
+  "optUsageTitle": {
+    "message": "Mai felhasználás"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} kérés{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Adatvédelem"
+  },
+  "optPrivacyText": {
+    "message": "A fordított oldalak szövege csak az Ön által választott szolgáltatóhoz kerül, vagy az Ollamával a gépén marad. Nincs statisztika, nincs követés, a fejlesztőhöz semmi nem jut el. Ingyenes csomagban a Gemini és a Mistral újrahasznosíthatja az elküldött szöveget."
+  },
+  "warnGemini": {
+    "message": "A kulcsot a Google AI Studióban hozza létre, számlázás összekapcsolása nélkül. Ingyenes csomagban a Google újrahasznosíthatja az elküldött szöveget. Ugyanazon projekt két kulcsa közös korláton osztozik."
+  },
+  "warnGroq": {
+    "message": "Ingyenes csomag kártya nélkül: a korlát felett csak 429-es hibát kap, számlát soha."
+  },
+  "warnMistral": {
+    "message": "Ingyenes mód kártya nélkül. A kérések tanításra is felhasználhatók: ha szeretné, kapcsolja ki ezt a Mistral konzolban."
+  },
+  "warnOpenRouter": {
+    "message": "Ingyenes módban csak a :free végződésű modellek elfogadottak (kb. napi 50 kérés). Soha ne töltsön fel egyenleget ehhez a bővítményhez."
+  },
+  "warnOllama": {
+    "message": "Modell a saját gépén: ingyenes és privát, semmi nem hagyja el a gépet. Egy kis modell többet hibázik; a kétes szakaszok eredetiben maradnak."
+  },
+  "popupView": {
+    "message": "Oldal megjelenítése"
+  },
+  "segOriginal": {
+    "message": "Eredeti"
+  },
+  "segTranslation": {
+    "message": "Fordítás"
+  },
+  "popupTranslating": {
+    "message": "Fordítás folyamatban…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} szakasz"
+  },
+  "popupManage": {
+    "message": "Kezelés"
+  },
+  "popupMoreKeys": {
+    "message": "és még {0} kulcs"
+  },
+  "popupNoKeysLong": {
+    "message": "A kezdéshez adjon meg egy ingyenes kulcsot (Gemini, Groq, Mistral, OpenRouter) vagy az Ollamát."
+  },
+  "stateReady": {
+    "message": "Fordításra kész"
+  },
+  "stateNoKey": {
+    "message": "Nincs beállított kulcs"
+  },
+  "stateRunning": {
+    "message": "Fordítás folyamatban"
+  },
+  "stateTranslated": {
+    "message": "Oldal lefordítva"
+  },
+  "stateOriginal": {
+    "message": "Eredeti látható"
+  },
+  "stateStopped": {
+    "message": "Leállítva"
+  },
+  "statePaused": {
+    "message": "Elérte az oldal korlátját"
+  },
+  "stateError": {
+    "message": "Hiba"
+  },
+  "stateUnavailable": {
+    "message": "Az oldal nem fordítható"
+  },
+  "toastAutoOn": {
+    "message": "Automatikus fordítás bekapcsolva: {0}."
+  },
+  "toastAutoOff": {
+    "message": "Automatikus fordítás kikapcsolva: {0}."
+  },
+  "toastPermDenied": {
+    "message": "Engedély megtagadva: a webhely nem lett hozzáadva."
+  },
+  "badgeShowBadge": {
+    "message": "DevDocTrad jelvény megjelenítése"
+  },
+  "optNavLabel": {
+    "message": "Beállítások részei"
+  },
+  "optNavKeys": {
+    "message": "Szolgáltatók és kulcsok"
+  },
+  "optNavPrivacy": {
+    "message": "Adatvédelem és költségek"
+  },
+  "optNavAppearance": {
+    "message": "Megjelenés"
+  },
+  "optDescKeys": {
+    "message": "API-kulcsai és az Ollama, a kártyák sorrendjében, fentről lefelé kipróbálva."
+  },
+  "optDescTranslation": {
+    "message": "Nyelv, megjelenítés és az, hogy mit fordíthat a bővítmény."
+  },
+  "optDescPrivacy": {
+    "message": "Mi hagyja el a böngészőt, kinek, és mennyibe kerül."
+  },
+  "optDescSites": {
+    "message": "Automatikusan fordított webhelyek és védendő oldalak."
+  },
+  "optDescGlossary": {
+    "message": "Változatlanul hagyandó vagy mindig ugyanúgy fordítandó kifejezések."
+  },
+  "optDescData": {
+    "message": "Fordítási gyorsítótár és a böngészőben tárolt adatok."
+  },
+  "optDescAppearance": {
+    "message": "A beállítások, a felugró ablak és az oldalakon megjelenő jelvény témája."
+  },
+  "optVersion": {
+    "message": "{0}. verzió"
+  },
+  "optAddProvider": {
+    "message": "Szolgáltató hozzáadása"
+  },
+  "optAddProviderHelp": {
+    "message": "Az új kártya a lista végére kerül. A kártyák sorrendje a prioritási sorrend."
+  },
+  "optProvider": {
+    "message": "Szolgáltató"
+  },
+  "optKeysEmptyHint": {
+    "message": "Válasszon szolgáltatót: megjelenik egy kártya, illessze be a kulcsot, majd „Modellek betöltése”, és válasszon modellt."
+  },
+  "optKeyName": {
+    "message": "Kulcs neve"
+  },
+  "optKeyEnabled": {
+    "message": "Kulcs használata"
+  },
+  "optPriority": {
+    "message": "prioritás: {0}"
+  },
+  "optKeyHelp": {
+    "message": "Alapértelmezés szerint rejtett, csak ebben a böngészőben tárolva."
+  },
+  "optBaseUrlHelp": {
+    "message": "Az Ollamának futnia kell a gépén."
+  },
+  "optModelHelp": {
+    "message": "A „Modellek betöltése” kitölti a javaslatlistát."
+  },
+  "optLimits": {
+    "message": "Korlátok"
+  },
+  "optLimitsHelp": {
+    "message": "Üres = a szolgáltató alapértéke."
+  },
+  "optPaidTitle": {
+    "message": "Költségek"
+  },
+  "optPaidHelp": {
+    "message": "Csak akkor használatos, ha a felugró ablakban kiválasztja."
+  },
+  "optPaidOk": {
+    "message": "Keret és árak beállítva: a kulcs a keretig használható."
+  },
+  "optPrivacyFlow": {
+    "message": "Hová kerül a szöveg"
+  },
+  "optProviderNotes": {
+    "message": "Megjegyzések szolgáltatónként"
+  },
+  "optProviderUsed": {
+    "message": "használatban"
+  },
+  "optUsageEmpty": {
+    "message": "Még nincs beállított kulcs."
+  },
+  "optUsageHelp": {
+    "message": "Minden nap éjfélkor (UTC) nullázódik."
+  },
+  "optPaidRuleTitle": {
+    "message": "Fizetős kulcsok"
+  },
+  "optPaidRule": {
+    "message": "Fizetős kulcs soha nem használatos automatikusan: a felugró ablakban kell kiválasztani. Letiltva marad, amíg a napi keret és mindkét ár nincs beállítva, és a keret elérésekor azonnal leáll."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Még nincs automatikus webhely"
+  },
+  "optAutoEmptyLong": {
+    "message": "Hozzáadás: nyissa meg a webhelyet, kattintson az eszköztáron a DevDocTrad ikonra, majd kapcsolja be a „Webhely automatikus fordítása” lehetőséget. A böngésző csak az adott webhelyhez kér engedélyt."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Eltávolítja a(z) {0} webhelyet az automatikusan fordítottak közül?"
+  },
+  "optGlEmpty": {
+    "message": "Még nincs kifejezés. Példa: „thread” a „Soha ne fordítsa” szabállyal."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 kifejezés"
+  },
+  "optGlImported": {
+    "message": "{0} kifejezés importálva."
+  },
+  "optCacheConfirm": {
+    "message": "Üríti a gyorsítótárat? A már lefordított oldalakat újra le kell fordítani (új hívások a szolgáltatókhoz)."
+  },
+  "optCacheCleared": {
+    "message": "Gyorsítótár kiürítve."
+  },
+  "optStorageTitle": {
+    "message": "Helyi tárhely"
+  },
+  "optTheme": {
+    "message": "Téma"
+  },
+  "optThemeHelp": {
+    "message": "A „Rendszer” a számítógép világos vagy sötét beállítását követi."
+  },
+  "optThemeSystem": {
+    "message": "Rendszer"
+  },
+  "optThemeLight": {
+    "message": "Világos"
+  },
+  "optThemeDark": {
+    "message": "Sötét"
+  },
+  "optPriceInUsd": {
+    "message": "Bemeneti ár ($$ / millió token)"
+  },
+  "optPriceOutUsd": {
+    "message": "Kimeneti ár ($$ / millió token)"
+  },
+  "optDailyCapUsd": {
+    "message": "Napi keret ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "ez a Google-projekt előre fizetett számlázást használ, és a kreditjei elfogytak. Ne töltsön fel semmit: hozzon létre kulcsot egy számlázás nélküli projektben a Google AI Studióban (ingyenes csomag)."
+  }
+}

@@ -157,15 +157,28 @@
     }
 
     /* ---------------- Appels fournisseurs ---------------- */
+    /* Firefox arrête la page d'arrière-plan après 30 s sans appel d'API d'extension, même si une
+     * requête est en cours (vu en vrai : Ollama qui charge un modèle 7B met plus de 30 s, la requête
+     * était coupée et le modèle jamais chargé). Un appel d'API léger toutes les 20 s la garde en vie. */
+    function keepAlive() {
+      if (!api || !api.runtime || typeof api.runtime.getPlatformInfo !== 'function') return null;
+      return setInterval(function () {
+        try { var p = api.runtime.getPlatformInfo(); if (p && p.catch) p.catch(function () {}); } catch (e) { /* rien */ }
+      }, 20000);
+    }
+
     function fetchWithTimeout(url, init, timeoutMs) {
       var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
       var timer = null;
+      var alive = keepAlive();
       if (ctrl) {
         init.signal = ctrl.signal;
         timer = setTimeout(function () { ctrl.abort(); }, timeoutMs);
       }
-      return fetchFn(url, init).then(function (r) { if (timer) clearTimeout(timer); return r; }, function (e) {
+      return fetchFn(url, init).then(function (r) { if (timer) clearTimeout(timer); if (alive) clearInterval(alive); return r; }, function (e) {
         if (timer) clearTimeout(timer);
+        if (alive) clearInterval(alive);
+        if (ctrl && ctrl.signal.aborted && e && typeof e === 'object') { try { e.timedOut = true; } catch (x) { /* rien */ } }
         throw e;
       });
     }
@@ -211,8 +224,21 @@
       try { var u = JSON.parse(user); n = (u.texts || []).length; withGloss = Array.isArray(u.already_glossed); } catch (e) { /* format libre */ }
       if (!n) return 'json';
       var props = { translations: { type: 'array', items: { type: 'string' }, minItems: n, maxItems: n } };
-      if (withGloss) props.glossed = { type: 'array', items: { type: 'string' } };
+      if (withGloss) {
+        props.terms = { type: 'array', items: { type: 'object', properties: { en: { type: 'string' }, tr: { type: 'string' } }, required: ['en', 'tr'] } };
+      }
       return { type: 'object', properties: props, required: ['translations'] };
+    }
+
+    /* Plafond de longueur de réponse : un petit modèle peut boucler sans fin (vu avec qwen2.5:7b
+     * en ourdou : plus de 2 000 jetons pour quelques phrases). Large marge pour les écritures non latines. */
+    var ollamaSchemaSlow = {};
+    var OLLAMA_SCHEMA_TIMEOUT_MS = 90000;
+
+    function ollamaMaxTokens(user) {
+      var chars = 0;
+      try { (JSON.parse(user).texts || []).forEach(function (t) { chars += String(t).length; }); } catch (e) { chars = String(user).length; }
+      return Math.min(8192, Math.max(512, Math.ceil(chars * 1.5) + 256));
     }
 
     function callProvider(key, model, system, user) {
@@ -239,15 +265,29 @@
       }
       if (p === 'ollama') {
         url = baseOf(key) + '/api/chat';
-        init = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: model, stream: false, format: ollamaSchema(user), options: { temperature: 0 },
-            messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
-          })
+        var schema = ollamaSchema(user);
+        var askOllama = function (format, to) {
+          return send(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: model, stream: false, format: format, options: { temperature: 0, num_predict: ollamaMaxTokens(user) },
+              messages: [{ role: 'system', content: system }, { role: 'user', content: user }]
+            })
+          }, to, function (j) { return j && j.message ? j.message.content : ''; });
         };
-        return send(url, init, timeout, function (j) { return j && j.message ? j.message.content : ''; });
+        // Le schéma JSON tient les petits modèles dans la bonne structure, mais avec certaines écritures
+        // (thaï vu en vrai) la génération sous schéma devient extrêmement lente : au bout de 90 s sans
+        // réponse, on relance en JSON libre et on garde ce choix pour ce modèle.
+        if (typeof schema === 'object' && !ollamaSchemaSlow[model]) {
+          return askOllama(schema, Math.min(timeout, OLLAMA_SCHEMA_TIMEOUT_MS)).catch(function (err) {
+            if (!err || !err.timedOut) throw err;
+            ollamaSchemaSlow[model] = true;
+            log('ollama: schéma trop lent, JSON libre pour', model);
+            return askOllama('json', timeout);
+          });
+        }
+        return askOllama(typeof schema === 'object' ? 'json' : schema, timeout);
       }
       // compatibles OpenAI : groq, mistral, openrouter
       url = baseOf(key) + '/chat/completions';
@@ -283,7 +323,9 @@
         }, function (err) {
           if (err instanceof ProviderError) throw err;
           var kind = key.provider === 'ollama' ? 'ollama_down' : 'network';
-          throw new ProviderError(kind, DDT.sanitize(err && err.message, [key.key]));
+          var pe = new ProviderError(kind, DDT.sanitize(err && err.message, [key.key]));
+          if (err && err.timedOut) pe.timedOut = true;
+          throw pe;
         });
       }
     }
@@ -387,9 +429,10 @@
         var out = [];
         var bad = [];
         srcs.forEach(function (s, i) {
-          var v = DDT.validateTranslation(s, resp.translations[i], { explainTerms: env.settings.explainTerms });
+          var v = DDT.validateTranslation(s, resp.translations[i], { explainTerms: env.settings.explainTerms, target: env.settings.target });
           if (v.ok) out[i] = v.value; else { out[i] = null; bad.push(i); }
         });
+        if (env.settings.explainTerms) out = DDT.addTermGlosses(out, resp.terms, env.glossed);
         var seq = Promise.resolve();
         bad.forEach(function (i) {
           seq = seq.then(function () {
@@ -405,9 +448,10 @@
       var model = key.modelHard || key.modelEasy;
       return requestTranslations(key, model, [src], env, ctx).then(function (resp) {
         if (!resp || !Array.isArray(resp.translations) || resp.translations.length !== 1) return null;
-        var v = DDT.validateTranslation(src, resp.translations[0], { explainTerms: env.settings.explainTerms });
+        var v = DDT.validateTranslation(src, resp.translations[0], { explainTerms: env.settings.explainTerms, target: env.settings.target });
         if (v.ok && Array.isArray(resp.glossed)) resp.glossed.forEach(function (g) { env.glossed.add(g); });
-        return v.ok ? v.value : null;
+        if (!v.ok) return null;
+        return env.settings.explainTerms ? DDT.addTermGlosses([v.value], resp.terms, env.glossed)[0] : v.value;
       });
     }
 
@@ -525,7 +569,10 @@
       function termsIn(text, terms) {
         if (!env.settings.explainTerms) return undefined;
         var low = text.toLowerCase();
-        var found = terms.filter(function (x) { return low.indexOf(String(x).toLowerCase() + ' (') !== -1; });
+        var found = terms.filter(function (x) {
+          var k = String(x).toLowerCase();
+          return low.indexOf('(' + k + ')') !== -1 || low.indexOf(k + ' (') !== -1;
+        });
         return found.length ? found : undefined;
       }
 
@@ -625,6 +672,10 @@
               list.push({ id: m.id, name: m.name || m.id, free: free });
             });
           }
+          // Seulement des modèles qui savent traduire : pas de voix (whisper, orpheus, tts),
+          // pas de filtres de sécurité (guard), pas d'embeddings, d'images ni de modération.
+          var NOT_TEXT = /whisper|orpheus|(^|[-_/])tts([-_]|$)|playai|guard|embed|moderation|imagen|veo|aqa|dall-e|vision-preview|rerank/i;
+          list = list.filter(function (m) { return !NOT_TEXT.test(m.id); });
           list.sort(function (a, b) { return a.id < b.id ? -1 : 1; });
           return list;
         });
@@ -733,7 +784,19 @@
         delete s.targetChoice;
         if (s.autoSites.indexOf(host) === -1) s.autoSites = s.autoSites.concat([host]);
         return setLocal({ settings: s });
-      }).then(syncAutoScripts);
+      }).then(syncAutoScripts).then(function () { return runAutoInOpenTabs(host); });
+    }
+    /* Les scripts enregistrés ne s'appliquent qu'aux pages chargées ensuite : on lance tout de suite
+       le déclencheur automatique dans les onglets déjà ouverts sur ce site (mêmes vérifications :
+       page sensible, page déjà dans la langue cible, clé gratuite disponible). */
+    function runAutoInOpenTabs(host) {
+      if (!api.tabs || !api.tabs.query || !api.scripting || !api.scripting.executeScript) return Promise.resolve();
+      return api.tabs.query({ url: originsFor(host) }).then(function (tabs) {
+        return Promise.all((tabs || []).map(function (tb) {
+          return api.scripting.executeScript({ target: { tabId: tb.id }, files: ['shared.js', 'content.js', 'auto.js'] })
+            .catch(function () { /* onglet fermé ou page interdite */ });
+        }));
+      }).catch(function (e) { log('auto tabs', String(e && e.message)); });
     }
     function removeAutoSite(host) {
       return loadAll().then(function (all) {
@@ -856,7 +919,11 @@
 
   api.runtime.onInstalled.addListener(function () {
     api.storage.local.get('settings').then(function (r) {
-      if (!r.settings) return api.storage.local.set({ settings: DDT.DEFAULT_SETTINGS });
+      if (!r.settings) return api.storage.local.set({ settings: Object.assign({}, DDT.DEFAULT_SETTINGS, { termsStyle: 3 }) });
+      // Mise à jour : les parenthèses (terme anglais) deviennent une option désactivée par défaut.
+      if (r.settings.termsStyle !== 3) {
+        return api.storage.local.set({ settings: Object.assign({}, r.settings, { explainTerms: false, termsStyle: 3 }) });
+      }
     }).then(bg.syncAutoScripts);
   });
   if (api.runtime.onStartup) api.runtime.onStartup.addListener(bg.syncAutoScripts);

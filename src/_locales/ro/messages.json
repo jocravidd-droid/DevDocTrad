@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Traduce fidel documentația pentru dezvoltatori și site-urile de programare, fără să atingă vreodată codul."
+  },
+  "cmdToggle": {
+    "message": "Traduce pagina sau revino la original"
+  },
+  "badgeTranslating": {
+    "message": "Se traduce: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Tradus: {0} fragmente"
+  },
+  "badgeDoneFailed": {
+    "message": "Tradus: {0} fragmente, {1} lăsate în original"
+  },
+  "badgeStopped": {
+    "message": "Oprit"
+  },
+  "badgeCap": {
+    "message": "Limita de {0} caractere a fost atinsă pentru această pagină."
+  },
+  "badgeRateLimited": {
+    "message": "Limita cheii gratuite a fost atinsă. Reîncercare în {0} s ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Limita a fost atinsă pe toate cheile gratuite. Încearcă mai târziu."
+  },
+  "badgeNoKey": {
+    "message": "Nicio cheie disponibilă. Adaugă o cheie în setări."
+  },
+  "badgeError": {
+    "message": "Eroare: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "tradus local (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "tradus online ({0})"
+  },
+  "badgeNothing": {
+    "message": "Nimic de tradus pe această pagină."
+  },
+  "badgeKeyProblem": {
+    "message": "Problemă cu cheia {0}: {1}"
+  },
+  "btnStop": {
+    "message": "Oprește"
+  },
+  "btnOriginal": {
+    "message": "Arată originalul"
+  },
+  "btnTranslation": {
+    "message": "Arată traducerea"
+  },
+  "btnMinimize": {
+    "message": "Minimizează"
+  },
+  "btnClose": {
+    "message": "Închide"
+  },
+  "btnContinue": {
+    "message": "Continuă"
+  },
+  "errAuth": {
+    "message": "cheie respinsă (invalidă sau revocată)"
+  },
+  "errPayment": {
+    "message": "sold insuficient la furnizor; cheie oprită"
+  },
+  "errRate": {
+    "message": "limita de cereri a fost atinsă, încearcă din nou peste un minut"
+  },
+  "errOllamaDown": {
+    "message": "Ollama nu răspunde pe localhost:11434. Pornește Ollama și încearcă din nou."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama respinge extensia (403). Setează variabila de mediu OLLAMA_ORIGINS la chrome-extension://*,moz-extension://* apoi repornește Ollama."
+  },
+  "errOpenRouterFree": {
+    "message": "în modul gratuit, OpenRouter acceptă doar modelele al căror nume se termină cu :free"
+  },
+  "errPaidUnset": {
+    "message": "cheie plătită blocată: setează mai întâi plafonul zilnic și ambele prețuri în setări."
+  },
+  "errPaidCap": {
+    "message": "plafonul zilnic al cheii plătite a fost atins ($${0} din $${1})."
+  },
+  "errUnknown": {
+    "message": "Eroare necunoscută"
+  },
+  "keyAvailable": {
+    "message": "disponibilă"
+  },
+  "keyDisabled": {
+    "message": "dezactivată"
+  },
+  "keyNoModel": {
+    "message": "alege un model"
+  },
+  "keyPausedUntil": {
+    "message": "în pauză până la {0}"
+  },
+  "keyProblem": {
+    "message": "problemă"
+  },
+  "tier_free": {
+    "message": "gratuită"
+  },
+  "tier_paid": {
+    "message": "plătită"
+  },
+  "tier_local": {
+    "message": "locală"
+  },
+  "gl_never": {
+    "message": "Nu traduce niciodată"
+  },
+  "gl_always": {
+    "message": "Traduce mereu prin"
+  },
+  "popupTranslate": {
+    "message": "Traduce această pagină"
+  },
+  "popupSettings": {
+    "message": "Setări"
+  },
+  "popupUnsupported": {
+    "message": "Această pagină nu poate fi tradusă de o extensie (pagină a browserului, magazin de extensii sau cititor PDF)."
+  },
+  "popupKey": {
+    "message": "Cheie"
+  },
+  "popupKeyAuto": {
+    "message": "Automat (gratuite și locală)"
+  },
+  "popupAuto": {
+    "message": "Traduce automat acest site"
+  },
+  "popupSensitive": {
+    "message": "Pagină sensibilă: nu se traduce niciodată automat. Butonul funcționează, Ollama este folosit primul dacă este configurat."
+  },
+  "popupKeys": {
+    "message": "Starea cheilor"
+  },
+  "popupNoKeys": {
+    "message": "Nicio cheie încă."
+  },
+  "popupAddKey": {
+    "message": "Adaugă o cheie"
+  },
+  "popupShortcut": {
+    "message": "Comandă rapidă:"
+  },
+  "optTitle": {
+    "message": "Setări DevDocTrad"
+  },
+  "optPermMissing": {
+    "message": "Accesul la furnizorii de traducere nu este încă permis de browser."
+  },
+  "optPermGrant": {
+    "message": "Permite accesul la furnizori"
+  },
+  "optTabKeys": {
+    "message": "Chei"
+  },
+  "optTabTranslation": {
+    "message": "Traducere"
+  },
+  "optTabGlossary": {
+    "message": "Glosar"
+  },
+  "optTabSites": {
+    "message": "Site-uri"
+  },
+  "optTabData": {
+    "message": "Date"
+  },
+  "optKeysTitle": {
+    "message": "Chei API"
+  },
+  "optKeysLocal": {
+    "message": "Cheile rămân în acest browser (stocare locală). Nu sunt niciodată sincronizate cu contul tău și nu sunt trimise nicăieri în afară de furnizor. Ordinea cardurilor este ordinea de prioritate."
+  },
+  "optAddKey": {
+    "message": "Adaugă"
+  },
+  "optKey": {
+    "message": "Cheie"
+  },
+  "optShow": {
+    "message": "Arată"
+  },
+  "optHide": {
+    "message": "Ascunde"
+  },
+  "optBaseUrl": {
+    "message": "Adresa Ollama"
+  },
+  "optTier": {
+    "message": "Tip"
+  },
+  "optModelEasy": {
+    "message": "Model (pagini simple)"
+  },
+  "optModelHard": {
+    "message": "Model pentru pagini dificile (opțional)"
+  },
+  "optMaxChars": {
+    "message": "Dimensiunea lotului (caractere)"
+  },
+  "optInterval": {
+    "message": "Interval între cereri (ms)"
+  },
+  "optMaxReq": {
+    "message": "Număr maxim de cereri pe zi (0 = fără limită)"
+  },
+  "optPriceIn": {
+    "message": "Preț intrare ($$ pe milion de tokeni)"
+  },
+  "optPriceOut": {
+    "message": "Preț ieșire ($$ pe milion de tokeni)"
+  },
+  "optDailyCap": {
+    "message": "Plafon zilnic ($$)"
+  },
+  "optLoadModels": {
+    "message": "Încarcă modelele"
+  },
+  "optTest": {
+    "message": "Testează"
+  },
+  "optUp": {
+    "message": "Mută în sus"
+  },
+  "optDown": {
+    "message": "Mută în jos"
+  },
+  "optDelete": {
+    "message": "Șterge"
+  },
+  "optDeleteConfirm": {
+    "message": "Ștergi această cheie?"
+  },
+  "optWorking": {
+    "message": "Se verifică…"
+  },
+  "optTestOk": {
+    "message": "Cheie validă, {0} modele disponibile."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama răspunde, modele instalate: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "{0} modele încărcate: alege unul din listă."
+  },
+  "optSaved": {
+    "message": "Salvat"
+  },
+  "optTarget": {
+    "message": "Limba țintă"
+  },
+  "optTargetAuto": {
+    "message": "Limba browserului ({0})"
+  },
+  "optMode": {
+    "message": "Afișare"
+  },
+  "optModeReplace": {
+    "message": "Înlocuiește textul"
+  },
+  "optModeBilingual": {
+    "message": "Bilingv (traducerea sub original)"
+  },
+  "optExplain": {
+    "message": "Termeni tehnici: tradus + engleză în paranteză"
+  },
+  "optExplainHelp": {
+    "message": "Noțiunile tehnice sunt traduse, iar termenul englezesc apare în paranteză la prima apariție. Dezactivat: termenii tehnici în engleză rămân în engleză, fără paranteze. Codul și numele (Path, npm…) nu sunt traduse niciodată."
+  },
+  "optComments": {
+    "message": "Traduce comentariile din blocurile de cod"
+  },
+  "optCommentsHelp": {
+    "message": "Dezactivat implicit. Sunt traduse doar comentariile recunoscute de evidențierea sintaxei site-ului; codul nu este modificat niciodată, iar originalul revine neschimbat."
+  },
+  "optPageCap": {
+    "message": "Limită de caractere pe pagină"
+  },
+  "optShortcut": {
+    "message": "Comandă rapidă de la tastatură"
+  },
+  "optShortcutCurrent": {
+    "message": "Comanda rapidă actuală: {0}."
+  },
+  "optShortcutNone": {
+    "message": "niciuna"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Pentru a o schimba: deschide chrome://extensions/shortcuts."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Pentru a o schimba: Managerul de suplimente, pictograma roată, „Gestionează comenzile rapide ale extensiilor”."
+  },
+  "optGlossaryHelp": {
+    "message": "Termeni care nu se traduc niciodată sau care se traduc mereu într-un anumit fel. Doar termenii găsiți în fragment sunt trimiși modelului. Maximum 500 de intrări."
+  },
+  "optGlTerm": {
+    "message": "Termen"
+  },
+  "optGlType": {
+    "message": "Regulă"
+  },
+  "optGlTranslation": {
+    "message": "Traducere impusă"
+  },
+  "optGlAdd": {
+    "message": "Adaugă un termen"
+  },
+  "optGlExport": {
+    "message": "Exportă (JSON)"
+  },
+  "optGlImport": {
+    "message": "Importă (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Fișier invalid: se așteaptă o listă JSON de obiecte {term, type, translation}."
+  },
+  "optAutoTitle": {
+    "message": "Site-uri traduse automat"
+  },
+  "optAutoHelp": {
+    "message": "Adaugă un site din fereastra pop-up cu „Traduce automat acest site”. Doar cheile gratuite și Ollama sunt folosite automat."
+  },
+  "optAutoEmpty": {
+    "message": "Niciun site încă."
+  },
+  "optAutoGranted": {
+    "message": "permis"
+  },
+  "optAutoRevoked": {
+    "message": "permisiune retrasă"
+  },
+  "optSensitiveTitle": {
+    "message": "Pagini sensibile"
+  },
+  "optSensitiveHelp": {
+    "message": "Nu se traduc niciodată automat (nici orice pagină cu un câmp de parolă). Butonul manual funcționează totuși."
+  },
+  "optSensitiveBase": {
+    "message": "Modele de bază:"
+  },
+  "optSensitiveExtra": {
+    "message": "Modele suplimentare (câte unul pe linie, cuvânt sau domeniu)"
+  },
+  "optCacheTitle": {
+    "message": "Memoria cache a traducerilor"
+  },
+  "optCacheInfo": {
+    "message": "{0} fragmente în cache ({1} MB). O pagină deja tradusă se reafișează fără niciun apel de rețea."
+  },
+  "optCacheClear": {
+    "message": "Golește memoria cache"
+  },
+  "optUsageTitle": {
+    "message": "Consumul de azi"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} cereri{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Confidențialitate"
+  },
+  "optPrivacyText": {
+    "message": "Textul paginilor pe care le traduci este trimis doar furnizorului ales sau rămâne pe calculatorul tău cu Ollama. Fără statistici, fără urmărire, nimic nu este trimis dezvoltatorului. În planurile gratuite, Gemini și Mistral pot reutiliza textul trimis."
+  },
+  "warnGemini": {
+    "message": "Creează cheia în Google AI Studio fără a lega facturarea. În planul gratuit, Google poate reutiliza textul trimis. Două chei din același proiect împart aceeași limită."
+  },
+  "warnGroq": {
+    "message": "Plan gratuit fără card: peste limită primești doar o eroare 429, niciodată o factură."
+  },
+  "warnMistral": {
+    "message": "Mod gratuit fără card. Cererile pot fi folosite pentru antrenare: dezactivează asta în consola Mistral dacă preferi."
+  },
+  "warnOpenRouter": {
+    "message": "În modul gratuit sunt acceptate doar modelele care se termină cu :free (aproximativ 50 de cereri pe zi). Nu reîncărca niciodată credit pentru această extensie."
+  },
+  "warnOllama": {
+    "message": "Model pe calculatorul tău: gratuit și privat, nimic nu părăsește calculatorul. Un model mic greșește mai des; fragmentele îndoielnice rămân în original."
+  },
+  "popupView": {
+    "message": "Afișarea paginii"
+  },
+  "segOriginal": {
+    "message": "Original"
+  },
+  "segTranslation": {
+    "message": "Traducere"
+  },
+  "popupTranslating": {
+    "message": "Se traduce…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} fragmente"
+  },
+  "popupManage": {
+    "message": "Gestionează"
+  },
+  "popupMoreKeys": {
+    "message": "și încă {0} chei"
+  },
+  "popupNoKeysLong": {
+    "message": "Adaugă o cheie gratuită (Gemini, Groq, Mistral, OpenRouter) sau Ollama pentru a începe."
+  },
+  "stateReady": {
+    "message": "Gata de tradus"
+  },
+  "stateNoKey": {
+    "message": "Nicio cheie configurată"
+  },
+  "stateRunning": {
+    "message": "Traducere în curs"
+  },
+  "stateTranslated": {
+    "message": "Pagină tradusă"
+  },
+  "stateOriginal": {
+    "message": "Se afișează originalul"
+  },
+  "stateStopped": {
+    "message": "Oprită"
+  },
+  "statePaused": {
+    "message": "Limita paginii a fost atinsă"
+  },
+  "stateError": {
+    "message": "Eroare"
+  },
+  "stateUnavailable": {
+    "message": "Pagina nu poate fi tradusă"
+  },
+  "toastAutoOn": {
+    "message": "Traducerea automată a fost activată pentru {0}."
+  },
+  "toastAutoOff": {
+    "message": "Traducerea automată a fost dezactivată pentru {0}."
+  },
+  "toastPermDenied": {
+    "message": "Permisiune refuzată: site-ul nu a fost adăugat."
+  },
+  "badgeShowBadge": {
+    "message": "Arată insigna DevDocTrad"
+  },
+  "optNavLabel": {
+    "message": "Secțiunile setărilor"
+  },
+  "optNavKeys": {
+    "message": "Furnizori și chei"
+  },
+  "optNavPrivacy": {
+    "message": "Confidențialitate și costuri"
+  },
+  "optNavAppearance": {
+    "message": "Aspect"
+  },
+  "optDescKeys": {
+    "message": "Cheile tale API și Ollama, încercate în ordinea cardurilor, de sus în jos."
+  },
+  "optDescTranslation": {
+    "message": "Limba, afișarea și ce are voie extensia să traducă."
+  },
+  "optDescPrivacy": {
+    "message": "Ce părăsește browserul tău, către cine și cât costă."
+  },
+  "optDescSites": {
+    "message": "Site-uri traduse automat și pagini de protejat."
+  },
+  "optDescGlossary": {
+    "message": "Termeni de păstrat neschimbați sau de tradus mereu la fel."
+  },
+  "optDescData": {
+    "message": "Memoria cache a traducerilor și datele păstrate în acest browser."
+  },
+  "optDescAppearance": {
+    "message": "Tema setărilor, a ferestrei pop-up și a insignei afișate pe pagini."
+  },
+  "optVersion": {
+    "message": "versiunea {0}"
+  },
+  "optAddProvider": {
+    "message": "Adaugă un furnizor"
+  },
+  "optAddProviderHelp": {
+    "message": "Noul card se adaugă la final. Ordinea cardurilor este ordinea de prioritate."
+  },
+  "optProvider": {
+    "message": "Furnizor"
+  },
+  "optKeysEmptyHint": {
+    "message": "Alege un furnizor: apare un card, lipește cheia, apoi „Încarcă modelele” și alege un model."
+  },
+  "optKeyName": {
+    "message": "Numele cheii"
+  },
+  "optKeyEnabled": {
+    "message": "Folosește această cheie"
+  },
+  "optPriority": {
+    "message": "prioritate {0}"
+  },
+  "optKeyHelp": {
+    "message": "Ascunsă implicit, păstrată doar în acest browser."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama trebuie să ruleze pe calculatorul tău."
+  },
+  "optModelHelp": {
+    "message": "„Încarcă modelele” completează lista de sugestii."
+  },
+  "optLimits": {
+    "message": "Limite"
+  },
+  "optLimitsHelp": {
+    "message": "Gol = valoarea implicită a furnizorului."
+  },
+  "optPaidTitle": {
+    "message": "Costuri"
+  },
+  "optPaidHelp": {
+    "message": "Folosită doar când o alegi în fereastra pop-up."
+  },
+  "optPaidOk": {
+    "message": "Plafonul și prețurile sunt setate: cheia poate fi folosită până la plafon."
+  },
+  "optPrivacyFlow": {
+    "message": "Unde ajunge textul"
+  },
+  "optProviderNotes": {
+    "message": "Note despre furnizori"
+  },
+  "optProviderUsed": {
+    "message": "în uz"
+  },
+  "optUsageEmpty": {
+    "message": "Nicio cheie configurată încă."
+  },
+  "optUsageHelp": {
+    "message": "Resetat în fiecare zi la miezul nopții (UTC)."
+  },
+  "optPaidRuleTitle": {
+    "message": "Chei plătite"
+  },
+  "optPaidRule": {
+    "message": "O cheie plătită nu este folosită niciodată automat: trebuie să o alegi în fereastra pop-up. Rămâne blocată până când plafonul zilnic și ambele prețuri sunt setate și se oprește imediat ce plafonul este atins."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Niciun site automat încă"
+  },
+  "optAutoEmptyLong": {
+    "message": "Pentru a adăuga unul: deschide site-ul, apasă pictograma DevDocTrad din bara de instrumente, apoi activează „Traduce automat acest site”. Browserul cere permisiunea doar pentru acel site."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "Elimini {0} din site-urile traduse automat?"
+  },
+  "optGlEmpty": {
+    "message": "Niciun termen încă. Exemplu: „thread” cu regula „Nu traduce niciodată”."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 termeni"
+  },
+  "optGlImported": {
+    "message": "{0} termeni importați."
+  },
+  "optCacheConfirm": {
+    "message": "Golești memoria cache? Paginile deja traduse vor trebui traduse din nou (noi apeluri către furnizori)."
+  },
+  "optCacheCleared": {
+    "message": "Memoria cache a fost golită."
+  },
+  "optStorageTitle": {
+    "message": "Stocare locală"
+  },
+  "optTheme": {
+    "message": "Temă"
+  },
+  "optThemeHelp": {
+    "message": "„Sistem” urmează setarea luminoasă sau întunecată a calculatorului."
+  },
+  "optThemeSystem": {
+    "message": "Sistem"
+  },
+  "optThemeLight": {
+    "message": "Luminoasă"
+  },
+  "optThemeDark": {
+    "message": "Întunecată"
+  },
+  "optPriceInUsd": {
+    "message": "Preț intrare ($$ pe milion de tokeni)"
+  },
+  "optPriceOutUsd": {
+    "message": "Preț ieșire ($$ pe milion de tokeni)"
+  },
+  "optDailyCapUsd": {
+    "message": "Plafon zilnic ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "acest proiect Google folosește facturare preplătită, iar creditele sale s-au epuizat. Nu reîncărca nimic: creează o cheie într-un proiect fără facturare în Google AI Studio (plan gratuit)."
+  }
+}

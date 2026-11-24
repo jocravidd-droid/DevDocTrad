@@ -231,7 +231,7 @@ test('Ollama 403 : la marche à suivre OLLAMA_ORIGINS est donnée', async () => 
   assert.match(t.message, /errOllamaOrigin/);
 });
 
-test('glossaire : seules les entrées présentes dans le lot sont envoyées ; explications désactivées par défaut', async () => {
+test('glossaire : seules les entrées présentes dans le lot sont envoyées ; option des termes anglais désactivée', async () => {
   const { bg, fetch } = makeBackground({
     local: {
       settings: settings(),
@@ -243,7 +243,7 @@ test('glossaire : seules les entrées présentes dans le lot sont envoyées ; ex
   const body = JSON.parse(fetch.calls[0].init.body);
   const user = JSON.parse(body.messages[1].content);
   assert.deepEqual(user.glossary, { never: [], always: { world: 'monde' } });
-  assert.equal(user.already_glossed, undefined, 'pas d\'explications par défaut');
+  assert.equal(user.already_glossed, undefined, 'option désactivée : pas de liste already_glossed');
   assert.match(body.messages[0].content, /sans explication/);
 });
 
@@ -384,4 +384,13 @@ test('Groq : réflexion courte pour gpt-oss, et pause douce quand les jetons res
   const q = st.keys.find((k) => k.id === 'q');
   assert.equal(q.available, false);
   assert.ok(q.until > 0);
+});
+
+test('liste des modèles : les modèles audio et les filtres de sécurité ne sont pas proposés', async () => {
+  const { bg } = makeBackground({
+    local: { settings: settings(), keys: [key('g', 'groq')] },
+    handler: () => response(200, { data: ['openai/gpt-oss-120b', 'whisper-large-v3', 'canopylabs/orpheus-v1-english', 'meta-llama/llama-prompt-guard-2-22m', 'openai/gpt-oss-safeguard-20b', 'allam-2-7b'].map((id) => ({ id })) })
+  });
+  const list = await bg.listModels(Object.assign(key('g', 'groq'), { key: 'gsk_test' }));
+  assert.deepEqual(list.map((m) => m.id), ['allam-2-7b', 'openai/gpt-oss-120b']);
 });

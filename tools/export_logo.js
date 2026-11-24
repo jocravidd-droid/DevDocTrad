@@ -24,7 +24,7 @@ const JOBS = [
   ['devdoctrad-logotype-dark.svg', [1120, 256], 0, 'design/logo/devdoctrad-logotype-dark.png']
 ];
 (async () => {
-  const b = await chromium.launch();
+  const b = await chromium.launch(process.env.DDT_CHROMIUM ? { executablePath: process.env.DDT_CHROMIUM } : {});
   const p = await b.newPage();
   for (const [file, size, pad, out] of JOBS) {
     const [w, h] = Array.isArray(size) ? size : [size, size];

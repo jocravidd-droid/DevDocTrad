@@ -1,0 +1,617 @@
+{
+  "extName": {
+    "message": "DevDocTrad"
+  },
+  "uiDir": {
+    "message": "ltr"
+  },
+  "extDescription": {
+    "message": "Geliştirici belgelerini ve programlama sitelerini, koda asla dokunmadan aslına sadık şekilde çevirir."
+  },
+  "cmdToggle": {
+    "message": "Sayfayı çevir veya orijinale dön"
+  },
+  "badgeTranslating": {
+    "message": "Çevriliyor: {0} / {1}"
+  },
+  "badgeDone": {
+    "message": "Çevrildi: {0} bölüm"
+  },
+  "badgeDoneFailed": {
+    "message": "Çevrildi: {0} bölüm, {1} bölüm orijinal bırakıldı"
+  },
+  "badgeStopped": {
+    "message": "Durduruldu"
+  },
+  "badgeCap": {
+    "message": "Bu sayfa için {0} karakter sınırına ulaşıldı."
+  },
+  "badgeRateLimited": {
+    "message": "Ücretsiz anahtar sınırına ulaşıldı. {0} sn sonra yeniden denenecek ({1}/3)."
+  },
+  "badgeRateGiveUp": {
+    "message": "Tüm ücretsiz anahtarlarda sınıra ulaşıldı. Daha sonra yeniden deneyin."
+  },
+  "badgeNoKey": {
+    "message": "Kullanılabilir anahtar yok. Ayarlardan bir anahtar ekleyin."
+  },
+  "badgeError": {
+    "message": "Hata: {0}"
+  },
+  "badgeViaLocal": {
+    "message": "yerel olarak çevrildi (Ollama)"
+  },
+  "badgeViaOnline": {
+    "message": "çevrimiçi çevrildi ({0})"
+  },
+  "badgeNothing": {
+    "message": "Bu sayfada çevrilecek bir şey yok."
+  },
+  "badgeKeyProblem": {
+    "message": "{0} anahtarında sorun: {1}"
+  },
+  "btnStop": {
+    "message": "Durdur"
+  },
+  "btnOriginal": {
+    "message": "Orijinali göster"
+  },
+  "btnTranslation": {
+    "message": "Çeviriyi göster"
+  },
+  "btnMinimize": {
+    "message": "Küçült"
+  },
+  "btnClose": {
+    "message": "Kapat"
+  },
+  "btnContinue": {
+    "message": "Devam et"
+  },
+  "errAuth": {
+    "message": "anahtar reddedildi (geçersiz veya iptal edilmiş)"
+  },
+  "errPayment": {
+    "message": "sağlayıcıda yetersiz bakiye; anahtar durduruldu"
+  },
+  "errRate": {
+    "message": "istek sınırına ulaşıldı, bir dakika sonra yeniden deneyin"
+  },
+  "errOllamaDown": {
+    "message": "Ollama localhost:11434 adresinde yanıt vermiyor. Ollama'yı başlatıp yeniden deneyin."
+  },
+  "errOllamaOrigin": {
+    "message": "Ollama eklentiyi reddediyor (403). OLLAMA_ORIGINS ortam değişkenini chrome-extension://*,moz-extension://* olarak ayarlayın ve Ollama'yı yeniden başlatın."
+  },
+  "errOpenRouterFree": {
+    "message": "ücretsiz modda OpenRouter yalnızca adı :free ile biten modelleri kabul eder"
+  },
+  "errPaidUnset": {
+    "message": "ücretli anahtar engellendi: önce ayarlardan günlük tavanı ve iki fiyatı girin."
+  },
+  "errPaidCap": {
+    "message": "ücretli anahtarın günlük tavanına ulaşıldı ($${0} / $${1})."
+  },
+  "errUnknown": {
+    "message": "Bilinmeyen hata"
+  },
+  "keyAvailable": {
+    "message": "kullanılabilir"
+  },
+  "keyDisabled": {
+    "message": "devre dışı"
+  },
+  "keyNoModel": {
+    "message": "bir model seçin"
+  },
+  "keyPausedUntil": {
+    "message": "{0} saatine kadar duraklatıldı"
+  },
+  "keyProblem": {
+    "message": "sorun"
+  },
+  "tier_free": {
+    "message": "ücretsiz"
+  },
+  "tier_paid": {
+    "message": "ücretli"
+  },
+  "tier_local": {
+    "message": "yerel"
+  },
+  "gl_never": {
+    "message": "Asla çevirme"
+  },
+  "gl_always": {
+    "message": "Her zaman şöyle çevir"
+  },
+  "popupTranslate": {
+    "message": "Bu sayfayı çevir"
+  },
+  "popupSettings": {
+    "message": "Ayarlar"
+  },
+  "popupUnsupported": {
+    "message": "Bu sayfa bir eklenti tarafından çevrilemez (tarayıcı sayfası, eklenti mağazası veya PDF görüntüleyici)."
+  },
+  "popupKey": {
+    "message": "Anahtar"
+  },
+  "popupKeyAuto": {
+    "message": "Otomatik (ücretsiz ve yerel)"
+  },
+  "popupAuto": {
+    "message": "Bu siteyi otomatik çevir"
+  },
+  "popupSensitive": {
+    "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
+  },
+  "popupKeys": {
+    "message": "Anahtar durumu"
+  },
+  "popupNoKeys": {
+    "message": "Henüz anahtar yok."
+  },
+  "popupAddKey": {
+    "message": "Anahtar ekle"
+  },
+  "popupShortcut": {
+    "message": "Kısayol:"
+  },
+  "optTitle": {
+    "message": "DevDocTrad ayarları"
+  },
+  "optPermMissing": {
+    "message": "Çeviri sağlayıcılarına erişime tarayıcı henüz izin vermedi."
+  },
+  "optPermGrant": {
+    "message": "Sağlayıcılara erişime izin ver"
+  },
+  "optTabKeys": {
+    "message": "Anahtarlar"
+  },
+  "optTabTranslation": {
+    "message": "Çeviri"
+  },
+  "optTabGlossary": {
+    "message": "Sözlük"
+  },
+  "optTabSites": {
+    "message": "Siteler"
+  },
+  "optTabData": {
+    "message": "Veriler"
+  },
+  "optKeysTitle": {
+    "message": "API anahtarları"
+  },
+  "optKeysLocal": {
+    "message": "Anahtarlar bu tarayıcıda kalır (yerel depolama). Hesabınızla asla eşitlenmez ve sağlayıcı dışında hiçbir yere gönderilmez. Kartların sırası öncelik sırasıdır."
+  },
+  "optAddKey": {
+    "message": "Ekle"
+  },
+  "optKey": {
+    "message": "Anahtar"
+  },
+  "optShow": {
+    "message": "Göster"
+  },
+  "optHide": {
+    "message": "Gizle"
+  },
+  "optBaseUrl": {
+    "message": "Ollama adresi"
+  },
+  "optTier": {
+    "message": "Tür"
+  },
+  "optModelEasy": {
+    "message": "Model (basit sayfalar)"
+  },
+  "optModelHard": {
+    "message": "Zor sayfalar için model (isteğe bağlı)"
+  },
+  "optMaxChars": {
+    "message": "Parti boyutu (karakter)"
+  },
+  "optInterval": {
+    "message": "İstekler arası süre (ms)"
+  },
+  "optMaxReq": {
+    "message": "Günlük en fazla istek (0 = sınırsız)"
+  },
+  "optPriceIn": {
+    "message": "Giriş fiyatı (milyon token başına $$)"
+  },
+  "optPriceOut": {
+    "message": "Çıkış fiyatı (milyon token başına $$)"
+  },
+  "optDailyCap": {
+    "message": "Günlük tavan ($$)"
+  },
+  "optLoadModels": {
+    "message": "Modelleri yükle"
+  },
+  "optTest": {
+    "message": "Test et"
+  },
+  "optUp": {
+    "message": "Yukarı taşı"
+  },
+  "optDown": {
+    "message": "Aşağı taşı"
+  },
+  "optDelete": {
+    "message": "Sil"
+  },
+  "optDeleteConfirm": {
+    "message": "Bu anahtar silinsin mi?"
+  },
+  "optWorking": {
+    "message": "Denetleniyor…"
+  },
+  "optTestOk": {
+    "message": "Geçerli anahtar, {0} model kullanılabilir."
+  },
+  "optTestOkLocal": {
+    "message": "Ollama yanıt veriyor, yüklü model sayısı: {0}."
+  },
+  "optModelsLoaded": {
+    "message": "{0} model yüklendi: listeden birini seçin."
+  },
+  "optSaved": {
+    "message": "Kaydedildi"
+  },
+  "optTarget": {
+    "message": "Hedef dil"
+  },
+  "optTargetAuto": {
+    "message": "Tarayıcı dili ({0})"
+  },
+  "optMode": {
+    "message": "Görünüm"
+  },
+  "optModeReplace": {
+    "message": "Metni değiştir"
+  },
+  "optModeBilingual": {
+    "message": "İki dilli (çeviri orijinalin altında)"
+  },
+  "optExplain": {
+    "message": "Teknik terimler: çeviri + parantez içinde İngilizce"
+  },
+  "optExplainHelp": {
+    "message": "Teknik kavramlar çevrilir ve İngilizce terim ilk geçtiği yerde parantez içinde verilir. Kapalı: İngilizce teknik terimler parantezsiz, İngilizce kalır. Kod ve adlar (Path, npm…) asla çevrilmez."
+  },
+  "optComments": {
+    "message": "Kod bloklarındaki yorumları çevir"
+  },
+  "optCommentsHelp": {
+    "message": "Varsayılan olarak kapalı. Yalnızca sitenin sözdizimi vurgulamasının tanıdığı yorumlar çevrilir; kod asla değişmez ve orijinal aynen geri gelir."
+  },
+  "optPageCap": {
+    "message": "Sayfa başına karakter sınırı"
+  },
+  "optShortcut": {
+    "message": "Klavye kısayolu"
+  },
+  "optShortcutCurrent": {
+    "message": "Geçerli kısayol: {0}."
+  },
+  "optShortcutNone": {
+    "message": "yok"
+  },
+  "optShortcutWhereChrome": {
+    "message": "Değiştirmek için: chrome://extensions/shortcuts sayfasını açın."
+  },
+  "optShortcutWhereFirefox": {
+    "message": "Değiştirmek için: Eklenti yöneticisi, dişli simgesi, \"Eklenti kısayollarını yönet\"."
+  },
+  "optGlossaryHelp": {
+    "message": "Asla çevrilmeyecek veya her zaman belirli bir şekilde çevrilecek terimler. Modele yalnızca bölümde geçen terimler gönderilir. En fazla 500 kayıt."
+  },
+  "optGlTerm": {
+    "message": "Terim"
+  },
+  "optGlType": {
+    "message": "Kural"
+  },
+  "optGlTranslation": {
+    "message": "Zorunlu çeviri"
+  },
+  "optGlAdd": {
+    "message": "Terim ekle"
+  },
+  "optGlExport": {
+    "message": "Dışa aktar (JSON)"
+  },
+  "optGlImport": {
+    "message": "İçe aktar (JSON)"
+  },
+  "optGlImportError": {
+    "message": "Geçersiz dosya: {term, type, translation} nesnelerinden oluşan bir JSON listesi bekleniyor."
+  },
+  "optAutoTitle": {
+    "message": "Otomatik çevrilen siteler"
+  },
+  "optAutoHelp": {
+    "message": "Açılır pencereden \"Bu siteyi otomatik çevir\" ile site ekleyin. Otomatik çeviride yalnızca ücretsiz anahtarlar ve Ollama kullanılır."
+  },
+  "optAutoEmpty": {
+    "message": "Henüz site yok."
+  },
+  "optAutoGranted": {
+    "message": "izin verildi"
+  },
+  "optAutoRevoked": {
+    "message": "izin kaldırıldı"
+  },
+  "optSensitiveTitle": {
+    "message": "Hassas sayfalar"
+  },
+  "optSensitiveHelp": {
+    "message": "Asla otomatik çevrilmez (parola alanı olan hiçbir sayfa da). Elle çeviri düğmesi yine çalışır."
+  },
+  "optSensitiveBase": {
+    "message": "Temel kalıplar:"
+  },
+  "optSensitiveExtra": {
+    "message": "Ek kalıplar (her satıra bir kelime veya alan adı)"
+  },
+  "optCacheTitle": {
+    "message": "Çeviri önbelleği"
+  },
+  "optCacheInfo": {
+    "message": "Önbellekte {0} bölüm ({1} MB). Daha önce çevrilmiş bir sayfa ağ çağrısı yapılmadan yeniden gösterilir."
+  },
+  "optCacheClear": {
+    "message": "Önbelleği temizle"
+  },
+  "optUsageTitle": {
+    "message": "Bugünkü kullanım"
+  },
+  "optUsageLine": {
+    "message": "{0}{1} istek{2}"
+  },
+  "optPrivacyTitle": {
+    "message": "Gizlilik"
+  },
+  "optPrivacyText": {
+    "message": "Çevirdiğiniz sayfaların metni yalnızca seçtiğiniz sağlayıcıya gönderilir veya Ollama ile bilgisayarınızda kalır. İstatistik yok, izleme yok, geliştiriciye hiçbir şey gönderilmez. Ücretsiz katmanlarda Gemini ve Mistral gönderilen metni yeniden kullanabilir."
+  },
+  "warnGemini": {
+    "message": "Anahtarı faturalandırma bağlamadan Google AI Studio'da oluşturun. Ücretsiz katmanda Google gönderilen metni yeniden kullanabilir. Aynı projedeki iki anahtar aynı sınırı paylaşır."
+  },
+  "warnGroq": {
+    "message": "Kartsız ücretsiz katman: sınır aşılınca yalnızca 429 hatası alırsınız, asla fatura değil."
+  },
+  "warnMistral": {
+    "message": "Kartsız ücretsiz mod. İstekler eğitim için kullanılabilir: isterseniz Mistral konsolundan kapatın."
+  },
+  "warnOpenRouter": {
+    "message": "Ücretsiz modda yalnızca :free ile biten modeller kabul edilir (günde yaklaşık 50 istek). Bu eklenti için asla kredi yüklemeyin."
+  },
+  "warnOllama": {
+    "message": "Bilgisayarınızdaki model: ücretsiz ve gizli, hiçbir şey bilgisayarınızdan çıkmaz. Küçük bir model daha çok hata yapar; şüpheli bölümler orijinal kalır."
+  },
+  "popupView": {
+    "message": "Sayfa görünümü"
+  },
+  "segOriginal": {
+    "message": "Orijinal"
+  },
+  "segTranslation": {
+    "message": "Çeviri"
+  },
+  "popupTranslating": {
+    "message": "Çevriliyor…"
+  },
+  "popupCount": {
+    "message": "{0} / {1} bölüm"
+  },
+  "popupManage": {
+    "message": "Yönet"
+  },
+  "popupMoreKeys": {
+    "message": "ve {0} anahtar daha"
+  },
+  "popupNoKeysLong": {
+    "message": "Başlamak için ücretsiz bir anahtar (Gemini, Groq, Mistral, OpenRouter) veya Ollama ekleyin."
+  },
+  "stateReady": {
+    "message": "Çeviriye hazır"
+  },
+  "stateNoKey": {
+    "message": "Anahtar ayarlanmadı"
+  },
+  "stateRunning": {
+    "message": "Çevriliyor"
+  },
+  "stateTranslated": {
+    "message": "Sayfa çevrildi"
+  },
+  "stateOriginal": {
+    "message": "Orijinal gösteriliyor"
+  },
+  "stateStopped": {
+    "message": "Durduruldu"
+  },
+  "statePaused": {
+    "message": "Sayfa sınırına ulaşıldı"
+  },
+  "stateError": {
+    "message": "Hata"
+  },
+  "stateUnavailable": {
+    "message": "Sayfa çevrilemiyor"
+  },
+  "toastAutoOn": {
+    "message": "{0} için otomatik çeviri açıldı."
+  },
+  "toastAutoOff": {
+    "message": "{0} için otomatik çeviri kapatıldı."
+  },
+  "toastPermDenied": {
+    "message": "İzin reddedildi: site eklenmedi."
+  },
+  "badgeShowBadge": {
+    "message": "DevDocTrad rozetini göster"
+  },
+  "optNavLabel": {
+    "message": "Ayar bölümleri"
+  },
+  "optNavKeys": {
+    "message": "Sağlayıcılar ve anahtarlar"
+  },
+  "optNavPrivacy": {
+    "message": "Gizlilik ve maliyetler"
+  },
+  "optNavAppearance": {
+    "message": "Görünüm"
+  },
+  "optDescKeys": {
+    "message": "API anahtarlarınız ve Ollama, kartların sırasıyla yukarıdan aşağıya denenir."
+  },
+  "optDescTranslation": {
+    "message": "Dil, görünüm ve eklentinin neyi çevirmesine izin verildiği."
+  },
+  "optDescPrivacy": {
+    "message": "Tarayıcınızdan neyin, kime gittiği ve maliyeti."
+  },
+  "optDescSites": {
+    "message": "Otomatik çevrilen siteler ve korunacak sayfalar."
+  },
+  "optDescGlossary": {
+    "message": "Olduğu gibi bırakılacak veya her zaman aynı şekilde çevrilecek terimler."
+  },
+  "optDescData": {
+    "message": "Çeviri önbelleği ve bu tarayıcıda tutulan veriler."
+  },
+  "optDescAppearance": {
+    "message": "Ayarların, açılır pencerenin ve sayfalarda gösterilen rozetin teması."
+  },
+  "optVersion": {
+    "message": "sürüm {0}"
+  },
+  "optAddProvider": {
+    "message": "Sağlayıcı ekle"
+  },
+  "optAddProviderHelp": {
+    "message": "Yeni kart en sona eklenir. Kartların sırası öncelik sırasıdır."
+  },
+  "optProvider": {
+    "message": "Sağlayıcı"
+  },
+  "optKeysEmptyHint": {
+    "message": "Bir sağlayıcı seçin: bir kart görünür, anahtarınızı yapıştırın, sonra \"Modelleri yükle\" deyip bir model seçin."
+  },
+  "optKeyName": {
+    "message": "Anahtar adı"
+  },
+  "optKeyEnabled": {
+    "message": "Bu anahtarı kullan"
+  },
+  "optPriority": {
+    "message": "öncelik {0}"
+  },
+  "optKeyHelp": {
+    "message": "Varsayılan olarak gizli, yalnızca bu tarayıcıda tutulur."
+  },
+  "optBaseUrlHelp": {
+    "message": "Ollama bilgisayarınızda çalışıyor olmalı."
+  },
+  "optModelHelp": {
+    "message": "\"Modelleri yükle\" öneri listesini doldurur."
+  },
+  "optLimits": {
+    "message": "Sınırlar"
+  },
+  "optLimitsHelp": {
+    "message": "Boş = sağlayıcının varsayılanı."
+  },
+  "optPaidTitle": {
+    "message": "Maliyetler"
+  },
+  "optPaidHelp": {
+    "message": "Yalnızca açılır pencerede seçtiğinizde kullanılır."
+  },
+  "optPaidOk": {
+    "message": "Tavan ve fiyatlar ayarlı: anahtar tavana kadar kullanılabilir."
+  },
+  "optPrivacyFlow": {
+    "message": "Metin nereye gidiyor"
+  },
+  "optProviderNotes": {
+    "message": "Sağlayıcı notları"
+  },
+  "optProviderUsed": {
+    "message": "kullanımda"
+  },
+  "optUsageEmpty": {
+    "message": "Henüz anahtar ayarlanmadı."
+  },
+  "optUsageHelp": {
+    "message": "Her gün gece yarısı (UTC) sıfırlanır."
+  },
+  "optPaidRuleTitle": {
+    "message": "Ücretli anahtarlar"
+  },
+  "optPaidRule": {
+    "message": "Ücretli bir anahtar asla otomatik kullanılmaz: açılır pencerede seçmeniz gerekir. Günlük tavan ve iki fiyat ayarlanana kadar engelli kalır ve tavana ulaşılır ulaşılmaz durur."
+  },
+  "optAutoEmptyTitle": {
+    "message": "Henüz otomatik site yok"
+  },
+  "optAutoEmptyLong": {
+    "message": "Eklemek için: siteyi açın, araç çubuğundaki DevDocTrad simgesine tıklayın, ardından \"Bu siteyi otomatik çevir\"i açın. Tarayıcı yalnızca o site için izin ister."
+  },
+  "optAutoRemoveConfirm": {
+    "message": "{0} otomatik çevrilen sitelerden kaldırılsın mı?"
+  },
+  "optGlEmpty": {
+    "message": "Henüz terim yok. Örnek: \"Asla çevirme\" kuralıyla \"thread\"."
+  },
+  "optGlCount": {
+    "message": "{0} / 500 terim"
+  },
+  "optGlImported": {
+    "message": "{0} terim içe aktarıldı."
+  },
+  "optCacheConfirm": {
+    "message": "Önbellek temizlensin mi? Daha önce çevrilmiş sayfaların yeniden çevrilmesi gerekecek (sağlayıcılara yeni çağrılar)."
+  },
+  "optCacheCleared": {
+    "message": "Önbellek temizlendi."
+  },
+  "optStorageTitle": {
+    "message": "Yerel depolama"
+  },
+  "optTheme": {
+    "message": "Tema"
+  },
+  "optThemeHelp": {
+    "message": "\"Sistem\", bilgisayarınızın açık veya koyu ayarını izler."
+  },
+  "optThemeSystem": {
+    "message": "Sistem"
+  },
+  "optThemeLight": {
+    "message": "Açık"
+  },
+  "optThemeDark": {
+    "message": "Koyu"
+  },
+  "optPriceInUsd": {
+    "message": "Giriş fiyatı (milyon token başına $$)"
+  },
+  "optPriceOutUsd": {
+    "message": "Çıkış fiyatı (milyon token başına $$)"
+  },
+  "optDailyCapUsd": {
+    "message": "Günlük tavan ($$)"
+  },
+  "errGeminiPrepay": {
+    "message": "bu Google projesi ön ödemeli faturalandırma kullanıyor ve kredileri tükendi. Hiçbir şey yüklemeyin: Google AI Studio'da faturalandırması olmayan bir projede anahtar oluşturun (ücretsiz katman)."
+  }
+}

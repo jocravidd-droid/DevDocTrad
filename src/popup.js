@@ -13,6 +13,7 @@
   var lastStatus = null;
   var pollTimer = null;
   var sensitive = false;
+  var MAX_KEYS = 2;   // le popup ne doit jamais dépasser 600 px de haut (barre de défilement sinon)
 
   DDT.localizePage(document);
   UI.fillIcons(document);
@@ -43,7 +44,7 @@
     hasUsableKey = false;
     state.keys.forEach(function (k, i) {
       if (k.enabled && k.configured && k.tier !== 'paid') hasUsableKey = true;
-      if (i < 3) {
+      if (i < MAX_KEYS) {
         var li = document.createElement('li');
         var name = document.createElement('span');
         name.className = 'kname';
@@ -68,10 +69,10 @@
         sel.appendChild(o);
       }
     });
-    if (state.keys.length > 3) {
+    if (state.keys.length > MAX_KEYS) {
       var more = document.createElement('li');
       more.className = 'more';
-      more.textContent = t('popupMoreKeys', [state.keys.length - 3]);
+      more.textContent = t('popupMoreKeys', [state.keys.length - MAX_KEYS]);
       ul.appendChild(more);
     }
     sel.value = current || '';
@@ -133,6 +134,7 @@
     return send({ type: 'getState' }).then(function (state) {
       if (!state) return;
       renderKeys(state);
+      renderTargets(state.settings.targetChoice || state.settings.target);
       $('autoSite').checked = (state.settings.autoSites || []).some(function (h) {
         return host === h || host.slice(-(h.length + 1)) === '.' + h;
       });
@@ -163,6 +165,38 @@
   $('openOptions').addEventListener('click', openOptions);
   $('manageKeys').addEventListener('click', openOptions);
   $('addKey').addEventListener('click', openOptions);
+
+  /* ---------- Langue cible : les 37 langues, comme dans les réglages ---------- */
+  function renderTargets(current) {
+    var sel = $('targetSel');
+    sel.textContent = '';
+    var o = document.createElement('option');
+    o.value = 'auto';
+    o.textContent = DDT.languageName(DDT.resolveTarget('auto')) + ' (auto)';   // court : le menu est étroit
+    o.title = t('optTargetAuto', [DDT.languageName(DDT.resolveTarget('auto'))]);
+    sel.appendChild(o);
+    Object.keys(DDT.TARGETS).map(function (code) { return { code: code, name: DDT.languageName(code) }; })
+      .sort(function (a, b) { return a.name.localeCompare(b.name); })
+      .forEach(function (l) {
+        var opt = document.createElement('option');
+        opt.value = l.code;
+        opt.textContent = l.name;
+        sel.appendChild(opt);
+      });
+    sel.value = current || 'auto';
+  }
+  $('targetSel').addEventListener('change', function (e) {
+    var v = e.target.value;
+    api.storage.local.get('settings').then(function (r) {
+      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {}, { target: v });
+      return api.storage.local.set({ settings: s });
+    }).then(function () {
+      // la page oublie l'ancienne langue ; l'utilisateur relance avec « Traduire cette page »
+      if (tab && supported) api.tabs.sendMessage(tab.id, { to: 'content', cmd: 'status' }).catch(function () {});
+      lastStatus = null;
+      setTimeout(refreshStatus, 150);
+    });
+  });
 
   // Geste utilisateur : la demande de permission part tout de suite, avant tout await (Firefox).
   $('autoSite').addEventListener('change', function (e) {
