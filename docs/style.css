@@ -1,8 +1,8 @@
 /* DevDocTrad - site. Style verre dépoli. Licence MIT. */
-:root{--accent:#0a84ff;--text:#1d1d1f;--text2:#515154;--glass:rgba(255,255,255,.6);--stroke:rgba(255,255,255,.7);--hair:rgba(60,60,67,.14);--fill:rgba(120,120,128,.14);
+:root{--menu:rgba(250,250,252,.97);--accent:#0a84ff;--text:#1d1d1f;--text2:#515154;--glass:rgba(255,255,255,.6);--stroke:rgba(255,255,255,.7);--hair:rgba(60,60,67,.14);--fill:rgba(120,120,128,.14);
 --shadow:0 20px 60px rgba(31,38,135,.16),0 1px 0 rgba(255,255,255,.7) inset;
 --bg:radial-gradient(1100px 700px at 5% -10%,#cfe3ff 0%,transparent 60%),radial-gradient(900px 600px at 100% 0%,#e7dcff 0%,transparent 55%),radial-gradient(1000px 800px at 50% 110%,#ffe1ec 0%,transparent 60%),#f5f5f7;color-scheme:light dark}
-@media (prefers-color-scheme:dark){:root{--text:#f5f5f7;--text2:#aeaeb2;--glass:rgba(40,40,44,.55);--stroke:rgba(255,255,255,.12);--hair:rgba(255,255,255,.12);--fill:rgba(120,120,128,.24);
+@media (prefers-color-scheme:dark){:root{--menu:rgba(30,30,32,.97);--text:#f5f5f7;--text2:#aeaeb2;--glass:rgba(40,40,44,.55);--stroke:rgba(255,255,255,.12);--hair:rgba(255,255,255,.12);--fill:rgba(120,120,128,.24);
 --shadow:0 20px 60px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.06) inset;
 --bg:radial-gradient(1100px 700px at 5% -10%,#10264a 0%,transparent 60%),radial-gradient(900px 600px at 100% 0%,#2a1d4a 0%,transparent 55%),radial-gradient(1000px 800px at 50% 110%,#3a1626 0%,transparent 60%),#000}}
 *{box-sizing:border-box}
@@ -15,7 +15,7 @@ a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 nav.top{position:sticky;top:12px;z-index:10;margin:12px auto 0;display:flex;align-items:center;gap:14px;padding:10px 14px 10px 12px;border-radius:18px}
 nav.top .brand{display:flex;align-items:center;gap:10px;font-weight:650;color:var(--text)}
 nav.top img{width:30px;height:30px;border-radius:8px}
-nav.top .links{margin-left:auto;display:flex;gap:16px;font-size:15px;flex-wrap:wrap}
+nav.top .links{margin-inline-start:auto;display:flex;gap:16px;font-size:15px;flex-wrap:wrap;align-items:center}
 nav.top .links a{color:var(--text2)}
 .hero{text-align:center;padding:72px 0 28px}
 .hero img.icon{width:112px;height:112px;border-radius:26px;box-shadow:0 18px 40px rgba(10,132,255,.35)}
@@ -41,20 +41,44 @@ h2{font-size:clamp(28px,4vw,38px);letter-spacing:-.025em;margin:0 0 8px;text-ali
 .steps li{list-style:none;counter-increment:s;padding:14px 18px 14px 58px;position:relative}
 .steps li::before{content:counter(s);position:absolute;left:16px;top:14px;width:28px;height:28px;border-radius:14px;background:var(--accent);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-.cols .card ol{margin:8px 0 0;padding-left:20px;color:var(--text2);font-size:15.5px}
+.cols .card ol{margin:8px 0 0;padding-inline-start:20px;color:var(--text2);font-size:15.5px}
 .cols .card li{margin:4px 0}
 code{font:14px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--fill);padding:2px 6px;border-radius:6px}
 details{padding:16px 20px;margin-bottom:10px}
 details summary{cursor:pointer;font-weight:600;list-style:none}
 details summary::-webkit-details-marker{display:none}
-details summary::after{content:"+";float:right;color:var(--text2);font-weight:400}
+details summary::after{content:"+";float:inline-end;color:var(--text2);font-weight:400}
 details[open] summary::after{content:"–"}
 details p{color:var(--text2);margin:10px 0 0;font-size:15.5px}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .gallery figure{margin:0;padding:8px}
 .gallery img{width:100%;height:auto;border-radius:14px;display:block}
 .gallery figcaption{font-size:14px;color:var(--text2);padding:8px 6px 2px;text-align:center}
-footer{padding:56px 0 40px;text-align:center;color:var(--text2);font-size:14px}
+footer{padding:56px 0 96px;text-align:center;color:var(--text2);font-size:14px}
 footer a{color:var(--text2);text-decoration:underline}
-@media (max-width:640px){nav.top .links a.hide-sm{display:none}.hero{padding-top:44px}}
+/* Nouveauté, langues, bandeau de langue (v1.1) */
+.hero p.new{margin:0 0 14px}
+.hero p.new a{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--fill);color:var(--text);font-size:15px;font-weight:600}
+.hero p.new a:hover{text-decoration:none;filter:brightness(1.05)}
+.gallery{margin-top:24px}
+.faq{max-width:780px;margin:24px auto 0}
+.sub.more{margin-top:18px}
+details.lang{position:relative;padding:0;margin:0}
+details.lang summary{display:flex;align-items:center;gap:6px;color:var(--text2);font-weight:500;padding:4px 8px;border-radius:10px}
+details.lang summary:hover{background:var(--fill)}
+details.lang summary::after{content:none}
+details.lang summary svg{width:18px;height:18px;flex:none}
+details.lang ul{position:absolute;inset-inline-end:0;top:calc(100% + 10px);margin:0;padding:8px;list-style:none;width:min(560px,calc(100vw - 40px));
+max-height:min(70vh,520px);overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:2px;border-radius:18px;z-index:20;
+background:var(--menu);border:1px solid var(--hair);box-shadow:var(--shadow)}
+details.lang li a{display:block;padding:7px 10px;border-radius:10px;color:var(--text);font-size:15px}
+details.lang li a:hover{background:var(--fill);text-decoration:none}
+details.lang li a[aria-current=page]{background:var(--accent);color:#fff}
+.langbar{position:fixed;inset-inline:0;bottom:16px;margin:0 auto;width:max-content;max-width:calc(100vw - 32px);display:flex;align-items:center;gap:6px;padding:8px 8px 8px 18px;border-radius:999px;z-index:30;font-size:15px}
+.langbar a{font-weight:600}
+.langbar button{all:unset;cursor:pointer;width:30px;height:30px;border-radius:15px;display:grid;place-items:center;color:var(--text2);font-size:20px;line-height:1}
+.langbar button:hover{background:var(--fill)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.langbar button:focus-visible,details.lang summary:focus-visible{outline:3px solid var(--accent)}
+@media (max-width:640px){nav.top .links a.hide-sm{display:none}.hero{padding-top:44px}nav.top{gap:8px}nav.top .links{gap:10px}details.lang summary span{display:none}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

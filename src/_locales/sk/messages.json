@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Prekladať tento web automaticky"
   },
+  "popupVoice": {
+    "message": "Prekladať hlas vo videách"
+  },
+  "cmdVoice": {
+    "message": "Preložiť hlas videa alebo zastaviť"
+  },
+  "voiceOn": {
+    "message": "Preklad hlasu zapnutý"
+  },
+  "voiceNoVideo": {
+    "message": "Na tejto stránke nie je žiadne video."
+  },
+  "voicePlay": {
+    "message": "Spusti video a začni."
+  },
+  "voiceListening": {
+    "message": "Počúvanie videa"
+  },
+  "voiceSourceTrack": {
+    "message": "Titulky videa preložené"
+  },
+  "voiceSourceAudio": {
+    "message": "Hlas prepísaný cez Groq Whisper (zadarmo)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video bez titulkov: pridaj bezplatný kľúč Groq na prepis hlasu."
+  },
+  "voiceRate": {
+    "message": "Bezplatný limit prepisu vyčerpaný. Skús to neskôr."
+  },
+  "voiceNoAudio": {
+    "message": "Zvuk tohto videa nie je dostupný (chránené video)."
+  },
+  "voiceSpeak": {
+    "message": "Prečítať preklad nahlas"
+  },
+  "voiceSpeakOff": {
+    "message": "Zastaviť čítanie nahlas"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy sa neprekladá automaticky. Tlačidlo funguje, Ollama sa použije ako prvá, ak je nastavená."
   },

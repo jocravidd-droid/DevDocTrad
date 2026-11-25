@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "このサイトを自動で翻訳"
   },
+  "popupVoice": {
+    "message": "動画の音声を翻訳"
+  },
+  "cmdVoice": {
+    "message": "動画の音声を翻訳／停止"
+  },
+  "voiceOn": {
+    "message": "音声翻訳をオンにしました"
+  },
+  "voiceNoVideo": {
+    "message": "このページには動画がありません。"
+  },
+  "voicePlay": {
+    "message": "動画を再生すると始まります。"
+  },
+  "voiceListening": {
+    "message": "動画を聞き取り中"
+  },
+  "voiceSourceTrack": {
+    "message": "動画の字幕を翻訳しました"
+  },
+  "voiceSourceAudio": {
+    "message": "Groq Whisper で音声を文字起こし（無料）"
+  },
+  "voiceNeedGroq": {
+    "message": "字幕のない動画：音声を文字起こしするには無料の Groq キーを追加してください。"
+  },
+  "voiceRate": {
+    "message": "無料の文字起こし上限に達しました。後でもう一度お試しください。"
+  },
+  "voiceNoAudio": {
+    "message": "この動画の音声にはアクセスできません（保護された動画）。"
+  },
+  "voiceSpeak": {
+    "message": "翻訳を読み上げる"
+  },
+  "voiceSpeakOff": {
+    "message": "読み上げを停止"
+  },
   "popupSensitive": {
     "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
   },

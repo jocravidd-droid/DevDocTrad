@@ -202,5 +202,18 @@
 "optPriceInUsd": "Inmatningspris ($$ per miljon tokens)",
 "optPriceOutUsd": "Utmatningspris ($$ per miljon tokens)",
 "optDailyCapUsd": "Dagstak ($$)",
-"errGeminiPrepay": "det här Google-projektet använder förbetald fakturering och dess krediter är slut. Fyll inte på något: skapa en nyckel i ett projekt utan fakturering i Google AI Studio (gratisnivå)."
+"errGeminiPrepay": "det här Google-projektet använder förbetald fakturering och dess krediter är slut. Fyll inte på något: skapa en nyckel i ett projekt utan fakturering i Google AI Studio (gratisnivå).",
+"popupVoice": "Översätt rösten i videor",
+"cmdVoice": "Översätt videons röst eller stoppa",
+"voiceOn": "Röstöversättning på",
+"voiceNoVideo": "Det finns ingen video på den här sidan.",
+"voicePlay": "Spela upp videon för att börja.",
+"voiceListening": "Lyssnar på videon",
+"voiceSourceTrack": "Videons undertexter översatta",
+"voiceSourceAudio": "Röst transkriberad av Groq Whisper (gratis)",
+"voiceNeedGroq": "Video utan undertexter: lägg till en gratis Groq-nyckel för att transkribera rösten.",
+"voiceRate": "Gratis gräns för transkription nådd. Försök igen senare.",
+"voiceNoAudio": "Ljudet i den här videon är inte åtkomligt (skyddad video).",
+"voiceSpeak": "Läs upp översättningen",
+"voiceSpeakOff": "Sluta läsa upp"
 }

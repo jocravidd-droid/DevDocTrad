@@ -202,5 +202,18 @@
 "optPriceInUsd": "Cena wejścia ($$ za milion tokenów)",
 "optPriceOutUsd": "Cena wyjścia ($$ za milion tokenów)",
 "optDailyCapUsd": "Dzienny limit ($$)",
-"errGeminiPrepay": "ten projekt Google korzysta z płatności z góry, a jego środki się wyczerpały. Niczego nie doładowuj: utwórz klucz w projekcie bez płatności w Google AI Studio (darmowy plan)."
+"errGeminiPrepay": "ten projekt Google korzysta z płatności z góry, a jego środki się wyczerpały. Niczego nie doładowuj: utwórz klucz w projekcie bez płatności w Google AI Studio (darmowy plan).",
+"popupVoice": "Tłumacz głos w filmach",
+"cmdVoice": "Tłumacz głos filmu lub zatrzymaj",
+"voiceOn": "Tłumaczenie głosu włączone",
+"voiceNoVideo": "Na tej stronie nie ma filmu.",
+"voicePlay": "Odtwórz film, aby zacząć.",
+"voiceListening": "Słuchanie filmu",
+"voiceSourceTrack": "Napisy filmu przetłumaczone",
+"voiceSourceAudio": "Głos transkrybowany przez Groq Whisper (za darmo)",
+"voiceNeedGroq": "Film bez napisów: dodaj darmowy klucz Groq, aby transkrybować głos.",
+"voiceRate": "Osiągnięto darmowy limit transkrypcji. Spróbuj później.",
+"voiceNoAudio": "Dźwięk tego filmu jest niedostępny (film chroniony).",
+"voiceSpeak": "Czytaj tłumaczenie na głos",
+"voiceSpeakOff": "Zatrzymaj czytanie na głos"
 }

@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Oversett dette nettstedet automatisk"
   },
+  "popupVoice": {
+    "message": "Oversett stemmen i videoer"
+  },
+  "cmdVoice": {
+    "message": "Oversett videoens stemme eller stopp"
+  },
+  "voiceOn": {
+    "message": "Stemmeoversettelse på"
+  },
+  "voiceNoVideo": {
+    "message": "Det er ingen video på denne siden."
+  },
+  "voicePlay": {
+    "message": "Spill av videoen for å starte."
+  },
+  "voiceListening": {
+    "message": "Lytter til videoen"
+  },
+  "voiceSourceTrack": {
+    "message": "Videoens undertekster oversatt"
+  },
+  "voiceSourceAudio": {
+    "message": "Stemme transkribert av Groq Whisper (gratis)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video uten undertekster: legg til en gratis Groq-nøkkel for å transkribere stemmen."
+  },
+  "voiceRate": {
+    "message": "Gratis grense for transkripsjon nådd. Prøv igjen senere."
+  },
+  "voiceNoAudio": {
+    "message": "Lyden i denne videoen er ikke tilgjengelig (beskyttet video)."
+  },
+  "voiceSpeak": {
+    "message": "Les oversettelsen høyt"
+  },
+  "voiceSpeakOff": {
+    "message": "Stopp høytlesing"
+  },
   "popupSensitive": {
     "message": "Sensitiv side: oversettes aldri automatisk. Knappen virker, Ollama brukes først hvis det er satt opp."
   },

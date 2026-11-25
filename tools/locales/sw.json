@@ -202,5 +202,18 @@
 "optPriceInUsd": "Bei ya ingizo ($$ kwa tokeni milioni)",
 "optPriceOutUsd": "Bei ya matokeo ($$ kwa tokeni milioni)",
 "optDailyCapUsd": "Kikomo cha kila siku ($$)",
-"errGeminiPrepay": "mradi huu wa Google unatumia malipo ya kabla na salio lake limekwisha. Usiongeze chochote: unda ufunguo kwenye mradi usio na malipo katika Google AI Studio (mpango wa bure)."
+"errGeminiPrepay": "mradi huu wa Google unatumia malipo ya kabla na salio lake limekwisha. Usiongeze chochote: unda ufunguo kwenye mradi usio na malipo katika Google AI Studio (mpango wa bure).",
+"popupVoice": "Tafsiri sauti ya video",
+"cmdVoice": "Tafsiri sauti ya video au simamisha",
+"voiceOn": "Tafsiri ya sauti imewashwa",
+"voiceNoVideo": "Hakuna video kwenye ukurasa huu.",
+"voicePlay": "Cheza video ili kuanza.",
+"voiceListening": "Inasikiliza video",
+"voiceSourceTrack": "Manukuu ya video yametafsiriwa",
+"voiceSourceAudio": "Sauti imeandikwa na Groq Whisper (bure)",
+"voiceNeedGroq": "Video bila manukuu: ongeza ufunguo wa bure wa Groq ili kuandika sauti.",
+"voiceRate": "Kikomo cha bure cha kuandika sauti kimefikiwa. Jaribu tena baadaye.",
+"voiceNoAudio": "Sauti ya video hii haipatikani (video iliyolindwa).",
+"voiceSpeak": "Soma tafsiri kwa sauti",
+"voiceSpeakOff": "Acha kusoma kwa sauti"
 }

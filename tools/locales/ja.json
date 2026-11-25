@@ -202,5 +202,18 @@
 "optPriceInUsd": "入力料金（100 万トークンあたり $$）",
 "optPriceOutUsd": "出力料金（100 万トークンあたり $$）",
 "optDailyCapUsd": "1 日の上限額（$$）",
-"errGeminiPrepay": "この Google プロジェクトは前払い請求を使っており、クレジットを使い切りました。チャージはしないでください：Google AI Studio で請求先のないプロジェクトにキーを作成してください（無料プラン）。"
+"errGeminiPrepay": "この Google プロジェクトは前払い請求を使っており、クレジットを使い切りました。チャージはしないでください：Google AI Studio で請求先のないプロジェクトにキーを作成してください（無料プラン）。",
+"popupVoice": "動画の音声を翻訳",
+"cmdVoice": "動画の音声を翻訳／停止",
+"voiceOn": "音声翻訳をオンにしました",
+"voiceNoVideo": "このページには動画がありません。",
+"voicePlay": "動画を再生すると始まります。",
+"voiceListening": "動画を聞き取り中",
+"voiceSourceTrack": "動画の字幕を翻訳しました",
+"voiceSourceAudio": "Groq Whisper で音声を文字起こし（無料）",
+"voiceNeedGroq": "字幕のない動画：音声を文字起こしするには無料の Groq キーを追加してください。",
+"voiceRate": "無料の文字起こし上限に達しました。後でもう一度お試しください。",
+"voiceNoAudio": "この動画の音声にはアクセスできません（保護された動画）。",
+"voiceSpeak": "翻訳を読み上げる",
+"voiceSpeakOff": "読み上げを停止"
 }

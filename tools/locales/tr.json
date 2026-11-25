@@ -202,5 +202,18 @@
 "optPriceInUsd": "Giriş fiyatı (milyon token başına $$)",
 "optPriceOutUsd": "Çıkış fiyatı (milyon token başına $$)",
 "optDailyCapUsd": "Günlük tavan ($$)",
-"errGeminiPrepay": "bu Google projesi ön ödemeli faturalandırma kullanıyor ve kredileri tükendi. Hiçbir şey yüklemeyin: Google AI Studio'da faturalandırması olmayan bir projede anahtar oluşturun (ücretsiz katman)."
+"errGeminiPrepay": "bu Google projesi ön ödemeli faturalandırma kullanıyor ve kredileri tükendi. Hiçbir şey yüklemeyin: Google AI Studio'da faturalandırması olmayan bir projede anahtar oluşturun (ücretsiz katman).",
+"popupVoice": "Videolardaki sesi çevir",
+"cmdVoice": "Videonun sesini çevir veya durdur",
+"voiceOn": "Ses çevirisi açık",
+"voiceNoVideo": "Bu sayfada video yok.",
+"voicePlay": "Başlamak için videoyu oynat.",
+"voiceListening": "Video dinleniyor",
+"voiceSourceTrack": "Videonun altyazıları çevrildi",
+"voiceSourceAudio": "Ses Groq Whisper ile yazıya döküldü (ücretsiz)",
+"voiceNeedGroq": "Altyazısız video: sesi yazıya dökmek için ücretsiz bir Groq anahtarı ekle.",
+"voiceRate": "Ücretsiz yazıya dökme sınırına ulaşıldı. Daha sonra yeniden dene.",
+"voiceNoAudio": "Bu videonun sesine erişilemiyor (korumalı video).",
+"voiceSpeak": "Çeviriyi sesli oku",
+"voiceSpeakOff": "Sesli okumayı durdur"
 }

@@ -202,5 +202,18 @@
 "optPriceInUsd": "Harga input ($$ per sejuta token)",
 "optPriceOutUsd": "Harga output ($$ per sejuta token)",
 "optDailyCapUsd": "Batas harian ($$)",
-"errGeminiPrepay": "proyek Google ini memakai penagihan prabayar dan kreditnya sudah habis. Jangan mengisi apa pun: buat kunci di proyek tanpa penagihan di Google AI Studio (paket gratis)."
+"errGeminiPrepay": "proyek Google ini memakai penagihan prabayar dan kreditnya sudah habis. Jangan mengisi apa pun: buat kunci di proyek tanpa penagihan di Google AI Studio (paket gratis).",
+"popupVoice": "Terjemahkan suara di video",
+"cmdVoice": "Terjemahkan suara video atau berhenti",
+"voiceOn": "Terjemahan suara aktif",
+"voiceNoVideo": "Tidak ada video di halaman ini.",
+"voicePlay": "Putar video untuk memulai.",
+"voiceListening": "Mendengarkan video",
+"voiceSourceTrack": "Subtitle video diterjemahkan",
+"voiceSourceAudio": "Suara ditranskripsi oleh Groq Whisper (gratis)",
+"voiceNeedGroq": "Video tanpa subtitle: tambahkan kunci Groq gratis untuk mentranskripsi suara.",
+"voiceRate": "Batas transkripsi gratis tercapai. Coba lagi nanti.",
+"voiceNoAudio": "Suara video ini tidak dapat diakses (video dilindungi).",
+"voiceSpeak": "Bacakan terjemahan",
+"voiceSpeakOff": "Hentikan pembacaan"
 }

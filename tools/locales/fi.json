@@ -202,5 +202,18 @@
 "optPriceInUsd": "Syötteen hinta ($$ miljoonaa tokenia kohden)",
 "optPriceOutUsd": "Tulosteen hinta ($$ miljoonaa tokenia kohden)",
 "optDailyCapUsd": "Päiväkatto ($$)",
-"errGeminiPrepay": "tämä Google-projekti käyttää ennakkoon maksettua laskutusta, ja sen krediitit ovat loppuneet. Älä lataa mitään: luo avain projektiin ilman laskutusta Google AI Studiossa (ilmaistaso)."
+"errGeminiPrepay": "tämä Google-projekti käyttää ennakkoon maksettua laskutusta, ja sen krediitit ovat loppuneet. Älä lataa mitään: luo avain projektiin ilman laskutusta Google AI Studiossa (ilmaistaso).",
+"popupVoice": "Käännä videoiden puhe",
+"cmdVoice": "Käännä videon puhe tai pysäytä",
+"voiceOn": "Puheen käännös päällä",
+"voiceNoVideo": "Tällä sivulla ei ole videota.",
+"voicePlay": "Aloita toistamalla video.",
+"voiceListening": "Kuunnellaan videota",
+"voiceSourceTrack": "Videon tekstitykset käännetty",
+"voiceSourceAudio": "Puhe litteroitu Groq Whisperillä (ilmainen)",
+"voiceNeedGroq": "Video ilman tekstityksiä: lisää ilmainen Groq-avain puheen litterointiin.",
+"voiceRate": "Ilmainen litterointiraja täynnä. Yritä myöhemmin uudelleen.",
+"voiceNoAudio": "Tämän videon ääntä ei voi käyttää (suojattu video).",
+"voiceSpeak": "Lue käännös ääneen",
+"voiceSpeakOff": "Lopeta ääneen lukeminen"
 }

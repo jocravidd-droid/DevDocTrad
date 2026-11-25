@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Images promotionnelles du Chrome Web Store : store/promo-440x280.png et store/promo-1400x560.png. */
+/* Images promotionnelles : Chrome Web Store (440x280, 1400x560), aperçu GitHub (1280x640) et partage du site (1200x630). */
 'use strict';
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -7,7 +7,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const logo = fs.readFileSync(path.join(ROOT, 'design', 'logo', 'devdoctrad-symbol.svg'), 'utf8');
 const shot = 'data:image/png;base64,' + fs.readFileSync(path.join(ROOT, 'store', 'screenshots', 'screenshot-1-traduction-fr.png')).toString('base64');
-function page(w, h, big) {
+function page(w, h, big, tagline) {
   return `<!doctype html><html><head><meta charset="utf-8"><style>
   *{box-sizing:border-box}body{margin:0;width:${w}px;height:${h}px;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",system-ui,sans-serif;
   background:#070a1d;background-image:radial-gradient(60% 70% at 0% 0%,rgba(40,70,190,.75),transparent 70%),radial-gradient(60% 70% at 100% 10%,rgba(92,50,190,.6),transparent 70%),radial-gradient(60% 60% at 70% 100%,rgba(16,150,160,.5),transparent 70%);color:#eef0ff;display:flex;align-items:center;gap:${big ? 56 : 18}px;padding:0 ${big ? 80 : 26}px}
@@ -18,15 +18,17 @@ function page(w, h, big) {
   .shot{margin-left:auto;width:520px;border-radius:18px;padding:8px;background:rgba(30,34,78,.7);border:1px solid rgba(170,190,255,.2);box-shadow:0 30px 70px rgba(0,0,0,.5)}
   .shot img{display:block;width:100%;border-radius:12px}
   </style></head><body><div class="logo">${logo.replace(/<title>[^<]*<\/title>/, '')}</div><div><h1>DevDoc<b>Trad</b></h1>
-  <p>${big ? 'Faithful translation of developer docs. Code stays intact.' : 'Faithful translation of developer docs. Code stays intact.'}</p></div>
+  <p>${tagline || 'Faithful translation of developer docs. Code stays intact.'}</p></div>
   ${big ? `<div class="shot"><img src="${shot}"></div>` : ''}</body></html>`;
 }
 (async () => {
   const b = await chromium.launch(process.env.DDT_CHROMIUM ? { executablePath: process.env.DDT_CHROMIUM } : {});
   const p = await b.newPage();
-  for (const [w, h, big, out] of [[440, 280, false, 'store/promo-440x280.png'], [1400, 560, true, 'store/promo-1400x560.png']]) {
+  const social = 'Faithful translation of developer docs and video voice. Code stays intact. Free, 37 languages.';
+  for (const [w, h, big, out, tag] of [[440, 280, false, 'store/promo-440x280.png'], [1400, 560, true, 'store/promo-1400x560.png'],
+    [1280, 640, true, 'store/social-preview-1280x640.png', social], [1200, 630, true, 'docs/assets/og-image.png', social]]) {
     await p.setViewportSize({ width: w, height: h });
-    await p.setContent(page(w, h, big));
+    await p.setContent(page(w, h, big, tag));
     await p.waitForTimeout(300);
     await p.screenshot({ path: path.join(ROOT, out) });
     console.log(out);

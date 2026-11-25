@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Translate this site automatically"
   },
+  "popupVoice": {
+    "message": "Translate the voice in videos"
+  },
+  "cmdVoice": {
+    "message": "Translate the video's voice or stop"
+  },
+  "voiceOn": {
+    "message": "Voice translation on"
+  },
+  "voiceNoVideo": {
+    "message": "No video on this page."
+  },
+  "voicePlay": {
+    "message": "Play the video to start."
+  },
+  "voiceListening": {
+    "message": "Listening to the video"
+  },
+  "voiceSourceTrack": {
+    "message": "Video subtitles translated"
+  },
+  "voiceSourceAudio": {
+    "message": "Voice transcribed by Groq Whisper (free)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video without subtitles: add a free Groq key to transcribe the voice."
+  },
+  "voiceRate": {
+    "message": "Free transcription limit reached. Try again later."
+  },
+  "voiceNoAudio": {
+    "message": "This video's sound cannot be accessed (protected video)."
+  },
+  "voiceSpeak": {
+    "message": "Read the translation aloud"
+  },
+  "voiceSpeakOff": {
+    "message": "Stop reading aloud"
+  },
   "popupSensitive": {
     "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."
   },

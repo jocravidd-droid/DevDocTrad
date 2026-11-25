@@ -16,6 +16,7 @@ Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : 
 - **Dans ta langue** : par défaut, la langue de ton navigateur (français, russe, espagnol, japonais… 37 langues). Tu peux en choisir une autre dans les réglages.
 - **Original ou bilingue** : remplace le texte, ou affiche la traduction sous chaque phrase. Un clic pour revenir à l'original exact.
 - **Gratuit** : utilise les paliers gratuits de Gemini, Groq, Mistral et OpenRouter avec tes propres clés, ou un modèle local avec Ollama. Une clé payante est bloquée tant que tu n'as pas réglé un plafond.
+- **La voix des vidéos traduite** (nouveau en 1.1) : tutoriels, conférences, YouTube… les sous-titres sont traduits en direct sur la vidéo. Sans sous-titres, la voix est transcrite gratuitement par Groq Whisper avec ta clé Groq gratuite. Option lecture à voix haute (voix du navigateur, gratuite).
 - **Privé** : aucune statistique, aucun pistage. Tes clés restent dans ton navigateur.
 - **Agréable à utiliser** : interface en verre façon Apple, thème clair, sombre ou automatique, badge très discret sur les pages.
 
@@ -27,7 +28,7 @@ L'extension n'est pas encore publiée sur les boutiques. En attendant, l'install
 
 ### Chrome, Edge ou Brave
 
-1. Télécharge le fichier [`release/devdoctrad-chrome-1.0.0.zip`](release/devdoctrad-chrome-1.0.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement (« Download raw file ») en haut à droite du fichier.
+1. Télécharge le fichier [`release/devdoctrad-chrome-1.1.0.zip`](release/devdoctrad-chrome-1.1.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement (« Download raw file ») en haut à droite du fichier.
 2. Décompresse ce fichier zip dans un dossier que tu garderas (par exemple `Documents/DevDocTrad`). Ne supprime pas ce dossier ensuite : le navigateur charge l'extension depuis lui.
 3. Ouvre la page des extensions en tapant dans la barre d'adresse :
    - Chrome : `chrome://extensions`
@@ -40,7 +41,7 @@ L'extension n'est pas encore publiée sur les boutiques. En attendant, l'install
 
 ### Firefox
 
-1. Télécharge le fichier [`release/devdoctrad-firefox-1.0.0.zip`](release/devdoctrad-firefox-1.0.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
+1. Télécharge le fichier [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
@@ -118,6 +119,7 @@ Ollama est utilisé en secours quand toutes les clés gratuites sont en pause, e
 ## Utilisation
 
 - **Traduire une page** : clique sur l'icône DevDocTrad, puis sur **Traduire cette page**. Ou utilise le raccourci **Alt+Maj+T**.
+- **Traduire la voix d'une vidéo** : sur une page avec une vidéo, active **Traduire la voix des vidéos** dans le popup, ou appuie sur **Alt+Maj+V**. Les sous-titres traduits s'affichent sur la vidéo ; le bouton haut-parleur lit la traduction à voix haute ; la croix arrête tout. Pour une vidéo sans sous-titres, il faut une clé **Groq** gratuite (la transcription Whisper est incluse dans le palier gratuit de Groq).
 - **Revenir à l'original** : bouton **Voir l'original** dans le petit badge en bas à droite de la page, dans le popup, ou de nouveau **Alt+Maj+T**.
 - **Traduire automatiquement un site** : sur un site que tu lis souvent, ouvre le popup et active **Traduire automatiquement ce site**. Le navigateur te demande la permission pour ce site uniquement.
 - **Changer de langue** : directement dans le popup (menu **Langue cible**, 37 langues), ou dans Réglages > **Traduction**. Par défaut : la langue de ton navigateur.
@@ -156,7 +158,21 @@ Les tests automatiques (Node + jsdom) utilisent de faux fournisseurs : aucun app
 node tools/e2e.js
 ```
 
+```bash
+node tools/e2e_voice.js
+```
+
+Le second vérifie la traduction de la voix des vidéos dans un vrai Chromium (vidéo de démo, sous-titres, son transcrit par un faux Groq).
+
+```bash
+python3 tools/build_site.py
+```
+
+Régénère le site `docs/` dans les 37 langues à partir de `tools/site/<langue>.json` (un fichier de textes par langue, mêmes clés que `fr.json`). Les tests vérifient que `docs/` est à jour.
+
 Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo et un faux serveur Ollama local ; il produit aussi les captures d'écran de `store/screenshots/`. Autres scripts : `node tools/qa_shots.js` (captures de contrôle du popup et du badge), `node tools/export_logo.js` (exports du logo), `node tools/promo.js` (images promotionnelles).
+
+Historique des versions : [CHANGELOG.md](CHANGELOG.md). Une mise à jour (correctifs et améliorations) est préparée tous les 15 jours.
 
 Organisation : `src/` (code de l'extension), `manifests/` (manifestes Chrome et Firefox), `tests/`, `tools/` (icônes, textes de l'interface, démo, test de bout en bout), `docs/` (site), `store/` (fiches des boutiques), `PLAN.md` (cahier des charges), `design/` (direction artistique, spécification, logo, contrôle visuel).
 
@@ -180,18 +196,19 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 - Code, commands, function names, APIs, paths and URLs are never translated; links, bold text and `code` elements stay in place.
 - Replace mode or bilingual mode, one click back to the exact original.
 - Free: uses the free tiers of Gemini, Groq, Mistral and OpenRouter with your own keys, or a local model with Ollama. Paid keys are blocked until you set a daily cap.
+- New in 1.1: translates the voice of videos (tutorials, talks, YouTube) into live subtitles; videos without subtitles are transcribed for free with Groq Whisper (your free Groq key); optional read-aloud.
 - No analytics, no tracking. Keys stay in your browser's local storage.
 
 ### Install (Chrome, Edge, Brave)
 
-1. Download [`release/devdoctrad-chrome-1.0.0.zip`](release/devdoctrad-chrome-1.0.0.zip) and unzip it into a folder you will keep.
+1. Download [`release/devdoctrad-chrome-1.1.0.zip`](release/devdoctrad-chrome-1.1.0.zip) and unzip it into a folder you will keep.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
 
 ### Install (Firefox 140+)
 
-1. Download [`release/devdoctrad-firefox-1.0.0.zip`](release/devdoctrad-firefox-1.0.0.zip).
+1. Download [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and select the zip file. (Temporary: it is removed when Firefox closes.)
 
@@ -201,4 +218,6 @@ Open the settings (gear icon in the popup), **Keys** tab, choose a provider, cli
 
 ### Use
 
-Click the toolbar icon, then **Translate this page**, or press **Alt+Shift+T**. Press it again to go back to the original.
+Click the toolbar icon, then **Translate this page**, or press **Alt+Shift+T**. Press it again to go back to the original. For a video, turn on **Translate the voice in videos** in the popup or press **Alt+Shift+V**.
+
+Website in 37 languages: https://devdoctrad.vercel.app/en/

@@ -202,5 +202,18 @@
 "optPriceInUsd": "입력 가격(100만 토큰당 $$)",
 "optPriceOutUsd": "출력 가격(100만 토큰당 $$)",
 "optDailyCapUsd": "일일 한도($$)",
-"errGeminiPrepay": "이 Google 프로젝트는 선불 결제를 사용하며 크레딧이 모두 소진되었습니다. 충전하지 마세요. Google AI Studio에서 결제가 없는 프로젝트에 키를 만드세요(무료 요금제)."
+"errGeminiPrepay": "이 Google 프로젝트는 선불 결제를 사용하며 크레딧이 모두 소진되었습니다. 충전하지 마세요. Google AI Studio에서 결제가 없는 프로젝트에 키를 만드세요(무료 요금제).",
+"popupVoice": "동영상 음성 번역",
+"cmdVoice": "동영상 음성 번역 또는 중지",
+"voiceOn": "음성 번역 켜짐",
+"voiceNoVideo": "이 페이지에 동영상이 없습니다.",
+"voicePlay": "시작하려면 동영상을 재생하세요.",
+"voiceListening": "동영상 듣는 중",
+"voiceSourceTrack": "동영상 자막 번역됨",
+"voiceSourceAudio": "Groq Whisper로 음성 받아쓰기(무료)",
+"voiceNeedGroq": "자막 없는 동영상: 음성을 받아쓰려면 무료 Groq 키를 추가하세요.",
+"voiceRate": "무료 받아쓰기 한도에 도달했습니다. 나중에 다시 시도하세요.",
+"voiceNoAudio": "이 동영상의 소리에 접근할 수 없습니다(보호된 동영상).",
+"voiceSpeak": "번역 소리 내어 읽기",
+"voiceSpeakOff": "소리 내어 읽기 중지"
 }

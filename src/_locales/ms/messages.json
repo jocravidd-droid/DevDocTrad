@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Terjemah laman ini secara automatik"
   },
+  "popupVoice": {
+    "message": "Terjemah suara dalam video"
+  },
+  "cmdVoice": {
+    "message": "Terjemah suara video atau berhenti"
+  },
+  "voiceOn": {
+    "message": "Terjemahan suara dihidupkan"
+  },
+  "voiceNoVideo": {
+    "message": "Tiada video di halaman ini."
+  },
+  "voicePlay": {
+    "message": "Mainkan video untuk bermula."
+  },
+  "voiceListening": {
+    "message": "Mendengar video"
+  },
+  "voiceSourceTrack": {
+    "message": "Sari kata video diterjemah"
+  },
+  "voiceSourceAudio": {
+    "message": "Suara ditranskripsi oleh Groq Whisper (percuma)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video tanpa sari kata: tambah kunci Groq percuma untuk mentranskripsi suara."
+  },
+  "voiceRate": {
+    "message": "Had transkripsi percuma dicapai. Cuba lagi kemudian."
+  },
+  "voiceNoAudio": {
+    "message": "Bunyi video ini tidak dapat diakses (video dilindungi)."
+  },
+  "voiceSpeak": {
+    "message": "Baca terjemahan dengan kuat"
+  },
+  "voiceSpeakOff": {
+    "message": "Berhenti membaca dengan kuat"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemah automatik. Tombol kekal berfungsi, Ollama digunakan dahulu jika sudah ditetapkan."
   },

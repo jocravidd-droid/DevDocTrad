@@ -1,2 +1,2 @@
-4cb60ce9ad9a4739590c317aafb2474ea7db40a71fdb14d7ad54a385f366d77c  devdoctrad-chrome-1.0.0.zip
-c9a2da6a0baa4102c2fe78010b269fdeaff807db333bc431ac64a70bad8ecf3c  devdoctrad-firefox-1.0.0.zip
+a1db32ac5a2458eba98baf1f3003a073fc303068d9ee7c522cb6ef8cde0a2e3c  devdoctrad-chrome-1.1.0.zip
+5f28c36da411fd1ab3176158af4460528f4aa8691199140fed574cf2e96fae22  devdoctrad-firefox-1.1.0.zip

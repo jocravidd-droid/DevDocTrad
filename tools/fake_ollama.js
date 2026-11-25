@@ -31,7 +31,7 @@ http.createServer((req, res) => {
       const d = dicts[LANG[user.target]] || {};
       const translations = user.texts.map((t) => {
         if (d[t]) return d[t];
-        unknown.add(t);
+        unknown.add(process.env.FAKE_OLLAMA_DEBUG ? user.target + " | " + t : t);
         fs.writeFileSync(path.join(dir, 'unknown.txt'), [...unknown].join('\n') + '\n');
         return t.replace(/\{(\d+)\|[^{}]*\}/g, '{$1}');
       });

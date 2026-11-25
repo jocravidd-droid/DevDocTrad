@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Tự động dịch trang web này"
   },
+  "popupVoice": {
+    "message": "Dịch giọng nói trong video"
+  },
+  "cmdVoice": {
+    "message": "Dịch giọng nói của video hoặc dừng"
+  },
+  "voiceOn": {
+    "message": "Đã bật dịch giọng nói"
+  },
+  "voiceNoVideo": {
+    "message": "Không có video trên trang này."
+  },
+  "voicePlay": {
+    "message": "Phát video để bắt đầu."
+  },
+  "voiceListening": {
+    "message": "Đang nghe video"
+  },
+  "voiceSourceTrack": {
+    "message": "Đã dịch phụ đề của video"
+  },
+  "voiceSourceAudio": {
+    "message": "Giọng nói được chép lại bằng Groq Whisper (miễn phí)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video không có phụ đề: thêm khóa Groq miễn phí để chép lại giọng nói."
+  },
+  "voiceRate": {
+    "message": "Đã đạt giới hạn chép lời miễn phí. Hãy thử lại sau."
+  },
+  "voiceNoAudio": {
+    "message": "Không thể truy cập âm thanh của video này (video được bảo vệ)."
+  },
+  "voiceSpeak": {
+    "message": "Đọc to bản dịch"
+  },
+  "voiceSpeakOff": {
+    "message": "Dừng đọc to"
+  },
   "popupSensitive": {
     "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
   },

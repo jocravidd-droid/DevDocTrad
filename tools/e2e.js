@@ -181,8 +181,9 @@ async function shot(page, name) {
     await opt.waitForTimeout(800);
     const optTitle = await opt.textContent('h1');
     check('page de réglages en français', optTitle === 'Fournisseurs et clés', optTitle);
-    const keyShown = await opt.evaluate(() => document.querySelector('[data-f=key]').type);
-    check('clé masquée par défaut', keyShown === 'password');
+    // Chromium : champ texte masqué par CSS (-webkit-text-security), pour éviter les gestionnaires de mots de passe
+    const keyShown = await opt.evaluate(() => { const i = document.querySelector('[data-f=key]'); return i.type === 'password' || i.classList.contains('masked'); });
+    check('clé masquée par défaut', keyShown);
     await shot(opt, 'screenshot-3-reglages.png');
     await opt.close();
 

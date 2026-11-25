@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Käännä tämä sivusto automaattisesti"
   },
+  "popupVoice": {
+    "message": "Käännä videoiden puhe"
+  },
+  "cmdVoice": {
+    "message": "Käännä videon puhe tai pysäytä"
+  },
+  "voiceOn": {
+    "message": "Puheen käännös päällä"
+  },
+  "voiceNoVideo": {
+    "message": "Tällä sivulla ei ole videota."
+  },
+  "voicePlay": {
+    "message": "Aloita toistamalla video."
+  },
+  "voiceListening": {
+    "message": "Kuunnellaan videota"
+  },
+  "voiceSourceTrack": {
+    "message": "Videon tekstitykset käännetty"
+  },
+  "voiceSourceAudio": {
+    "message": "Puhe litteroitu Groq Whisperillä (ilmainen)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video ilman tekstityksiä: lisää ilmainen Groq-avain puheen litterointiin."
+  },
+  "voiceRate": {
+    "message": "Ilmainen litterointiraja täynnä. Yritä myöhemmin uudelleen."
+  },
+  "voiceNoAudio": {
+    "message": "Tämän videon ääntä ei voi käyttää (suojattu video)."
+  },
+  "voiceSpeak": {
+    "message": "Lue käännös ääneen"
+  },
+  "voiceSpeakOff": {
+    "message": "Lopeta ääneen lukeminen"
+  },
   "popupSensitive": {
     "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
   },

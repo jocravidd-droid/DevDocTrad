@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "לתרגם אתר זה אוטומטית"
   },
+  "popupVoice": {
+    "message": "תרגום הקול בסרטונים"
+  },
+  "cmdVoice": {
+    "message": "תרגום קול הסרטון או עצירה"
+  },
+  "voiceOn": {
+    "message": "תרגום הקול הופעל"
+  },
+  "voiceNoVideo": {
+    "message": "אין סרטון בדף הזה."
+  },
+  "voicePlay": {
+    "message": "הפעל את הסרטון כדי להתחיל."
+  },
+  "voiceListening": {
+    "message": "מאזין לסרטון"
+  },
+  "voiceSourceTrack": {
+    "message": "הכתוביות של הסרטון תורגמו"
+  },
+  "voiceSourceAudio": {
+    "message": "הקול תומלל על ידי Groq Whisper (חינם)"
+  },
+  "voiceNeedGroq": {
+    "message": "סרטון בלי כתוביות: הוסף מפתח Groq חינמי כדי לתמלל את הקול."
+  },
+  "voiceRate": {
+    "message": "הגעת למגבלת התמלול החינמית. נסה שוב מאוחר יותר."
+  },
+  "voiceNoAudio": {
+    "message": "אין גישה לשמע של הסרטון הזה (סרטון מוגן)."
+  },
+  "voiceSpeak": {
+    "message": "הקראת התרגום בקול"
+  },
+  "voiceSpeakOff": {
+    "message": "הפסקת ההקראה"
+  },
   "popupSensitive": {
     "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
   },

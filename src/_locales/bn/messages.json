@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "এই সাইট স্বয়ংক্রিয়ভাবে অনুবাদ করুন"
   },
+  "popupVoice": {
+    "message": "ভিডিওর কণ্ঠ অনুবাদ করুন"
+  },
+  "cmdVoice": {
+    "message": "ভিডিওর কণ্ঠ অনুবাদ করুন বা থামান"
+  },
+  "voiceOn": {
+    "message": "কণ্ঠ অনুবাদ চালু"
+  },
+  "voiceNoVideo": {
+    "message": "এই পৃষ্ঠায় কোনো ভিডিও নেই।"
+  },
+  "voicePlay": {
+    "message": "শুরু করতে ভিডিও চালান।"
+  },
+  "voiceListening": {
+    "message": "ভিডিও শোনা হচ্ছে"
+  },
+  "voiceSourceTrack": {
+    "message": "ভিডিওর সাবটাইটেল অনূদিত"
+  },
+  "voiceSourceAudio": {
+    "message": "Groq Whisper দিয়ে কণ্ঠ লিখিত (বিনামূল্যে)"
+  },
+  "voiceNeedGroq": {
+    "message": "সাবটাইটেল ছাড়া ভিডিও: কণ্ঠ লিখিত করতে একটি বিনামূল্যের Groq কী যোগ করুন।"
+  },
+  "voiceRate": {
+    "message": "বিনামূল্যের ট্রান্সক্রিপশন সীমা পূর্ণ। পরে আবার চেষ্টা করুন।"
+  },
+  "voiceNoAudio": {
+    "message": "এই ভিডিওর শব্দ পাওয়া যাচ্ছে না (সুরক্ষিত ভিডিও)।"
+  },
+  "voiceSpeak": {
+    "message": "অনুবাদ জোরে পড়ুন"
+  },
+  "voiceSpeakOff": {
+    "message": "জোরে পড়া বন্ধ করুন"
+  },
   "popupSensitive": {
     "message": "সংবেদনশীল পেজ: কখনও স্বয়ংক্রিয় অনুবাদ হয় না। বোতাম কাজ করে, সেট থাকলে Ollama আগে ব্যবহৃত হয়।"
   },

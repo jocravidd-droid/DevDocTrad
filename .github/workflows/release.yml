@@ -1,0 +1,37 @@
+# Publie une version GitHub (avec les deux zips) quand une étiquette v1.2.3 est envoyée.
+name: Version
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - run: npm test
+      - run: python3 build.py
+      - name: Vérifier que l'étiquette correspond à la version
+        run: |
+          V=$(python3 -c "import json;print(json.load(open('manifests/base.json'))['version'])")
+          test "v$V" = "$GITHUB_REF_NAME"
+      - name: Notes de version (section du CHANGELOG)
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          awk -v v="$V" '$0 ~ "^## \\["v"\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > notes.md
+      - name: Créer la version GitHub
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS.txt --title "DevDocTrad $GITHUB_REF_NAME" --notes-file notes.md

@@ -843,6 +843,79 @@
       });
     }
 
+    /* ---------------- Voix des vidéos : transcription (Groq Whisper, palier gratuit) ----------------
+     * Seules les clés Groq gratuites servent : jamais de clé payante pour l'audio. Le son arrive
+     * en base64 (morceaux de quelques secondes) ; seul le texte transcrit est renvoyé à la page. */
+    function base64ToBytes(b64) {
+      var bin = (typeof atob === 'function') ? atob(b64) : Buffer.from(b64, 'base64').toString('binary');
+      var out = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+    function voiceKeys(keys) {
+      return keys.filter(function (k) {
+        return k.provider === DDT.WHISPER.provider && k.enabled !== false && k.key && tierOf(k) === 'free';
+      });
+    }
+    function transcribe(msg) {
+      var audio = String((msg && msg.audio) || '');
+      var mime = String((msg && msg.mime) || 'audio/webm').split(';')[0];
+      if (!audio) return Promise.resolve({ ok: false, error: 'empty' });
+      if (audio.length * 0.75 > DDT.WHISPER.maxBytes) return Promise.resolve({ ok: false, error: 'too_big' });
+      return loadAll().then(function (all) {
+        var keys = voiceKeys(all.keys);
+        if (!keys.length) return { ok: false, error: 'no_groq' };
+        return getSessionState().then(function (st) {
+          var key = null;
+          var minUntil = Infinity;
+          keys.forEach(function (k) {
+            if (key) return;
+            var av = keyAvailability(k, st, all.usage);
+            if (av.ok) key = k; else if (av.until) minUntil = Math.min(minUntil, av.until);
+          });
+          if (!key && !isFinite(minUntil)) return { ok: false, error: 'no_groq' };   // clés désactivées (refusées)
+          if (!key) return { ok: false, error: 'rate_limited', waitMs: Math.max(1000, minUntil - now()) };
+          var ext = /ogg/.test(mime) ? 'ogg' : (/mp4|m4a|aac/.test(mime) ? 'm4a' : (/wav/.test(mime) ? 'wav' : 'webm'));
+          var form = new FormData();
+          form.append('file', new Blob([base64ToBytes(audio)], { type: mime }), 'audio.' + ext);
+          form.append('model', DDT.WHISPER.model);
+          form.append('response_format', 'json');
+          form.append('temperature', '0');
+          var url = DDT.PROVIDERS.groq.base + DDT.WHISPER.path;
+          return fetchWithTimeout(url, { method: 'POST', headers: { Authorization: 'Bearer ' + key.key }, body: form }, 60000)
+            .then(function (res) {
+              return readBody(res).then(function (b) {
+                if (!res.ok) throw classify(key, res, b);
+                return bumpUsage(key.id, 1, 0).then(function () {
+                  return { ok: true, text: DDT.cleanTranscript(b.json && b.json.text), via: key.label || 'Groq' };
+                });
+              });
+            }, function (e) {
+              throw new ProviderError('network', DDT.sanitize(e && e.message, [key.key]));
+            })
+            .catch(function (err) {
+              if (!(err instanceof ProviderError)) err = new ProviderError('network', DDT.sanitize(err && err.message, [key.key]));
+              return handleKeyError(key, err, st).then(function (m) {
+                if (err.kind === 'rate') return { ok: false, error: 'rate_limited', waitMs: err.retryAfterMs || PAUSE_DEFAULT_MS };
+                return { ok: false, error: err.kind, message: m || DDT.sanitize(err.message, [key.key]).slice(0, 160) };
+              });
+            });
+        });
+      });
+    }
+
+    /* Commandes envoyées au script « voix » d'un onglet ; il est injecté à la première demande. */
+    function voiceCommand(tabId, cmd, keyId) {
+      function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null }); }
+      return send().then(function (r) {
+        if (r === undefined && cmd !== 'status') throw new Error('no receiver');
+        return r || { active: false };
+      }).catch(function () {
+        if (cmd === 'status' || cmd === 'stop') return { active: false };
+        return api.scripting.executeScript({ target: { tabId: tabId }, files: ['shared.js', 'voice.js'] }).then(send);
+      });
+    }
+
     function onMessage(msg) {
       if (!msg || !msg.type) return Promise.resolve(null);
       switch (msg.type) {
@@ -859,6 +932,8 @@
         case 'clearCache': return clearCache();
         case 'resetKey': return resetKeyState(msg.keyId).then(function () { return { ok: true }; });
         case 'syncAuto': return syncAutoScripts().then(function () { return { ok: true }; });
+        case 'transcribe': return transcribe(msg);
+        case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId);
         default: return Promise.resolve(null);
       }
     }
@@ -876,7 +951,7 @@
       translateTexts: translateTexts, listModels: listModels, testKey: testKey, onMessage: onMessage,
       syncAutoScripts: syncAutoScripts, autoCheck: autoCheck, tabCommand: tabCommand, flushCache: flushCache,
       buildChain: buildChain, publicState: publicState, clearCache: clearCache, cacheInfo: cacheInfo,
-      addAutoSite: addAutoSite, removeAutoSite: removeAutoSite,
+      addAutoSite: addAutoSite, removeAutoSite: removeAutoSite, transcribe: transcribe, voiceCommand: voiceCommand,
       _ProviderError: ProviderError
     };
   }
@@ -910,9 +985,11 @@
 
   if (api.commands && api.commands.onCommand) {
     api.commands.onCommand.addListener(function (command) {
-      if (command !== 'toggle-translation') return;
+      if (command !== 'toggle-translation' && command !== 'toggle-voice') return;
       api.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
-        if (tabs && tabs[0]) return bg.tabCommand(tabs[0].id, 'toggle', null);
+        if (!tabs || !tabs[0]) return;
+        if (command === 'toggle-voice') return bg.voiceCommand(tabs[0].id, 'toggle', null);
+        return bg.tabCommand(tabs[0].id, 'toggle', null);
       }).catch(function () { /* page non traduisible */ });
     });
   }

@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Tłumacz tę witrynę automatycznie"
   },
+  "popupVoice": {
+    "message": "Tłumacz głos w filmach"
+  },
+  "cmdVoice": {
+    "message": "Tłumacz głos filmu lub zatrzymaj"
+  },
+  "voiceOn": {
+    "message": "Tłumaczenie głosu włączone"
+  },
+  "voiceNoVideo": {
+    "message": "Na tej stronie nie ma filmu."
+  },
+  "voicePlay": {
+    "message": "Odtwórz film, aby zacząć."
+  },
+  "voiceListening": {
+    "message": "Słuchanie filmu"
+  },
+  "voiceSourceTrack": {
+    "message": "Napisy filmu przetłumaczone"
+  },
+  "voiceSourceAudio": {
+    "message": "Głos transkrybowany przez Groq Whisper (za darmo)"
+  },
+  "voiceNeedGroq": {
+    "message": "Film bez napisów: dodaj darmowy klucz Groq, aby transkrybować głos."
+  },
+  "voiceRate": {
+    "message": "Osiągnięto darmowy limit transkrypcji. Spróbuj później."
+  },
+  "voiceNoAudio": {
+    "message": "Dźwięk tego filmu jest niedostępny (film chroniony)."
+  },
+  "voiceSpeak": {
+    "message": "Czytaj tłumaczenie na głos"
+  },
+  "voiceSpeakOff": {
+    "message": "Zatrzymaj czytanie na głos"
+  },
   "popupSensitive": {
     "message": "Strona wrażliwa: nigdy nie jest tłumaczona automatycznie. Przycisk działa; jeśli Ollama jest skonfigurowana, jest używana jako pierwsza."
   },

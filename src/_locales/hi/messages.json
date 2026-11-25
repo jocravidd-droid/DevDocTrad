@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "इस साइट का स्वचालित अनुवाद करें"
   },
+  "popupVoice": {
+    "message": "वीडियो की आवाज़ का अनुवाद करें"
+  },
+  "cmdVoice": {
+    "message": "वीडियो की आवाज़ का अनुवाद करें या रोकें"
+  },
+  "voiceOn": {
+    "message": "आवाज़ का अनुवाद चालू"
+  },
+  "voiceNoVideo": {
+    "message": "इस पेज पर कोई वीडियो नहीं है।"
+  },
+  "voicePlay": {
+    "message": "शुरू करने के लिए वीडियो चलाएँ।"
+  },
+  "voiceListening": {
+    "message": "वीडियो सुना जा रहा है"
+  },
+  "voiceSourceTrack": {
+    "message": "वीडियो के सबटाइटल अनूदित"
+  },
+  "voiceSourceAudio": {
+    "message": "आवाज़ Groq Whisper से लिखी गई (मुफ़्त)"
+  },
+  "voiceNeedGroq": {
+    "message": "बिना सबटाइटल का वीडियो: आवाज़ लिखने के लिए मुफ़्त Groq कुंजी जोड़ें।"
+  },
+  "voiceRate": {
+    "message": "मुफ़्त ट्रांसक्रिप्शन सीमा पूरी हो गई। बाद में फिर कोशिश करें।"
+  },
+  "voiceNoAudio": {
+    "message": "इस वीडियो की आवाज़ उपलब्ध नहीं है (सुरक्षित वीडियो)।"
+  },
+  "voiceSpeak": {
+    "message": "अनुवाद ज़ोर से पढ़ें"
+  },
+  "voiceSpeakOff": {
+    "message": "ज़ोर से पढ़ना बंद करें"
+  },
   "popupSensitive": {
     "message": "संवेदनशील पेज: कभी स्वचालित अनुवाद नहीं। बटन काम करता है, सेट होने पर Ollama पहले इस्तेमाल होता है।"
   },

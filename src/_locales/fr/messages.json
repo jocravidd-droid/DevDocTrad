@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Traduire automatiquement ce site"
   },
+  "popupVoice": {
+    "message": "Traduire la voix des vidéos"
+  },
+  "cmdVoice": {
+    "message": "Traduire la voix de la vidéo ou arrêter"
+  },
+  "voiceOn": {
+    "message": "Traduction de la voix activée"
+  },
+  "voiceNoVideo": {
+    "message": "Aucune vidéo sur cette page."
+  },
+  "voicePlay": {
+    "message": "Lance la vidéo pour commencer."
+  },
+  "voiceListening": {
+    "message": "Écoute de la vidéo en cours"
+  },
+  "voiceSourceTrack": {
+    "message": "Sous-titres de la vidéo traduits"
+  },
+  "voiceSourceAudio": {
+    "message": "Voix transcrite par Groq Whisper (gratuit)"
+  },
+  "voiceNeedGroq": {
+    "message": "Vidéo sans sous-titres : ajoute une clé Groq gratuite pour transcrire la voix."
+  },
+  "voiceRate": {
+    "message": "Limite gratuite de transcription atteinte. Réessaie plus tard."
+  },
+  "voiceNoAudio": {
+    "message": "Le son de cette vidéo n'est pas accessible (vidéo protégée)."
+  },
+  "voiceSpeak": {
+    "message": "Lire la traduction à voix haute"
+  },
+  "voiceSpeakOff": {
+    "message": "Arrêter la lecture à voix haute"
+  },
   "popupSensitive": {
     "message": "Page sensible : jamais de traduction automatique ici. Le bouton fonctionne, Ollama est utilisé en premier s'il est réglé."
   },

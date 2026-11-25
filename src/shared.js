@@ -537,6 +537,32 @@
     }
   }
 
+  /* ---------- Voix des vidéos : transcription gratuite (Groq Whisper) ---------- */
+  var WHISPER = { provider: 'groq', model: 'whisper-large-v3-turbo', path: '/audio/transcriptions', maxBytes: 20 * 1024 * 1024 };
+
+  /* Whisper « invente » des phrases sur un silence ou une musique (génériques de sous-titreurs,
+     remerciements). Ces phrases connues sont retirées ; un texte sans lettre est ignoré. */
+  var WHISPER_NOISE = [
+    /sous-titr\S*[^!?\n]{0,80}?(?:amara\.org|st'? ?501|radio-canada)[.!?]?/gi,
+    /amara\.org/gi,
+    /subtitles? (?:by|made by|created by)[^.!?]*[.!?]?/gi,
+    /(?:thanks?|thank you) for watching[.!?]?/gi,
+    /merci d'avoir regard[ée] (?:cette vid[ée]o)?[.!?]?/gi,
+    /please subscribe[^.!?]*[.!?]?/gi,
+    /untertitel (?:im auftrag|der amara)[^.!?]*[.!?]?/gi,
+    /продолжение следует\.{0,3}/gi,
+    /субтитры (?:сделал|создавал|подогнал)[^.!?]*[.!?]?/gi,
+    /ご視聴ありがとうございました。?/g,
+    /字幕(?:由|by)[^。.!?]*[。.!?]?/g
+  ];
+  function cleanTranscript(text) {
+    var s = String(text == null ? '' : text);
+    WHISPER_NOISE.forEach(function (re) { s = s.replace(re, ' '); });
+    s = s.replace(/\[(?:music|musique|applause|applaudissements|silence|rires|laughter)\]/gi, ' ')
+      .replace(/[\u266A\u266B]+/g, ' ').replace(/\s+/g, ' ').trim();
+    return letterCount(s) >= 2 ? s : '';
+  }
+
   root.DDT = {
     __loaded: true,
     api: api,
@@ -576,7 +602,9 @@
     todayKey: todayKey,
     t: t,
     localizePage: localizePage,
-    addTermGlosses: addTermGlosses
+    addTermGlosses: addTermGlosses,
+    WHISPER: WHISPER,
+    cleanTranscript: cleanTranscript
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.DDT;
 })(typeof globalThis !== 'undefined' ? globalThis : (typeof self !== 'undefined' ? self : this));

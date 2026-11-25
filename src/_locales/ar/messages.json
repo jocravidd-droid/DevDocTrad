@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "ترجمة هذا الموقع تلقائيًا"
   },
+  "popupVoice": {
+    "message": "ترجمة الصوت في الفيديوهات"
+  },
+  "cmdVoice": {
+    "message": "ترجمة صوت الفيديو أو الإيقاف"
+  },
+  "voiceOn": {
+    "message": "تم تفعيل ترجمة الصوت"
+  },
+  "voiceNoVideo": {
+    "message": "لا يوجد فيديو في هذه الصفحة."
+  },
+  "voicePlay": {
+    "message": "شغّل الفيديو للبدء."
+  },
+  "voiceListening": {
+    "message": "جارٍ الاستماع إلى الفيديو"
+  },
+  "voiceSourceTrack": {
+    "message": "تمت ترجمة ترجمات الفيديو"
+  },
+  "voiceSourceAudio": {
+    "message": "صوت مُفرّغ بواسطة Groq Whisper (مجاني)"
+  },
+  "voiceNeedGroq": {
+    "message": "فيديو بلا ترجمة مكتوبة: أضف مفتاح Groq مجانيًا لتفريغ الصوت."
+  },
+  "voiceRate": {
+    "message": "تم بلوغ حد التفريغ المجاني. أعد المحاولة لاحقًا."
+  },
+  "voiceNoAudio": {
+    "message": "لا يمكن الوصول إلى صوت هذا الفيديو (فيديو محمي)."
+  },
+  "voiceSpeak": {
+    "message": "قراءة الترجمة بصوت عالٍ"
+  },
+  "voiceSpeakOff": {
+    "message": "إيقاف القراءة بصوت عالٍ"
+  },
   "popupSensitive": {
     "message": "صفحة حساسة: لا تُترجم تلقائيًا أبدًا. الزر يعمل، ويُستخدم Ollama أولًا إن كان مُعدًّا."
   },

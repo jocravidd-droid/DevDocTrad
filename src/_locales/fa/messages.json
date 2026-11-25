@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "ترجمهٔ خودکار این سایت"
   },
+  "popupVoice": {
+    "message": "ترجمهٔ صدای ویدیوها"
+  },
+  "cmdVoice": {
+    "message": "ترجمهٔ صدای ویدیو یا توقف"
+  },
+  "voiceOn": {
+    "message": "ترجمهٔ صدا فعال شد"
+  },
+  "voiceNoVideo": {
+    "message": "در این صفحه ویدیویی نیست."
+  },
+  "voicePlay": {
+    "message": "برای شروع، ویدیو را پخش کن."
+  },
+  "voiceListening": {
+    "message": "در حال گوش دادن به ویدیو"
+  },
+  "voiceSourceTrack": {
+    "message": "زیرنویس‌های ویدیو ترجمه شد"
+  },
+  "voiceSourceAudio": {
+    "message": "صدا با Groq Whisper پیاده شد (رایگان)"
+  },
+  "voiceNeedGroq": {
+    "message": "ویدیوی بدون زیرنویس: برای پیاده‌سازی صدا یک کلید رایگان Groq اضافه کن."
+  },
+  "voiceRate": {
+    "message": "سقف رایگان پیاده‌سازی پر شد. بعداً دوباره امتحان کن."
+  },
+  "voiceNoAudio": {
+    "message": "صدای این ویدیو در دسترس نیست (ویدیوی محافظت‌شده)."
+  },
+  "voiceSpeak": {
+    "message": "خواندن ترجمه با صدای بلند"
+  },
+  "voiceSpeakOff": {
+    "message": "توقف خواندن با صدای بلند"
+  },
   "popupSensitive": {
     "message": "صفحهٔ حساس: هرگز به‌طور خودکار ترجمه نمی‌شود. دکمه کار می‌کند و اگر Ollama تنظیم شده باشد، اول از آن استفاده می‌شود."
   },

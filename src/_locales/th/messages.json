@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "แปลเว็บไซต์นี้อัตโนมัติ"
   },
+  "popupVoice": {
+    "message": "แปลเสียงในวิดีโอ"
+  },
+  "cmdVoice": {
+    "message": "แปลเสียงของวิดีโอหรือหยุด"
+  },
+  "voiceOn": {
+    "message": "เปิดการแปลเสียงแล้ว"
+  },
+  "voiceNoVideo": {
+    "message": "ไม่มีวิดีโอในหน้านี้"
+  },
+  "voicePlay": {
+    "message": "เล่นวิดีโอเพื่อเริ่ม"
+  },
+  "voiceListening": {
+    "message": "กำลังฟังวิดีโอ"
+  },
+  "voiceSourceTrack": {
+    "message": "แปลคำบรรยายของวิดีโอแล้ว"
+  },
+  "voiceSourceAudio": {
+    "message": "ถอดเสียงโดย Groq Whisper (ฟรี)"
+  },
+  "voiceNeedGroq": {
+    "message": "วิดีโอไม่มีคำบรรยาย: เพิ่มคีย์ Groq ฟรีเพื่อถอดเสียง"
+  },
+  "voiceRate": {
+    "message": "ถึงขีดจำกัดการถอดเสียงฟรีแล้ว ลองอีกครั้งภายหลัง"
+  },
+  "voiceNoAudio": {
+    "message": "ไม่สามารถเข้าถึงเสียงของวิดีโอนี้ (วิดีโอที่ได้รับการป้องกัน)"
+  },
+  "voiceSpeak": {
+    "message": "อ่านคำแปลออกเสียง"
+  },
+  "voiceSpeakOff": {
+    "message": "หยุดอ่านออกเสียง"
+  },
   "popupSensitive": {
     "message": "หน้าที่ละเอียดอ่อน: ไม่แปลอัตโนมัติเลย ปุ่มยังใช้ได้ และจะใช้ Ollama ก่อนหากตั้งค่าไว้"
   },

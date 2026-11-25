@@ -202,5 +202,18 @@
 "optPriceInUsd": "輸入價格（每百萬 token $$）",
 "optPriceOutUsd": "輸出價格（每百萬 token $$）",
 "optDailyCapUsd": "每日上限（$$）",
-"errGeminiPrepay": "此 Google 專案使用預付帳單，額度已用完。請不要儲值：在 Google AI Studio 中於未啟用帳單的專案裡建立金鑰（免費方案）。"
+"errGeminiPrepay": "此 Google 專案使用預付帳單，額度已用完。請不要儲值：在 Google AI Studio 中於未啟用帳單的專案裡建立金鑰（免費方案）。",
+"popupVoice": "翻譯影片中的語音",
+"cmdVoice": "翻譯影片語音或停止",
+"voiceOn": "語音翻譯已開啟",
+"voiceNoVideo": "此頁面沒有影片。",
+"voicePlay": "播放影片即可開始。",
+"voiceListening": "正在聆聽影片",
+"voiceSourceTrack": "影片字幕已翻譯",
+"voiceSourceAudio": "語音由 Groq Whisper 轉寫（免費）",
+"voiceNeedGroq": "無字幕影片：新增一個免費的 Groq 金鑰即可轉寫語音。",
+"voiceRate": "已達免費轉寫上限。請稍後再試。",
+"voiceNoAudio": "無法取得此影片的聲音（受保護的影片）。",
+"voiceSpeak": "朗讀譯文",
+"voiceSpeakOff": "停止朗讀"
 }

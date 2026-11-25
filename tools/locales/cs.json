@@ -202,5 +202,18 @@
 "optPriceInUsd": "Cena vstupu ($$ za milion tokenů)",
 "optPriceOutUsd": "Cena výstupu ($$ za milion tokenů)",
 "optDailyCapUsd": "Denní limit ($$)",
-"errGeminiPrepay": "tento projekt Google používá předplacenou fakturaci a jeho kredity jsou vyčerpány. Nic nedobíjejte: vytvořte klíč v projektu bez fakturace v Google AI Studio (bezplatný tarif)."
+"errGeminiPrepay": "tento projekt Google používá předplacenou fakturaci a jeho kredity jsou vyčerpány. Nic nedobíjejte: vytvořte klíč v projektu bez fakturace v Google AI Studio (bezplatný tarif).",
+"popupVoice": "Překládat hlas ve videích",
+"cmdVoice": "Přeložit hlas videa nebo zastavit",
+"voiceOn": "Překlad hlasu zapnut",
+"voiceNoVideo": "Na této stránce není žádné video.",
+"voicePlay": "Spusť video a začni.",
+"voiceListening": "Poslech videa",
+"voiceSourceTrack": "Titulky videa přeloženy",
+"voiceSourceAudio": "Hlas přepsán pomocí Groq Whisper (zdarma)",
+"voiceNeedGroq": "Video bez titulků: přidej bezplatný klíč Groq pro přepis hlasu.",
+"voiceRate": "Bezplatný limit přepisu vyčerpán. Zkus to později.",
+"voiceNoAudio": "Zvuk tohoto videa není dostupný (chráněné video).",
+"voiceSpeak": "Přečíst překlad nahlas",
+"voiceSpeakOff": "Zastavit čtení nahlas"
 }

@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "自动翻译此网站"
   },
+  "popupVoice": {
+    "message": "翻译视频中的语音"
+  },
+  "cmdVoice": {
+    "message": "翻译视频语音或停止"
+  },
+  "voiceOn": {
+    "message": "语音翻译已开启"
+  },
+  "voiceNoVideo": {
+    "message": "此页面没有视频。"
+  },
+  "voicePlay": {
+    "message": "播放视频即可开始。"
+  },
+  "voiceListening": {
+    "message": "正在收听视频"
+  },
+  "voiceSourceTrack": {
+    "message": "视频字幕已翻译"
+  },
+  "voiceSourceAudio": {
+    "message": "语音由 Groq Whisper 转写（免费）"
+  },
+  "voiceNeedGroq": {
+    "message": "无字幕视频：添加一个免费的 Groq 密钥即可转写语音。"
+  },
+  "voiceRate": {
+    "message": "已达到免费转写上限。请稍后再试。"
+  },
+  "voiceNoAudio": {
+    "message": "无法获取此视频的声音（受保护的视频）。"
+  },
+  "voiceSpeak": {
+    "message": "朗读译文"
+  },
+  "voiceSpeakOff": {
+    "message": "停止朗读"
+  },
   "popupSensitive": {
     "message": "敏感页面：从不自动翻译。按钮仍然可用，如已配置 Ollama 则优先使用。"
   },

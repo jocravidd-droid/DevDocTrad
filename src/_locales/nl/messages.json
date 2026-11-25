@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Deze site automatisch vertalen"
   },
+  "popupVoice": {
+    "message": "Stem in video's vertalen"
+  },
+  "cmdVoice": {
+    "message": "Stem van de video vertalen of stoppen"
+  },
+  "voiceOn": {
+    "message": "Stemvertaling aan"
+  },
+  "voiceNoVideo": {
+    "message": "Er staat geen video op deze pagina."
+  },
+  "voicePlay": {
+    "message": "Speel de video af om te beginnen."
+  },
+  "voiceListening": {
+    "message": "Video wordt beluisterd"
+  },
+  "voiceSourceTrack": {
+    "message": "Ondertitels van de video vertaald"
+  },
+  "voiceSourceAudio": {
+    "message": "Stem uitgeschreven door Groq Whisper (gratis)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video zonder ondertitels: voeg een gratis Groq-sleutel toe om de stem uit te schrijven."
+  },
+  "voiceRate": {
+    "message": "Gratis transcriptielimiet bereikt. Probeer het later opnieuw."
+  },
+  "voiceNoAudio": {
+    "message": "Het geluid van deze video is niet toegankelijk (beveiligde video)."
+  },
+  "voiceSpeak": {
+    "message": "Vertaling voorlezen"
+  },
+  "voiceSpeakOff": {
+    "message": "Voorlezen stoppen"
+  },
   "popupSensitive": {
     "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
   },

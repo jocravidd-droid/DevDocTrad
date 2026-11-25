@@ -202,5 +202,18 @@
 "optPriceInUsd": "Giá đầu vào ($$ mỗi triệu token)",
 "optPriceOutUsd": "Giá đầu ra ($$ mỗi triệu token)",
 "optDailyCapUsd": "Hạn mức hằng ngày ($$)",
-"errGeminiPrepay": "dự án Google này dùng thanh toán trả trước và đã hết tín dụng. Đừng nạp gì cả: hãy tạo khóa trong một dự án không có thanh toán trên Google AI Studio (gói miễn phí)."
+"errGeminiPrepay": "dự án Google này dùng thanh toán trả trước và đã hết tín dụng. Đừng nạp gì cả: hãy tạo khóa trong một dự án không có thanh toán trên Google AI Studio (gói miễn phí).",
+"popupVoice": "Dịch giọng nói trong video",
+"cmdVoice": "Dịch giọng nói của video hoặc dừng",
+"voiceOn": "Đã bật dịch giọng nói",
+"voiceNoVideo": "Không có video trên trang này.",
+"voicePlay": "Phát video để bắt đầu.",
+"voiceListening": "Đang nghe video",
+"voiceSourceTrack": "Đã dịch phụ đề của video",
+"voiceSourceAudio": "Giọng nói được chép lại bằng Groq Whisper (miễn phí)",
+"voiceNeedGroq": "Video không có phụ đề: thêm khóa Groq miễn phí để chép lại giọng nói.",
+"voiceRate": "Đã đạt giới hạn chép lời miễn phí. Hãy thử lại sau.",
+"voiceNoAudio": "Không thể truy cập âm thanh của video này (video được bảo vệ).",
+"voiceSpeak": "Đọc to bản dịch",
+"voiceSpeakOff": "Dừng đọc to"
 }

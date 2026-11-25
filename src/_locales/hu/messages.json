@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Webhely automatikus fordítása"
   },
+  "popupVoice": {
+    "message": "Videók hangjának fordítása"
+  },
+  "cmdVoice": {
+    "message": "A videó hangjának fordítása vagy leállítás"
+  },
+  "voiceOn": {
+    "message": "Hangfordítás bekapcsolva"
+  },
+  "voiceNoVideo": {
+    "message": "Ezen az oldalon nincs videó."
+  },
+  "voicePlay": {
+    "message": "Indítsd el a videót a kezdéshez."
+  },
+  "voiceListening": {
+    "message": "A videó hallgatása"
+  },
+  "voiceSourceTrack": {
+    "message": "A videó feliratai lefordítva"
+  },
+  "voiceSourceAudio": {
+    "message": "Hang átírva Groq Whisperrel (ingyenes)"
+  },
+  "voiceNeedGroq": {
+    "message": "Felirat nélküli videó: adj hozzá egy ingyenes Groq-kulcsot a hang átírásához."
+  },
+  "voiceRate": {
+    "message": "Elérted az ingyenes átírási korlátot. Próbáld később."
+  },
+  "voiceNoAudio": {
+    "message": "A videó hangja nem érhető el (védett videó)."
+  },
+  "voiceSpeak": {
+    "message": "A fordítás felolvasása"
+  },
+  "voiceSpeakOff": {
+    "message": "Felolvasás leállítása"
+  },
   "popupSensitive": {
     "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
   },

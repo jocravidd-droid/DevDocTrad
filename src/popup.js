@@ -216,6 +216,27 @@
     }
   });
 
+  /* ---------- Voix des vidéos : sous-titres traduits, ou son transcrit (Groq Whisper gratuit) ---------- */
+  function voiceStatus() {
+    if (!tab || !supported) return;
+    send({ type: 'voiceCommand', tabId: tab.id, cmd: 'status' }).then(function (r) {
+      $('voiceSwitch').checked = !!(r && r.active);
+    }).catch(function () { /* page sans script voix */ });
+  }
+  $('voiceSwitch').addEventListener('change', function (e) {
+    if (!tab) return;
+    var on = e.target.checked;
+    send({ type: 'voiceCommand', tabId: tab.id, cmd: on ? 'start' : 'stop', keyId: $('keySel').value || null }).then(function (r) {
+      if (on && (!r || !r.active)) {
+        e.target.checked = false;
+        UI.toast('warning', (r && r.message) || t('voiceNoVideo'));
+      } else if (on) UI.toast('success', t('voiceOn'));
+    }).catch(function (err) {
+      e.target.checked = false;
+      UI.toast('error', t('badgeError', [String(err && err.message || err)]));
+    });
+  });
+
   api.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
     tab = tabs && tabs[0];
     var url = tab && tab.url ? tab.url : '';
@@ -237,6 +258,7 @@
     refreshState().then(function () {
       if (supported) {
         refreshStatus();
+        voiceStatus();
         pollTimer = setInterval(refreshStatus, 800);
       }
     });

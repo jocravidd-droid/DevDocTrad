@@ -1,0 +1,52 @@
+# Tests à chaque envoi et à chaque pull request. Gratuit pour un dépôt public.
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - name: Tests (Node + jsdom, faux fournisseurs, aucun appel réseau réel)
+        run: npm test
+      - name: Les paquets se construisent sans erreur
+        run: python3 build.py
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - name: Chromium pour Playwright
+        run: npx playwright install --with-deps chromium
+      - run: python3 build.py
+      - name: Bout en bout (vrai Chromium, faux Ollama)
+        run: DDT_E2E_TARGET=fr xvfb-run -a node tools/e2e.js
+      - name: Bout en bout de la voix des vidéos (faux Groq)
+        run: xvfb-run -a node tools/e2e_voice.js
+      - name: Ne pas garder les captures du test
+        if: always()
+        run: git checkout -- docs/assets store/screenshots || true

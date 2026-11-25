@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Bu siteyi otomatik çevir"
   },
+  "popupVoice": {
+    "message": "Videolardaki sesi çevir"
+  },
+  "cmdVoice": {
+    "message": "Videonun sesini çevir veya durdur"
+  },
+  "voiceOn": {
+    "message": "Ses çevirisi açık"
+  },
+  "voiceNoVideo": {
+    "message": "Bu sayfada video yok."
+  },
+  "voicePlay": {
+    "message": "Başlamak için videoyu oynat."
+  },
+  "voiceListening": {
+    "message": "Video dinleniyor"
+  },
+  "voiceSourceTrack": {
+    "message": "Videonun altyazıları çevrildi"
+  },
+  "voiceSourceAudio": {
+    "message": "Ses Groq Whisper ile yazıya döküldü (ücretsiz)"
+  },
+  "voiceNeedGroq": {
+    "message": "Altyazısız video: sesi yazıya dökmek için ücretsiz bir Groq anahtarı ekle."
+  },
+  "voiceRate": {
+    "message": "Ücretsiz yazıya dökme sınırına ulaşıldı. Daha sonra yeniden dene."
+  },
+  "voiceNoAudio": {
+    "message": "Bu videonun sesine erişilemiyor (korumalı video)."
+  },
+  "voiceSpeak": {
+    "message": "Çeviriyi sesli oku"
+  },
+  "voiceSpeakOff": {
+    "message": "Sesli okumayı durdur"
+  },
   "popupSensitive": {
     "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
   },

@@ -202,5 +202,18 @@
 "optPriceInUsd": "Invoerprijs ($$ per miljoen tokens)",
 "optPriceOutUsd": "Uitvoerprijs ($$ per miljoen tokens)",
 "optDailyCapUsd": "Daglimiet ($$)",
-"errGeminiPrepay": "dit Google-project gebruikt prepaid facturering en het tegoed is op. Laad niets op: maak in Google AI Studio een sleutel aan in een project zonder facturering (gratis abonnement)."
+"errGeminiPrepay": "dit Google-project gebruikt prepaid facturering en het tegoed is op. Laad niets op: maak in Google AI Studio een sleutel aan in een project zonder facturering (gratis abonnement).",
+"popupVoice": "Stem in video's vertalen",
+"cmdVoice": "Stem van de video vertalen of stoppen",
+"voiceOn": "Stemvertaling aan",
+"voiceNoVideo": "Er staat geen video op deze pagina.",
+"voicePlay": "Speel de video af om te beginnen.",
+"voiceListening": "Video wordt beluisterd",
+"voiceSourceTrack": "Ondertitels van de video vertaald",
+"voiceSourceAudio": "Stem uitgeschreven door Groq Whisper (gratis)",
+"voiceNeedGroq": "Video zonder ondertitels: voeg een gratis Groq-sleutel toe om de stem uit te schrijven.",
+"voiceRate": "Gratis transcriptielimiet bereikt. Probeer het later opnieuw.",
+"voiceNoAudio": "Het geluid van deze video is niet toegankelijk (beveiligde video).",
+"voiceSpeak": "Vertaling voorlezen",
+"voiceSpeakOff": "Voorlezen stoppen"
 }

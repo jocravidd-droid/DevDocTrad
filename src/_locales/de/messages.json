@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Diese Website automatisch übersetzen"
   },
+  "popupVoice": {
+    "message": "Stimme in Videos übersetzen"
+  },
+  "cmdVoice": {
+    "message": "Stimme des Videos übersetzen oder stoppen"
+  },
+  "voiceOn": {
+    "message": "Sprachübersetzung aktiviert"
+  },
+  "voiceNoVideo": {
+    "message": "Auf dieser Seite gibt es kein Video."
+  },
+  "voicePlay": {
+    "message": "Starte das Video, um zu beginnen."
+  },
+  "voiceListening": {
+    "message": "Video wird angehört"
+  },
+  "voiceSourceTrack": {
+    "message": "Untertitel des Videos übersetzt"
+  },
+  "voiceSourceAudio": {
+    "message": "Stimme transkribiert von Groq Whisper (kostenlos)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video ohne Untertitel: Füge einen kostenlosen Groq-Schlüssel hinzu, um die Stimme zu transkribieren."
+  },
+  "voiceRate": {
+    "message": "Kostenloses Transkriptionslimit erreicht. Versuche es später erneut."
+  },
+  "voiceNoAudio": {
+    "message": "Der Ton dieses Videos ist nicht zugänglich (geschütztes Video)."
+  },
+  "voiceSpeak": {
+    "message": "Übersetzung vorlesen"
+  },
+  "voiceSpeakOff": {
+    "message": "Vorlesen beenden"
+  },
   "popupSensitive": {
     "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
   },

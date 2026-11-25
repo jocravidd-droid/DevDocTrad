@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Oversæt dette websted automatisk"
   },
+  "popupVoice": {
+    "message": "Oversæt stemmen i videoer"
+  },
+  "cmdVoice": {
+    "message": "Oversæt videoens stemme eller stop"
+  },
+  "voiceOn": {
+    "message": "Oversættelse af stemmen slået til"
+  },
+  "voiceNoVideo": {
+    "message": "Der er ingen video på denne side."
+  },
+  "voicePlay": {
+    "message": "Afspil videoen for at starte."
+  },
+  "voiceListening": {
+    "message": "Lytter til videoen"
+  },
+  "voiceSourceTrack": {
+    "message": "Videoens undertekster oversat"
+  },
+  "voiceSourceAudio": {
+    "message": "Stemme transskriberet af Groq Whisper (gratis)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video uden undertekster: tilføj en gratis Groq-nøgle for at transskribere stemmen."
+  },
+  "voiceRate": {
+    "message": "Gratis grænse for transskription nået. Prøv igen senere."
+  },
+  "voiceNoAudio": {
+    "message": "Lyden i denne video er ikke tilgængelig (beskyttet video)."
+  },
+  "voiceSpeak": {
+    "message": "Læs oversættelsen højt"
+  },
+  "voiceSpeakOff": {
+    "message": "Stop højtlæsning"
+  },
   "popupSensitive": {
     "message": "Følsom side: oversættes aldrig automatisk. Knappen virker, Ollama bruges først, hvis det er sat op."
   },

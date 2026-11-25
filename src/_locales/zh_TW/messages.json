@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "自動翻譯此網站"
   },
+  "popupVoice": {
+    "message": "翻譯影片中的語音"
+  },
+  "cmdVoice": {
+    "message": "翻譯影片語音或停止"
+  },
+  "voiceOn": {
+    "message": "語音翻譯已開啟"
+  },
+  "voiceNoVideo": {
+    "message": "此頁面沒有影片。"
+  },
+  "voicePlay": {
+    "message": "播放影片即可開始。"
+  },
+  "voiceListening": {
+    "message": "正在聆聽影片"
+  },
+  "voiceSourceTrack": {
+    "message": "影片字幕已翻譯"
+  },
+  "voiceSourceAudio": {
+    "message": "語音由 Groq Whisper 轉寫（免費）"
+  },
+  "voiceNeedGroq": {
+    "message": "無字幕影片：新增一個免費的 Groq 金鑰即可轉寫語音。"
+  },
+  "voiceRate": {
+    "message": "已達免費轉寫上限。請稍後再試。"
+  },
+  "voiceNoAudio": {
+    "message": "無法取得此影片的聲音（受保護的影片）。"
+  },
+  "voiceSpeak": {
+    "message": "朗讀譯文"
+  },
+  "voiceSpeakOff": {
+    "message": "停止朗讀"
+  },
   "popupSensitive": {
     "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
   },

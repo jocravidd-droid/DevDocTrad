@@ -202,5 +202,18 @@
 "optPriceInUsd": "Preț intrare ($$ pe milion de tokeni)",
 "optPriceOutUsd": "Preț ieșire ($$ pe milion de tokeni)",
 "optDailyCapUsd": "Plafon zilnic ($$)",
-"errGeminiPrepay": "acest proiect Google folosește facturare preplătită, iar creditele sale s-au epuizat. Nu reîncărca nimic: creează o cheie într-un proiect fără facturare în Google AI Studio (plan gratuit)."
+"errGeminiPrepay": "acest proiect Google folosește facturare preplătită, iar creditele sale s-au epuizat. Nu reîncărca nimic: creează o cheie într-un proiect fără facturare în Google AI Studio (plan gratuit).",
+"popupVoice": "Tradu vocea din videoclipuri",
+"cmdVoice": "Tradu vocea videoclipului sau oprește",
+"voiceOn": "Traducerea vocii activată",
+"voiceNoVideo": "Nu există niciun videoclip pe această pagină.",
+"voicePlay": "Pornește videoclipul pentru a începe.",
+"voiceListening": "Se ascultă videoclipul",
+"voiceSourceTrack": "Subtitrările videoclipului traduse",
+"voiceSourceAudio": "Voce transcrisă de Groq Whisper (gratuit)",
+"voiceNeedGroq": "Videoclip fără subtitrări: adaugă o cheie Groq gratuită pentru a transcrie vocea.",
+"voiceRate": "Limita gratuită de transcriere a fost atinsă. Încearcă mai târziu.",
+"voiceNoAudio": "Sunetul acestui videoclip nu este accesibil (videoclip protejat).",
+"voiceSpeak": "Citește traducerea cu voce tare",
+"voiceSpeakOff": "Oprește citirea cu voce tare"
 }

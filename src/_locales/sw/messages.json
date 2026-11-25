@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Tafsiri tovuti hii kiotomatiki"
   },
+  "popupVoice": {
+    "message": "Tafsiri sauti ya video"
+  },
+  "cmdVoice": {
+    "message": "Tafsiri sauti ya video au simamisha"
+  },
+  "voiceOn": {
+    "message": "Tafsiri ya sauti imewashwa"
+  },
+  "voiceNoVideo": {
+    "message": "Hakuna video kwenye ukurasa huu."
+  },
+  "voicePlay": {
+    "message": "Cheza video ili kuanza."
+  },
+  "voiceListening": {
+    "message": "Inasikiliza video"
+  },
+  "voiceSourceTrack": {
+    "message": "Manukuu ya video yametafsiriwa"
+  },
+  "voiceSourceAudio": {
+    "message": "Sauti imeandikwa na Groq Whisper (bure)"
+  },
+  "voiceNeedGroq": {
+    "message": "Video bila manukuu: ongeza ufunguo wa bure wa Groq ili kuandika sauti."
+  },
+  "voiceRate": {
+    "message": "Kikomo cha bure cha kuandika sauti kimefikiwa. Jaribu tena baadaye."
+  },
+  "voiceNoAudio": {
+    "message": "Sauti ya video hii haipatikani (video iliyolindwa)."
+  },
+  "voiceSpeak": {
+    "message": "Soma tafsiri kwa sauti"
+  },
+  "voiceSpeakOff": {
+    "message": "Acha kusoma kwa sauti"
+  },
   "popupSensitive": {
     "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
   },

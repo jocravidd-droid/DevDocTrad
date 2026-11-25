@@ -143,6 +143,45 @@
   "popupAuto": {
     "message": "Traduce automat acest site"
   },
+  "popupVoice": {
+    "message": "Tradu vocea din videoclipuri"
+  },
+  "cmdVoice": {
+    "message": "Tradu vocea videoclipului sau oprește"
+  },
+  "voiceOn": {
+    "message": "Traducerea vocii activată"
+  },
+  "voiceNoVideo": {
+    "message": "Nu există niciun videoclip pe această pagină."
+  },
+  "voicePlay": {
+    "message": "Pornește videoclipul pentru a începe."
+  },
+  "voiceListening": {
+    "message": "Se ascultă videoclipul"
+  },
+  "voiceSourceTrack": {
+    "message": "Subtitrările videoclipului traduse"
+  },
+  "voiceSourceAudio": {
+    "message": "Voce transcrisă de Groq Whisper (gratuit)"
+  },
+  "voiceNeedGroq": {
+    "message": "Videoclip fără subtitrări: adaugă o cheie Groq gratuită pentru a transcrie vocea."
+  },
+  "voiceRate": {
+    "message": "Limita gratuită de transcriere a fost atinsă. Încearcă mai târziu."
+  },
+  "voiceNoAudio": {
+    "message": "Sunetul acestui videoclip nu este accesibil (videoclip protejat)."
+  },
+  "voiceSpeak": {
+    "message": "Citește traducerea cu voce tare"
+  },
+  "voiceSpeakOff": {
+    "message": "Oprește citirea cu voce tare"
+  },
   "popupSensitive": {
     "message": "Pagină sensibilă: nu se traduce niciodată automat. Butonul funcționează, Ollama este folosit primul dacă este configurat."
   },

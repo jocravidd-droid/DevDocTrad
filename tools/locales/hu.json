@@ -202,5 +202,18 @@
 "optPriceInUsd": "Bemeneti ár ($$ / millió token)",
 "optPriceOutUsd": "Kimeneti ár ($$ / millió token)",
 "optDailyCapUsd": "Napi keret ($$)",
-"errGeminiPrepay": "ez a Google-projekt előre fizetett számlázást használ, és a kreditjei elfogytak. Ne töltsön fel semmit: hozzon létre kulcsot egy számlázás nélküli projektben a Google AI Studióban (ingyenes csomag)."
+"errGeminiPrepay": "ez a Google-projekt előre fizetett számlázást használ, és a kreditjei elfogytak. Ne töltsön fel semmit: hozzon létre kulcsot egy számlázás nélküli projektben a Google AI Studióban (ingyenes csomag).",
+"popupVoice": "Videók hangjának fordítása",
+"cmdVoice": "A videó hangjának fordítása vagy leállítás",
+"voiceOn": "Hangfordítás bekapcsolva",
+"voiceNoVideo": "Ezen az oldalon nincs videó.",
+"voicePlay": "Indítsd el a videót a kezdéshez.",
+"voiceListening": "A videó hallgatása",
+"voiceSourceTrack": "A videó feliratai lefordítva",
+"voiceSourceAudio": "Hang átírva Groq Whisperrel (ingyenes)",
+"voiceNeedGroq": "Felirat nélküli videó: adj hozzá egy ingyenes Groq-kulcsot a hang átírásához.",
+"voiceRate": "Elérted az ingyenes átírási korlátot. Próbáld később.",
+"voiceNoAudio": "A videó hangja nem érhető el (védett videó).",
+"voiceSpeak": "A fordítás felolvasása",
+"voiceSpeakOff": "Felolvasás leállítása"
 }
