@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Tradutor de docs, código e vídeos",
 "extDescription": "Traduz fielmente a documentação técnica e os sites para programadores, sem nunca tocar no código.",
 "cmdToggle": "Traduzir a página ou voltar ao original",
 "badgeTranslating": "A traduzir: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Limite gratuito de transcrição atingido. Tenta novamente mais tarde.",
 "voiceNoAudio": "O som deste vídeo não está acessível (vídeo protegido).",
 "voiceSpeak": "Ler a tradução em voz alta",
-"voiceSpeakOff": "Parar a leitura em voz alta"
+"voiceSpeakOff": "Parar a leitura em voz alta",
+"popupRestricted": "O navegador proíbe todas as extensões neste site (loja de extensões, conta ou apoio do navegador). Não é um erro do DevDocTrad.",
+"popupPdf": "Os PDF abrem no visualizador do navegador, onde nenhuma extensão pode entrar. Abre a versão HTML do documento, se existir.",
+"popupBlocked": "O navegador recusou o acesso a esta página. No Firefox alguns sites são restritos: abre about:addons, DevDocTrad, permite «Executar em sites com restrições» e recarrega a página."
 }

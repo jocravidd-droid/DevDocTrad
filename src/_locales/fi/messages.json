@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Kääntäjä dokumenteille ja videoille"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Avain"
+  },
+  "popupRestricted": {
+    "message": "Selain kieltää kaikki laajennukset tällä sivustolla (laajennuskauppa, selaintili tai tuki). Kyse ei ole DevDocTradin viasta."
+  },
+  "popupPdf": {
+    "message": "PDF-tiedostot avautuvat selaimen katseluohjelmaan, johon mikään laajennus ei pääse. Avaa asiakirjan HTML-versio, jos sellainen on."
+  },
+  "popupBlocked": {
+    "message": "Selain esti pääsyn tälle sivulle. Firefoxissa jotkin sivustot ovat rajoitettuja: avaa about:addons, DevDocTrad, salli ”Suorita rajoitetuilla sivustoilla” ja lataa sivu uudelleen."
   },
   "popupKeyAuto": {
     "message": "Automaattinen (ilmaiset ja paikallinen)"

@@ -537,6 +537,31 @@
     }
   }
 
+  /* ---------- Pages où aucune extension ne peut agir ----------
+     Firefox interdit toute extension sur ses domaines « restreints » (pref
+     extensions.webextensions.restrictedDomains) ; Chrome et Edge sur leurs boutiques. Le navigateur
+     ne dit rien : sans ce contrôle, le bouton semblait ne rien faire « sans raison ». */
+  var RESTRICTED_HOSTS = ['accounts-static.cdn.mozilla.net', 'accounts.firefox.com', 'addons.cdn.mozilla.net',
+    'addons.mozilla.org', 'api.accounts.firefox.com', 'content.cdn.mozilla.net', 'discovery.addons.mozilla.org',
+    'install.mozilla.org', 'oauth.accounts.firefox.com', 'profile.accounts.firefox.com', 'support.mozilla.org',
+    'sync.services.mozilla.com', 'chromewebstore.google.com', 'microsoftedge.microsoft.com'];
+  function unsupportedReason(url) {
+    var u;
+    try { u = new URL(String(url || '')); } catch (e) { return 'scheme'; }
+    if (!/^https?:$/.test(u.protocol)) return 'scheme';
+    var host = u.hostname.toLowerCase();
+    if (RESTRICTED_HOSTS.indexOf(host) !== -1) return 'restricted';
+    if (host === 'chrome.google.com' && /^\/webstore/.test(u.pathname)) return 'restricted';
+    if (/\.pdf$/i.test(u.pathname)) return 'pdf';
+    return '';
+  }
+  /* Message compréhensible quand le navigateur refuse d'injecter le script dans l'onglet. */
+  function injectionHelp(err) {
+    var m = String((err && err.message) || err || '');
+    if (/permission|cannot access|cannot be scripted|restricted|Missing host|extensions gallery|not allowed/i.test(m)) return t('popupBlocked');
+    return t('badgeError', [sanitize(m).slice(0, 160)]);
+  }
+
   /* ---------- Voix des vidéos : transcription gratuite (Groq Whisper) ---------- */
   var WHISPER = { provider: 'groq', model: 'whisper-large-v3-turbo', path: '/audio/transcriptions', maxBytes: 20 * 1024 * 1024 };
 
@@ -604,6 +629,9 @@
     localizePage: localizePage,
     addTermGlosses: addTermGlosses,
     WHISPER: WHISPER,
+    RESTRICTED_HOSTS: RESTRICTED_HOSTS,
+    unsupportedReason: unsupportedReason,
+    injectionHelp: injectionHelp,
     cleanTranscript: cleanTranscript
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.DDT;

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Mtafsiri wa nyaraka, msimbo na video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Ufunguo"
+  },
+  "popupRestricted": {
+    "message": "Kivinjari kinazuia viendelezi vyote kwenye tovuti hii (duka la viendelezi, akaunti au usaidizi wa kivinjari). Si hitilafu ya DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF hufunguka kwenye kitazamaji cha kivinjari, ambacho hakuna kiendelezi kinachoweza kukiingia. Fungua toleo la HTML la hati ikiwa lipo."
+  },
+  "popupBlocked": {
+    "message": "Kivinjari kimekataa ufikiaji wa ukurasa huu. Kwenye Firefox baadhi ya tovuti zimezuiwa: fungua about:addons, DevDocTrad, ruhusu «Endesha kwenye tovuti zenye vikwazo», kisha pakia upya ukurasa."
   },
   "popupKeyAuto": {
     "message": "Kiotomatiki (za bure na ya ndani)"

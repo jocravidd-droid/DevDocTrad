@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad：技術ドキュメント・動画翻訳",
 "extDescription": "開発者向けドキュメントやプログラミングサイトを、コードには一切触れずに忠実に翻訳します。",
 "cmdToggle": "ページを翻訳する、または原文に戻す",
 "badgeTranslating": "翻訳中：{0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "無料の文字起こし上限に達しました。後でもう一度お試しください。",
 "voiceNoAudio": "この動画の音声にはアクセスできません（保護された動画）。",
 "voiceSpeak": "翻訳を読み上げる",
-"voiceSpeakOff": "読み上げを停止"
+"voiceSpeakOff": "読み上げを停止",
+"popupRestricted": "このサイトでは、ブラウザーがすべての拡張機能を禁止しています（拡張機能ストア、ブラウザーのアカウントやサポート）。DevDocTrad の不具合ではありません。",
+"popupPdf": "PDF はブラウザーのビューアーで開かれ、拡張機能は中に入れません。HTML 版があればそちらを開いてください。",
+"popupBlocked": "ブラウザーがこのページへのアクセスを拒否しました。Firefox では一部のサイトが制限されています：about:addons を開き、DevDocTrad で「制限付きサイトで実行」を許可して、ページを再読み込みしてください。"
 }

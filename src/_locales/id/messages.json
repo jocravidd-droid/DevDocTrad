@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Penerjemah dokumentasi dan video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Kunci"
+  },
+  "popupRestricted": {
+    "message": "Browser melarang semua ekstensi di situs ini (toko ekstensi, akun, atau dukungan browser). Ini bukan kesalahan DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF dibuka di penampil browser, yang tidak bisa dimasuki ekstensi apa pun. Buka versi HTML dokumen jika ada."
+  },
+  "popupBlocked": {
+    "message": "Browser menolak akses ke halaman ini. Di Firefox beberapa situs dibatasi: buka about:addons, DevDocTrad, izinkan «Jalankan di situs dengan pembatasan», lalu muat ulang halaman."
   },
   "popupKeyAuto": {
     "message": "Otomatis (gratis dan lokal)"

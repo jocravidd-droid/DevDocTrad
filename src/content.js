@@ -413,8 +413,130 @@
       unit.applied = null;
     }
 
+    /* ---------------- Fichiers texte et Markdown bruts ----------------
+     * Un README « raw », un .txt ou un .md s'affichent dans un seul <pre> : tout serait pris pour du
+     * code, donc « rien à traduire ». On construit à côté une version lisible (titres, paragraphes,
+     * listes, citations ; blocs de code gardés en <pre>), on la traduit, et on remontre le <pre>
+     * d'origine, intact, pour « Voir l'original ». */
+    var plain = null;
+    function isPlainDocument() {
+      var ct = String(doc.contentType || '').toLowerCase();
+      var body = doc.body;
+      if (!body) return false;
+      var kids = Array.prototype.filter.call(body.children, function (c) { return !isUi(c) && c.tagName !== 'SCRIPT' && c.tagName !== 'STYLE'; });
+      if (kids.length !== 1 || kids[0].tagName !== 'PRE') return false;
+      if (/^text\/(plain|markdown|x-markdown)/.test(ct)) return true;
+      // affichage brut sans type annoncé : un seul <pre> qui contient du texte en phrases
+      return /\.(md|markdown|txt|rst)(\?|#|$)/i.test(String(win.location && win.location.pathname || ''));
+    }
+    function inlineMd(parent, text) {
+      // `code`, **gras**, [lien](url) ; le reste en texte brut (jamais de HTML interprété)
+      var re = /`([^`]+)`|\*\*([^*]+)\*\*|\[([^\]]+)\]\((https?:\/\/[^)\s]+|[^)\s:]+)\)/g;
+      var last = 0;
+      var m;
+      while ((m = re.exec(text)) !== null) {
+        if (m.index > last) parent.appendChild(doc.createTextNode(text.slice(last, m.index)));
+        var el;
+        if (m[1] !== undefined) { el = doc.createElement('code'); el.textContent = m[1]; }
+        else if (m[2] !== undefined) { el = doc.createElement('b'); el.textContent = m[2]; }
+        else { el = doc.createElement('a'); el.textContent = m[3]; el.setAttribute('href', m[4]); }
+        parent.appendChild(el);
+        last = re.lastIndex;
+      }
+      if (last < text.length) parent.appendChild(doc.createTextNode(text.slice(last)));
+    }
+    function looksPreformatted(lines) {
+      return lines.some(function (l) { return /\S {3,}\S|[│┌┐└┘├┤─═║+]{3,}|^\s*[|+][-=+|]{3,}/.test(l); });
+    }
+    function buildPlainView(text) {
+      var box = doc.createElement('div');
+      box.setAttribute('data-ddt-plain', '');
+      box.style.maxWidth = '88ch';
+      box.style.margin = '16px auto';
+      box.style.padding = '0 16px';
+      box.style.font = '15px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif';
+      var lines = String(text).replace(/\r\n?/g, '\n').split('\n');
+      var i = 0;
+      var list = null;
+      function codeBlock(content) {
+        var pre = doc.createElement('pre');
+        pre.textContent = content;
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.padding = '10px 12px';
+        pre.style.borderRadius = '8px';
+        pre.style.background = 'rgba(127,127,127,.12)';
+        pre.style.font = '13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace';
+        box.appendChild(pre);
+      }
+      while (i < lines.length) {
+        var line = lines[i];
+        var fence = /^\s*(```|~~~)/.exec(line);
+        if (fence) {
+          var buf = [];
+          i++;
+          while (i < lines.length && lines[i].trim().indexOf(fence[1]) !== 0) buf.push(lines[i++]);
+          i++;
+          list = null;
+          codeBlock(buf.join('\n'));
+          continue;
+        }
+        if (!line.trim()) { i++; list = null; continue; }
+        if (/^( {4}|\t)/.test(line)) {
+          var code = [];
+          while (i < lines.length && (/^( {4}|\t)/.test(lines[i]) || !lines[i].trim())) code.push(lines[i++]);
+          while (code.length && !code[code.length - 1].trim()) code.pop();
+          list = null;
+          codeBlock(code.map(function (l) { return l.replace(/^( {4}|\t)/, ''); }).join('\n'));
+          continue;
+        }
+        var h = /^(#{1,6})\s+(.*?)\s*#*\s*$/.exec(line);
+        if (h) {
+          var hx = doc.createElement('h' + h[1].length);
+          inlineMd(hx, h[2]);
+          box.appendChild(hx);
+          i++;
+          list = null;
+          continue;
+        }
+        var li = /^\s*(?:[-*+]|\d{1,3}[.)])\s+(.*)$/.exec(line);
+        if (li) {
+          if (!list) { list = doc.createElement(/^\s*\d/.test(line) ? 'ol' : 'ul'); box.appendChild(list); }
+          var item = doc.createElement('li');
+          var txt = [li[1]];
+          i++;
+          while (i < lines.length && lines[i].trim() && /^\s{2,}\S/.test(lines[i]) && !/^\s*(?:[-*+]|\d{1,3}[.)])\s+/.test(lines[i])) txt.push(lines[i++].trim());
+          inlineMd(item, txt.join(' '));
+          list.appendChild(item);
+          continue;
+        }
+        list = null;
+        var para = [];
+        while (i < lines.length && lines[i].trim() && !/^\s*(```|~~~|#{1,6}\s)/.test(lines[i]) && !/^( {4}|\t)/.test(lines[i])) para.push(lines[i++]);
+        if (looksPreformatted(para)) { codeBlock(para.join('\n')); continue; }
+        var quote = para.every(function (l) { return /^\s*>/.test(l); });
+        var el = doc.createElement(quote ? 'blockquote' : 'p');
+        inlineMd(el, para.map(function (l) { return quote ? l.replace(/^\s*>\s?/, '') : l.trim(); }).join(' '));
+        box.appendChild(el);
+      }
+      return box;
+    }
+    function preparePlain() {
+      if (plain || !isPlainDocument()) return;
+      var pre = Array.prototype.filter.call(doc.body.children, function (c) { return c.tagName === 'PRE'; })[0];
+      var view = buildPlainView(pre.textContent);
+      plain = { pre: pre, view: view, display: pre.style.display };
+      doc.body.insertBefore(view, pre);
+      pre.style.display = 'none';
+    }
+    function showPlain(translated) {
+      if (!plain) return;
+      plain.view.style.display = translated ? '' : 'none';
+      plain.pre.style.display = translated ? 'none' : plain.display;
+    }
+
     /* ---------------- Page : marques anti-traduction du navigateur ---------------- */
     function markPage() {
+      showPlain(true);
       if (savedHtmlState) return;
       var html = doc.documentElement;
       savedHtmlState = {
@@ -434,6 +556,7 @@
       }
     }
     function unmarkPage() {
+      showPlain(false);
       if (!savedHtmlState) return;
       var html = doc.documentElement;
       if (savedHtmlState.translate === null) html.removeAttribute('translate');
@@ -626,6 +749,7 @@
       options = Object.assign({}, options, opts || {});
       if (opts && opts.settings) settings = Object.assign(settings, opts.settings);
       ensureBadge();
+      withObserverOff(preparePlain);
       markPage();
       showing = 'translated';
       withObserverOff(function () {
@@ -767,10 +891,13 @@
       '--b-shadow:0 10px 28px rgba(0, 0, 0, .45), 0 1px 2px rgba(0, 0, 0, .3)}}',
       '.b{position:fixed;right:16px;bottom:16px;z-index:2147483647;box-sizing:border-box;max-width:min(320px,calc(100vw - 32px));',
       'font:12.5px/1.35 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",system-ui,sans-serif;color:var(--b-text-1);',
-      'background:var(--b-solid);border:1px solid var(--b-hairline);border-radius:var(--b-r);box-shadow:var(--b-shadow);overflow:hidden;',
+      // Verre sur ::before, découpé par clip-path : Chromium ne découpe pas toujours le flou selon border-radius
+      '--b-cr:var(--b-r);isolation:isolate;background:transparent;border-radius:var(--b-cr);box-shadow:var(--b-shadow);overflow:hidden;',
       'transition:opacity .2s cubic-bezier(.2,.8,.2,1),transform .2s cubic-bezier(.2,.8,.2,1)}',
-      '@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.b{background:var(--b-surface);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}}',
-      '@media (prefers-reduced-transparency:reduce){.b{background:var(--b-solid)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}',
+      '.b::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;background:var(--b-solid);',
+      'border:1px solid var(--b-hairline);box-sizing:border-box;clip-path:inset(0 round var(--b-cr))}',
+      '@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.b::before{background:var(--b-surface);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%)}}',
+      '@media (prefers-reduced-transparency:reduce){.b::before{background:var(--b-solid)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}',
       '.row{display:flex;align-items:center;gap:6px;padding:6px 6px 6px 10px}',
       '.sym{width:16px;height:16px;flex:none;color:var(--b-text-2)}',
       '.msg{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:550;font-variant-numeric:tabular-nums}',
@@ -784,7 +911,7 @@
       'button.txt{padding:0 9px;color:var(--b-accent)}',
       '.bar{height:2px;background:var(--b-hairline)}.fill{height:100%;width:0;background:var(--b-accent);transition:width .3s cubic-bezier(.2,.8,.2,1)}',
       '.hide{display:none!important}',
-      '.min{border-radius:var(--b-pill)}.min .row{padding:5px}.min .msg,.min [data-a=stop],.min [data-a=toggle],.min [data-a=continue],.min [data-a=close],.min .bar{display:none}',
+      '.min{--b-cr:var(--b-pill)}.min .row{padding:5px}.min .msg,.min [data-a=stop],.min [data-a=toggle],.min [data-a=continue],.min [data-a=close],.min .bar{display:none}',
       '.min [data-a=min]{width:26px}',
       '@media (prefers-reduced-motion:reduce){.b,.fill,button{transition:none}}'
     ].join('');

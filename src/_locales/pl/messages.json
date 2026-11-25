@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Tłumacz dokumentacji, kodu i wideo"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Klucz"
+  },
+  "popupRestricted": {
+    "message": "Przeglądarka zabrania wszystkim rozszerzeniom działania na tej stronie (sklep z rozszerzeniami, konto lub pomoc przeglądarki). To nie jest błąd DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "Pliki PDF otwierają się w przeglądarce PDF, do której żadne rozszerzenie nie ma wstępu. Otwórz wersję HTML dokumentu, jeśli istnieje."
+  },
+  "popupBlocked": {
+    "message": "Przeglądarka odmówiła dostępu do tej strony. W Firefoksie niektóre strony są ograniczone: otwórz about:addons, DevDocTrad, zezwól na „Uruchamiaj na witrynach z ograniczeniami” i przeładuj stronę."
   },
   "popupKeyAuto": {
     "message": "Automatycznie (darmowe i lokalny)"

@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: מתרגם תיעוד, קוד וסרטונים"
   },
   "uiDir": {
     "message": "rtl"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "מפתח"
+  },
+  "popupRestricted": {
+    "message": "הדפדפן אוסר על כל תוסף לפעול באתר הזה (חנות תוספים, חשבון או תמיכה של הדפדפן). זו לא תקלה של DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "קובצי PDF נפתחים במציג של הדפדפן, ששום תוסף לא יכול להיכנס אליו. פתח את גרסת ה-HTML של המסמך אם יש."
+  },
+  "popupBlocked": {
+    "message": "הדפדפן סירב לגשת לדף הזה. ב-Firefox חלק מהאתרים מוגבלים: פתח את about:addons, את DevDocTrad, אפשר „הפעלה באתרים עם הגבלות” וטען מחדש את הדף."
   },
   "popupKeyAuto": {
     "message": "אוטומטי (חינמיים ומקומי)"

@@ -917,7 +917,7 @@
     }
 
     function onMessage(msg) {
-      if (!msg || !msg.type) return Promise.resolve(null);
+      if (!msg || !msg.type) return null;
       switch (msg.type) {
         case 'getState': return publicState();
         case 'listModels': return keyFromMsg(msg).then(listModels).then(function (l) { return { ok: true, models: l }; },
@@ -934,7 +934,7 @@
         case 'syncAuto': return syncAutoScripts().then(function () { return { ok: true }; });
         case 'transcribe': return transcribe(msg);
         case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId);
-        default: return Promise.resolve(null);
+        default: return null;   // message pour un autre destinataire : ne pas répondre à sa place
       }
     }
     // Les réglages envoient seulement l'identifiant ; la clé est relue dans le stockage ici.
@@ -979,7 +979,9 @@
 
   api.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg || !msg.type || msg.to === 'content') return;
-    bg.onMessage(msg).then(sendResponse, function (e) { sendResponse({ ok: false, message: DDT.sanitize(e && e.message) }); });
+    var p = bg.onMessage(msg);
+    if (!p) return;
+    p.then(sendResponse, function (e) { sendResponse({ ok: false, message: DDT.sanitize(e && e.message) }); });
     return true;
   });
 
@@ -988,9 +990,22 @@
       if (command !== 'toggle-translation' && command !== 'toggle-voice') return;
       api.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
         if (!tabs || !tabs[0]) return;
-        if (command === 'toggle-voice') return bg.voiceCommand(tabs[0].id, 'toggle', null);
-        return bg.tabCommand(tabs[0].id, 'toggle', null);
-      }).catch(function () { /* page non traduisible */ });
+        var tab = tabs[0];
+        // Raccourci sur une page interdite : le navigateur ne dit rien, on l'affiche sur l'icône.
+        function explain(text) {
+          if (!api.action) return;
+          try {
+            api.action.setBadgeText({ tabId: tab.id, text: '!' });
+            api.action.setBadgeBackgroundColor({ tabId: tab.id, color: '#c81e45' });
+            api.action.setTitle({ tabId: tab.id, title: 'DevDocTrad : ' + text });
+          } catch (e) { /* rien */ }
+        }
+        var why = DDT.unsupportedReason(tab.url || '');
+        if (why === 'restricted') return explain(DDT.t('popupRestricted'));
+        if (why === 'pdf') return explain(DDT.t('popupPdf'));
+        var p = command === 'toggle-voice' ? bg.voiceCommand(tab.id, 'toggle', null) : bg.tabCommand(tab.id, 'toggle', null);
+        return p.catch(function (e) { explain(DDT.injectionHelp(e)); });
+      }).catch(function () { /* onglet fermé */ });
     });
   }
 

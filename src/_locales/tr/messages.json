@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Doküman, kod ve video çevirmeni"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Anahtar"
+  },
+  "popupRestricted": {
+    "message": "Tarayıcı bu sitede tüm eklentileri yasaklıyor (eklenti mağazası, tarayıcı hesabı veya destek). Bu bir DevDocTrad hatası değil."
+  },
+  "popupPdf": {
+    "message": "PDF'ler tarayıcının görüntüleyicisinde açılır ve hiçbir eklenti oraya giremez. Varsa belgenin HTML sürümünü aç."
+  },
+  "popupBlocked": {
+    "message": "Tarayıcı bu sayfaya erişimi reddetti. Firefox'ta bazı siteler kısıtlıdır: about:addons'u aç, DevDocTrad'e gir, “Kısıtlamalı sitelerde çalıştır”a izin ver ve sayfayı yenile."
   },
   "popupKeyAuto": {
     "message": "Otomatik (ücretsiz ve yerel)"

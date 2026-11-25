@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: 기술 문서·코드·동영상 번역기",
 "extDescription": "개발자 문서와 프로그래밍 사이트를 코드는 전혀 건드리지 않고 충실하게 번역합니다.",
 "cmdToggle": "페이지 번역 또는 원문으로 돌아가기",
 "badgeTranslating": "번역 중: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "무료 받아쓰기 한도에 도달했습니다. 나중에 다시 시도하세요.",
 "voiceNoAudio": "이 동영상의 소리에 접근할 수 없습니다(보호된 동영상).",
 "voiceSpeak": "번역 소리 내어 읽기",
-"voiceSpeakOff": "소리 내어 읽기 중지"
+"voiceSpeakOff": "소리 내어 읽기 중지",
+"popupRestricted": "브라우저가 이 사이트에서 모든 확장 프로그램을 금지합니다(확장 프로그램 스토어, 브라우저 계정 또는 지원). DevDocTrad의 오류가 아닙니다.",
+"popupPdf": "PDF는 브라우저 뷰어에서 열리며, 어떤 확장 프로그램도 들어갈 수 없습니다. HTML 버전이 있으면 그것을 여세요.",
+"popupBlocked": "브라우저가 이 페이지에 대한 접근을 거부했습니다. Firefox에서는 일부 사이트가 제한됩니다: about:addons를 열고 DevDocTrad에서 「제한된 사이트에서 실행」을 허용한 뒤 페이지를 새로 고치세요."
 }

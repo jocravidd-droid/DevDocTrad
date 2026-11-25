@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Trình dịch tài liệu, mã và video",
 "extDescription": "Dịch trung thực tài liệu dành cho lập trình viên và các trang web lập trình, không bao giờ động vào mã.",
 "cmdToggle": "Dịch trang hoặc quay lại bản gốc",
 "badgeTranslating": "Đang dịch: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Đã đạt giới hạn chép lời miễn phí. Hãy thử lại sau.",
 "voiceNoAudio": "Không thể truy cập âm thanh của video này (video được bảo vệ).",
 "voiceSpeak": "Đọc to bản dịch",
-"voiceSpeakOff": "Dừng đọc to"
+"voiceSpeakOff": "Dừng đọc to",
+"popupRestricted": "Trình duyệt cấm mọi tiện ích trên trang này (cửa hàng tiện ích, tài khoản hoặc hỗ trợ của trình duyệt). Đây không phải lỗi của DevDocTrad.",
+"popupPdf": "PDF mở trong trình xem của trình duyệt, nơi không tiện ích nào vào được. Hãy mở bản HTML của tài liệu nếu có.",
+"popupBlocked": "Trình duyệt đã từ chối truy cập trang này. Trong Firefox, một số trang bị hạn chế: mở about:addons, DevDocTrad, cho phép «Chạy trên các trang bị hạn chế», rồi tải lại trang."
 }

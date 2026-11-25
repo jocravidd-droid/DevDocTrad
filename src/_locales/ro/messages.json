@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Traducător de documentație și video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Cheie"
+  },
+  "popupRestricted": {
+    "message": "Browserul interzice toate extensiile pe acest site (magazin de extensii, contul sau asistența browserului). Nu este o eroare DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF-urile se deschid în vizualizatorul browserului, unde nicio extensie nu poate intra. Deschide versiunea HTML a documentului, dacă există."
+  },
+  "popupBlocked": {
+    "message": "Browserul a refuzat accesul la această pagină. În Firefox unele site-uri sunt restricționate: deschide about:addons, DevDocTrad, permite „Rulează pe site-uri cu restricții” și reîncarcă pagina."
   },
   "popupKeyAuto": {
     "message": "Automat (gratuite și locală)"

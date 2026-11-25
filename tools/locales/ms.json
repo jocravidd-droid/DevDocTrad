@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Penterjemah dokumentasi dan video",
 "extDescription": "Menterjemah dokumentasi pembangun dan laman web pengaturcaraan dengan setia, tanpa pernah menyentuh kod.",
 "cmdToggle": "Terjemah halaman atau kembali ke asalnya",
 "badgeTranslating": "Menterjemah: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Had transkripsi percuma dicapai. Cuba lagi kemudian.",
 "voiceNoAudio": "Bunyi video ini tidak dapat diakses (video dilindungi).",
 "voiceSpeak": "Baca terjemahan dengan kuat",
-"voiceSpeakOff": "Berhenti membaca dengan kuat"
+"voiceSpeakOff": "Berhenti membaca dengan kuat",
+"popupRestricted": "Pelayar melarang semua sambungan di laman ini (kedai sambungan, akaun atau sokongan pelayar). Ini bukan ralat DevDocTrad.",
+"popupPdf": "PDF dibuka dalam pemapar pelayar, yang tidak boleh dimasuki oleh sambungan. Buka versi HTML dokumen jika ada.",
+"popupBlocked": "Pelayar menolak akses ke halaman ini. Dalam Firefox sesetengah laman dihadkan: buka about:addons, DevDocTrad, benarkan «Jalankan di laman dengan sekatan», kemudian muat semula halaman."
 }

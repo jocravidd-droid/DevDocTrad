@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Tłumacz dokumentacji, kodu i wideo",
 "extDescription": "Wiernie tłumaczy dokumentację techniczną i strony dla programistów, nigdy nie zmieniając kodu.",
 "cmdToggle": "Przetłumacz stronę lub wróć do oryginału",
 "badgeTranslating": "Tłumaczenie: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Osiągnięto darmowy limit transkrypcji. Spróbuj później.",
 "voiceNoAudio": "Dźwięk tego filmu jest niedostępny (film chroniony).",
 "voiceSpeak": "Czytaj tłumaczenie na głos",
-"voiceSpeakOff": "Zatrzymaj czytanie na głos"
+"voiceSpeakOff": "Zatrzymaj czytanie na głos",
+"popupRestricted": "Przeglądarka zabrania wszystkim rozszerzeniom działania na tej stronie (sklep z rozszerzeniami, konto lub pomoc przeglądarki). To nie jest błąd DevDocTrad.",
+"popupPdf": "Pliki PDF otwierają się w przeglądarce PDF, do której żadne rozszerzenie nie ma wstępu. Otwórz wersję HTML dokumentu, jeśli istnieje.",
+"popupBlocked": "Przeglądarka odmówiła dostępu do tej strony. W Firefoksie niektóre strony są ograniczone: otwórz about:addons, DevDocTrad, zezwól na „Uruchamiaj na witrynach z ograniczeniami” i przeładuj stronę."
 }

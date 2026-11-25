@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Übersetzer für Doku, Code & Videos"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Schlüssel"
+  },
+  "popupRestricted": {
+    "message": "Der Browser verbietet allen Erweiterungen diese Website (Erweiterungs-Store, Browserkonto oder Support). Das ist kein Fehler von DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDFs öffnen sich im PDF-Viewer des Browsers, auf den keine Erweiterung zugreifen kann. Öffne die HTML-Version des Dokuments, falls es eine gibt."
+  },
+  "popupBlocked": {
+    "message": "Der Browser hat den Zugriff auf diese Seite verweigert. In Firefox sind manche Websites eingeschränkt: Öffne about:addons, DevDocTrad, erlaube „Auf Websites mit Einschränkungen ausführen“ und lade die Seite neu."
   },
   "popupKeyAuto": {
     "message": "Automatisch (kostenlos und lokal)"

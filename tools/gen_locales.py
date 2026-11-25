@@ -30,7 +30,8 @@ CHROME_LOCALES = {
 
 M = {
     # Manifeste
-    "extName": ("DevDocTrad", "DevDocTrad"),
+    # Nom affiché dans les boutiques et le navigateur : marque + mots les plus cherchés (50 caractères max, limite AMO)
+    "extName": ("DevDocTrad : Traducteur de docs, code et vidéos", "DevDocTrad: Translator for Docs, Code & Videos"),
     # Sens d'écriture de l'interface ; rempli automatiquement pour chaque langue (voir RTL plus bas)
     "uiDir": ("ltr", "ltr"),
     "extDescription": (
@@ -86,6 +87,12 @@ M = {
     "popupUnsupported": ("Cette page ne peut pas être traduite par une extension (page interne du navigateur, boutique d'extensions ou lecteur PDF).",
                          "This page cannot be translated by an extension (browser page, extension store or PDF viewer)."),
     "popupKey": ("Clé", "Key"),
+    "popupRestricted": ("Le navigateur interdit à toutes les extensions d'agir sur ce site (boutique d'extensions, compte ou assistance du navigateur). Ce n'est pas une panne de DevDocTrad.",
+                        "The browser forbids every extension on this site (extension store, browser account or support). This is not a DevDocTrad bug."),
+    "popupPdf": ("Les PDF s'ouvrent dans la visionneuse du navigateur, où aucune extension ne peut entrer. Ouvre la version HTML du document si elle existe.",
+                 "PDFs open in the browser's viewer, which no extension can enter. Open the HTML version of the document if there is one."),
+    "popupBlocked": ("Le navigateur a refusé l'accès à cette page. Dans Firefox, certains sites sont restreints : ouvre about:addons, DevDocTrad, puis autorise « Exécuter sur les sites avec restrictions », et recharge la page.",
+                     "The browser refused access to this page. In Firefox, some sites are restricted: open about:addons, DevDocTrad, allow \"Run on sites with restrictions\", then reload the page."),
     "popupKeyAuto": ("Automatique (gratuites et locale)", "Automatic (free and local)"),
     "popupAuto": ("Traduire automatiquement ce site", "Translate this site automatically"),
     # Voix des vidéos (v1.1)

@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Vertaler voor docs, code en video's",
 "extDescription": "Vertaalt technische documentatie en websites voor programmeurs nauwkeurig, zonder ooit de code aan te raken.",
 "cmdToggle": "De pagina vertalen of terug naar het origineel",
 "badgeTranslating": "Bezig met vertalen: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Gratis transcriptielimiet bereikt. Probeer het later opnieuw.",
 "voiceNoAudio": "Het geluid van deze video is niet toegankelijk (beveiligde video).",
 "voiceSpeak": "Vertaling voorlezen",
-"voiceSpeakOff": "Voorlezen stoppen"
+"voiceSpeakOff": "Voorlezen stoppen",
+"popupRestricted": "De browser verbiedt alle extensies op deze site (extensiewinkel, browseraccount of ondersteuning). Dit is geen fout van DevDocTrad.",
+"popupPdf": "PDF's openen in de viewer van de browser, waar geen enkele extensie in kan. Open de HTML-versie van het document als die er is.",
+"popupBlocked": "De browser weigerde toegang tot deze pagina. In Firefox zijn sommige sites beperkt: open about:addons, DevDocTrad, sta „Uitvoeren op websites met beperkingen” toe en herlaad de pagina."
 }

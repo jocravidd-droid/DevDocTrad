@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Trình dịch tài liệu, mã và video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Khóa"
+  },
+  "popupRestricted": {
+    "message": "Trình duyệt cấm mọi tiện ích trên trang này (cửa hàng tiện ích, tài khoản hoặc hỗ trợ của trình duyệt). Đây không phải lỗi của DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF mở trong trình xem của trình duyệt, nơi không tiện ích nào vào được. Hãy mở bản HTML của tài liệu nếu có."
+  },
+  "popupBlocked": {
+    "message": "Trình duyệt đã từ chối truy cập trang này. Trong Firefox, một số trang bị hạn chế: mở about:addons, DevDocTrad, cho phép «Chạy trên các trang bị hạn chế», rồi tải lại trang."
   },
   "popupKeyAuto": {
     "message": "Tự động (miễn phí và cục bộ)"

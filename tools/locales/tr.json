@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Doküman, kod ve video çevirmeni",
 "extDescription": "Geliştirici belgelerini ve programlama sitelerini, koda asla dokunmadan aslına sadık şekilde çevirir.",
 "cmdToggle": "Sayfayı çevir veya orijinale dön",
 "badgeTranslating": "Çevriliyor: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Ücretsiz yazıya dökme sınırına ulaşıldı. Daha sonra yeniden dene.",
 "voiceNoAudio": "Bu videonun sesine erişilemiyor (korumalı video).",
 "voiceSpeak": "Çeviriyi sesli oku",
-"voiceSpeakOff": "Sesli okumayı durdur"
+"voiceSpeakOff": "Sesli okumayı durdur",
+"popupRestricted": "Tarayıcı bu sitede tüm eklentileri yasaklıyor (eklenti mağazası, tarayıcı hesabı veya destek). Bu bir DevDocTrad hatası değil.",
+"popupPdf": "PDF'ler tarayıcının görüntüleyicisinde açılır ve hiçbir eklenti oraya giremez. Varsa belgenin HTML sürümünü aç.",
+"popupBlocked": "Tarayıcı bu sayfaya erişimi reddetti. Firefox'ta bazı siteler kısıtlıdır: about:addons'u aç, DevDocTrad'e gir, “Kısıtlamalı sitelerde çalıştır”a izin ver ve sayfayı yenile."
 }

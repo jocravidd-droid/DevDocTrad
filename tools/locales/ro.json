@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Traducător de documentație și video",
 "extDescription": "Traduce fidel documentația pentru dezvoltatori și site-urile de programare, fără să atingă vreodată codul.",
 "cmdToggle": "Traduce pagina sau revino la original",
 "badgeTranslating": "Se traduce: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Limita gratuită de transcriere a fost atinsă. Încearcă mai târziu.",
 "voiceNoAudio": "Sunetul acestui videoclip nu este accesibil (videoclip protejat).",
 "voiceSpeak": "Citește traducerea cu voce tare",
-"voiceSpeakOff": "Oprește citirea cu voce tare"
+"voiceSpeakOff": "Oprește citirea cu voce tare",
+"popupRestricted": "Browserul interzice toate extensiile pe acest site (magazin de extensii, contul sau asistența browserului). Nu este o eroare DevDocTrad.",
+"popupPdf": "PDF-urile se deschid în vizualizatorul browserului, unde nicio extensie nu poate intra. Deschide versiunea HTML a documentului, dacă există.",
+"popupBlocked": "Browserul a refuzat accesul la această pagină. În Firefox unele site-uri sunt restricționate: deschide about:addons, DevDocTrad, permite „Rulează pe site-uri cu restricții” și reîncarcă pagina."
 }

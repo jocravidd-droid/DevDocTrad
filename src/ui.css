@@ -26,37 +26,54 @@ code, .mono { font-family: var(--mono); font-size: .92em; }
 [hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ---------- Matériaux : repli opaque d'abord, verre si le flou existe ---------- */
+/* ---------- Matériaux : repli opaque d'abord, verre si le flou existe ----------
+   Le verre (fond, flou, bord, reflet) est dessiné par un pseudo-élément ::before découpé par
+   clip-path aux mêmes coins arrondis. Raison : Chromium ne découpe pas toujours backdrop-filter
+   selon border-radius (coins carrés ou « faussement arrondis » autour du flou, retour de Judley).
+   Un clip-path arrondi est respecté partout (Chrome, Edge, Brave, Firefox). L'élément lui-même ne
+   garde que l'ombre extérieure, qui ne passe jamais sous la carte. */
 .m-primary, .m-secondary, .m-floating {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  border: 0;
+  --m-r: var(--r-lg);
+  border-radius: var(--m-r);
+  box-shadow: var(--shadow-2);
+}
+.m-primary { --m-r: var(--r-xl); }
+.m-secondary { box-shadow: var(--shadow-1); }
+.m-floating { box-shadow: var(--shadow-3); }
+.m-primary::before, .m-secondary::before, .m-floating::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
   background: var(--solid-fallback);
   border: 1px solid var(--edge);
-  box-shadow: var(--shadow-2), inset 0 1px 0 var(--edge-inner);
+  box-shadow: inset 0 1px 0 var(--edge-inner);
+  clip-path: inset(0 round var(--m-r));
 }
-.m-primary { border-radius: var(--r-xl); }
-.m-secondary { border-radius: var(--r-lg); box-shadow: var(--shadow-1), inset 0 1px 0 var(--edge-inner); }
-.m-floating { border-radius: var(--r-lg); box-shadow: var(--shadow-3), inset 0 1px 0 var(--edge-inner); }
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .m-primary { background: var(--glass-primary); -webkit-backdrop-filter: blur(var(--blur-primary)) saturate(180%); backdrop-filter: blur(var(--blur-primary)) saturate(180%); }
-  .m-secondary { background: var(--glass-secondary); -webkit-backdrop-filter: blur(var(--blur-secondary)) saturate(160%); backdrop-filter: blur(var(--blur-secondary)) saturate(160%); }
-  .m-floating { background: var(--glass-floating); -webkit-backdrop-filter: blur(var(--blur-primary)) saturate(180%); backdrop-filter: blur(var(--blur-primary)) saturate(180%); }
+  .m-primary::before { background: var(--glass-primary); -webkit-backdrop-filter: blur(var(--blur-primary)) saturate(180%); backdrop-filter: blur(var(--blur-primary)) saturate(180%); }
+  .m-secondary::before { background: var(--glass-secondary); -webkit-backdrop-filter: blur(var(--blur-secondary)) saturate(160%); backdrop-filter: blur(var(--blur-secondary)) saturate(160%); }
+  .m-floating::before { background: var(--glass-floating); -webkit-backdrop-filter: blur(var(--blur-primary)) saturate(180%); backdrop-filter: blur(var(--blur-primary)) saturate(180%); }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .m-primary, .m-secondary, .m-floating { background: var(--solid-fallback) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  .m-primary::before, .m-secondary::before, .m-floating::before { background: var(--solid-fallback) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 }
 
-/* Motif d'identité : la feuille décalée du logo, derrière le panneau principal */
-/* Feuille arrière (motif du logo) : une ombre nette décalée vers le haut et la gauche, comme une pile
-   de papier. Chrome et Chromium la dessinent mal sur les coins arrondis (tache décalée, coins
-   « faussement arrondis » : retour de Judley), donc elle n'est gardée que dans Firefox ; ailleurs le
-   panneau garde son ombre simple. */
-.m-primary.sheet, .m-secondary.sheet { box-shadow: var(--shadow-2), inset 0 1px 0 var(--edge-inner); }
-@supports (-moz-appearance: none) {
-  .m-primary.sheet, .m-secondary.sheet {
-    box-shadow: -6px -6px 0 0 var(--sheet-back), -6px -6px 0 1px var(--sheet-edge), var(--shadow-2), inset 0 1px 0 var(--edge-inner);
-  }
-  [dir=rtl] .m-primary.sheet, [dir=rtl] .m-secondary.sheet {
-    box-shadow: 6px -6px 0 0 var(--sheet-back), 6px -6px 0 1px var(--sheet-edge), var(--shadow-2), inset 0 1px 0 var(--edge-inner);
-  }
+/* Motif d'identité : la feuille arrière du logo, décalée vers le haut et le début de ligne, comme une
+   pile de papier. Une ombre nette et décalée de l'élément (sans flou ni étalement) : elle garde
+   exactement les mêmes coins arrondis que la carte et n'est jamais dessinée sous la carte, dans
+   Chrome comme dans Firefox, puisque le verre n'est plus sur l'élément mais sur ::before. */
+.m-primary.sheet, .m-secondary.sheet {
+  box-shadow: -6px -6px 0 0 var(--sheet-back), -6px -6px 0 1px var(--sheet-edge), var(--shadow-2);
+}
+[dir=rtl] .m-primary.sheet, [dir=rtl] .m-secondary.sheet {
+  box-shadow: 6px -6px 0 0 var(--sheet-back), 6px -6px 0 1px var(--sheet-edge), var(--shadow-2);
 }
 
 /* ---------- Boutons ---------- */

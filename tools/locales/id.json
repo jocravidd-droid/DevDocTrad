@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Penerjemah dokumentasi dan video",
 "extDescription": "Menerjemahkan dokumentasi pengembang dan situs pemrograman dengan setia, tanpa pernah menyentuh kode.",
 "cmdToggle": "Terjemahkan halaman atau kembali ke aslinya",
 "badgeTranslating": "Menerjemahkan: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Batas transkripsi gratis tercapai. Coba lagi nanti.",
 "voiceNoAudio": "Suara video ini tidak dapat diakses (video dilindungi).",
 "voiceSpeak": "Bacakan terjemahan",
-"voiceSpeakOff": "Hentikan pembacaan"
+"voiceSpeakOff": "Hentikan pembacaan",
+"popupRestricted": "Browser melarang semua ekstensi di situs ini (toko ekstensi, akun, atau dukungan browser). Ini bukan kesalahan DevDocTrad.",
+"popupPdf": "PDF dibuka di penampil browser, yang tidak bisa dimasuki ekstensi apa pun. Buka versi HTML dokumen jika ada.",
+"popupBlocked": "Browser menolak akses ke halaman ini. Di Firefox beberapa situs dibatasi: buka about:addons, DevDocTrad, izinkan «Jalankan di situs dengan pembatasan», lalu muat ulang halaman."
 }

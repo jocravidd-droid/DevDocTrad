@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Traductor de docs, código y vídeos"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Clave"
+  },
+  "popupRestricted": {
+    "message": "El navegador prohíbe todas las extensiones en este sitio (tienda de extensiones, cuenta o ayuda del navegador). No es un fallo de DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "Los PDF se abren en el visor del navegador, donde ninguna extensión puede entrar. Abre la versión HTML del documento si existe."
+  },
+  "popupBlocked": {
+    "message": "El navegador ha denegado el acceso a esta página. En Firefox algunos sitios están restringidos: abre about:addons, DevDocTrad, permite «Ejecutar en sitios con restricciones» y recarga la página."
   },
   "popupKeyAuto": {
     "message": "Automático (gratuitas y local)"

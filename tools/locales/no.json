@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Oversetter for docs, kode og video",
 "extDescription": "Oversetter utviklerdokumentasjon og programmeringsnettsteder tro mot originalen, uten noen gang å røre koden.",
 "cmdToggle": "Oversett siden eller gå tilbake til originalen",
 "badgeTranslating": "Oversetter: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Gratis grense for transkripsjon nådd. Prøv igjen senere.",
 "voiceNoAudio": "Lyden i denne videoen er ikke tilgjengelig (beskyttet video).",
 "voiceSpeak": "Les oversettelsen høyt",
-"voiceSpeakOff": "Stopp høytlesing"
+"voiceSpeakOff": "Stopp høytlesing",
+"popupRestricted": "Nettleseren forbyr alle utvidelser på dette nettstedet (utvidelsesbutikk, nettleserkonto eller støtte). Dette er ikke en feil i DevDocTrad.",
+"popupPdf": "PDF-er åpnes i nettleserens visningsprogram, der ingen utvidelse kommer inn. Åpne HTML-versjonen av dokumentet hvis den finnes.",
+"popupBlocked": "Nettleseren nektet tilgang til denne siden. I Firefox er noen nettsteder begrenset: åpne about:addons, DevDocTrad, tillat «Kjør på nettsteder med begrensninger», og last inn siden på nytt."
 }

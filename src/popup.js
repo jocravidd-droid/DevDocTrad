@@ -146,7 +146,7 @@
     if (!tab) return;
     send({ type: 'tabCommand', tabId: tab.id, cmd: c, keyId: $('keySel').value || null }).then(function () {
       setTimeout(refreshStatus, 250);
-    }).catch(function (e) { UI.toast('error', t('badgeError', [String(e && e.message || e)])); });
+    }).catch(function (e) { UI.toast('error', DDT.injectionHelp(e)); });
   }
 
   $('translate').addEventListener('click', function () {
@@ -240,7 +240,11 @@
   api.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
     tab = tabs && tabs[0];
     var url = tab && tab.url ? tab.url : '';
-    supported = /^https?:/i.test(url) && !/^https:\/\/(chrome\.google\.com\/webstore|chromewebstore\.google\.com|addons\.mozilla\.org|microsoftedge\.microsoft\.com\/addons)/i.test(url);
+    // efface le « ! » laissé sur l'icône par un raccourci refusé
+    try { if (tab && api.action) { api.action.setBadgeText({ tabId: tab.id, text: '' }); api.action.setTitle({ tabId: tab.id, title: '' }); } } catch (e) { /* rien */ }
+    var why = DDT.unsupportedReason(url);
+    supported = !why;
+    if (why && why !== 'scheme') $('unsupportedMsg').textContent = t(why === 'pdf' ? 'popupPdf' : 'popupRestricted');
     try { host = url ? new URL(url).hostname : ''; } catch (e) { host = ''; }
     $('host').textContent = host || (url ? url.split(':')[0] + ':' : '');
     if (!supported) {

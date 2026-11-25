@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Traduttore di doc, codice e video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Chiave"
+  },
+  "popupRestricted": {
+    "message": "Il browser vieta tutte le estensioni su questo sito (store delle estensioni, account o assistenza del browser). Non è un errore di DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "I PDF si aprono nel visualizzatore del browser, dove nessuna estensione può entrare. Apri la versione HTML del documento, se esiste."
+  },
+  "popupBlocked": {
+    "message": "Il browser ha rifiutato l'accesso a questa pagina. In Firefox alcuni siti sono limitati: apri about:addons, DevDocTrad, consenti «Esegui nei siti con restrizioni» e ricarica la pagina."
   },
   "popupKeyAuto": {
     "message": "Automatica (gratuite e locale)"

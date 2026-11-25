@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Kääntäjä dokumenteille ja videoille",
 "extDescription": "Kääntää kehittäjädokumentaation ja ohjelmointisivustot uskollisesti koskematta koskaan koodiin.",
 "cmdToggle": "Käännä sivu tai palaa alkuperäiseen",
 "badgeTranslating": "Käännetään: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Ilmainen litterointiraja täynnä. Yritä myöhemmin uudelleen.",
 "voiceNoAudio": "Tämän videon ääntä ei voi käyttää (suojattu video).",
 "voiceSpeak": "Lue käännös ääneen",
-"voiceSpeakOff": "Lopeta ääneen lukeminen"
+"voiceSpeakOff": "Lopeta ääneen lukeminen",
+"popupRestricted": "Selain kieltää kaikki laajennukset tällä sivustolla (laajennuskauppa, selaintili tai tuki). Kyse ei ole DevDocTradin viasta.",
+"popupPdf": "PDF-tiedostot avautuvat selaimen katseluohjelmaan, johon mikään laajennus ei pääse. Avaa asiakirjan HTML-versio, jos sellainen on.",
+"popupBlocked": "Selain esti pääsyn tälle sivulle. Firefoxissa jotkin sivustot ovat rajoitettuja: avaa about:addons, DevDocTrad, salli ”Suorita rajoitetuilla sivustoilla” ja lataa sivu uudelleen."
 }

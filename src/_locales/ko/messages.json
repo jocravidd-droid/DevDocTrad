@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: 기술 문서·코드·동영상 번역기"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "키"
+  },
+  "popupRestricted": {
+    "message": "브라우저가 이 사이트에서 모든 확장 프로그램을 금지합니다(확장 프로그램 스토어, 브라우저 계정 또는 지원). DevDocTrad의 오류가 아닙니다."
+  },
+  "popupPdf": {
+    "message": "PDF는 브라우저 뷰어에서 열리며, 어떤 확장 프로그램도 들어갈 수 없습니다. HTML 버전이 있으면 그것을 여세요."
+  },
+  "popupBlocked": {
+    "message": "브라우저가 이 페이지에 대한 접근을 거부했습니다. Firefox에서는 일부 사이트가 제한됩니다: about:addons를 열고 DevDocTrad에서 「제한된 사이트에서 실행」을 허용한 뒤 페이지를 새로 고치세요."
   },
   "popupKeyAuto": {
     "message": "자동(무료 및 로컬)"

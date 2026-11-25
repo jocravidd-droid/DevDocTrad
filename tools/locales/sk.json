@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Prekladač dokumentácie, kódu a videí",
 "extDescription": "Verne prekladá dokumentáciu pre vývojárov a weby o programovaní bez toho, aby sa kedy dotkol kódu.",
 "cmdToggle": "Preložiť stránku alebo sa vrátiť k originálu",
 "badgeTranslating": "Prekladá sa: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Bezplatný limit prepisu vyčerpaný. Skús to neskôr.",
 "voiceNoAudio": "Zvuk tohto videa nie je dostupný (chránené video).",
 "voiceSpeak": "Prečítať preklad nahlas",
-"voiceSpeakOff": "Zastaviť čítanie nahlas"
+"voiceSpeakOff": "Zastaviť čítanie nahlas",
+"popupRestricted": "Prehliadač na tejto stránke zakazuje všetky rozšírenia (obchod s rozšíreniami, účet alebo podpora prehliadača). Nejde o chybu DevDocTrad.",
+"popupPdf": "PDF sa otvárajú v zobrazovači prehliadača, kam žiadne rozšírenie nesmie. Otvor HTML verziu dokumentu, ak existuje.",
+"popupBlocked": "Prehliadač odmietol prístup k tejto stránke. Vo Firefoxe sú niektoré stránky obmedzené: otvor about:addons, DevDocTrad, povoľ „Spúšťať na stránkach s obmedzeniami“ a stránku načítaj znova."
 }

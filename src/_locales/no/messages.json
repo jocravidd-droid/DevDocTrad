@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Oversetter for docs, kode og video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Nøkkel"
+  },
+  "popupRestricted": {
+    "message": "Nettleseren forbyr alle utvidelser på dette nettstedet (utvidelsesbutikk, nettleserkonto eller støtte). Dette er ikke en feil i DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF-er åpnes i nettleserens visningsprogram, der ingen utvidelse kommer inn. Åpne HTML-versjonen av dokumentet hvis den finnes."
+  },
+  "popupBlocked": {
+    "message": "Nettleseren nektet tilgang til denne siden. I Firefox er noen nettsteder begrenset: åpne about:addons, DevDocTrad, tillat «Kjør på nettsteder med begrensninger», og last inn siden på nytt."
   },
   "popupKeyAuto": {
     "message": "Automatisk (gratis og lokal)"

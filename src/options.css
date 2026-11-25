@@ -13,7 +13,7 @@ body.opts { min-height: 100vh; }
 /* ---------- Navigation latérale (matériau le plus opaque) ---------- */
 .side { position: sticky; top: 28px; padding: 18px 10px 12px; display: flex; flex-direction: column; gap: 18px; }
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .side.m-dense { background: var(--glass-floating); }
+  .side.m-dense::before { background: var(--glass-floating); }
 }
 .brand { display: flex; align-items: center; gap: var(--s-3); padding: 0 10px; }
 .brand img { width: 36px; height: 36px; flex: none; filter: drop-shadow(var(--shadow-1)); }
@@ -200,7 +200,7 @@ label.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; 
 /* ---------- Petit écran : navigation en rangée horizontale ---------- */
 @media (max-width: 759px) {
   .shell { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 12px 12px 56px; }
-  .side { position: sticky; top: 8px; z-index: 10; flex-direction: row; align-items: center; gap: 6px; padding: 6px; border-radius: var(--r-lg); }
+  .side { position: sticky; top: 8px; z-index: 10; flex-direction: row; align-items: center; gap: 6px; padding: 6px; --m-r: var(--r-lg); }
   .brand { padding: 0 2px 0 4px; }
   .brand img { width: 28px; height: 28px; }
   .brand-id { display: none; }

@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad：技術文件、程式碼與影片翻譯",
 "extDescription": "忠實翻譯開發者文件與程式設計網站，絕不更動程式碼。",
 "cmdToggle": "翻譯頁面或返回原文",
 "badgeTranslating": "翻譯中：{0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "已達免費轉寫上限。請稍後再試。",
 "voiceNoAudio": "無法取得此影片的聲音（受保護的影片）。",
 "voiceSpeak": "朗讀譯文",
-"voiceSpeakOff": "停止朗讀"
+"voiceSpeakOff": "停止朗讀",
+"popupRestricted": "瀏覽器禁止所有擴充功能在此網站上執行（擴充功能商店、瀏覽器帳號或支援頁面）。這不是 DevDocTrad 的故障。",
+"popupPdf": "PDF 會在瀏覽器的檢視器中開啟，任何擴充功能都無法進入。如有 HTML 版本，請開啟 HTML 版本。",
+"popupBlocked": "瀏覽器拒絕存取此頁面。在 Firefox 中，部分網站受到限制：開啟 about:addons，進入 DevDocTrad，允許「在受限網站上執行」，然後重新載入頁面。"
 }

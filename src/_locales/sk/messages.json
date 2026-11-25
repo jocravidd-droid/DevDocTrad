@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Prekladač dokumentácie, kódu a videí"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Kľúč"
+  },
+  "popupRestricted": {
+    "message": "Prehliadač na tejto stránke zakazuje všetky rozšírenia (obchod s rozšíreniami, účet alebo podpora prehliadača). Nejde o chybu DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF sa otvárajú v zobrazovači prehliadača, kam žiadne rozšírenie nesmie. Otvor HTML verziu dokumentu, ak existuje."
+  },
+  "popupBlocked": {
+    "message": "Prehliadač odmietol prístup k tejto stránke. Vo Firefoxe sú niektoré stránky obmedzené: otvor about:addons, DevDocTrad, povoľ „Spúšťať na stránkach s obmedzeniami“ a stránku načítaj znova."
   },
   "popupKeyAuto": {
     "message": "Automaticky (bezplatné a lokálny)"

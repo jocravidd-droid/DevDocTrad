@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad：技术文档、代码与视频翻译"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "密钥"
+  },
+  "popupRestricted": {
+    "message": "浏览器禁止所有扩展在此网站上运行（扩展商店、浏览器账户或支持页面）。这不是 DevDocTrad 的故障。"
+  },
+  "popupPdf": {
+    "message": "PDF 会在浏览器的查看器中打开，任何扩展都无法进入。如有 HTML 版本，请打开 HTML 版本。"
+  },
+  "popupBlocked": {
+    "message": "浏览器拒绝访问此页面。在 Firefox 中，部分网站受到限制：打开 about:addons，进入 DevDocTrad，允许「在受限网站上运行」，然后重新加载页面。"
   },
   "popupKeyAuto": {
     "message": "自动（免费和本地）"

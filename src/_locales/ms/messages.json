@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Penterjemah dokumentasi dan video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Kunci"
+  },
+  "popupRestricted": {
+    "message": "Pelayar melarang semua sambungan di laman ini (kedai sambungan, akaun atau sokongan pelayar). Ini bukan ralat DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF dibuka dalam pemapar pelayar, yang tidak boleh dimasuki oleh sambungan. Buka versi HTML dokumen jika ada."
+  },
+  "popupBlocked": {
+    "message": "Pelayar menolak akses ke halaman ini. Dalam Firefox sesetengah laman dihadkan: buka about:addons, DevDocTrad, benarkan «Jalankan di laman dengan sekatan», kemudian muat semula halaman."
   },
   "popupKeyAuto": {
     "message": "Otomatis (percuma dan lokal)"

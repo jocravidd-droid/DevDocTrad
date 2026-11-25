@@ -1,5 +1,5 @@
 {
-"extName": "DevDocTrad",
+"extName": "DevDocTrad: Fordító dokumentációhoz és videóhoz",
 "extDescription": "Hűen lefordítja a fejlesztői dokumentációt és a programozási oldalakat, a kódhoz soha nem nyúl.",
 "cmdToggle": "Oldal fordítása vagy vissza az eredetihez",
 "badgeTranslating": "Fordítás: {0} / {1}",
@@ -215,5 +215,8 @@
 "voiceRate": "Elérted az ingyenes átírási korlátot. Próbáld később.",
 "voiceNoAudio": "A videó hangja nem érhető el (védett videó).",
 "voiceSpeak": "A fordítás felolvasása",
-"voiceSpeakOff": "Felolvasás leállítása"
+"voiceSpeakOff": "Felolvasás leállítása",
+"popupRestricted": "A böngésző ezen az oldalon minden bővítményt tilt (bővítményáruház, böngészőfiók vagy támogatás). Ez nem a DevDocTrad hibája.",
+"popupPdf": "A PDF-ek a böngésző megjelenítőjében nyílnak meg, ahová egyetlen bővítmény sem léphet be. Ha van, nyisd meg a dokumentum HTML-változatát.",
+"popupBlocked": "A böngésző megtagadta a hozzáférést ehhez az oldalhoz. A Firefoxban egyes oldalak korlátozottak: nyisd meg az about:addons oldalt, a DevDocTradot, engedélyezd a „Futtatás korlátozott webhelyeken” lehetőséget, majd töltsd újra az oldalt."
 }

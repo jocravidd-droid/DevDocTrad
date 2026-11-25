@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Översättare för docs, kod och video"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Nyckel"
+  },
+  "popupRestricted": {
+    "message": "Webbläsaren förbjuder alla tillägg på den här webbplatsen (tilläggsbutik, webbläsarkonto eller support). Det är inget fel i DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF-filer öppnas i webbläsarens visare, dit inget tillägg kommer in. Öppna dokumentets HTML-version om den finns."
+  },
+  "popupBlocked": {
+    "message": "Webbläsaren nekade åtkomst till den här sidan. I Firefox är vissa webbplatser begränsade: öppna about:addons, DevDocTrad, tillåt ”Kör på webbplatser med begränsningar” och läs in sidan igen."
   },
   "popupKeyAuto": {
     "message": "Automatiskt (gratis och lokal)"

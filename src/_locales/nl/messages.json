@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "DevDocTrad"
+    "message": "DevDocTrad: Vertaler voor docs, code en video's"
   },
   "uiDir": {
     "message": "ltr"
@@ -136,6 +136,15 @@
   },
   "popupKey": {
     "message": "Sleutel"
+  },
+  "popupRestricted": {
+    "message": "De browser verbiedt alle extensies op deze site (extensiewinkel, browseraccount of ondersteuning). Dit is geen fout van DevDocTrad."
+  },
+  "popupPdf": {
+    "message": "PDF's openen in de viewer van de browser, waar geen enkele extensie in kan. Open de HTML-versie van het document als die er is."
+  },
+  "popupBlocked": {
+    "message": "De browser weigerde toegang tot deze pagina. In Firefox zijn sommige sites beperkt: open about:addons, DevDocTrad, sta „Uitvoeren op websites met beperkingen” toe en herlaad de pagina."
   },
   "popupKeyAuto": {
     "message": "Automatisch (gratis en lokaal)"
