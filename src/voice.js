@@ -423,8 +423,14 @@
           source.connect(analyser);
           // Firefox : mozCaptureStream retire le son de la vidéo ; on le renvoie vers les haut-parleurs.
           if (cap.moz) source.connect(ctx.destination);
-          var buf = new Float32Array(analyser.fftSize);
+          // Tampon créé côté page : dans Firefox, un tableau du script d'extension passé à une méthode
+          // de la page n'est pas rempli (frontière Xray) et tout semblait silencieux.
+          var buf = new (win.Float32Array || Float32Array)(analyser.fftSize);
+          // Le contexte audio d'une page démarre souvent « suspendu » (pas de clic sur la page) : il ne
+          // mesure alors que des zéros. On tente de le relancer ; sinon, pas de détection de silence.
+          if (ctx.state !== 'running' && ctx.resume) { try { ctx.resume().catch(function () {}); } catch (e) { /* rien */ } }
           meter = win.setInterval(function () {
+            if (ctx.state !== 'running') { level = 1; return; }
             analyser.getFloatTimeDomainData(buf);
             var sum = 0;
             for (var i = 0; i < buf.length; i++) sum += buf[i] * buf[i];

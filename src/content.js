@@ -431,14 +431,15 @@
     }
     function inlineMd(parent, text) {
       // `code`, **gras**, [lien](url) ; le reste en texte brut (jamais de HTML interprété)
-      var re = /`([^`]+)`|\*\*([^*]+)\*\*|\[([^\]]+)\]\((https?:\/\/[^)\s]+|[^)\s:]+)\)/g;
+      text = String(text).replace(/\\([\\`*_{}\[\]()#+\-.!&<>|])/g, '$1');   // échappements Markdown
+      var re = /`([^`]+)`|\*\*(.+?)\*\*|\[([^\]]+)\]\((https?:\/\/[^)\s]+|[^)\s:]+)\)/g;
       var last = 0;
       var m;
       while ((m = re.exec(text)) !== null) {
         if (m.index > last) parent.appendChild(doc.createTextNode(text.slice(last, m.index)));
         var el;
         if (m[1] !== undefined) { el = doc.createElement('code'); el.textContent = m[1]; }
-        else if (m[2] !== undefined) { el = doc.createElement('b'); el.textContent = m[2]; }
+        else if (m[2] !== undefined) { el = doc.createElement('b'); inlineMd(el, m[2]); }
         else { el = doc.createElement('a'); el.textContent = m[3]; el.setAttribute('href', m[4]); }
         parent.appendChild(el);
         last = re.lastIndex;
@@ -481,7 +482,7 @@
           continue;
         }
         if (!line.trim()) { i++; list = null; continue; }
-        if (/^( {4}|\t)/.test(line)) {
+        if (/^( {4}|\t)/.test(line) && !(list && /^\s*(?:[-*+]|\d{1,3}[.)])\s+/.test(line))) {
           var code = [];
           while (i < lines.length && (/^( {4}|\t)/.test(lines[i]) || !lines[i].trim())) code.push(lines[i++]);
           while (code.length && !code[code.length - 1].trim()) code.pop();
@@ -513,6 +514,11 @@
         var para = [];
         while (i < lines.length && lines[i].trim() && !/^\s*(```|~~~|#{1,6}\s)/.test(lines[i]) && !/^( {4}|\t)/.test(lines[i])) para.push(lines[i++]);
         if (looksPreformatted(para)) { codeBlock(para.join('\n')); continue; }
+        // HTML brut d'un README (<p align=…>, <picture>…) : balises retirées, et une ligne qui n'est
+        // qu'une balise reste visible telle quelle, sans être envoyée à la traduction.
+        if (para.every(function (l) { return /^\s*<[^>]+>\s*(<[^>]+>\s*)*$/.test(l); })) { codeBlock(para.join('\n')); continue; }
+        para = para.map(function (l) { return l.replace(/<\/?[a-zA-Z][^>]*>/g, ' '); }).filter(function (l) { return l.trim(); });
+        if (!para.length) continue;
         var quote = para.every(function (l) { return /^\s*>/.test(l); });
         var el = doc.createElement(quote ? 'blockquote' : 'p');
         inlineMd(el, para.map(function (l) { return quote ? l.replace(/^\s*>\s?/, '') : l.trim(); }).join(' '));

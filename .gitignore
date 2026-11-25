@@ -2,3 +2,5 @@ node_modules/
 dist/
 __pycache__/
 design/references/
+.claude/worktrees/
+tools/demo/unknown.txt

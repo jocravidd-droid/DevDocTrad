@@ -139,3 +139,19 @@ test('Markdown : pas d\'injection HTML depuis le texte du fichier', async () => 
   assert.equal(view.querySelector('script'), null);
   assert.equal(view.querySelector('a'), null, 'lien javascript: refusé');
 });
+
+test('Markdown réel (README GitHub) : sous-listes, lien dans du gras, échappements, HTML brut', async () => {
+  const md = ['<p align="center">', '  <img src="logo.svg">', '</p>', '',
+    '**Fast web framework for [Node.js](https://nodejs.org).**', '', '- Docs \\& Community', '- Contributing',
+    '    - [TC emeriti members](#tc-emeriti-members)', '', '<b>Note</b> keep it short.'].join('\n');
+  const dom = rawDom(md, 'https://raw.githubusercontent.com/x/y/main/README.md');
+  const { engine } = H.makeEngine(dom);
+  await engine.start();
+  const view = dom.window.document.querySelector('[data-ddt-plain]');
+  const b = view.querySelector('p > b');
+  assert.equal(b.querySelector('a').getAttribute('href'), 'https://nodejs.org', 'lien dans le gras');
+  const items = [...view.querySelectorAll('li')].map((li) => li.textContent);
+  assert.deepEqual(items, ['DOCS & COMMUNITY', 'CONTRIBUTING', 'TC EMERITI MEMBERS'], 'sous-liste = éléments, pas du code');
+  assert.ok([...view.querySelectorAll('pre')].some((p) => p.textContent.includes('<img src="logo.svg">')), 'HTML seul gardé tel quel');
+  assert.ok([...view.querySelectorAll('p')].some((p) => p.textContent.trim() === 'NOTE KEEP IT SHORT.'), 'balises retirées du texte');
+});
