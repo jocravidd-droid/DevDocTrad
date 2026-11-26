@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Voorlezen stoppen"
   },
+  "popupVoiceMode": {
+    "message": "Stem in video's"
+  },
+  "popupVoiceSubs": {
+    "message": "Ondertitels"
+  },
+  "popupVoiceDub": {
+    "message": "Ondertitels + vertaalde stem (nasynchronisatie)"
+  },
+  "voiceNoTts": {
+    "message": "Geen spraaksynthesestem voor {0} op dit apparaat: alleen ondertitels."
+  },
+  "voiceDubClick": {
+    "message": "Klik op de pagina om de vertaalde stem toe te staan."
+  },
+  "voiceInFrame": {
+    "message": "Deze video staat in een ingesloten speler ({0}): open hem in een tabblad om hem te vertalen."
+  },
+  "voiceOpenTab": {
+    "message": "Video openen in een tabblad"
+  },
   "popupSensitive": {
     "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
   },

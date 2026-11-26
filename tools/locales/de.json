@@ -224,5 +224,12 @@
 "popupProgress": "Fortschritt der Übersetzung",
 "optUrlInvalid": "Ungültige Adresse: Gib eine http://- oder https://-Adresse ein, zum Beispiel http://localhost:11434.",
 "optOllamaPermDenied": "Berechtigung verweigert: DevDocTrad kann {0} nicht erreichen.",
-"keyNoApiKey": "Schlüssel fehlt"
+"keyNoApiKey": "Schlüssel fehlt",
+"popupVoiceMode": "Stimme in Videos",
+"popupVoiceSubs": "Untertitel",
+"popupVoiceDub": "Untertitel + übersetzte Stimme (Synchronisation)",
+"voiceNoTts": "Keine Sprachausgabe-Stimme für {0} auf diesem Gerät: nur Untertitel.",
+"voiceDubClick": "Klicke auf die Seite, um die übersetzte Stimme zu erlauben.",
+"voiceInFrame": "Dieses Video läuft in einem eingebetteten Player ({0}): öffne es in einem Tab, um es zu übersetzen.",
+"voiceOpenTab": "Video in einem Tab öffnen"
 }

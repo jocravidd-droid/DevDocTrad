@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Arrêter la lecture à voix haute"
   },
+  "popupVoiceMode": {
+    "message": "Voix des vidéos"
+  },
+  "popupVoiceSubs": {
+    "message": "Sous-titres"
+  },
+  "popupVoiceDub": {
+    "message": "Sous-titres + voix traduite (doublage)"
+  },
+  "voiceNoTts": {
+    "message": "Aucune voix de synthèse en {0} sur cet appareil : sous-titres seuls."
+  },
+  "voiceDubClick": {
+    "message": "Clique sur la page pour autoriser la voix traduite."
+  },
+  "voiceInFrame": {
+    "message": "Cette vidéo est dans un lecteur intégré ({0}) : ouvre-la dans un onglet pour la traduire."
+  },
+  "voiceOpenTab": {
+    "message": "Ouvrir la vidéo dans un onglet"
+  },
   "popupSensitive": {
     "message": "Page sensible : jamais de traduction automatique ici. Le bouton fonctionne, Ollama est utilisé en premier s'il est réglé."
   },

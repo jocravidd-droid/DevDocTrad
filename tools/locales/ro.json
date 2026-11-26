@@ -224,5 +224,12 @@
 "popupProgress": "Progresul traducerii",
 "optUrlInvalid": "Adresă nevalidă: introdu o adresă http:// sau https://, de exemplu http://localhost:11434.",
 "optOllamaPermDenied": "Permisiune refuzată: DevDocTrad nu poate accesa {0}.",
-"keyNoApiKey": "lipsește cheia"
+"keyNoApiKey": "lipsește cheia",
+"popupVoiceMode": "Vocea videoclipurilor",
+"popupVoiceSubs": "Subtitrări",
+"popupVoiceDub": "Subtitrări + voce tradusă (dublaj)",
+"voiceNoTts": "Nicio voce sintetizată pentru {0} pe acest dispozitiv: doar subtitrări.",
+"voiceDubClick": "Dă clic pe pagină pentru a permite vocea tradusă.",
+"voiceInFrame": "Acest videoclip este într-un player încorporat ({0}): deschide-l într-o filă pentru a-l traduce.",
+"voiceOpenTab": "Deschide videoclipul într-o filă"
 }

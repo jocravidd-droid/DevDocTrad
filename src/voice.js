@@ -7,7 +7,11 @@
  *   2. les sous-titres de YouTube (activés automatiquement s'ils existent) ;
  *   3. sinon, le son de la vidéo : morceaux de quelques secondes transcrits par Groq Whisper
  *      (palier gratuit, avec la clé Groq de l'utilisateur), puis traduits comme le reste.
- * Option : lecture de la traduction à voix haute par la synthèse vocale du navigateur (locale, gratuite).
+ * Option « doublage » : la traduction est lue par une voix de synthèse du navigateur (speechSynthesis,
+ * gratuite), calée sur les sous-titres, pendant que le son d'origine est baissé.
+ *
+ * Vidéos et sons (<video>, <audio>) cherchés aussi dans les shadow roots ouverts (lecteurs en composants
+ * web). Lecteur intégré d'un autre site (<iframe> YouTube, Vimeo...) : lien pour l'ouvrir dans un onglet.
  *
  * Injecté seulement à la demande (popup ou raccourci Alt+Maj+V). Licence MIT.
  */
@@ -25,6 +29,79 @@
   var BATCH = 40;                // sous-titres traduits par demande
   var WATCH_MS = 1000;           // surveillance : vidéo retirée ou remplacée, vidéo YouTube suivante
   var OWN_LABEL = 'DevDocTrad';  // piste texte ajoutée pour le plein écran natif (jamais prise comme source)
+  var DUCK = 0.15;               // doublage : son d'origine à 15 % pendant que la voix parle
+  var RAMP_MS = 280;             // durée de la baisse ou de la remontée du son
+  var UNDUCK_MS = 350;           // silence entre deux phrases avant de remonter le son
+  var MAX_LAG_MS = 2000;         // retard de la voix au-delà duquel la phrase en cours est coupée
+  var RATE_MIN = 0.9;
+  var RATE_MAX = 1.7;
+  var VOICES_WAIT_MS = 1500;     // attente de « voiceschanged » (liste des voix chargée plus tard)
+  var MAX_SHADOW_DEPTH = 8;
+
+  /* Lecteurs vidéo intégrés connus (adresse d'un <iframe>) */
+  var PLAYER_RE = new RegExp([
+    'youtube(-nocookie)?\\.com/(embed|shorts|live)/', 'youtu\\.be/', 'player\\.vimeo\\.com/', 'vimeo\\.com/(video|event)/',
+    'dailymotion\\.com/(embed|player)', 'geo\\.dailymotion\\.com/', 'dai\\.ly/', 'wistia\\.(com|net)/', 'wi\\.st/',
+    'loom\\.com/(embed|share)/', 'player\\.twitch\\.tv', 'clips\\.twitch\\.tv', 'streamable\\.com/[eo]/', 'vidyard\\.com/',
+    'players\\.brightcove\\.net/', 'jwplayer\\.com/players', 'jwplatform\\.com/', 'facebook\\.com/plugins/video',
+    'player\\.bilibili\\.com/', 'rumble\\.com/embed/', 'embed\\.ted\\.com/', '/videos/embed/', 'bitchute\\.com/embed/',
+    'odysee\\.com/\\$/embed/', 'vk\\.com/video_ext', 'ok\\.ru/videoembed/', 'mediadelivery\\.net/embed/',
+    'cloudflarestream\\.com/', 'videodelivery\\.net/', 'vidyard\\.com/', 'kaltura\\.com/', 'panopto\\.(com|eu)/',
+    'canva\\.com/design/.*/watch', 'descript\\.com/embed', 'tella\\.tv/video'
+  ].join('|'), 'i');
+
+  /* Langues : alias des codes de voix (norvégien « nb », hébreu « iw »...) et région par défaut */
+  var LANG_ALIAS = { no: ['no', 'nb', 'nn'], he: ['he', 'iw'], id: ['id', 'in'], fil: ['fil', 'tl'] };
+  var DEFAULT_REGION = { en: 'US', ja: 'JP', ko: 'KR', zh: 'CN', sv: 'SE', da: 'DK', el: 'GR', cs: 'CZ', uk: 'UA',
+    hi: 'IN', bn: 'IN', ta: 'IN', te: 'IN', mr: 'IN', vi: 'VN', he: 'IL', fa: 'IR', ar: 'SA', ms: 'MY', sw: 'KE',
+    ur: 'PK', no: 'NO', nb: 'NO', ca: 'ES', et: 'EE', sl: 'SI', sr: 'RS', fil: 'PH' };
+  var QUALITY_RE = /natural|neural|online|google|premium|enhanced/i;
+
+  function normLang(code) { return String(code || '').replace(/_/g, '-').toLowerCase(); }
+  function primary(code) { return normLang(code).split('-')[0]; }
+  function sameLanguage(voiceLang, target) {
+    var p = primary(voiceLang);
+    var tp = primary(target);
+    return p === tp || (LANG_ALIAS[tp] || []).indexOf(p) !== -1;
+  }
+  /* Voix « exacte » : même code complet, ou région par défaut de la langue (fr -> fr-FR, en -> en-US) */
+  function exactLanguage(voiceLang, target) {
+    var v = normLang(voiceLang);
+    var tg = normLang(target);
+    if (v === tg) return true;
+    if (tg.indexOf('-') !== -1 || !sameLanguage(v, tg)) return false;
+    var region = (DEFAULT_REGION[tg] || tg).toLowerCase();
+    return v.split('-')[1] === region || v === tg;
+  }
+  /* Meilleure voix de synthèse pour la langue cible : langue exacte d'abord, puis voix de bonne qualité
+     (« Natural », « Neural », « Online », « Google », « Premium », « Enhanced »), puis la langue seule. */
+  function pickTtsVoice(voices, target) {
+    var best = null;
+    var bestScore = -1;
+    Array.prototype.forEach.call(voices || [], function (v, i) {
+      if (!v || !sameLanguage(v.lang, target)) return;
+      var score = (exactLanguage(v.lang, target) ? 100 : 0) + (QUALITY_RE.test(v.name || '') ? 10 : 0) + (v.default ? 1 : 0);
+      if (score > bestScore) { best = v; bestScore = score; }
+    });
+    return best;
+  }
+  /* Durée naturelle d'une phrase (secondes, vitesse 1) : environ 15 caractères par seconde,
+     moins pour le chinois, le japonais et le coréen (une syllabe par caractère). */
+  function speechSeconds(text, lang) {
+    var n = String(text || '').replace(/\s+/g, '').length;
+    var cps = /^(zh|ja)/.test(primary(lang)) ? 6.5 : primary(lang) === 'ko' ? 8 : 15;
+    return 0.15 + n / cps;
+  }
+  /* Vitesse de lecture : la phrase doit tenir dans le temps du sous-titre (moins le retard de la voix),
+     bornée entre 0,9 et 1,7. Sans durée connue (YouTube, son transcrit) : rythme un peu soutenu. */
+  function dubRate(text, availSec, lagSec, lang) {
+    var est = speechSeconds(text, lang);
+    var lag = Math.max(0, lagSec || 0);
+    var room = availSec == null ? est / 1.1 - lag : availSec - lag;
+    room = Math.max(room, 0.4);
+    var r = est / room;
+    return Math.round(Math.min(RATE_MAX, Math.max(RATE_MIN, r)) * 100) / 100;
+  }
 
   function cueText(s) {
     return String(s || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
@@ -50,28 +127,109 @@
     var ytCurrent = null;        // identifiant de la vidéo YouTube en cours (null : pas YouTube)
     var memo = {};               // texte original -> traduction
     var pending = {};            // texte original -> promesse
-    var speaking = false;
-    var savedVolume = null;
+    var speaking = false;        // doublage (lecture à voix haute) en marche
+    var frameAnchor = null;      // <iframe> de lecteur signalé quand la page n'a pas de vidéo
+    var ttsVoice = null;         // voix de synthèse choisie pour la langue cible
+    var voicesPromise = null;
+    var speakGen = 0;            // incrémenté à chaque annulation : les rappels des phrases annulées sont ignorés
+    var queued = 0;              // phrases envoyées à la synthèse et pas encore finies
+    var speakEnd = 0;            // heure (ms) prévue de fin des phrases en file
+    var lastSaid = '';           // dernière phrase envoyée (évite de la redire en double)
+    var live = [];               // phrases en cours : gardées en mémoire (Chrome perd sinon leurs événements)
+    var baseVolume = null;       // volume d'origine pendant le doublage (null : son non baissé)
+    var ducked = false;
+    var rampTimer = null;
+    var unduckTimer = null;
+    var resumeHook = null;       // source en cours : redire le bon sous-titre après une pause ou un saut
+    var mediaOff = null;         // retire les écouteurs pause / lecture / saut de la vidéo suivie
+    var rampMs = deps.rampMs != null ? deps.rampMs : RAMP_MS;
+    var unduckMs = deps.unduckMs != null ? deps.unduckMs : UNDUCK_MS;
     var host = null;
     var box = null;
     var lastShown = '';
     var stats = { translated: 0, transcribed: 0 };
 
-    /* ---------------- Choix de la vidéo ---------------- */
+    /* ---------------- Choix de la vidéo (ou du son) ---------------- */
     function area(v) {
       var r = v.getBoundingClientRect ? v.getBoundingClientRect() : { width: 0, height: 0 };
       return Math.max(0, r.width) * Math.max(0, r.height);
     }
+    /* Surface réellement visible dans la fenêtre */
+    function visibleArea(el) {
+      if (!el.getBoundingClientRect) return 0;
+      var r = el.getBoundingClientRect();
+      var vw = win.innerWidth || 1024;
+      var vh = win.innerHeight || 768;
+      var w = Math.min(r.right != null ? r.right : r.left + r.width, vw) - Math.max(r.left || 0, 0);
+      var h = Math.min(r.bottom != null ? r.bottom : r.top + r.height, vh) - Math.max(r.top || 0, 0);
+      return Math.max(0, w) * Math.max(0, h);
+    }
+    /* <video>, <audio> et <iframe> du document et des shadow roots ouverts (lecteurs en composants web) */
+    function collect(node, out, depth) {
+      var list;
+      try { list = node.querySelectorAll('video, audio, iframe'); } catch (e) { return; }
+      for (var i = 0; i < list.length; i++) (list[i].tagName === 'IFRAME' ? out.frames : out.media).push(list[i]);
+      if (depth >= MAX_SHADOW_DEPTH) return;
+      var all = node.querySelectorAll('*');
+      for (var j = 0; j < all.length; j++) {
+        var sr = all[j].shadowRoot;
+        if (sr && sr !== host && all[j] !== host) collect(sr, out, depth + 1);
+      }
+    }
+    function scan() {
+      var out = { media: [], frames: [] };
+      collect(doc, out, 0);
+      return out;
+    }
+    function playing(m) { return !m.paused && !m.ended; }
+    function hasSource(m) {
+      return !!(m.currentSrc || m.src || m.srcObject || (m.querySelector && m.querySelector('source[src]')) ||
+        (m.textTracks && m.textTracks.length));
+    }
+    /* Plusieurs vidéos : celle qui joue, sinon la plus grande visible ; une vidéo passe avant un son */
     function pickVideo() {
-      var list = Array.prototype.slice.call(doc.querySelectorAll('video'));
+      var list = scan().media;
       if (!list.length) return null;
-      list.sort(function (a, b) {
-        var pa = a.paused ? 0 : 1;
-        var pb = b.paused ? 0 : 1;
-        if (pa !== pb) return pb - pa;
-        return area(b) - area(a);
+      var info = list.map(function (m, i) {
+        return { m: m, i: i, play: playing(m) ? 1 : 0, area: visibleArea(m) || area(m) * 0.001,
+          video: m.tagName === 'VIDEO' ? 1 : 0, src: hasSource(m) ? 1 : 0 };
       });
-      return list[0];
+      info.sort(function (a, b) {
+        return (b.play - a.play) || (b.area - a.area) || (b.video - a.video) || (b.src - a.src) || (a.i - b.i);
+      });
+      return info[0].m;
+    }
+    function isAudio(m) { return !!m && m.tagName === 'AUDIO'; }
+    /* Lecteur intégré d'un autre site : l'extension n'est injectée que dans le cadre principal.
+       On rend l'adresse à ouvrir dans un onglet (YouTube : page de la vidéo, avec ses sous-titres). */
+    function playerUrl(src) {
+      var u;
+      try { u = new URL(src, doc.baseURI); } catch (e) { return ''; }
+      if (!/^https?:$/.test(u.protocol)) return '';
+      var yt = /(^|\.)youtube(-nocookie)?\.com$/i.test(u.hostname) && /^\/(embed|shorts|live)\/([^/?#]+)/.exec(u.pathname);
+      if (yt && yt[2] !== 'videoseries') {
+        var start = u.searchParams.get('start') || u.searchParams.get('t');
+        return 'https://www.youtube.com/watch?v=' + encodeURIComponent(yt[2]) + (start ? '&t=' + encodeURIComponent(start) : '');
+      }
+      return u.href;
+    }
+    function isPlayerFrame(f) {
+      var src = f.src || f.getAttribute('src') || f.getAttribute('data-src') || '';
+      if (!src || /^(about|javascript|data|blob):/i.test(src)) return false;
+      if (PLAYER_RE.test(src)) return true;
+      var allow = (f.getAttribute('allow') || '') + (f.hasAttribute('allowfullscreen') ? ' fullscreen' : '');
+      return /fullscreen|autoplay|encrypted-media|picture-in-picture/i.test(allow) && /embed|player|video/i.test(src);
+    }
+    function pickPlayerFrame(frames) {
+      var best = null;
+      var bestArea = 0;
+      (frames || scan().frames).forEach(function (f) {
+        var a = visibleArea(f);
+        var r = f.getBoundingClientRect ? f.getBoundingClientRect() : { width: 0, height: 0 };
+        if (r.width < 120 || r.height < 68 || a <= 0 || !isPlayerFrame(f)) return;
+        if (a > bestArea) { best = f; bestArea = a; }
+      });
+      return best;
     }
     function isYouTube() { return /(^|\.)youtube(-nocookie)?\.com$/i.test(win.location.hostname); }
     function textTracks(v) {
@@ -144,7 +302,11 @@
       '.bar button:focus-visible{outline:2px solid #4da3ff;outline-offset:1px}',
       '.bar button[aria-pressed=true]{background:#0a84ff}',
       '.bar svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
-      '.msg{max-width:46ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}'
+      '.msg{max-width:46ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '.msg.long{white-space:normal;max-width:60ch;padding:3px 0}',
+      '.bar button.open{width:auto;padding:0 10px;background:#0a84ff;font-weight:600;white-space:nowrap}',
+      '.bar button.open:hover{background:#3d9bff}',
+      '.bar button.open[hidden]{display:none}'
     ].join('');
     var ICON_SPEAK = '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>';
     var ICON_CLOSE = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
@@ -165,13 +327,21 @@
       // aria-live seulement sur la traduction (pas sur les boutons ni les messages), et coupé
       // pendant la lecture à voix haute : sinon le lecteur d'écran la lirait une seconde fois
       box.innerHTML = '<div class="line orig"></div><div class="line tr" aria-live="' + (speaking ? 'off' : 'polite') + '"></div>' +
-        '<div class="bar"><span class="msg"></span><button class="speak" type="button" aria-pressed="false">' + ICON_SPEAK +
+        '<div class="bar"><span class="msg"></span><button class="open" type="button" hidden></button>' +
+        '<button class="speak" type="button" aria-pressed="false">' + ICON_SPEAK +
         '</button><button class="close" type="button">' + ICON_CLOSE + '</button></div>';
       sr.appendChild(box);
       var speak = box.querySelector('.speak');
       speak.title = t('voiceSpeak');
       speak.setAttribute('aria-label', t('voiceSpeak'));
       speak.addEventListener('click', function () { setSpeaking(!speaking); });
+      var open = box.querySelector('.open');
+      open.textContent = t('voiceOpenTab');
+      open.addEventListener('click', function () {
+        var url = open.getAttribute('data-url');
+        if (url) { try { win.open(url, '_blank', 'noopener'); } catch (e) { /* rien */ } }
+        stop();
+      });
       var close = box.querySelector('.close');
       close.title = t('btnClose');
       close.setAttribute('aria-label', t('btnClose'));
@@ -203,9 +373,11 @@
       var parent = fs && fs.tagName !== 'VIDEO' ? fs : (doc.body || doc.documentElement);
       if (host.parentNode !== parent) parent.appendChild(host);
     }
+    /* Bande sur la vidéo ; pour un son (<audio>, podcast) ou sans vidéo visible : en bas de la fenêtre */
     function position() {
-      if (!box || !video) return;
-      var r = video.getBoundingClientRect();
+      if (!box) return;
+      var anchor = video || frameAnchor;
+      var r = anchor && !isAudio(anchor) && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { width: 0, height: 0, top: 0, bottom: 0, left: 0 };
       var vw = win.innerWidth || 1024;
       var vh = win.innerHeight || 768;
       var visible = r.width > 40 && r.height > 40 && r.bottom > 0 && r.top < vh;
@@ -216,7 +388,7 @@
       box.style.width = Math.round(width) + 'px';
       box.style.bottom = Math.round(bottom) + 'px';
     }
-    function show(original, translated) {
+    function show(original, translated, timing) {
       ensureBox();
       var bilingual = settings.mode === 'bilingual';
       box.querySelector('.orig').textContent = bilingual && translated ? original || '' : '';
@@ -225,7 +397,7 @@
       position();
       if (translated && translated !== lastShown) {
         lastShown = translated;
-        if (speaking) say(translated);
+        if (speaking) say(translated, timing);
       }
     }
     function clearLines() {
@@ -242,33 +414,203 @@
       position();
     }
 
-    /* ---------------- Lecture à voix haute (synthèse vocale du navigateur) ---------------- */
+    /* ---------------- Doublage : voix de synthèse du navigateur (locale, gratuite) ---------------- */
     function synth() { return win.speechSynthesis || null; }
-    function say(text) {
+    function targetLang() { return DDT.resolveTarget(settings.target); }
+    /* Liste des voix : souvent vide au premier appel, remplie à l'événement « voiceschanged » */
+    function loadVoices() {
+      if (voicesPromise) return voicesPromise;
       var s = synth();
-      if (!s || !win.SpeechSynthesisUtterance) return;
-      if (s.speaking || s.pending) s.cancel();      // pas de retard qui s'accumule
-      var u = new win.SpeechSynthesisUtterance(text);
-      u.lang = DDT.resolveTarget(settings.target);
-      u.rate = 1.05;
-      s.speak(u);
+      voicesPromise = new Promise(function (resolve) {
+        var list = [];
+        try { list = s.getVoices() || []; } catch (e) { list = []; }
+        if (list.length) { resolve(list); return; }
+        var done = false;
+        var finish = function () {
+          if (done) return;
+          done = true;
+          try { if (s.removeEventListener) s.removeEventListener('voiceschanged', finish); } catch (e) { /* rien */ }
+          var l2 = [];
+          try { l2 = s.getVoices() || []; } catch (e) { l2 = []; }
+          if (!l2.length) voicesPromise = null;   // liste encore vide : nouvel essai au prochain doublage
+          resolve(l2);
+        };
+        try {
+          if (s.addEventListener) s.addEventListener('voiceschanged', finish);
+          else s.onvoiceschanged = finish;
+        } catch (e) { /* rien */ }
+        win.setTimeout(finish, deps.voicesWaitMs || VOICES_WAIT_MS);
+      });
+      return voicesPromise;
     }
+    function noVoiceMessage() { return t('voiceNoTts', [DDT.languageName(targetLang())]); }
+
+    /* Son d'origine : baissé en douceur pendant que la voix parle, remonté entre les phrases */
+    function ramp(to, done) {
+      if (rampTimer) { win.clearInterval(rampTimer); rampTimer = null; }
+      var v = video;
+      if (!v) { if (done) done(); return; }
+      to = Math.max(0, Math.min(1, to));
+      var from = v.volume;
+      var steps = Math.max(1, Math.round(rampMs / 40));
+      if (!rampMs || Math.abs(from - to) < 0.005) {
+        try { v.volume = to; } catch (e) { /* rien */ }
+        if (done) done();
+        return;
+      }
+      var k = 0;
+      rampTimer = win.setInterval(function () {
+        k++;
+        try { v.volume = Math.max(0, Math.min(1, from + (to - from) * Math.min(1, k / steps))); } catch (e) { /* rien */ }
+        if (k >= steps) { win.clearInterval(rampTimer); rampTimer = null; if (done) done(); }
+      }, 40);
+    }
+    function duck() {
+      if (!video) return;
+      if (unduckTimer) { win.clearTimeout(unduckTimer); unduckTimer = null; }
+      if (ducked) return;
+      if (baseVolume === null) baseVolume = video.volume;   // volume choisi par l'utilisateur, relu à chaque reprise
+      ducked = true;
+      ramp(baseVolume * DUCK);
+    }
+    function scheduleUnduck() {
+      if (unduckTimer) win.clearTimeout(unduckTimer);
+      unduckTimer = win.setTimeout(function () {
+        unduckTimer = null;
+        if (queued || !ducked) return;
+        ducked = false;
+        var base = baseVolume;
+        if (base === null) return;
+        ramp(base, function () { if (!ducked) baseVolume = null; });
+      }, unduckMs);
+    }
+    /* Volume d'origine rendu tout de suite (arrêt, changement de vidéo) */
+    function restoreVolume() {
+      if (unduckTimer) { win.clearTimeout(unduckTimer); unduckTimer = null; }
+      if (rampTimer) { win.clearInterval(rampTimer); rampTimer = null; }
+      if (baseVolume !== null && video) { try { video.volume = baseVolume; } catch (e) { /* rien */ } }
+      baseVolume = null;
+      ducked = false;
+    }
+    function cancelSpeech() {
+      speakGen++;
+      queued = 0;
+      speakEnd = 0;
+      lastSaid = '';
+      live = [];
+      var s = synth();
+      if (s) { try { s.cancel(); } catch (e) { /* rien */ } }
+      if (ducked) scheduleUnduck();
+    }
+    /* Une phrase traduite à dire. timing.end : fin du sous-titre (temps de la vidéo), pour caler la vitesse. */
+    function say(text, timing) {
+      var s = synth();
+      if (!s || !win.SpeechSynthesisUtterance || !text) return;
+      loadVoices().then(function () {
+        if (!speaking || !active || !ttsVoice) return;
+        if (video && video.paused) return;            // reprise à la lecture (resumeHook)
+        if (text === lastSaid && queued) return;       // déjà en cours (sous-titre redit après un saut)
+        var availSec = null;
+        if (timing && timing.end != null && video) {
+          availSec = (timing.end - (video.currentTime || 0)) / (video.playbackRate || 1);
+          if (availSec < 0.25) return;                 // sous-titre presque fini : trop tard
+        }
+        var now = Date.now();
+        var lagMs = queued ? Math.max(0, speakEnd - now) : 0;
+        // retard trop grand : la phrase en cours est coupée ; sinon la suivante est accélérée
+        if (lagMs > MAX_LAG_MS) { cancelSpeech(); lagMs = 0; }
+        var lang = ttsVoice.lang || targetLang();
+        var rate = dubRate(text, availSec, lagMs / 1000, lang);
+        var u = new win.SpeechSynthesisUtterance(text);
+        u.voice = ttsVoice;
+        u.lang = lang;
+        u.rate = rate;
+        var gen = speakGen;
+        var finished = false;
+        var end = function (ev) {
+          if (finished) return;
+          finished = true;
+          live = live.filter(function (x) { return x !== u; });
+          if (gen !== speakGen) return;
+          queued = Math.max(0, queued - 1);
+          // Chrome refuse de parler tant que la page n'a reçu aucun clic : on le dit
+          if (ev && ev.error === 'not-allowed') setMessage(t('voiceDubClick'));
+          if (!queued) { speakEnd = 0; scheduleUnduck(); }
+        };
+        u.onstart = function () { if (gen === speakGen) duck(); };
+        u.onend = end;
+        u.onerror = end;
+        queued++;
+        speakEnd = Math.max(now, speakEnd) + speechSeconds(text, lang) / rate * 1000;
+        lastSaid = text;
+        live.push(u);
+        duck();
+        try { s.speak(u); } catch (e) { end(); }
+      });
+    }
+    function renderSpeak() {
+      if (!box) return;
+      var b = box.querySelector('.speak');
+      b.setAttribute('aria-pressed', speaking ? 'true' : 'false');
+      var label = t(speaking ? 'voiceSpeakOff' : 'voiceSpeak') + (speaking && ttsVoice ? ' (' + ttsVoice.name + ')' : '');
+      b.title = label;
+      b.setAttribute('aria-label', label);
+      box.querySelector('.tr').setAttribute('aria-live', speaking ? 'off' : 'polite');
+    }
+    /* Doublage marche/arrêt. Sans voix pour la langue cible : message clair, sous-titres seuls. */
     function setSpeaking(on) {
-      speaking = !!on && !!synth();
-      if (box) {
-        var b = box.querySelector('.speak');
-        b.setAttribute('aria-pressed', speaking ? 'true' : 'false');
-        var label = t(speaking ? 'voiceSpeakOff' : 'voiceSpeak');
-        b.title = label;
-        b.setAttribute('aria-label', label);
-        box.querySelector('.tr').setAttribute('aria-live', speaking ? 'off' : 'polite');
+      var want = !!on && !!synth() && !!win.SpeechSynthesisUtterance;
+      if (!want) {
+        speaking = false;
+        renderSpeak();
+        cancelSpeech();
+        restoreVolume();
+        if (on) setMessage(noVoiceMessage());
+        return Promise.resolve(false);
       }
-      if (video) {
-        if (speaking && savedVolume === null) { savedVolume = video.volume; video.volume = Math.min(video.volume, 0.25); }
-        if (!speaking && savedVolume !== null) { video.volume = savedVolume; savedVolume = null; }
-      }
-      if (!speaking && synth()) synth().cancel();
-      if (speaking && lastShown) say(lastShown);
+      speaking = true;
+      renderSpeak();
+      return loadVoices().then(function (list) {
+        if (!speaking) return false;
+        ttsVoice = pickTtsVoice(list, targetLang());
+        if (!ttsVoice) {
+          speaking = false;
+          renderSpeak();
+          if (active) setMessage(noVoiceMessage());
+          return false;
+        }
+        renderSpeak();
+        if (lastShown && active) say(lastShown, null);
+        return true;
+      });
+    }
+    /* Pause de la vidéo : la voix se tait ; lecture : elle reprend au sous-titre affiché ;
+       saut dans la vidéo : la voix repart au sous-titre du nouvel endroit. */
+    function bindMedia(v) {
+      if (mediaOff) mediaOff();
+      mediaOff = null;
+      if (!v || !v.addEventListener) return;
+      var onPause = function () { if (speaking) cancelSpeech(); };
+      var onPlay = function () { if (speaking && resumeHook) resumeHook(); };
+      var onSeeking = function () { if (speaking) cancelSpeech(); };
+      var onSeeked = function () { if (speaking && resumeHook && !v.paused) resumeHook(true); };
+      v.addEventListener('pause', onPause);
+      v.addEventListener('play', onPlay);
+      v.addEventListener('seeking', onSeeking);
+      v.addEventListener('seeked', onSeeked);
+      mediaOff = function () {
+        v.removeEventListener('pause', onPause);
+        v.removeEventListener('play', onPlay);
+        v.removeEventListener('seeking', onSeeking);
+        v.removeEventListener('seeked', onSeeked);
+      };
+    }
+    /* Reprise par défaut (YouTube, son transcrit) : la traduction affichée, pas après un saut */
+    function defaultResume(seek) {
+      if (seek || !lastShown) return;
+      var l = lastShown;
+      lastSaid = '';
+      say(l, null);
     }
 
     /* ---------------- 1. Pistes de sous-titres HTML5 ---------------- */
@@ -357,25 +699,33 @@
         syncFullscreen();
         var list = track.activeCues || [];
         var parts = [];
-        for (var i = 0; i < list.length; i++) parts.push(cueText(list[i].text));
+        var end = null;          // fin du sous-titre : le doublage cale sa vitesse dessus
+        for (var i = 0; i < list.length; i++) {
+          parts.push(cueText(list[i].text));
+          if (typeof list[i].endTime === 'number' && isFinite(list[i].endTime)) end = Math.max(end == null ? 0 : end, list[i].endTime);
+        }
+        var timing = end == null ? null : { end: end };
         var s = parts.join('\n').trim();
         if (!s) { clearLines(); return; }
-        if (s in memo) { show(s, memo[s]); return; }
+        if (s in memo) { show(s, memo[s], timing); return; }
         show(s, '');
         translateOne(s).then(function (tr) {
           var cur = [];
           var l2 = track.activeCues || [];
           for (var j = 0; j < l2.length; j++) cur.push(cueText(l2[j].text));
-          if (active && cur.join('\n').trim() === s) show(s, tr || '');
+          if (active && cur.join('\n').trim() === s) show(s, tr || '', timing);
           syncFullscreen();
         });
       }
       track.addEventListener('cuechange', onCue);
+      // pause puis lecture, ou saut : le sous-titre actif est redit depuis le début
+      resumeHook = function () { lastShown = ''; onCue(); };
       var poll = win.setInterval(prepare, 500);
       win.setTimeout(function () { win.clearInterval(poll); }, 15000);
       prepare();
       onCue();
       srcCleanups.push(function () {
+        resumeHook = defaultResume;
         track.removeEventListener('cuechange', onCue);
         win.clearInterval(poll);
         doc.removeEventListener('fullscreenchange', syncFullscreen);
@@ -503,7 +853,8 @@
       mode = 'audio';
       var MR = deps.MediaRecorder || win.MediaRecorder;
       var AC = deps.AudioContext || win.AudioContext || win.webkitAudioContext;
-      var cap = captureAudio(video);
+      // vidéo protégée (DRM, Netflix...) : le son capturé ne serait que du silence
+      var cap = video.mediaKeys ? null : captureAudio(video);
       if (!MR || !cap) { releaseCapture(cap); setMessage(t('voiceNoAudio')); return; }
       var mime = pickMime(MR);
       setMessage(t('voiceListening'));
@@ -664,11 +1015,11 @@
     }
     function useVideo(next) {
       if (next === video) return;
-      // volume baissé pour la lecture à voix haute : rendu à l'ancienne vidéo, appliqué à la nouvelle
-      if (savedVolume !== null && video) { try { video.volume = savedVolume; } catch (e) { /* rien */ } }
-      savedVolume = null;
+      // doublage : phrase en cours coupée et volume rendu à l'ancienne vidéo
+      cancelSpeech();
+      restoreVolume();
       video = next;
-      if (speaking && video) { savedVolume = video.volume; video.volume = Math.min(video.volume, 0.25); }
+      bindMedia(video);
     }
     /* Vidéo retirée ou remplacée (application d'une seule page, YouTube) : la référence est périmée.
        On suit la nouvelle vidéo avec la source adaptée, sinon on arrête proprement. */
@@ -720,22 +1071,55 @@
       if (opts.settings) settings = Object.assign({}, DDT.DEFAULT_SETTINGS, opts.settings);
       keyId = opts.keyId || null;
       if (active) return status();
+      var found = scan();
       video = pickVideo();
-      if (!video) { message = t('voiceNoVideo'); return status({ ok: false, error: 'no_video' }); }
+      if (!video) {
+        // lecteur intégré d'un autre site : la traduction marchera dans son propre onglet
+        var frame = pickPlayerFrame(found.frames);
+        var url = frame ? playerUrl(frame.src || frame.getAttribute('src') || frame.getAttribute('data-src')) : '';
+        if (url) {
+          frameAnchor = frame;
+          var hostName = '';
+          try { hostName = new URL(url).hostname.replace(/^www\./, ''); } catch (e) { /* rien */ }
+          message = t('voiceInFrame', [hostName]);
+          ensureBox();
+          var m = box.querySelector('.msg');
+          m.textContent = message;
+          m.title = message;
+          m.classList.add('long');
+          var open = box.querySelector('.open');
+          open.hidden = false;
+          open.setAttribute('data-url', url);
+          box.querySelector('.speak').hidden = true;
+          box.classList.add('on');
+          position();
+          return status({ ok: false, error: 'iframe_player', url: url });
+        }
+        message = t('voiceNoVideo');
+        return status({ ok: false, error: 'no_video' });
+      }
+      if (host) stop();             // message d'un lecteur intégré encore affiché
       active = true;
       memo = {};
       pending = {};
       lastShown = '';
+      resumeHook = defaultResume;
       ytCurrent = isYouTube() ? ytVideoId() : null;
       ensureBox();
+      bindMedia(video);
       watch();
       startSource();
+      if (settings.voiceDub) setSpeaking(true);
       return status();
     }
     function stop() {
       if (!active && !host) return status();
       active = false;
       setSpeaking(false);
+      if (mediaOff) mediaOff();
+      mediaOff = null;
+      resumeHook = null;
+      frameAnchor = null;
       stopSource();
       var list = cleanups;
       cleanups = [];
@@ -748,17 +1132,21 @@
     function toggle(opts) { return active ? stop() : start(opts); }
     function status(extra) {
       return Object.assign({ ok: true, active: active, mode: mode, message: message, speaking: speaking,
+        dubVoice: speaking && ttsVoice ? ttsVoice.name : null, media: video ? video.tagName.toLowerCase() : null,
         translated: stats.translated, transcribed: stats.transcribed }, extra || {});
     }
 
     return {
       start: start, stop: stop, toggle: toggle, status: status, setSpeaking: setSpeaking,
+      setDub: function (on) { if (active) setSpeaking(on); return status(); },
       _memo: function () { return memo; }, _video: function () { return video; }
     };
   }
 
   root.DDT_createVoice = createVoice;
   root.DDT_cueText = cueText;
+  root.DDT_pickTtsVoice = pickTtsVoice;
+  root.DDT_dubRate = dubRate;
 
   /* ---------------- Mise en route dans l'extension ---------------- */
   var api = DDT && DDT.api;
@@ -805,6 +1193,7 @@
     if (!msg || msg.to !== 'voice') return;
     if (msg.cmd === 'status') { sendResponse(voice.status()); return; }
     if (msg.cmd === 'stop') { sendResponse(voice.stop()); return; }
+    if (msg.cmd === 'dub') { sendResponse(voice.setDub(!!msg.on)); return; }
     api.storage.local.get('settings').then(function (r) {
       var s = Object.assign({}, DDT.DEFAULT_SETTINGS, (r && r.settings) || {});
       var opts = { settings: s, keyId: msg.keyId };

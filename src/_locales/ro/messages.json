@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Oprește citirea cu voce tare"
   },
+  "popupVoiceMode": {
+    "message": "Vocea videoclipurilor"
+  },
+  "popupVoiceSubs": {
+    "message": "Subtitrări"
+  },
+  "popupVoiceDub": {
+    "message": "Subtitrări + voce tradusă (dublaj)"
+  },
+  "voiceNoTts": {
+    "message": "Nicio voce sintetizată pentru {0} pe acest dispozitiv: doar subtitrări."
+  },
+  "voiceDubClick": {
+    "message": "Dă clic pe pagină pentru a permite vocea tradusă."
+  },
+  "voiceInFrame": {
+    "message": "Acest videoclip este într-un player încorporat ({0}): deschide-l într-o filă pentru a-l traduce."
+  },
+  "voiceOpenTab": {
+    "message": "Deschide videoclipul într-o filă"
+  },
   "popupSensitive": {
     "message": "Pagină sensibilă: nu se traduce niciodată automat. Butonul funcționează, Ollama este folosit primul dacă este configurat."
   },

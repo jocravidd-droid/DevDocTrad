@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Zatrzymaj czytanie na głos"
   },
+  "popupVoiceMode": {
+    "message": "Głos w filmach"
+  },
+  "popupVoiceSubs": {
+    "message": "Napisy"
+  },
+  "popupVoiceDub": {
+    "message": "Napisy + przetłumaczony głos (dubbing)"
+  },
+  "voiceNoTts": {
+    "message": "Brak syntezatora mowy dla języka {0} na tym urządzeniu: tylko napisy."
+  },
+  "voiceDubClick": {
+    "message": "Kliknij stronę, aby zezwolić na przetłumaczony głos."
+  },
+  "voiceInFrame": {
+    "message": "Ten film jest w osadzonym odtwarzaczu ({0}): otwórz go w karcie, aby go przetłumaczyć."
+  },
+  "voiceOpenTab": {
+    "message": "Otwórz film w karcie"
+  },
   "popupSensitive": {
     "message": "Strona wrażliwa: nigdy nie jest tłumaczona automatycznie. Przycisk działa; jeśli Ollama jest skonfigurowana, jest używana jako pierwsza."
   },

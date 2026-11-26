@@ -224,5 +224,12 @@
 "popupProgress": "Maendeleo ya tafsiri",
 "optUrlInvalid": "Anwani si sahihi: weka anwani ya http:// au https://, kwa mfano http://localhost:11434.",
 "optOllamaPermDenied": "Ruhusa imekataliwa: DevDocTrad haiwezi kufikia {0}.",
-"keyNoApiKey": "ufunguo haupo"
+"keyNoApiKey": "ufunguo haupo",
+"popupVoiceMode": "Sauti ya video",
+"popupVoiceSubs": "Manukuu",
+"popupVoiceDub": "Manukuu + sauti iliyotafsiriwa (dabingi)",
+"voiceNoTts": "Hakuna sauti ya usanisi kwa {0} kwenye kifaa hiki: manukuu pekee.",
+"voiceDubClick": "Bofya ukurasa ili kuruhusu sauti iliyotafsiriwa.",
+"voiceInFrame": "Video hii iko ndani ya kicheza kilichopachikwa ({0}): ifungue kwenye kichupo ili kuitafsiri.",
+"voiceOpenTab": "Fungua video kwenye kichupo"
 }

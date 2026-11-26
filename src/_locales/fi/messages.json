@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Lopeta ääneen lukeminen"
   },
+  "popupVoiceMode": {
+    "message": "Videon ääni"
+  },
+  "popupVoiceSubs": {
+    "message": "Tekstitykset"
+  },
+  "popupVoiceDub": {
+    "message": "Tekstitykset + käännetty ääni (dubbaus)"
+  },
+  "voiceNoTts": {
+    "message": "Laitteessa ei ole puhesynteesiääntä kielelle {0}: vain tekstitykset."
+  },
+  "voiceDubClick": {
+    "message": "Napsauta sivua salliaksesi käännetyn äänen."
+  },
+  "voiceInFrame": {
+    "message": "Video on upotetussa soittimessa ({0}): avaa se välilehdellä kääntääksesi sen."
+  },
+  "voiceOpenTab": {
+    "message": "Avaa video välilehdellä"
+  },
   "popupSensitive": {
     "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
   },

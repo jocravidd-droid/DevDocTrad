@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Dejar de leer en voz alta"
   },
+  "popupVoiceMode": {
+    "message": "Voz de los vídeos"
+  },
+  "popupVoiceSubs": {
+    "message": "Subtítulos"
+  },
+  "popupVoiceDub": {
+    "message": "Subtítulos + voz traducida (doblaje)"
+  },
+  "voiceNoTts": {
+    "message": "No hay voz sintética en {0} en este dispositivo: solo subtítulos."
+  },
+  "voiceDubClick": {
+    "message": "Haz clic en la página para permitir la voz traducida."
+  },
+  "voiceInFrame": {
+    "message": "Este vídeo está en un reproductor integrado ({0}): ábrelo en una pestaña para traducirlo."
+  },
+  "voiceOpenTab": {
+    "message": "Abrir el vídeo en una pestaña"
+  },
   "popupSensitive": {
     "message": "Página sensible: nunca se traduce automáticamente. El botón funciona y, si está configurado, Ollama se usa primero."
   },

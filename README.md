@@ -16,7 +16,7 @@ Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : 
 - **Dans ta langue** : par défaut, la langue de ton navigateur (français, russe, espagnol, japonais… 37 langues). Tu peux en choisir une autre dans les réglages.
 - **Original ou bilingue** : remplace le texte, ou affiche la traduction sous chaque phrase. Un clic pour revenir à l'original exact.
 - **Gratuit** : utilise les paliers gratuits de Gemini, Groq, Mistral et OpenRouter avec tes propres clés, ou un modèle local avec Ollama. Une clé payante est bloquée tant que tu n'as pas réglé un plafond.
-- **La voix des vidéos traduite** (nouveau en 1.1) : tutoriels, conférences, YouTube… les sous-titres sont traduits en direct sur la vidéo. Sans sous-titres, la voix est transcrite gratuitement par Groq Whisper avec ta clé Groq gratuite. Option lecture à voix haute (voix du navigateur, gratuite).
+- **La voix des vidéos traduite** (nouveau en 1.1) : tutoriels, conférences, YouTube… les sous-titres sont traduits en direct sur la vidéo. Sans sous-titres, la voix est transcrite gratuitement par Groq Whisper avec ta clé Groq gratuite. Nouveau en 1.2 : **doublage** sur n'importe quelle vidéo, la traduction est dite par une voix de synthèse du navigateur (gratuite), calée sur les sous-titres, pendant que le son d'origine est baissé.
 - **Privé** : aucune statistique, aucun pistage. Tes clés restent dans ton navigateur.
 - **Agréable à utiliser** : interface en verre façon Apple, thème clair, sombre ou automatique, badge très discret sur les pages.
 
@@ -28,7 +28,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 ### Chrome, Edge ou Brave
 
-1. Télécharge le fichier [`release/devdoctrad-chrome-1.1.0.zip`](release/devdoctrad-chrome-1.1.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement (« Download raw file ») en haut à droite du fichier.
+1. Télécharge le fichier [`release/devdoctrad-chrome-1.2.0.zip`](release/devdoctrad-chrome-1.2.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement (« Download raw file ») en haut à droite du fichier.
 2. Décompresse ce fichier zip dans un dossier que tu garderas (par exemple `Documents/DevDocTrad`). Ne supprime pas ce dossier ensuite : le navigateur charge l'extension depuis lui.
 3. Ouvre la page des extensions en tapant dans la barre d'adresse :
    - Chrome : `chrome://extensions`
@@ -45,7 +45,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 **Ou à la main**, avec le zip (module temporaire, utile pour tester une version précise) :
 
-1. Télécharge le fichier [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
+1. Télécharge le fichier [`release/devdoctrad-firefox-1.2.0.zip`](release/devdoctrad-firefox-1.2.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
@@ -122,7 +122,9 @@ Ollama est utilisé en secours quand toutes les clés gratuites sont en pause, e
 ## Utilisation
 
 - **Traduire une page** : clique sur l'icône DevDocTrad, puis sur **Traduire cette page**. Ou utilise le raccourci **Alt+Maj+T**.
-- **Traduire la voix d'une vidéo** : sur une page avec une vidéo, active **Traduire la voix des vidéos** dans le popup, ou appuie sur **Alt+Maj+V**. Les sous-titres traduits s'affichent sur la vidéo ; le bouton haut-parleur lit la traduction à voix haute ; la croix arrête tout. Pour une vidéo sans sous-titres, il faut une clé **Groq** gratuite (la transcription Whisper est incluse dans le palier gratuit de Groq).
+- **Traduire la voix d'une vidéo** : sur une page avec une vidéo (ou un son, comme un podcast), active **Traduire la voix des vidéos** dans le popup, ou appuie sur **Alt+Maj+V**. Les sous-titres traduits s'affichent sur la vidéo ; la croix arrête tout. Pour une vidéo sans sous-titres, il faut une clé **Groq** gratuite (la transcription Whisper est incluse dans le palier gratuit de Groq). Plusieurs vidéos sur la page : celle qui joue est prise, sinon la plus grande visible. Les lecteurs en composants web (shadow DOM) sont pris en charge.
+- **Doublage (voix traduite)** : sous l'interrupteur, choisis **Sous-titres + voix traduite (doublage)** au lieu de **Sous-titres**. La traduction est dite par la meilleure voix de synthèse de ton navigateur pour la langue choisie (gratuit, aucun service payant), au début de chaque sous-titre et un peu plus vite si la phrase est longue ; le son d'origine descend à environ 15 % pendant que la voix parle. Pause de la vidéo = pause de la voix ; un saut dans la vidéo fait repartir la voix au bon sous-titre. Le bouton haut-parleur de la bande active ou coupe le doublage à tout moment. Si ton système n'a aucune voix pour la langue choisie, un message le dit et seuls les sous-titres restent. La qualité de la voix dépend du système et du navigateur (Edge et Chrome proposent souvent des voix « Online » ou « Google » plus naturelles ; sous Linux, il faut parfois installer des voix).
+- **Vidéo intégrée d'un autre site** (YouTube, Vimeo, Dailymotion, Wistia, Loom… dans un cadre) : la bande propose **Ouvrir la vidéo dans un onglet** ; la traduction marche dans ce nouvel onglet. Les vidéos protégées (DRM, comme Netflix) ne donnent pas accès à leur son.
 - **Revenir à l'original** : bouton **Voir l'original** dans le petit badge en bas à droite de la page, dans le popup, ou de nouveau **Alt+Maj+T**.
 - **Traduire automatiquement un site** : sur un site que tu lis souvent, ouvre le popup et active **Traduire automatiquement ce site**. Le navigateur te demande la permission pour ce site uniquement.
 - **Changer de langue** : directement dans le popup (menu **Langue cible**, 37 langues), ou dans Réglages > **Traduction**. Par défaut : la langue de ton navigateur.
@@ -206,11 +208,12 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 - Replace mode or bilingual mode, one click back to the exact original.
 - Free: uses the free tiers of Gemini, Groq, Mistral and OpenRouter with your own keys, or a local model with Ollama. Paid keys are blocked until you set a daily cap.
 - New in 1.1: translates the voice of videos (tutorials, talks, YouTube) into live subtitles; videos without subtitles are transcribed for free with Groq Whisper (your free Groq key); optional read-aloud.
+- New in 1.2: **dubbing** on any video: the translation is spoken by your browser's built-in speech synthesis (free), timed to the subtitles, while the original sound is lowered.
 - No analytics, no tracking. Keys stay in your browser's local storage.
 
 ### Install (Chrome, Edge, Brave)
 
-1. Download [`release/devdoctrad-chrome-1.1.0.zip`](release/devdoctrad-chrome-1.1.0.zip) and unzip it into a folder you will keep.
+1. Download [`release/devdoctrad-chrome-1.2.0.zip`](release/devdoctrad-chrome-1.2.0.zip) and unzip it into a folder you will keep.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
@@ -221,7 +224,7 @@ Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/de
 
 Or by hand, as a temporary add-on:
 
-1. Download [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip).
+1. Download [`release/devdoctrad-firefox-1.2.0.zip`](release/devdoctrad-firefox-1.2.0.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and select the zip file. (Temporary: it is removed when Firefox closes.)
 
@@ -231,6 +234,10 @@ Open the settings (gear icon in the popup), **Keys** tab, choose a provider, cli
 
 ### Use
 
-Click the toolbar icon, then **Translate this page**, or press **Alt+Shift+T**. Press it again to go back to the original. For a video, turn on **Translate the voice in videos** in the popup or press **Alt+Shift+V**.
+Click the toolbar icon, then **Translate this page**, or press **Alt+Shift+T**. Press it again to go back to the original. For a video (or an audio player such as a podcast), turn on **Translate the voice in videos** in the popup or press **Alt+Shift+V**. With several videos, the one playing is used, otherwise the largest visible one; players built with web components (shadow DOM) work too.
+
+**Dubbing**: under the switch, choose **Subtitles + translated voice (dubbing)** instead of **Subtitles**. The translation is spoken by the best speech voice your browser has for the target language (free, no paid service), at the start of each subtitle and slightly faster when the sentence is long; the original sound drops to about 15% while the voice speaks. Pausing the video pauses the voice, and seeking restarts it at the right subtitle. The speaker button on the subtitle bar turns dubbing on or off at any time. If your system has no voice for the target language, a message says so and only subtitles are shown. Voice quality depends on your system and browser (Edge and Chrome often offer more natural "Online" or "Google" voices; on Linux you may need to install voices).
+
+**Video embedded from another site** (YouTube, Vimeo, Dailymotion, Wistia, Loom… in a frame): the bar offers **Open the video in a tab**, where translation works. Protected videos (DRM, e.g. Netflix) do not give access to their sound.
 
 Website in 37 languages: https://devdoctrad.vercel.app/en/

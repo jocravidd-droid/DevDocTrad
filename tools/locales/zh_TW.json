@@ -224,5 +224,12 @@
 "popupProgress": "翻譯進度",
 "optUrlInvalid": "位址無效：請輸入以 http:// 或 https:// 開頭的位址，例如 http://localhost:11434。",
 "optOllamaPermDenied": "權限遭拒：DevDocTrad 無法連線到 {0}。",
-"keyNoApiKey": "缺少金鑰"
+"keyNoApiKey": "缺少金鑰",
+"popupVoiceMode": "影片語音",
+"popupVoiceSubs": "字幕",
+"popupVoiceDub": "字幕 + 翻譯語音（配音）",
+"voiceNoTts": "此裝置上沒有{0}的合成語音：僅顯示字幕。",
+"voiceDubClick": "請點選頁面以允許播放翻譯語音。",
+"voiceInFrame": "此影片位於內嵌播放器（{0}）中：請在分頁中開啟以進行翻譯。",
+"voiceOpenTab": "在分頁中開啟影片"
 }

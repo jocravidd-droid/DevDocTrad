@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Interrompi la lettura ad alta voce"
   },
+  "popupVoiceMode": {
+    "message": "Voce dei video"
+  },
+  "popupVoiceSubs": {
+    "message": "Sottotitoli"
+  },
+  "popupVoiceDub": {
+    "message": "Sottotitoli + voce tradotta (doppiaggio)"
+  },
+  "voiceNoTts": {
+    "message": "Nessuna voce di sintesi in {0} su questo dispositivo: solo sottotitoli."
+  },
+  "voiceDubClick": {
+    "message": "Fai clic sulla pagina per consentire la voce tradotta."
+  },
+  "voiceInFrame": {
+    "message": "Questo video è in un lettore incorporato ({0}): aprilo in una scheda per tradurlo."
+  },
+  "voiceOpenTab": {
+    "message": "Apri il video in una scheda"
+  },
   "popupSensitive": {
     "message": "Pagina sensibile: mai tradotta automaticamente. Il pulsante funziona; se configurato, Ollama viene usato per primo."
   },

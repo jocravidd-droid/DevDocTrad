@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "停止朗读"
   },
+  "popupVoiceMode": {
+    "message": "视频语音"
+  },
+  "popupVoiceSubs": {
+    "message": "字幕"
+  },
+  "popupVoiceDub": {
+    "message": "字幕 + 翻译语音（配音）"
+  },
+  "voiceNoTts": {
+    "message": "此设备上没有{0}的合成语音：仅显示字幕。"
+  },
+  "voiceDubClick": {
+    "message": "请点击页面以允许播放翻译语音。"
+  },
+  "voiceInFrame": {
+    "message": "此视频位于嵌入式播放器（{0}）中：请在标签页中打开以进行翻译。"
+  },
+  "voiceOpenTab": {
+    "message": "在标签页中打开视频"
+  },
   "popupSensitive": {
     "message": "敏感页面：从不自动翻译。按钮仍然可用，如已配置 Ollama 则优先使用。"
   },

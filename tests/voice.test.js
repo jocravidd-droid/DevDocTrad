@@ -185,9 +185,15 @@ test('message voiceCommand : script injecté à la première demande, statut san
   api.scripting = { executeScript: (o) => { injected.push(o.files); loaded = true; return Promise.resolve(); } };
   assert.deepEqual(await bg.onMessage({ type: 'voiceCommand', tabId: 3, cmd: 'status' }), { active: false });
   assert.equal(injected.length, 0, 'statut : pas d\'injection');
+  assert.deepEqual(await bg.onMessage({ type: 'voiceCommand', tabId: 3, cmd: 'dub', on: true }), { active: false });
+  assert.equal(injected.length, 0, 'doublage sans voix lancée : pas d\'injection');
   const r = await bg.onMessage({ type: 'voiceCommand', tabId: 3, cmd: 'start' });
   assert.deepEqual(injected, [['shared.js', 'voice.js']]);
   assert.equal(r.active, true);
+  let seen = null;
+  api.tabs.sendMessage = (tabId, msg) => { seen = msg; return Promise.resolve({ active: true, speaking: msg.on }); };
+  await bg.onMessage({ type: 'voiceCommand', tabId: 3, cmd: 'dub', on: true });
+  assert.deepEqual([seen.to, seen.cmd, seen.on], ['voice', 'dub', true], 'doublage transmis à la page');
 });
 
 /* ---------------- Page : pistes de sous-titres ---------------- */
@@ -303,29 +309,394 @@ test('bouton fermer de la bande : arrête tout', () => {
   assert.equal(overlay(dom), null);
 });
 
-/* ---------------- Lecture à voix haute ---------------- */
-test('voix haute : lit chaque nouvelle traduction dans la langue cible et baisse le son de la vidéo', async () => {
+/* ---------------- Doublage : voix de synthèse du navigateur ---------------- */
+const VOICES = [
+  { name: 'Thomas', lang: 'fr-CA' },
+  { name: 'Microsoft Hortense - French (France)', lang: 'fr-FR' },
+  { name: 'Google français', lang: 'fr-FR' },
+  { name: 'Samantha', lang: 'en-US', default: true },
+  { name: 'Daniel', lang: 'en-GB' }
+];
+/* Fausse synthèse vocale : phrases gardées, fin pilotée par le test (finish), annulation qui
+   déclenche onerror « interrupted » comme Chrome */
+function fakeSpeech(w, voices = VOICES, opts = {}) {
+  const listeners = {};
+  const sp = {
+    spoken: [], cancels: 0, list: opts.late ? [] : voices,
+    getVoices() { return this.list; },
+    addEventListener(n, f) { (listeners[n] = listeners[n] || []).push(f); },
+    removeEventListener(n, f) { listeners[n] = (listeners[n] || []).filter((x) => x !== f); },
+    loadLate() { this.list = voices; (listeners.voiceschanged || []).forEach((f) => f()); },
+    speak(u) {
+      this.spoken.push(u);
+      if (opts.refuse) { u.onerror && u.onerror({ error: 'not-allowed' }); return; }
+      u.onstart && u.onstart({});
+    },
+    cancel() {
+      this.cancels++;
+      this.spoken.filter((u) => !u.done).forEach((u) => { u.done = true; u.onerror && u.onerror({ error: 'interrupted' }); });
+    },
+    finish(u) { u.done = true; u.onend && u.onend({}); },
+    pause() {}, resume() {}
+  };
+  w.speechSynthesis = sp;
+  w.SpeechSynthesisUtterance = function (text) { this.text = text; };
+  return sp;
+}
+/* Vidéo qui joue (jsdom : toujours en pause, temps figé) */
+function playingVideo(video, t0 = 0) {
+  let paused = false;
+  let time = t0;
+  Object.defineProperty(video, 'paused', { get: () => paused, configurable: true });
+  Object.defineProperty(video, 'currentTime', { get: () => time, set: (v) => { time = v; }, configurable: true });
+  return {
+    pause() { paused = true; video.dispatchEvent(new video.ownerDocument.defaultView.Event('pause')); },
+    play() { paused = false; video.dispatchEvent(new video.ownerDocument.defaultView.Event('play')); },
+    seek(v) {
+      const E = video.ownerDocument.defaultView.Event;
+      time = v;
+      video.dispatchEvent(new E('seeking'));
+      video.dispatchEvent(new E('seeked'));
+    },
+    set time(v) { time = v; }
+  };
+}
+function dubSetup(cues, settings = {}, deps = {}, speechOpts) {
   const dom = voiceDom();
   const w = dom.window;
-  const spoken = [];
-  w.SpeechSynthesisUtterance = function (text) { this.text = text; };
-  w.speechSynthesis = { speaking: false, pending: false, speak: (u) => spoken.push(u), cancel: () => {} };
+  const sp = fakeSpeech(w, speechOpts && speechOpts.voices, speechOpts);
   const video = w.document.querySelector('video');
-  video.volume = 0.9;
-  const cue = { text: 'Open the terminal', startTime: 0 };
+  video.volume = 0.8;
+  const ctl = playingVideo(video);
+  const track = fakeTrack(cues);
+  Object.defineProperty(video, 'textTracks', { value: [track] });
+  const voice = w.DDT_createVoice(w.document, w, Object.assign({
+    transport: fakeTransport([]), transcribe: () => null, rampMs: 0, unduckMs: 15, voicesWaitMs: 200,
+    settings: Object.assign({ target: 'fr', mode: 'replace', voiceDub: true }, settings)
+  }, deps));
+  return { dom, w, sp, video, ctl, track, voice };
+}
+
+test('doublage : meilleure voix pour la langue cible (langue exacte, puis qualité, puis langue seule)', () => {
+  const w = voiceDom().window;
+  const pick = (voices, lang) => { const v = w.DDT_pickTtsVoice(voices, lang); return v && v.name; };
+  assert.equal(pick(VOICES, 'fr'), 'Google français', 'fr-FR et « Google » avant fr-FR simple et fr-CA');
+  assert.equal(pick([{ name: 'Amélie Premium', lang: 'fr-CA' }, { name: 'Hortense', lang: 'fr-FR' }], 'fr'), 'Hortense',
+    'langue exacte avant la qualité');
+  assert.equal(pick([{ name: 'Amélie', lang: 'fr-CA' }, { name: 'Felix', lang: 'de-DE' }], 'fr'), 'Amélie', 'langue seule en dernier');
+  assert.equal(pick(VOICES, 'en'), 'Samantha', 'en -> en-US');
+  assert.equal(pick([{ name: 'Luciana', lang: 'pt-BR' }, { name: 'Joana Enhanced', lang: 'pt-PT' }], 'pt-BR'), 'Luciana');
+  assert.equal(pick([{ name: 'Nora', lang: 'nb-NO' }], 'no'), 'Nora', 'norvégien : voix « nb »');
+  assert.equal(pick([{ name: 'Microsoft Xiaoxiao Online (Natural)', lang: 'zh-CN' }, { name: 'Ting-Ting', lang: 'zh-CN' }], 'zh-CN'),
+    'Microsoft Xiaoxiao Online (Natural)');
+  assert.equal(pick([{ name: 'x', lang: 'fr_FR' }], 'fr'), 'x', 'code avec « _ » (Android)');
+  assert.equal(pick(VOICES, 'ja'), null, 'aucune voix japonaise');
+});
+
+test('doublage : vitesse adaptée à la durée du sous-titre et au retard, entre 0,9 et 1,7', () => {
+  const rate = voiceDom().window.DDT_dubRate;
+  const text = 'Commence par installer le paquet avec npm.';   // ~2,5 s à vitesse 1
+  assert.equal(rate('Oui.', 4, 0, 'fr'), 0.9, 'texte court, sous-titre long : jamais sous 0,9');
+  assert.equal(rate(text + ' ' + text + ' ' + text, 2, 0, 'fr'), 1.7, 'texte long, sous-titre court : jamais au-dessus de 1,7');
+  const r = rate(text, 2.2, 0, 'fr');
+  assert.ok(r > 1 && r < 1.4, 'un peu plus rapide pour tenir dans 2,2 s : ' + r);
+  assert.ok(rate(text, 2.2, 0.6, 'fr') > r, 'retard de la phrase précédente : la suivante accélère');
+  assert.ok(rate(text, null, 0, 'fr') >= 1 && rate(text, null, 0, 'fr') <= 1.2, 'sans durée connue : rythme soutenu');
+  assert.ok(rate('配置文件已经更新了', 1, 0, 'zh-CN') > rate('配置文件已经更新了', 1, 0, 'fr'), 'chinois : moins de caractères par seconde');
+});
+
+test('doublage : chaque sous-titre dit au début avec la voix choisie, son d\'origine baissé à 15 % puis remonté', async () => {
+  const cue = { text: 'Open the terminal', startTime: 0, endTime: 2 };
+  const { sp, video, track, voice, ctl } = dubSetup([cue]);
+  voice.start();
+  assert.equal(voice.status().speaking, true, 'réglage voiceDub appliqué au démarrage');
+  ctl.time = 0.05;
+  track.fire([cue]);
+  assert.ok(await until(() => sp.spoken.length === 1));
+  const u = sp.spoken[0];
+  assert.equal(u.text, 'OPEN THE TERMINAL');
+  assert.equal(u.voice.name, 'Google français');
+  assert.equal(u.lang, 'fr-FR');
+  assert.ok(u.rate >= 0.9 && u.rate <= 1.7, 'vitesse bornée : ' + u.rate);
+  assert.ok(Math.abs(video.volume - 0.8 * 0.15) < 1e-9, 'son baissé pendant la voix : ' + video.volume);
+  assert.equal(voice.status().dubVoice, 'Google français');
+  sp.finish(u);
+  assert.ok(Math.abs(video.volume - 0.12) < 1e-9, 'pas remonté tout de suite (silence court entre deux phrases)');
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000), 'son remonté entre les phrases');
+  // le volume choisi par l'utilisateur entre deux phrases est respecté
+  video.volume = 0.5;
+  voice.stop();
+  assert.equal(video.volume, 0.5, 'arrêt : volume de l\'utilisateur gardé');
+});
+
+test('doublage : baisse et remontée du son en douceur, volume d\'origine rendu à l\'arrêt', async () => {
+  const cue = { text: 'Hello world', startTime: 0, endTime: 3 };
+  const { sp, video, track, voice } = dubSetup([cue], {}, { rampMs: 200 });
+  voice.start();
+  track.fire([cue]);
+  assert.ok(await until(() => sp.spoken.length === 1));
+  const steps = [];
+  await until(() => { steps.push(video.volume); return Math.abs(video.volume - 0.12) < 1e-9; }, 1500);
+  const middle = steps.filter((v) => v < 0.79 && v > 0.13);
+  assert.ok(middle.length >= 1, 'valeurs intermédiaires : ' + steps.slice(0, 8).join(', '));
+  voice.stop();
+  assert.equal(video.volume, 0.8, 'arrêt pendant la voix : volume d\'origine rendu tout de suite');
+  assert.ok(sp.cancels >= 1, 'voix coupée à l\'arrêt');
+});
+
+test('doublage : phrase précédente pas finie, la suivante accélère au lieu de couper ; au-delà de 2 s, coupée', async () => {
+  const c1 = { text: 'Install the package first', startTime: 0, endTime: 2 };
+  const c2 = { text: 'Then run the tests', startTime: 2, endTime: 4 };
+  const { sp, track, voice, ctl } = dubSetup([c1, c2]);
+  voice.start();
+  track.fire([c1]);
+  assert.ok(await until(() => sp.spoken.length === 1));
+  ctl.time = 2;
+  track.fire([c2]);
+  assert.ok(await until(() => sp.spoken.length === 2));
+  assert.equal(sp.cancels, 0, 'retard court : rien n\'est coupé');
+  const alone = voice; // vitesse de la 2e phrase comparée à la même phrase sans retard
+  assert.ok(sp.spoken[1].rate > sp.spoken[0].rate || sp.spoken[1].rate === 1.7, 'phrase suivante accélérée');
+  alone.stop();
+
+  const long = { text: 'This is a very long explanation that keeps going on and on about configuration files, environment variables, build steps and deployment targets', startTime: 0, endTime: 2 };
+  const c3 = { text: 'Next step', startTime: 2, endTime: 4 };
+  const b = dubSetup([long, c3]);
+  b.voice.start();
+  b.track.fire([long]);
+  assert.ok(await until(() => b.sp.spoken.length === 1));
+  b.ctl.time = 2;
+  b.track.fire([c3]);
+  assert.ok(await until(() => b.sp.spoken.length === 2));
+  assert.equal(b.sp.cancels, 1, 'retard de plus de 2 s : la phrase en cours est coupée');
+  assert.equal(b.sp.spoken[0].done, true);
+  b.voice.stop();
+});
+
+test('doublage : pause de la vidéo = voix coupée et son remonté ; lecture = reprise du sous-titre ; saut = bon sous-titre', async () => {
+  const c1 = { text: 'First step', startTime: 0, endTime: 3 };
+  const c2 = { text: 'Second step', startTime: 10, endTime: 13 };
+  const { sp, video, track, voice, ctl } = dubSetup([c1, c2]);
+  voice.start();
+  track.fire([c1]);
+  assert.ok(await until(() => sp.spoken.length === 1));
+  ctl.time = 1;
+  ctl.pause();
+  assert.equal(sp.cancels, 1, 'pause : voix coupée');
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000), 'pause : son d\'origine remonté');
+  ctl.play();
+  assert.ok(await until(() => sp.spoken.length === 2), 'lecture : le sous-titre en cours est redit');
+  assert.equal(sp.spoken[1].text, 'FIRST STEP');
+  // saut : le navigateur change de sous-titre, puis « seeked »
+  track.activeCues = [c2];
+  ctl.time = 10.2;
+  video.dispatchEvent(new video.ownerDocument.defaultView.Event('seeking'));
+  track.fire([c2]);
+  video.dispatchEvent(new video.ownerDocument.defaultView.Event('seeked'));
+  assert.ok(await until(() => sp.spoken.length >= 3));
+  await wait(60);
+  const after = sp.spoken.slice(2).map((u) => u.text);
+  assert.deepEqual(after, ['SECOND STEP'], 'un seul énoncé, au nouveau sous-titre');
+  assert.ok(sp.spoken[1].done, 'phrase d\'avant le saut coupée');
+  // pendant la pause, un sous-titre affiché n'est pas dit
+  ctl.pause();
+  track.fire([c1]);
+  await wait(60);
+  assert.equal(sp.spoken.length, 3, 'rien de dit vidéo en pause');
+  voice.stop();
+});
+
+test('doublage : bouton haut-parleur de la bande pour basculer, sans changer le réglage', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 2 };
+  const { dom, sp, track, voice } = dubSetup([cue], { voiceDub: false });
+  voice.start();
+  assert.equal(voice.status().speaking, false, 'défaut : sous-titres seuls');
+  track.fire([cue]);
+  await wait(40);
+  assert.equal(sp.spoken.length, 0);
+  overlay(dom).speak.click();
+  assert.ok(await until(() => sp.spoken.length === 1), 'la traduction affichée est dite');
+  assert.equal(overlay(dom).speak.getAttribute('aria-pressed'), 'true');
+  assert.match(overlay(dom).speak.title, /Google français/);
+  overlay(dom).speak.click();
+  assert.equal(voice.status().speaking, false);
+  assert.ok(sp.cancels >= 1);
+  voice.stop();
+});
+
+test('doublage : liste des voix chargée plus tard (voiceschanged)', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 2 };
+  const { sp, track, voice } = dubSetup([cue], {}, { voicesWaitMs: 3000 }, { late: true });
+  voice.start();
+  track.fire([cue]);
+  await wait(50);
+  assert.equal(sp.spoken.length, 0, 'pas encore de voix');
+  sp.loadLate();
+  assert.ok(await until(() => sp.spoken.length === 1));
+  assert.equal(sp.spoken[0].voice.name, 'Google français');
+  voice.stop();
+});
+
+test('doublage : aucune voix pour la langue cible, message clair et sous-titres seuls', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 2 };
+  const { dom, sp, track, voice, video } = dubSetup([cue], { target: 'ja' });
+  voice.start();
+  assert.ok(await until(() => /^voiceNoTts: /.test(overlay(dom).msg)), overlay(dom).msg);
+  assert.equal(voice.status().speaking, false);
+  track.fire([cue]);
+  assert.ok(await until(() => overlay(dom).tr === 'HELLO'), 'sous-titres toujours affichés');
+  assert.equal(sp.spoken.length, 0);
+  assert.equal(video.volume, 0.8, 'son d\'origine jamais baissé');
+  voice.stop();
+  // navigateur sans synthèse vocale du tout
+  const d2 = voiceDom();
+  const v2 = d2.window.document.querySelector('video');
+  Object.defineProperty(v2, 'textTracks', { value: [fakeTrack([])] });
+  const voice2 = d2.window.DDT_createVoice(d2.window.document, d2.window, { transport: fakeTransport([]), transcribe: () => null, settings: { voiceDub: true } });
+  voice2.start();
+  assert.match(overlay(d2).msg, /^voiceNoTts/);
+  assert.equal(voice2.status().speaking, false);
+  voice2.stop();
+});
+
+test('doublage : voix refusée par le navigateur (aucun clic sur la page), message pour débloquer', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 2 };
+  const { dom, sp, track, voice, video } = dubSetup([cue], {}, {}, { refuse: true });
+  voice.start();
+  track.fire([cue]);
+  assert.ok(await until(() => sp.spoken.length === 1));
+  assert.equal(overlay(dom).msg, 'voiceDubClick');
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000), 'son remonté');
+  voice.stop();
+});
+
+/* ---------------- Partout : shadow DOM, <audio>, plusieurs vidéos, lecteurs intégrés ---------------- */
+function rect(el, r) {
+  el.getBoundingClientRect = () => Object.assign({ left: 0, top: 0 }, r, { right: (r.left || 0) + r.width, bottom: (r.top || 0) + r.height });
+}
+
+test('partout : vidéo dans un shadow root ouvert (lecteur en composant web)', async () => {
+  const dom = voiceDom('<main><my-player></my-player></main>');
+  const w = dom.window;
+  const d = w.document;
+  const inner = d.createElement('div');
+  d.querySelector('my-player').attachShadow({ mode: 'open' }).appendChild(inner);
+  const deep = inner.appendChild(d.createElement('x-inner')).attachShadow({ mode: 'open' });
+  const video = d.createElement('video');
+  deep.appendChild(video);
+  const cue = { text: 'Deep inside', startTime: 0 };
   const track = fakeTrack([cue]);
   Object.defineProperty(video, 'textTracks', { value: [track] });
-  const voice = w.DDT_createVoice(w.document, w, { transport: fakeTransport([]), transcribe: () => null, settings: { target: 'de' } });
-  voice.start();
-  overlay(dom).speak.click();
-  assert.equal(overlay(dom).speak.getAttribute('aria-pressed'), 'true');
-  assert.equal(video.volume, 0.25);
+  const voice = w.DDT_createVoice(d, w, { transport: fakeTransport([]), transcribe: () => null, settings: { target: 'fr', mode: 'replace' } });
+  const st = voice.start();
+  assert.equal(st.active, true);
+  assert.equal(voice._video(), video, 'vidéo trouvée dans deux shadow roots imbriqués');
   track.fire([cue]);
-  await until(() => spoken.length === 1);
-  assert.equal(spoken[0].text, 'OPEN THE TERMINAL');
-  assert.equal(spoken[0].lang, 'de');
+  assert.ok(await until(() => overlay(dom).tr === 'DEEP INSIDE'));
   voice.stop();
-  assert.equal(video.volume, 0.9, 'volume rendu');
+});
+
+test('partout : <audio> (podcast) suivi, bande en bas de la fenêtre', async () => {
+  const dom = voiceDom('<main><audio src="episode.mp3" controls></audio></main>');
+  const w = dom.window;
+  const audio = w.document.querySelector('audio');
+  rect(audio, { left: 300, top: 100, width: 300, height: 40 });
+  const cue = { text: 'Welcome to the show', startTime: 0 };
+  const track = fakeTrack([cue]);
+  Object.defineProperty(audio, 'textTracks', { value: [track] });
+  const voice = w.DDT_createVoice(w.document, w, { transport: fakeTransport([]), transcribe: () => null, settings: { target: 'fr', mode: 'replace' } });
+  const st = voice.start();
+  assert.equal(st.active, true);
+  assert.equal(st.media, 'audio');
+  track.fire([cue]);
+  assert.ok(await until(() => overlay(dom).tr === 'WELCOME TO THE SHOW'));
+  const box = overlay(dom).host.shadowRoot.querySelector('.box');
+  assert.equal(box.style.bottom, '24px', 'en bas de la fenêtre');
+  assert.equal(box.style.left, '16px');
+  voice.stop();
+});
+
+test('partout : plusieurs vidéos, celle qui joue, sinon la plus grande visible', () => {
+  const dom = voiceDom('<main><video id="small"></video><video id="big"></video><video id="off"></video><audio id="a" src="x.mp3"></audio></main>');
+  const w = dom.window;
+  const d = w.document;
+  const mk = () => w.DDT_createVoice(d, w, { transport: fakeTransport([]), transcribe: () => null });
+  for (const id of ['small', 'big', 'off']) Object.defineProperty(d.getElementById(id), 'textTracks', { value: [fakeTrack([])] });
+  rect(d.getElementById('small'), { width: 320, height: 180 });
+  rect(d.getElementById('big'), { width: 960, height: 540, top: 200 });
+  rect(d.getElementById('off'), { width: 1600, height: 900, top: 5000 });   // plus grande mais hors de la fenêtre
+  let v = mk();
+  v.start();
+  assert.equal(v._video().id, 'big', 'la plus grande visible');
+  v.stop();
+  Object.defineProperty(d.getElementById('small'), 'paused', { value: false, configurable: true });
+  v = mk();
+  v.start();
+  assert.equal(v._video().id, 'small', 'celle qui joue');
+  v.stop();
+  Object.defineProperty(d.getElementById('small'), 'paused', { value: true, configurable: true });
+  Object.defineProperty(d.getElementById('a'), 'paused', { value: false, configurable: true });
+  v = mk();
+  v.start();
+  assert.equal(v._video().id, 'a', 'un son qui joue passe avant une vidéo en pause');
+  v.stop();
+});
+
+test('partout : lecteur intégré d\'un autre site (iframe), message clair et bouton pour l\'ouvrir dans un onglet', () => {
+  const dom = voiceDom('<main><iframe id="yt" src="https://www.youtube-nocookie.com/embed/abc123?start=42" allowfullscreen></iframe></main>');
+  const w = dom.window;
+  const d = w.document;
+  rect(d.getElementById('yt'), { left: 100, top: 100, width: 640, height: 360 });
+  const opened = [];
+  w.open = (url, target, feat) => { opened.push([url, target, feat]); return null; };
+  const voice = w.DDT_createVoice(d, w, { transport: fakeTransport([]), transcribe: () => null });
+  const st = voice.start();
+  assert.equal(st.active, false);
+  assert.equal(st.error, 'iframe_player');
+  assert.equal(st.url, 'https://www.youtube.com/watch?v=abc123&t=42', 'YouTube : page de la vidéo (sous-titres disponibles)');
+  assert.equal(st.message, 'voiceInFrame: youtube.com', 'site du lecteur nommé');
+  const o = overlay(dom);
+  assert.ok(o && o.on, 'bande affichée sur le lecteur');
+  assert.equal(o.msg, 'voiceInFrame: youtube.com');
+  const open = o.host.shadowRoot.querySelector('.open');
+  assert.equal(open.hidden, false);
+  assert.equal(open.textContent, 'voiceOpenTab');
+  assert.equal(o.speak.hidden, true, 'pas de haut-parleur sans vidéo');
+  open.click();
+  assert.deepEqual(opened, [['https://www.youtube.com/watch?v=abc123&t=42', '_blank', 'noopener']]);
+  assert.equal(overlay(dom), null, 'bande retirée après l\'ouverture');
+});
+
+test('partout : lecteurs Vimeo, Loom et générique reconnus ; iframe invisible ou non vidéo ignoré', () => {
+  const run = (html, r) => {
+    const dom = voiceDom('<main>' + html + '</main>');
+    const w = dom.window;
+    const f = w.document.querySelector('iframe');
+    if (f && r) rect(f, r);
+    const st = w.DDT_createVoice(w.document, w, { transport: fakeTransport([]), transcribe: () => null }).start();
+    return st;
+  };
+  const big = { width: 640, height: 360, top: 50, left: 50 };
+  assert.equal(run('<iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e"></iframe>', big).url,
+    'https://player.vimeo.com/video/76979871?h=8272103f6e');
+  assert.equal(run('<iframe src="https://www.loom.com/embed/0281766fa2d04bb788eaf19e65135184"></iframe>', big).error, 'iframe_player');
+  assert.equal(run('<iframe src="https://media.example.org/player/42" allow="autoplay; fullscreen"></iframe>', big).error, 'iframe_player',
+    'lecteur inconnu mais déclaré comme tel (allow fullscreen + « player »)');
+  assert.equal(run('<iframe src="https://player.vimeo.com/video/1"></iframe>', { width: 0, height: 0 }).error, 'no_video', 'invisible');
+  assert.equal(run('<iframe src="https://ads.example.com/banner"></iframe>', big).error, 'no_video', 'pas un lecteur');
+});
+
+test('partout : vidéo protégée (DRM), message voiceNoAudio comme avant', () => {
+  const dom = voiceDom();
+  const w = dom.window;
+  const video = w.document.querySelector('video');
+  Object.defineProperty(video, 'mediaKeys', { value: {}, configurable: true });
+  video.captureStream = () => { throw new Error('ne doit pas être appelé'); };
+  const voice = w.DDT_createVoice(w.document, w, { transport: fakeTransport([]), transcribe: () => null, MediaRecorder: function () {} });
+  voice.start();
+  assert.equal(voice.status().mode, 'audio');
+  assert.equal(overlay(dom).msg, 'voiceNoAudio');
+  voice.stop();
 });
 
 /* ---------------- YouTube ---------------- */
@@ -762,5 +1133,7 @@ test('extension : raccourci de la voix déclaré, voice.js présent, popup avec 
   assert.ok(Object.keys(base.commands).length <= 4, 'Chrome : 4 raccourcis maximum');
   assert.ok(fs.existsSync(path.join(H.SRC, 'voice.js')));
   assert.ok(H.read('popup.html').includes('id="voiceSwitch"'));
+  assert.ok(H.read('popup.html').includes('id="voiceDubSel"'), 'choix sous-titres / doublage');
+  assert.equal(DDT.DEFAULT_SETTINGS.voiceDub, false, 'défaut : sous-titres');
   assert.ok(!/tabCapture|offscreen/.test(JSON.stringify(base)), 'aucune nouvelle permission demandée');
 });

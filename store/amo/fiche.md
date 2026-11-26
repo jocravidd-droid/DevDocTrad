@@ -14,7 +14,7 @@ Sommaire :
 6. Liens, licence, options
 7. Politique de confidentialité
 8. Notes pour les relecteurs (Notes to Reviewer)
-9. Notes de version 1.1.0 (Release notes)
+9. Notes de version 1.2.0 (Release notes)
 
 ---
 
@@ -298,17 +298,18 @@ How to test for free:
 6. Video voice: open a YouTube video that has English captions, then turn on "Translate the voice in videos" in the popup (or press Alt+Shift+V). Translated subtitles appear on the video. For a video without subtitles, the same Groq key is used for Whisper transcription.
 ```
 
-## 9. Notes de version 1.1.0 (Release notes)
+## 9. Notes de version 1.2.0 (Release notes)
 
-Champ « Notes de version » de la version 1.1.0 (page de la version, après l’envoi du fichier). Tiré de `CHANGELOG.md`.
+Champ « Notes de version » de la version 1.2.0 (page de la version, après l’envoi du fichier). Tiré de `CHANGELOG.md`.
 
 **en-US** :
 
 ```text
+- New in 1.2: free dubbing on any video. Choose "Subtitles + translated voice (dubbing)" in the popup: the translation is spoken by your browser's built-in speech voice, timed to the subtitles, while the original sound is lowered. Works with web-component players and audio players; embedded players from other sites get an "Open the video in a tab" button.
 - New: video voice translation (popup switch or Alt+Shift+V), free. Video subtitles and YouTube captions are translated live on the video; videos without subtitles are transcribed by Groq Whisper (free tier, free Groq key only), then translated. Bilingual subtitles, full screen, optional read-aloud.
 - New: raw README and .txt files are translated (readable view, code intact, exact original on demand).
 - Firefox: clear message on domains reserved by Mozilla and on PDF files, help when Firefox refuses the injection, "!" on the icon when a shortcut fails.
-- Name with keywords in the 36 interface languages; 13 new interface texts translated.
+- Name with keywords in the 36 interface languages; 20 new interface texts translated.
 - Sharper rounded corners everywhere; the logo sheet is back.
 - Website in 37 languages: https://devdoctrad.vercel.app/
 - No new permission. Privacy policy updated (what is sent to Groq when the video voice is translated).
@@ -317,10 +318,11 @@ Champ « Notes de version » de la version 1.1.0 (page de la version, après l�
 **fr** :
 
 ```text
+- Nouveau en 1.2 : doublage gratuit sur n'importe quelle vidéo. Choisis « Sous-titres + voix traduite (doublage) » dans le popup : la traduction est dite par la voix de synthèse du navigateur, calée sur les sous-titres, pendant que le son d'origine est baissé. Marche aussi avec les lecteurs en composants web et les lecteurs audio ; un lecteur intégré d'un autre site propose « Ouvrir la vidéo dans un onglet ».
 - Nouveau : traduction de la voix des vidéos (interrupteur du popup ou Alt+Maj+V), gratuite. Les sous-titres des vidéos et de YouTube sont traduits en direct sur la vidéo ; une vidéo sans sous-titres est transcrite par Groq Whisper (palier gratuit, clé Groq gratuite uniquement), puis traduite. Sous-titres bilingues, plein écran, lecture à voix haute facultative.
 - Nouveau : les README et fichiers .txt bruts sont traduits (vue lisible, code intact, original exact à la demande).
 - Firefox : message clair sur les domaines réservés par Mozilla et les PDF, aide quand Firefox refuse l’injection, « ! » sur l’icône quand un raccourci échoue.
-- Nom avec mots-clés dans les 36 langues de l’interface ; 13 nouveaux textes d’interface traduits.
+- Nom avec mots-clés dans les 36 langues de l’interface ; 20 nouveaux textes d’interface traduits.
 - Coins arrondis nets partout ; la feuille du logo revient.
 - Site en 37 langues : https://devdoctrad.vercel.app/
 - Aucune nouvelle permission. Politique de confidentialité mise à jour (ce qui part chez Groq quand la voix des vidéos est traduite).

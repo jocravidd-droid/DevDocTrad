@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Sluta läsa upp"
   },
+  "popupVoiceMode": {
+    "message": "Röst i videor"
+  },
+  "popupVoiceSubs": {
+    "message": "Undertexter"
+  },
+  "popupVoiceDub": {
+    "message": "Undertexter + översatt röst (dubbning)"
+  },
+  "voiceNoTts": {
+    "message": "Ingen talsyntesröst för {0} på den här enheten: bara undertexter."
+  },
+  "voiceDubClick": {
+    "message": "Klicka på sidan för att tillåta den översatta rösten."
+  },
+  "voiceInFrame": {
+    "message": "Videon finns i en inbäddad spelare ({0}): öppna den i en flik för att översätta den."
+  },
+  "voiceOpenTab": {
+    "message": "Öppna videon i en flik"
+  },
   "popupSensitive": {
     "message": "Känslig sida: översätts aldrig automatiskt. Knappen fungerar, Ollama används först om den är konfigurerad."
   },

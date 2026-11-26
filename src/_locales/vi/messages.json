@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Dừng đọc to"
   },
+  "popupVoiceMode": {
+    "message": "Giọng nói trong video"
+  },
+  "popupVoiceSubs": {
+    "message": "Phụ đề"
+  },
+  "popupVoiceDub": {
+    "message": "Phụ đề + giọng dịch (lồng tiếng)"
+  },
+  "voiceNoTts": {
+    "message": "Thiết bị này không có giọng tổng hợp cho {0}: chỉ hiển thị phụ đề."
+  },
+  "voiceDubClick": {
+    "message": "Nhấp vào trang để cho phép giọng dịch."
+  },
+  "voiceInFrame": {
+    "message": "Video này nằm trong trình phát nhúng ({0}): mở nó trong một thẻ để dịch."
+  },
+  "voiceOpenTab": {
+    "message": "Mở video trong một thẻ"
+  },
   "popupSensitive": {
     "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
   },

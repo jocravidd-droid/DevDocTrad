@@ -224,5 +224,12 @@
 "popupProgress": "Çeviri ilerlemesi",
 "optUrlInvalid": "Geçersiz adres: http:// veya https:// ile başlayan bir adres girin, örneğin http://localhost:11434.",
 "optOllamaPermDenied": "İzin reddedildi: DevDocTrad {0} adresine ulaşamıyor.",
-"keyNoApiKey": "anahtar yok"
+"keyNoApiKey": "anahtar yok",
+"popupVoiceMode": "Video sesi",
+"popupVoiceSubs": "Altyazılar",
+"popupVoiceDub": "Altyazılar + çevrilmiş ses (dublaj)",
+"voiceNoTts": "Bu cihazda {0} için sentetik ses yok: yalnızca altyazılar.",
+"voiceDubClick": "Çevrilmiş sese izin vermek için sayfaya tıklayın.",
+"voiceInFrame": "Bu video gömülü bir oynatıcıda ({0}): çevirmek için bir sekmede açın.",
+"voiceOpenTab": "Videoyu bir sekmede aç"
 }

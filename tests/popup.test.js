@@ -136,6 +136,29 @@ test('popup : l\'interrupteur « voix des vidéos » est relu une actualisation 
   assert.equal(sw.checked, false, 'l\'interrupteur suit l\'état réel');
 });
 
+test('popup : choix sous-titres / doublage enregistré (voiceDub) et appliqué à la voix en cours', async () => {
+  const p = await openPopup({ keys: [freeKey], status: { state: 'idle', done: 0, total: 0 }, voiceActive: true });
+  const sel = p.doc.getElementById('voiceDubSel');
+  assert.equal(sel.value, 'subs', 'défaut : sous-titres');
+  assert.deepEqual(Array.from(sel.options).map((o) => o.textContent), [msg('popupVoiceSubs'), msg('popupVoiceDub')]);
+  assert.equal(sel.title, msg('popupVoiceMode'));
+  sel.value = 'dub';
+  sel.dispatchEvent(new p.w.Event('change'));
+  await settle(10);
+  assert.equal((await p.local.get('settings')).settings.voiceDub, true, 'réglage enregistré');
+  assert.equal((await p.local.get('settings')).settings.target, 'auto', 'autres réglages gardés');
+  const dub = p.sent.filter((m) => m.type === 'voiceCommand' && m.cmd === 'dub');
+  assert.deepEqual(dub.map((m) => [m.tabId, m.on]), [[9, true]], 'voix de la vidéo en cours : doublage activé tout de suite');
+  // réglage relu à l'ouverture
+  const p2 = await openPopup({ keys: [freeKey], settings: { voiceDub: true } });
+  assert.equal(p2.doc.getElementById('voiceDubSel').value, 'dub');
+  p2.doc.getElementById('voiceDubSel').value = 'subs';
+  p2.doc.getElementById('voiceDubSel').dispatchEvent(new p2.w.Event('change'));
+  await settle(10);
+  assert.equal((await p2.local.get('settings')).settings.voiceDub, false);
+  assert.equal(p2.sent.filter((m) => m.cmd === 'dub').length, 0, 'voix pas lancée : rien à envoyer');
+});
+
 test('popup : accessibilité (barre de progression nommée, titres complets des libellés coupés)', async () => {
   const p = await openPopup({ keys: [freeKey], status: { state: 'running', done: 3, total: 10, showing: 'translated' } });
   const bar = p.doc.getElementById('progress');

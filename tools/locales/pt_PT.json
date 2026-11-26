@@ -224,5 +224,12 @@
 "popupProgress": "Progresso da tradução",
 "optUrlInvalid": "Endereço inválido: introduza um endereço http:// ou https://, por exemplo http://localhost:11434.",
 "optOllamaPermDenied": "Permissão recusada: o DevDocTrad não consegue aceder a {0}.",
-"keyNoApiKey": "falta a chave"
+"keyNoApiKey": "falta a chave",
+"popupVoiceMode": "Voz dos vídeos",
+"popupVoiceSubs": "Legendas",
+"popupVoiceDub": "Legendas + voz traduzida (dobragem)",
+"voiceNoTts": "Nenhuma voz sintetizada em {0} neste dispositivo: apenas legendas.",
+"voiceDubClick": "Clique na página para permitir a voz traduzida.",
+"voiceInFrame": "Este vídeo está num leitor incorporado ({0}): abra-o num separador para o traduzir.",
+"voiceOpenTab": "Abrir o vídeo num separador"
 }
