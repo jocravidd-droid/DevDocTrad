@@ -370,20 +370,15 @@
       for (var i = 0; i < list.length; i++) { try { if (MR.isTypeSupported(list[i])) return list[i]; } catch (e) { /* rien */ } }
       return '';
     }
+    /* Le son enregistré (un Blob de la page) est lu par FileReader, qui rend directement une chaîne.
+       Lire ses octets (arrayBuffer + Uint8Array) échoue dans Firefox : « Permission denied to access
+       property constructor », l'objet appartient à la page et non au script d'extension. */
     function blobToBase64(blob) {
-      if (typeof blob.arrayBuffer !== 'function') {
-        return new Promise(function (resolve, reject) {
-          var fr = new win.FileReader();
-          fr.onload = function () { resolve(String(fr.result).replace(/^data:[^,]*,/, '')); };
-          fr.onerror = function () { reject(fr.error); };
-          fr.readAsDataURL(blob);
-        });
-      }
-      return blob.arrayBuffer().then(function (buf) {
-        var bytes = new Uint8Array(buf);
-        var bin = '';
-        for (var i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
-        return win.btoa(bin);
+      return new Promise(function (resolve, reject) {
+        var fr = new win.FileReader();
+        fr.onload = function () { resolve(String(fr.result).replace(/^data:[^,]*,/, '')); };
+        fr.onerror = function () { reject(fr.error); };
+        fr.readAsDataURL(blob);
       });
     }
     function captureAudio(v) {
