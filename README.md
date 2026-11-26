@@ -24,11 +24,11 @@ Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : 
 
 ## Installation
 
-Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/devdoctrad/) : un clic suffit. Pour Chrome, Edge et Brave, elle n'est pas encore sur les boutiques : en attendant, l'installation se fait à la main, en quelques clics. Les fichiers prêts à installer sont dans le dossier [`release/`](release/).
+Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/devdoctrad/) : un clic suffit. Pour Chrome, Edge et Brave, elle n'est pas encore sur les boutiques : en attendant, l'installation se fait à la main, en quelques clics. Les fichiers prêts à installer sont sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (et, pour la version actuelle, dans le dossier [`release/`](release/)).
 
 ### Chrome, Edge ou Brave
 
-1. Télécharge le fichier [`release/devdoctrad-chrome-1.2.0.zip`](release/devdoctrad-chrome-1.2.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement (« Download raw file ») en haut à droite du fichier.
+1. Télécharge le fichier `devdoctrad-chrome-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-chrome-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.2.0.zip).
 2. Décompresse ce fichier zip dans un dossier que tu garderas (par exemple `Documents/DevDocTrad`). Ne supprime pas ce dossier ensuite : le navigateur charge l'extension depuis lui.
 3. Ouvre la page des extensions en tapant dans la barre d'adresse :
    - Chrome : `chrome://extensions`
@@ -45,7 +45,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 **Ou à la main**, avec le zip (module temporaire, utile pour tester une version précise) :
 
-1. Télécharge le fichier [`release/devdoctrad-firefox-1.2.0.zip`](release/devdoctrad-firefox-1.2.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
+1. Télécharge le fichier `devdoctrad-firefox-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-firefox-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.2.0.zip).
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
@@ -181,7 +181,7 @@ python3 tools/build_site.py
 
 Régénère le site `docs/` dans les 37 langues à partir de `tools/site/<langue>.json` (un fichier de textes par langue, mêmes clés que `fr.json`). Les tests vérifient que `docs/` est à jour.
 
-Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo et un faux serveur Ollama local ; il produit aussi les captures d'écran de `store/screenshots/`. Autres scripts : `node tools/qa_shots.js` (captures de contrôle du popup et du badge), `node tools/export_logo.js` (exports du logo), `node tools/promo.js` (images promotionnelles).
+Test de bout en bout dans un vrai Chromium (Playwright), avec une page de démo et un faux serveur Ollama local. `tools/e2e.js` et `tools/e2e_voice.js` écrivent leurs captures d'écran dans un dossier temporaire (chemin affiché à la fin) ; pour mettre à jour les captures suivies du dépôt (`store/screenshots/` et `docs/assets/`), lance-les avec `DDT_SHOTS=1`, par exemple `DDT_SHOTS=1 node tools/e2e.js`. Autres scripts : `node tools/qa_shots.js` (captures de contrôle du popup et du badge), `node tools/export_logo.js` (exports du logo), `node tools/promo.js` (images promotionnelles).
 
 Historique des versions : [CHANGELOG.md](CHANGELOG.md). Une mise à jour (correctifs et améliorations) est préparée tous les 15 jours.
 
@@ -213,7 +213,7 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 
 ### Install (Chrome, Edge, Brave)
 
-1. Download [`release/devdoctrad-chrome-1.2.0.zip`](release/devdoctrad-chrome-1.2.0.zip) and unzip it into a folder you will keep.
+1. Download `devdoctrad-chrome-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-chrome-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.2.0.zip). Unzip it into a folder you will keep.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
@@ -224,7 +224,7 @@ Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/de
 
 Or by hand, as a temporary add-on:
 
-1. Download [`release/devdoctrad-firefox-1.2.0.zip`](release/devdoctrad-firefox-1.2.0.zip).
+1. Download `devdoctrad-firefox-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-firefox-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.2.0.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and select the zip file. (Temporary: it is removed when Firefox closes.)
 

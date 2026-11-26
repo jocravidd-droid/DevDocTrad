@@ -13,6 +13,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -37,6 +38,9 @@ jobs:
         run: |
           V="${GITHUB_REF_NAME#v}"
           awk -v v="$V" '$0 ~ "^## \\["v"\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > release/notes.md
+          # pas de version publiée sans notes : section absente ou vide dans CHANGELOG.md = échec
+          test -s release/notes.md || { echo "Notes de version vides : ajoute la section [$V] dans CHANGELOG.md"; exit 1; }
+          grep -q '[^[:space:]]' release/notes.md || { echo "Notes de version vides : la section [$V] de CHANGELOG.md n'a aucun texte"; exit 1; }
       - uses: actions/upload-artifact@v4
         with:
           name: version
@@ -48,6 +52,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     needs: build
     permissions:
       contents: write

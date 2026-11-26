@@ -12,6 +12,7 @@ permissions:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v5
         with:
@@ -31,6 +32,7 @@ jobs:
 
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     needs: tests
     steps:
       - uses: actions/checkout@v5
@@ -51,6 +53,3 @@ jobs:
         run: DDT_E2E_TARGET=fr xvfb-run -a node tools/e2e.js
       - name: Bout en bout de la voix des vidéos (faux Groq)
         run: xvfb-run -a node tools/e2e_voice.js
-      - name: Ne pas garder les captures du test
-        if: always()
-        run: git checkout -- docs/assets store/screenshots || true

@@ -15,6 +15,7 @@ const SITE = 'https://devdoctrad.vercel.app';
 const version = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifests', 'base.json'), 'utf8')).version;
 const EMOJI = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{1F000}-\u{1F2FF}]/u;
 const RTL = ['ar', 'he', 'fa', 'ur'];
+const LATEST = 'https://github.com/jocravidd-droid/DevDocTrad/releases/latest';
 const EXT_TARGETS = ['fr', 'en', 'es', 'de', 'it', 'pt', 'pt-BR', 'nl', 'pl', 'ru', 'uk', 'cs', 'sk', 'ro', 'hu', 'bg', 'el',
   'sv', 'da', 'no', 'fi', 'tr', 'ar', 'he', 'fa', 'hi', 'bn', 'ur', 'id', 'ms', 'vi', 'th', 'zh', 'zh-TW', 'ja', 'ko', 'sw'];
 
@@ -71,6 +72,28 @@ for (const l of langs) {
     const zips = [...d.querySelectorAll('a[href$=".zip"]')].map((a) => a.getAttribute('href'));
     assert.deepEqual(zips.map((z) => path.basename(z)), [`devdoctrad-chrome-${version}.zip`, `devdoctrad-firefox-${version}.zip`]);
     for (const z of zips) assert.ok(fs.existsSync(path.join(ROOT, 'release', path.basename(z))), 'zip publié : ' + z);
+    // lien principal : la page de la dernière version (ne casse pas quand les anciens zips sont retirés), puis le lien direct
+    for (const z of zips) {
+      const direct = d.querySelector(`a[href="${z}"]`);
+      const li = direct.closest('li');
+      const links = [...li.querySelectorAll('a')].map((a) => a.getAttribute('href'));
+      assert.deepEqual(links, [LATEST, z], `${l} : releases/latest d'abord, lien direct ensuite`);
+      assert.ok(z.startsWith('https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/'), z);
+    }
+    // logos : petites images aux bonnes dimensions (pas l'icône 512 px)
+    const navImg = d.querySelector('nav.top .brand img');
+    assert.deepEqual([navImg.getAttribute('src').replace(/^(\.\.\/)?/, ''), navImg.getAttribute('width'), navImg.getAttribute('height')], ['assets/icon-64.png', '30', '30']);
+    const heroImg = d.querySelector('.hero img.icon');
+    assert.deepEqual([heroImg.getAttribute('src').replace(/^(\.\.\/)?/, ''), heroImg.getAttribute('width'), heroImg.getAttribute('height')], ['assets/icon-224.png', '112', '112']);
+    // vidéo de présentation : sous son propre titre, avec un nom accessible
+    const promo = d.querySelector('#promo');
+    assert.equal(promo.querySelector('h2').textContent, t.promo_title);
+    assert.equal(promo.querySelector('video').getAttribute('aria-label'), t.promo_title.replace(/<[^>]+>/g, ''));
+    assert.equal(d.querySelector('#gallery h2').textContent, t.gal_title.replace(/<[^>]+>/g, ''));
+    const gal = d.querySelector('#gallery .gallery');
+    assert.deepEqual(['data-title', 'data-prev', 'data-next'].map((k) => gal.getAttribute(k)), [t.gal_title, t.gal_prev, t.gal_next]);
+    // annonce de la version actuelle
+    assert.ok(/1\.2|۱\.۲/.test(t.hero_new), `${l}.hero_new annonce la 1.2`);
     // ressources relatives : toutes présentes
     const base = path.dirname(pageFile(l));
     for (const el of d.querySelectorAll('img[src], link[href], script[src], a[href]')) {
@@ -261,9 +284,41 @@ test('site.js : la fausse vidéo fait défiler les 3 sous-titres, se met en paus
   w2.close();
 });
 
+test('site.js : visionneuse d\'images nommée, boutons nommés, focus gardé dedans', () => {
+  for (const l of ['fr', 'ar']) {
+    const t = load(l);
+    const w = interactive(l);
+    const d = w.document;
+    const box = d.querySelector('.lightbox');
+    assert.equal(box.getAttribute('role'), 'dialog');
+    assert.equal(box.getAttribute('aria-label'), t.gal_title);
+    const first = d.querySelector('.gallery a.zoom');
+    first.dispatchEvent(new w.MouseEvent('click', { bubbles: true, cancelable: true }));
+    assert.ok(box.classList.contains('open'));
+    const [close, prev, next] = ['.close', '.prev', '.next'].map((c) => box.querySelector(c));
+    assert.equal(close.getAttribute('aria-label'), t.suggest_close);
+    // de droite à gauche, « ‹ » avance : son nom suit l'action
+    assert.equal(prev.getAttribute('aria-label'), l === 'ar' ? t.gal_next : t.gal_prev);
+    assert.equal(next.getAttribute('aria-label'), l === 'ar' ? t.gal_prev : t.gal_next);
+    assert.equal(d.activeElement, close);
+    const tab = (shiftKey) => d.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Tab', shiftKey, bubbles: true, cancelable: true }));
+    tab(false); assert.equal(d.activeElement, prev);
+    tab(false); assert.equal(d.activeElement, next);
+    tab(false); assert.equal(d.activeElement, close, 'Tab revient au premier bouton');
+    tab(true); assert.equal(d.activeElement, next, 'Maj+Tab va au dernier bouton');
+    d.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    assert.ok(!box.classList.contains('open'));
+    assert.equal(d.activeElement, first, 'focus rendu au lien d\'origine');
+    w.close();
+  }
+});
+
 test('sitemap : une adresse par langue, avec toutes les variantes', () => {
   const xml = fs.readFileSync(path.join(DOCS, 'sitemap.xml'), 'utf8');
   assert.equal((xml.match(/<loc>/g) || []).length, langs.length);
+  // lastmod = date de la version dans CHANGELOG.md (pas la date du jour)
+  const date = fs.readFileSync(path.join(ROOT, 'CHANGELOG.md'), 'utf8').match(new RegExp(`^## \\[${version.replace(/\./g, '\\.')}\\] - (\\d{4}-\\d{2}-\\d{2})`, 'm'))[1];
+  assert.deepEqual([...new Set(xml.match(/<lastmod>[^<]*<\/lastmod>/g))], [`<lastmod>${date}</lastmod>`]);
   assert.equal((xml.match(/hreflang="x-default"/g) || []).length, langs.length);
   assert.ok(fs.readFileSync(path.join(DOCS, 'robots.txt'), 'utf8').includes(SITE + '/sitemap.xml'));
 });
@@ -271,6 +326,7 @@ test('sitemap : une adresse par langue, avec toutes les variantes', () => {
 test('llms.txt : cite la voix et toutes les langues du site', () => {
   const txt = fs.readFileSync(path.join(DOCS, 'llms.txt'), 'utf8');
   assert.ok(/voice of videos/i.test(txt));
+  assert.ok(/dubbing/i.test(txt), 'llms.txt cite le doublage');
   assert.equal((txt.match(/- \[Website \(/g) || []).length, langs.length);
   assert.ok(txt.includes(`Current version: ${version}`));
 });
@@ -278,13 +334,12 @@ test('llms.txt : cite la voix et toutes les langues du site', () => {
 test('site : docs/ est à jour avec tools/site (relancer python3 tools/build_site.py sinon)', () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-site-'));
   execFileSync('python3', [path.join(ROOT, 'tools', 'build_site.py')], { env: Object.assign({}, process.env, { DDT_SITE_OUT: tmp }) });
-  const strip = (s) => s.replace(/<lastmod>[^<]*<\/lastmod>/g, '');
   for (const l of langs) {
     const rel = path.join(folder(l), 'index.html');
     assert.equal(fs.readFileSync(path.join(tmp, rel), 'utf8'), fs.readFileSync(path.join(DOCS, rel), 'utf8'), 'page périmée : ' + rel);
   }
   for (const f of ['lang.js', 'site.js', 'llms.txt', 'sitemap.xml']) {
-    assert.equal(strip(fs.readFileSync(path.join(tmp, f), 'utf8')), strip(fs.readFileSync(path.join(DOCS, f), 'utf8')), 'fichier périmé : ' + f);
+    assert.equal(fs.readFileSync(path.join(tmp, f), 'utf8'), fs.readFileSync(path.join(DOCS, f), 'utf8'), 'fichier périmé : ' + f);
   }
   fs.rmSync(tmp, { recursive: true, force: true });
 });

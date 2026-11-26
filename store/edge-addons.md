@@ -24,22 +24,24 @@ Paquet à envoyer : `release/devdoctrad-chrome-1.2.0.zip` (le zip Chrome, tel qu
 5. **Store listings** : ajoute au moins **English** et **Français** (tu peux ajouter d'autres langues plus tard ; les textes du site `tools/site/<langue>.json` peuvent servir : `meta_desc` pour la description courte, les `f_*_t` / `f_*_p` pour la description longue).
    - Description : copie celle de [`chrome-web-store.md`](chrome-web-store.md) (mêmes limites) et ajoute ce paragraphe :
      ```text
-     New in 1.1: translate the voice of videos. Subtitles (including YouTube captions) are translated live on the video. Videos without subtitles are transcribed for free with Groq Whisper using your own free Groq key. Optional read-aloud with your browser's voice.
+     New in 1.2: video dubbing, on any website. Choose "Subtitles + translated voice (dubbing)" and the translation is spoken by your browser's built-in speech synthesis, timed to the subtitles, while the original sound is lowered. Free, no voice service.
+     Video voice (since 1.1): subtitles (including YouTube captions) are translated live on the video. Videos without subtitles are transcribed for free with Groq Whisper using your own free Groq key.
      ```
      En français :
      ```text
-     Nouveau en 1.1 : la voix des vidéos traduite. Les sous-titres (y compris ceux de YouTube) sont traduits en direct sur la vidéo. Une vidéo sans sous-titres est transcrite gratuitement par Groq Whisper avec ta propre clé Groq gratuite. Lecture à voix haute possible avec la voix de ton navigateur.
+     Nouveau en 1.2 : le doublage des vidéos, sur n'importe quel site. Choisis « Sous-titres + voix traduite (doublage) » et la traduction est dite par la synthèse vocale de ton navigateur, calée sur les sous-titres, pendant que le son d'origine est baissé. Gratuit, sans service de voix.
+     La voix des vidéos (depuis la 1.1) : les sous-titres (y compris ceux de YouTube) sont traduits en direct sur la vidéo. Une vidéo sans sous-titres est transcrite gratuitement par Groq Whisper avec ta propre clé Groq gratuite.
      ```
    - Logo : `store/icon-128.png` (300×300 conseillé : `design/logo/devdoctrad-symbol-1024.png` redimensionné convient aussi).
    - Captures 1280×800 : les cinq fichiers de `store/screenshots/`.
    - Petite promo 440×280 : `store/promo-440x280.png`. Grande promo 1400×560 : `store/promo-1400x560.png`.
-   - Mots-clés de recherche (Search terms) : `translate documentation`, `developer`, `translator`, `subtitles`, `video translation`, `code`, `README`, `Stack Overflow`.
+   - Mots-clés de recherche (Search terms) : `translate documentation`, `developer`, `translator`, `subtitles`, `video translation`, `dubbing`, `code`, `README`.
 6. **Notes for certification** (copie-colle, en anglais) :
    ```text
    DevDocTrad translates the visible text of web pages (and optionally video subtitles or video audio) with the user's own API keys (Google Gemini, Groq, Mistral, OpenRouter) or a local Ollama model. No account, no server, no analytics.
    To test: open the options page, add a free Groq or Gemini key, click "Load models", pick a model, "Test", then open any documentation page (e.g. https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) and click "Translate this page" in the popup.
    Permissions: storage (settings, keys, cache), activeTab + scripting (inject the translator into the current tab when the user clicks), host permissions only for the four API endpoints; optional per-site permission only when the user enables automatic translation for that site.
-   Video voice: on a page with a video, the popup switch "Translate the voice in videos" translates subtitles; without subtitles, short audio chunks are sent to Groq's Whisper endpoint with the user's free Groq key. The microphone is never used.
+   Video voice: on a page with a video, the popup switch "Translate the voice in videos" translates subtitles; without subtitles, short audio chunks are sent to Groq's Whisper endpoint with the user's free Groq key. The microphone is never used. Optional dubbing ("Subtitles + translated voice") speaks the translated subtitles with the browser's own speech synthesis; the extension calls no voice service.
    ```
 7. Clique sur **Publish**. La vérification prend en général de quelques heures à 7 jours ouvrés. Tu reçois un mail.
 

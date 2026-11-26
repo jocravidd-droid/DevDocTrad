@@ -11,6 +11,12 @@
  * - lance un faux Ollama (tools/fake_ollama.js) : aucune vraie IA, traductions préparées ;
  * - vérifie : traduction, retour à l'original identique octet pour octet, bilingue,
  *   traduction automatique d'un site choisi, réglages ; puis enregistre les captures.
+ *
+ * Captures d'écran : par défaut dans un dossier temporaire (chemin affiché à la fin), pour ne
+ * jamais modifier les fichiers suivis par git. Pour mettre à jour les captures du dépôt
+ * (store/screenshots/ et docs/assets/) :
+ *
+ *   DDT_SHOTS=1 node tools/e2e.js
  */
 'use strict';
 const { chromium } = require('playwright');
@@ -22,7 +28,10 @@ const { spawn } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist', 'chrome');
-const SHOTS = [path.join(ROOT, 'store', 'screenshots'), path.join(ROOT, 'docs', 'assets')];
+// DDT_SHOTS=1 : captures écrites dans les dossiers suivis du dépôt ; sinon dans un dossier temporaire.
+const SHOTS = process.env.DDT_SHOTS === '1'
+  ? [path.join(ROOT, 'store', 'screenshots'), path.join(ROOT, 'docs', 'assets')]
+  : [fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-shots-'))];
 const results = [];
 const check = (name, ok, extra) => { results.push({ name, ok }); console.log((ok ? 'OK   ' : 'FAIL ') + name + (extra ? ' : ' + extra : '')); };
 
@@ -203,5 +212,6 @@ async function shot(page, name) {
   }
   const failed = results.filter((r) => !r.ok).length;
   console.log(`\n${results.length - failed}/${results.length} vérifications réussies`);
+  console.log('Captures : ' + SHOTS.join(', ') + (process.env.DDT_SHOTS === '1' ? '' : ' (DDT_SHOTS=1 pour mettre à jour celles du dépôt)'));
   process.exit(failed ? 1 : 0);
 })();
