@@ -170,7 +170,9 @@ test('une unité retirée de la page avant le retour du lot n\'est pas appliqué
   await p;
   assert.equal(doc.body.innerHTML.includes('SECOND PARAGRAPH HERE.'), true);
   const u = engine._units().find((x) => x.src === 'First paragraph here.');
-  assert.ok(!u.applied, 'unité disparue non appliquée');
+  // l'unité disparue est oubliée (pas de fuite mémoire) ; si elle restait, elle ne serait pas appliquée
+  assert.ok(!u || !u.applied, 'unité disparue non appliquée');
+  assert.equal(engine.status().total, 1, 'unité disparue retirée du total');
 });
 
 test('SPA : changement d\'URL, le nouveau contenu est traduit, l\'ancien n\'est pas retraduit', async () => {
