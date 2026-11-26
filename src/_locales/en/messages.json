@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Stop reading aloud"
   },
+  "popupVoiceMode": {
+    "message": "Video voice"
+  },
+  "popupVoiceSubs": {
+    "message": "Subtitles"
+  },
+  "popupVoiceDub": {
+    "message": "Subtitles + translated voice (dubbing)"
+  },
+  "voiceNoTts": {
+    "message": "No speech voice for {0} on this device: subtitles only."
+  },
+  "voiceDubClick": {
+    "message": "Click the page to allow the translated voice."
+  },
+  "voiceInFrame": {
+    "message": "This video is in an embedded player ({0}): open it in a tab to translate it."
+  },
+  "voiceOpenTab": {
+    "message": "Open the video in a tab"
+  },
   "popupSensitive": {
     "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."
   },

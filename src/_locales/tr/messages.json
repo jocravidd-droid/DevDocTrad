@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Sesli okumayı durdur"
   },
+  "popupVoiceMode": {
+    "message": "Video sesi"
+  },
+  "popupVoiceSubs": {
+    "message": "Altyazılar"
+  },
+  "popupVoiceDub": {
+    "message": "Altyazılar + çevrilmiş ses (dublaj)"
+  },
+  "voiceNoTts": {
+    "message": "Bu cihazda {0} için sentetik ses yok: yalnızca altyazılar."
+  },
+  "voiceDubClick": {
+    "message": "Çevrilmiş sese izin vermek için sayfaya tıklayın."
+  },
+  "voiceInFrame": {
+    "message": "Bu video gömülü bir oynatıcıda ({0}): çevirmek için bir sekmede açın."
+  },
+  "voiceOpenTab": {
+    "message": "Videoyu bir sekmede aç"
+  },
   "popupSensitive": {
     "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
   },

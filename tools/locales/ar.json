@@ -224,5 +224,12 @@
 "popupProgress": "تقدّم الترجمة",
 "optUrlInvalid": "عنوان غير صالح: أدخل عنوانًا يبدأ بـ http:// أو https://، مثل http://localhost:11434.",
 "optOllamaPermDenied": "تم رفض الإذن: لا يستطيع DevDocTrad الوصول إلى {0}.",
-"keyNoApiKey": "المفتاح مفقود"
+"keyNoApiKey": "المفتاح مفقود",
+"popupVoiceMode": "صوت الفيديو",
+"popupVoiceSubs": "ترجمة نصية",
+"popupVoiceDub": "ترجمة نصية + صوت مترجم (دبلجة)",
+"voiceNoTts": "لا يوجد صوت تركيب كلام لـ{0} على هذا الجهاز: الترجمة النصية فقط.",
+"voiceDubClick": "انقر على الصفحة للسماح بالصوت المترجم.",
+"voiceInFrame": "هذا الفيديو داخل مشغّل مضمَّن ({0}): افتحه في علامة تبويب لترجمته.",
+"voiceOpenTab": "فتح الفيديو في علامة تبويب"
 }

@@ -224,5 +224,12 @@
 "popupProgress": "翻译进度",
 "optUrlInvalid": "地址无效：请输入以 http:// 或 https:// 开头的地址，例如 http://localhost:11434。",
 "optOllamaPermDenied": "权限被拒绝：DevDocTrad 无法访问 {0}。",
-"keyNoApiKey": "缺少密钥"
+"keyNoApiKey": "缺少密钥",
+"popupVoiceMode": "视频语音",
+"popupVoiceSubs": "字幕",
+"popupVoiceDub": "字幕 + 翻译语音（配音）",
+"voiceNoTts": "此设备上没有{0}的合成语音：仅显示字幕。",
+"voiceDubClick": "请点击页面以允许播放翻译语音。",
+"voiceInFrame": "此视频位于嵌入式播放器（{0}）中：请在标签页中打开以进行翻译。",
+"voiceOpenTab": "在标签页中打开视频"
 }

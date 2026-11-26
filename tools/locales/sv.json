@@ -224,5 +224,12 @@
 "popupProgress": "Översättningens förlopp",
 "optUrlInvalid": "Ogiltig adress: ange en http://- eller https://-adress, till exempel http://localhost:11434.",
 "optOllamaPermDenied": "Behörighet nekad: DevDocTrad kan inte nå {0}.",
-"keyNoApiKey": "nyckel saknas"
+"keyNoApiKey": "nyckel saknas",
+"popupVoiceMode": "Röst i videor",
+"popupVoiceSubs": "Undertexter",
+"popupVoiceDub": "Undertexter + översatt röst (dubbning)",
+"voiceNoTts": "Ingen talsyntesröst för {0} på den här enheten: bara undertexter.",
+"voiceDubClick": "Klicka på sidan för att tillåta den översatta rösten.",
+"voiceInFrame": "Videon finns i en inbäddad spelare ({0}): öppna den i en flik för att översätta den.",
+"voiceOpenTab": "Öppna videon i en flik"
 }

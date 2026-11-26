@@ -224,5 +224,12 @@
 "popupProgress": "번역 진행률",
 "optUrlInvalid": "잘못된 주소입니다. http:// 또는 https:// 주소를 입력하세요(예: http://localhost:11434).",
 "optOllamaPermDenied": "권한이 거부되었습니다. DevDocTrad가 {0}에 연결할 수 없습니다.",
-"keyNoApiKey": "키 없음"
+"keyNoApiKey": "키 없음",
+"popupVoiceMode": "동영상 음성",
+"popupVoiceSubs": "자막",
+"popupVoiceDub": "자막 + 번역 음성(더빙)",
+"voiceNoTts": "이 기기에는 {0} 합성 음성이 없습니다: 자막만 표시합니다.",
+"voiceDubClick": "번역 음성을 허용하려면 페이지를 클릭하세요.",
+"voiceInFrame": "이 동영상은 삽입된 플레이어({0})에 있습니다: 번역하려면 탭에서 여세요.",
+"voiceOpenTab": "동영상을 탭에서 열기"
 }

@@ -224,5 +224,12 @@
 "popupProgress": "Voortgang van de vertaling",
 "optUrlInvalid": "Ongeldig adres: voer een http://- of https://-adres in, bijvoorbeeld http://localhost:11434.",
 "optOllamaPermDenied": "Toestemming geweigerd: DevDocTrad kan {0} niet bereiken.",
-"keyNoApiKey": "sleutel ontbreekt"
+"keyNoApiKey": "sleutel ontbreekt",
+"popupVoiceMode": "Stem in video's",
+"popupVoiceSubs": "Ondertitels",
+"popupVoiceDub": "Ondertitels + vertaalde stem (nasynchronisatie)",
+"voiceNoTts": "Geen spraaksynthesestem voor {0} op dit apparaat: alleen ondertitels.",
+"voiceDubClick": "Klik op de pagina om de vertaalde stem toe te staan.",
+"voiceInFrame": "Deze video staat in een ingesloten speler ({0}): open hem in een tabblad om hem te vertalen.",
+"voiceOpenTab": "Video openen in een tabblad"
 }

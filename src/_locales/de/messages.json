@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Vorlesen beenden"
   },
+  "popupVoiceMode": {
+    "message": "Stimme in Videos"
+  },
+  "popupVoiceSubs": {
+    "message": "Untertitel"
+  },
+  "popupVoiceDub": {
+    "message": "Untertitel + übersetzte Stimme (Synchronisation)"
+  },
+  "voiceNoTts": {
+    "message": "Keine Sprachausgabe-Stimme für {0} auf diesem Gerät: nur Untertitel."
+  },
+  "voiceDubClick": {
+    "message": "Klicke auf die Seite, um die übersetzte Stimme zu erlauben."
+  },
+  "voiceInFrame": {
+    "message": "Dieses Video läuft in einem eingebetteten Player ({0}): öffne es in einem Tab, um es zu übersetzen."
+  },
+  "voiceOpenTab": {
+    "message": "Video in einem Tab öffnen"
+  },
   "popupSensitive": {
     "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
   },

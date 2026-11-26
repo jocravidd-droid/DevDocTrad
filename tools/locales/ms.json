@@ -224,5 +224,12 @@
 "popupProgress": "Kemajuan terjemahan",
 "optUrlInvalid": "Alamat tidak sah: masukkan alamat http:// atau https://, contohnya http://localhost:11434.",
 "optOllamaPermDenied": "Kebenaran ditolak: DevDocTrad tidak dapat mencapai {0}.",
-"keyNoApiKey": "kunci tiada"
+"keyNoApiKey": "kunci tiada",
+"popupVoiceMode": "Suara video",
+"popupVoiceSubs": "Sari kata",
+"popupVoiceDub": "Sari kata + suara terjemahan (alih suara)",
+"voiceNoTts": "Tiada suara sintetik untuk {0} pada peranti ini: sari kata sahaja.",
+"voiceDubClick": "Klik halaman untuk membenarkan suara terjemahan.",
+"voiceInFrame": "Video ini berada dalam pemain terbenam ({0}): bukanya dalam tab untuk menterjemahkannya.",
+"voiceOpenTab": "Buka video dalam tab"
 }

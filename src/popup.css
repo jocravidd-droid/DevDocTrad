@@ -55,3 +55,6 @@ body.tight main { gap: 6px; }
 body.tight .card { gap: 7px; padding-block: 9px; }
 body.tight #status, body.tight .note > span:last-child {
   display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
+/* Voix des vidéos : sous-titres seuls ou doublage, aligné sous le texte de l'interrupteur */
+#opts .voice-dub { margin-top: -4px; padding-inline-start: calc(42px + var(--s-3)); }
+#opts .voice-dub select { min-height: 30px; padding-top: 4px; padding-bottom: 4px; font-size: var(--fs-sm); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }

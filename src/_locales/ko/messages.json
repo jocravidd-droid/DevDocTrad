@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "소리 내어 읽기 중지"
   },
+  "popupVoiceMode": {
+    "message": "동영상 음성"
+  },
+  "popupVoiceSubs": {
+    "message": "자막"
+  },
+  "popupVoiceDub": {
+    "message": "자막 + 번역 음성(더빙)"
+  },
+  "voiceNoTts": {
+    "message": "이 기기에는 {0} 합성 음성이 없습니다: 자막만 표시합니다."
+  },
+  "voiceDubClick": {
+    "message": "번역 음성을 허용하려면 페이지를 클릭하세요."
+  },
+  "voiceInFrame": {
+    "message": "이 동영상은 삽입된 플레이어({0})에 있습니다: 번역하려면 탭에서 여세요."
+  },
+  "voiceOpenTab": {
+    "message": "동영상을 탭에서 열기"
+  },
   "popupSensitive": {
     "message": "민감한 페이지: 자동으로 번역하지 않습니다. 버튼은 작동하며, 설정되어 있으면 Ollama를 먼저 사용합니다."
   },

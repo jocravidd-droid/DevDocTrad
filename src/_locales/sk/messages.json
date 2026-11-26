@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Zastaviť čítanie nahlas"
   },
+  "popupVoiceMode": {
+    "message": "Hlas videa"
+  },
+  "popupVoiceSubs": {
+    "message": "Titulky"
+  },
+  "popupVoiceDub": {
+    "message": "Titulky + preložený hlas (dabing)"
+  },
+  "voiceNoTts": {
+    "message": "V tomto zariadení nie je syntetický hlas pre {0}: iba titulky."
+  },
+  "voiceDubClick": {
+    "message": "Kliknite na stránku, aby ste povolili preložený hlas."
+  },
+  "voiceInFrame": {
+    "message": "Toto video je vo vloženom prehrávači ({0}): otvorte ho na karte, aby sa dalo preložiť."
+  },
+  "voiceOpenTab": {
+    "message": "Otvoriť video na karte"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy sa neprekladá automaticky. Tlačidlo funguje, Ollama sa použije ako prvá, ak je nastavená."
   },

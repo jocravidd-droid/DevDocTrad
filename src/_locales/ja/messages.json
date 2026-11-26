@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "読み上げを停止"
   },
+  "popupVoiceMode": {
+    "message": "動画の音声"
+  },
+  "popupVoiceSubs": {
+    "message": "字幕"
+  },
+  "popupVoiceDub": {
+    "message": "字幕 + 翻訳音声（吹き替え）"
+  },
+  "voiceNoTts": {
+    "message": "この端末には{0}の合成音声がありません：字幕のみ表示します。"
+  },
+  "voiceDubClick": {
+    "message": "翻訳音声を許可するにはページをクリックしてください。"
+  },
+  "voiceInFrame": {
+    "message": "この動画は埋め込みプレーヤー（{0}）内にあります：翻訳するにはタブで開いてください。"
+  },
+  "voiceOpenTab": {
+    "message": "動画をタブで開く"
+  },
   "popupSensitive": {
     "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
   },

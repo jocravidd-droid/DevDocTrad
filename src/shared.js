@@ -79,7 +79,8 @@
     batchChars: 6000,
     sensitiveExtra: [],
     autoSites: [],              // noms d'hôte
-    theme: 'system'             // 'system' | 'light' | 'dark'
+    theme: 'system',            // 'system' | 'light' | 'dark'
+    voiceDub: false             // voix des vidéos : false = sous-titres, true = sous-titres + voix traduite (doublage)
   };
 
   /* ---------- Échappement ---------- */

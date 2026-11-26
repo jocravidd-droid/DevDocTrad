@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "停止朗讀"
   },
+  "popupVoiceMode": {
+    "message": "影片語音"
+  },
+  "popupVoiceSubs": {
+    "message": "字幕"
+  },
+  "popupVoiceDub": {
+    "message": "字幕 + 翻譯語音（配音）"
+  },
+  "voiceNoTts": {
+    "message": "此裝置上沒有{0}的合成語音：僅顯示字幕。"
+  },
+  "voiceDubClick": {
+    "message": "請點選頁面以允許播放翻譯語音。"
+  },
+  "voiceInFrame": {
+    "message": "此影片位於內嵌播放器（{0}）中：請在分頁中開啟以進行翻譯。"
+  },
+  "voiceOpenTab": {
+    "message": "在分頁中開啟影片"
+  },
   "popupSensitive": {
     "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
   },

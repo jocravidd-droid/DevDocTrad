@@ -224,5 +224,12 @@
 "popupProgress": "התקדמות התרגום",
 "optUrlInvalid": "כתובת לא תקינה: הזינו כתובת http:// או https://, למשל http://localhost:11434.",
 "optOllamaPermDenied": "ההרשאה נדחתה: DevDocTrad לא יכול להתחבר אל {0}.",
-"keyNoApiKey": "חסר מפתח"
+"keyNoApiKey": "חסר מפתח",
+"popupVoiceMode": "קול הסרטון",
+"popupVoiceSubs": "כתוביות",
+"popupVoiceDub": "כתוביות + קול מתורגם (דיבוב)",
+"voiceNoTts": "אין קול סינתטי ל{0} במכשיר זה: כתוביות בלבד.",
+"voiceDubClick": "יש ללחוץ על הדף כדי לאפשר את הקול המתורגם.",
+"voiceInFrame": "הסרטון נמצא בנגן מוטמע ({0}): יש לפתוח אותו בכרטיסייה כדי לתרגם.",
+"voiceOpenTab": "פתיחת הסרטון בכרטיסייה"
 }

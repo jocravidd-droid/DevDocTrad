@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Felolvasás leállítása"
   },
+  "popupVoiceMode": {
+    "message": "Videó hangja"
+  },
+  "popupVoiceSubs": {
+    "message": "Feliratok"
+  },
+  "popupVoiceDub": {
+    "message": "Feliratok + lefordított hang (szinkron)"
+  },
+  "voiceNoTts": {
+    "message": "Ezen az eszközön nincs beszédszintetizáló hang ehhez: {0}. Csak feliratok."
+  },
+  "voiceDubClick": {
+    "message": "Kattints az oldalra a lefordított hang engedélyezéséhez."
+  },
+  "voiceInFrame": {
+    "message": "Ez a videó egy beágyazott lejátszóban van ({0}): nyisd meg egy lapon a fordításhoz."
+  },
+  "voiceOpenTab": {
+    "message": "Videó megnyitása egy lapon"
+  },
   "popupSensitive": {
     "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
   },

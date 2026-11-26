@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Berhenti membaca dengan kuat"
   },
+  "popupVoiceMode": {
+    "message": "Suara video"
+  },
+  "popupVoiceSubs": {
+    "message": "Sari kata"
+  },
+  "popupVoiceDub": {
+    "message": "Sari kata + suara terjemahan (alih suara)"
+  },
+  "voiceNoTts": {
+    "message": "Tiada suara sintetik untuk {0} pada peranti ini: sari kata sahaja."
+  },
+  "voiceDubClick": {
+    "message": "Klik halaman untuk membenarkan suara terjemahan."
+  },
+  "voiceInFrame": {
+    "message": "Video ini berada dalam pemain terbenam ({0}): bukanya dalam tab untuk menterjemahkannya."
+  },
+  "voiceOpenTab": {
+    "message": "Buka video dalam tab"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemah automatik. Tombol kekal berfungsi, Ollama digunakan dahulu jika sudah ditetapkan."
   },

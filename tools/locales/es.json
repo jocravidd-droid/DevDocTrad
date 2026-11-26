@@ -224,5 +224,12 @@
 "popupProgress": "Progreso de la traducción",
 "optUrlInvalid": "Dirección no válida: escribe una dirección http:// o https://, por ejemplo http://localhost:11434.",
 "optOllamaPermDenied": "Permiso denegado: DevDocTrad no puede acceder a {0}.",
-"keyNoApiKey": "falta la clave"
+"keyNoApiKey": "falta la clave",
+"popupVoiceMode": "Voz de los vídeos",
+"popupVoiceSubs": "Subtítulos",
+"popupVoiceDub": "Subtítulos + voz traducida (doblaje)",
+"voiceNoTts": "No hay voz sintética en {0} en este dispositivo: solo subtítulos.",
+"voiceDubClick": "Haz clic en la página para permitir la voz traducida.",
+"voiceInFrame": "Este vídeo está en un reproductor integrado ({0}): ábrelo en una pestaña para traducirlo.",
+"voiceOpenTab": "Abrir el vídeo en una pestaña"
 }

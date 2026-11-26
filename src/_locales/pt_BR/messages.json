@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Parar a leitura em voz alta"
   },
+  "popupVoiceMode": {
+    "message": "Voz dos vídeos"
+  },
+  "popupVoiceSubs": {
+    "message": "Legendas"
+  },
+  "popupVoiceDub": {
+    "message": "Legendas + voz traduzida (dublagem)"
+  },
+  "voiceNoTts": {
+    "message": "Nenhuma voz sintetizada em {0} neste dispositivo: apenas legendas."
+  },
+  "voiceDubClick": {
+    "message": "Clique na página para permitir a voz traduzida."
+  },
+  "voiceInFrame": {
+    "message": "Este vídeo está em um player incorporado ({0}): abra-o em uma guia para traduzi-lo."
+  },
+  "voiceOpenTab": {
+    "message": "Abrir o vídeo em uma guia"
+  },
   "popupSensitive": {
     "message": "Página sensível: nunca traduzida automaticamente. O botão funciona; se configurado, o Ollama é usado primeiro."
   },

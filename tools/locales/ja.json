@@ -224,5 +224,12 @@
 "popupProgress": "翻訳の進行状況",
 "optUrlInvalid": "無効なアドレスです。http:// または https:// で始まるアドレスを入力してください（例: http://localhost:11434）。",
 "optOllamaPermDenied": "許可が拒否されました。DevDocTrad は {0} に接続できません。",
-"keyNoApiKey": "キーがありません"
+"keyNoApiKey": "キーがありません",
+"popupVoiceMode": "動画の音声",
+"popupVoiceSubs": "字幕",
+"popupVoiceDub": "字幕 + 翻訳音声（吹き替え）",
+"voiceNoTts": "この端末には{0}の合成音声がありません：字幕のみ表示します。",
+"voiceDubClick": "翻訳音声を許可するにはページをクリックしてください。",
+"voiceInFrame": "この動画は埋め込みプレーヤー（{0}）内にあります：翻訳するにはタブで開いてください。",
+"voiceOpenTab": "動画をタブで開く"
 }

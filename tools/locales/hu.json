@@ -224,5 +224,12 @@
 "popupProgress": "A fordítás előrehaladása",
 "optUrlInvalid": "Érvénytelen cím: adj meg egy http:// vagy https:// címet, például http://localhost:11434.",
 "optOllamaPermDenied": "Engedély megtagadva: a DevDocTrad nem éri el ezt: {0}.",
-"keyNoApiKey": "hiányzó kulcs"
+"keyNoApiKey": "hiányzó kulcs",
+"popupVoiceMode": "Videó hangja",
+"popupVoiceSubs": "Feliratok",
+"popupVoiceDub": "Feliratok + lefordított hang (szinkron)",
+"voiceNoTts": "Ezen az eszközön nincs beszédszintetizáló hang ehhez: {0}. Csak feliratok.",
+"voiceDubClick": "Kattints az oldalra a lefordított hang engedélyezéséhez.",
+"voiceInFrame": "Ez a videó egy beágyazott lejátszóban van ({0}): nyisd meg egy lapon a fordításhoz.",
+"voiceOpenTab": "Videó megnyitása egy lapon"
 }

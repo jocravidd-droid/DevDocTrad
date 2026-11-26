@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "Acha kusoma kwa sauti"
   },
+  "popupVoiceMode": {
+    "message": "Sauti ya video"
+  },
+  "popupVoiceSubs": {
+    "message": "Manukuu"
+  },
+  "popupVoiceDub": {
+    "message": "Manukuu + sauti iliyotafsiriwa (dabingi)"
+  },
+  "voiceNoTts": {
+    "message": "Hakuna sauti ya usanisi kwa {0} kwenye kifaa hiki: manukuu pekee."
+  },
+  "voiceDubClick": {
+    "message": "Bofya ukurasa ili kuruhusu sauti iliyotafsiriwa."
+  },
+  "voiceInFrame": {
+    "message": "Video hii iko ndani ya kicheza kilichopachikwa ({0}): ifungue kwenye kichupo ili kuitafsiri."
+  },
+  "voiceOpenTab": {
+    "message": "Fungua video kwenye kichupo"
+  },
   "popupSensitive": {
     "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
   },

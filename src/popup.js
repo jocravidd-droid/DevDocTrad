@@ -300,6 +300,26 @@
     });
   });
 
+  /* Sous-titres seuls ou doublage (voix de synthèse du navigateur) : réglage enregistré,
+     appliqué tout de suite si la voix de la vidéo est déjà traduite dans l'onglet */
+  api.storage.local.get('settings').then(function (r) {
+    var s = Object.assign({}, DDT.DEFAULT_SETTINGS, (r && r.settings) || {});
+    $('voiceDubSel').value = s.voiceDub ? 'dub' : 'subs';
+  });
+  $('voiceDubSel').addEventListener('change', function (e) {
+    var on = e.target.value === 'dub';
+    api.storage.local.get('settings').then(function (r) {
+      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {}, { voiceDub: on });
+      return api.storage.local.set({ settings: s });
+    }).then(function () {
+      if (tab && supported && $('voiceSwitch').checked) {
+        return send({ type: 'voiceCommand', tabId: tab.id, cmd: 'dub', on: on }).then(function (r) {
+          if (on && r && r.active && !r.speaking && r.message) UI.toast('warning', r.message);
+        });
+      }
+    }).catch(function () { /* rien */ });
+  });
+
   api.tabs.query({ active: true, currentWindow: true }).then(function (tabs) {
     tab = tabs && tabs[0];
     var url = tab && tab.url ? tab.url : '';

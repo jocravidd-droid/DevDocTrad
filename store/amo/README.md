@@ -1,6 +1,6 @@
 # Kit de fiche AMO : guide pas à pas
 
-DevDocTrad est **déjà publiée** sur Firefox : https://addons.mozilla.org/fr/firefox/addon/devdoctrad/ (version 1.0.0). Ce kit sert à refaire proprement la fiche et à envoyer la version 1.1.0. Tout se fait à la main, depuis ton compte, sur la page d’édition :
+DevDocTrad est **déjà publiée** sur Firefox : https://addons.mozilla.org/fr/firefox/addon/devdoctrad/ (version 1.0.0). Ce kit sert à refaire proprement la fiche et à envoyer la version 1.2.0. Tout se fait à la main, depuis ton compte, sur la page d’édition :
 
 https://addons.mozilla.org/fr/developers/addon/devdoctrad/edit
 
@@ -15,7 +15,7 @@ Durée : 20 à 30 minutes. Personne d’autre ne peut le faire à ta place (il f
 | Nom « DevDocTrad » seul : rien à chercher. | « DevDocTrad: Translator for Docs, Code & Videos » (et sa version française). |
 | Aucun tag ; catégorie « Search Tools » qui ne correspond pas. | Tags `translate` et `youtube` ; catégories Language Support + Web Development. |
 | Page d’accueil = GitHub ; site d’assistance seulement en anglais. | Page d’accueil `https://devdoctrad.vercel.app/`, assistance dans les deux langues. |
-| Version 1.0.0 en ligne. | Envoi de `release/devdoctrad-firefox-1.1.0.zip`. |
+| Version 1.0.0 en ligne. | Envoi de `release/devdoctrad-firefox-1.2.0.zip`. |
 
 ## Contenu du kit
 
@@ -32,21 +32,21 @@ Les libellés d’AMO peuvent changer un peu avec le temps : cherche le libellé
 
 ---
 
-## Étape 1 : envoyer la version 1.1.0
+## Étape 1 : envoyer la version 1.2.0
 
-Le fichier : `release/devdoctrad-firefox-1.1.0.zip` (dans le dépôt).
+Le fichier : `release/devdoctrad-firefox-1.2.0.zip` (dans le dépôt).
 
 1. Ouvre https://addons.mozilla.org/fr/developers/addon/devdoctrad/edit et connecte-toi si AMO le demande.
 2. Dans le menu de gauche, clique sur « Téléverser une nouvelle version » (Upload New Version).
 3. Si AMO demande où distribuer la version, choisis « Sur ce site » (On this site).
-4. Clique sur « Sélectionner un fichier… » (Select a file…) et choisis `release/devdoctrad-firefox-1.1.0.zip`.
+4. Clique sur « Sélectionner un fichier… » (Select a file…) et choisis `release/devdoctrad-firefox-1.2.0.zip`.
 5. Attends la validation automatique : elle doit indiquer 0 erreur. Les avertissements éventuels n’empêchent pas l’envoi.
 6. Dans « Compatibilité » (Compatible with), laisse « Firefox » coché, et « Firefox pour Android » décoché.
 7. Clique sur « Continuer » (Continue).
 8. À « Devez-vous envoyer le code source ? » (Do you need to submit source code?), réponds « Non » (No), puis « Continuer ».
 9. Dans « Notes de version » (Release notes), colle le bloc **en-US** de la section 9 de `fiche.md`. Si un sélecteur de langue est présent à côté du champ, choisis « Français » et colle le bloc **fr**.
 10. Dans « Notes pour les relecteurs » (Notes to Reviewer), colle le bloc de la section 8 de `fiche.md`.
-11. Clique sur « Envoyer la version » (Submit Version). La 1.1.0 part en validation ; la fiche reste en ligne pendant ce temps.
+11. Clique sur « Envoyer la version » (Submit Version). La 1.2.0 part en validation ; la fiche reste en ligne pendant ce temps.
 
 ## Étape 2 : ajouter la langue française à la fiche
 
@@ -60,7 +60,7 @@ Choisis la langue **English (US)** dans le sélecteur. Chaque bloc de la page a 
 
 Bloc « Décrire le module » (Describe Add-on) :
 
-15. « Nom » (Name) : colle le nom **en-US** de la section 1 de `fiche.md` (`DevDocTrad: Translator for Docs, Code & Videos`). Si AMO a déjà repris ce nom depuis la version 1.1.0, ne change rien.
+15. « Nom » (Name) : colle le nom **en-US** de la section 1 de `fiche.md` (`DevDocTrad: Translator for Docs, Code & Videos`). Si AMO a déjà repris ce nom depuis la version 1.2.0, ne change rien.
 16. « URL du module » (Add-on URL) : laisse `devdoctrad`. Ne la change jamais : les liens déjà partagés casseraient.
 17. « Résumé » (Summary) : efface tout, colle le résumé **en-US** de la section 2.
 18. « Description » : efface **tout** le texte français actuel, colle la description **en-US** de la section 3.1.
@@ -125,7 +125,7 @@ Passe le sélecteur de langue sur **Français**. Les champs vides en français a
 
 47. Ouvre la fiche publique en anglais : https://addons.mozilla.org/en-US/firefox/addon/devdoctrad/ . Vérifie : nom, résumé, description en anglais, 8 images nettes dans l’ordre, légendes, tags.
 48. Ouvre-la en français : https://addons.mozilla.org/fr/firefox/addon/devdoctrad/ . Vérifie le texte et les légendes en français.
-49. Les changements de texte et d’images sont visibles en quelques minutes. La version 1.1.0 apparaît une fois validée (de quelques minutes à quelques jours ; tu reçois un e-mail).
+49. Les changements de texte et d’images sont visibles en quelques minutes. La version 1.2.0 apparaît une fois validée (de quelques minutes à quelques jours ; tu reçois un e-mail).
 50. Si un relecteur pose une question, réponds en anglais sur la page de la version, en t’appuyant sur la section 8 de `fiche.md`. N’envoie jamais une de tes clés d’API.
 
 ## Refaire les images

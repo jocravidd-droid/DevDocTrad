@@ -224,5 +224,12 @@
 "popupProgress": "Postęp tłumaczenia",
 "optUrlInvalid": "Nieprawidłowy adres: wpisz adres http:// lub https://, na przykład http://localhost:11434.",
 "optOllamaPermDenied": "Odmowa uprawnień: DevDocTrad nie może połączyć się z {0}.",
-"keyNoApiKey": "brak klucza"
+"keyNoApiKey": "brak klucza",
+"popupVoiceMode": "Głos w filmach",
+"popupVoiceSubs": "Napisy",
+"popupVoiceDub": "Napisy + przetłumaczony głos (dubbing)",
+"voiceNoTts": "Brak syntezatora mowy dla języka {0} na tym urządzeniu: tylko napisy.",
+"voiceDubClick": "Kliknij stronę, aby zezwolić na przetłumaczony głos.",
+"voiceInFrame": "Ten film jest w osadzonym odtwarzaczu ({0}): otwórz go w karcie, aby go przetłumaczyć.",
+"voiceOpenTab": "Otwórz film w karcie"
 }

@@ -224,5 +224,12 @@
 "popupProgress": "Oversættelsens fremskridt",
 "optUrlInvalid": "Ugyldig adresse: indtast en http://- eller https://-adresse, for eksempel http://localhost:11434.",
 "optOllamaPermDenied": "Tilladelse nægtet: DevDocTrad kan ikke nå {0}.",
-"keyNoApiKey": "nøgle mangler"
+"keyNoApiKey": "nøgle mangler",
+"popupVoiceMode": "Videoens stemme",
+"popupVoiceSubs": "Undertekster",
+"popupVoiceDub": "Undertekster + oversat stemme (dubbing)",
+"voiceNoTts": "Ingen talesyntese-stemme til {0} på denne enhed: kun undertekster.",
+"voiceDubClick": "Klik på siden for at tillade den oversatte stemme.",
+"voiceInFrame": "Denne video er i en indlejret afspiller ({0}): åbn den i en fane for at oversætte den.",
+"voiceOpenTab": "Åbn videoen i en fane"
 }

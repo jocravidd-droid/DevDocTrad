@@ -224,5 +224,12 @@
 "popupProgress": "Kemajuan terjemahan",
 "optUrlInvalid": "Alamat tidak valid: masukkan alamat http:// atau https://, misalnya http://localhost:11434.",
 "optOllamaPermDenied": "Izin ditolak: DevDocTrad tidak dapat menjangkau {0}.",
-"keyNoApiKey": "kunci belum ada"
+"keyNoApiKey": "kunci belum ada",
+"popupVoiceMode": "Suara video",
+"popupVoiceSubs": "Subtitel",
+"popupVoiceDub": "Subtitel + suara terjemahan (sulih suara)",
+"voiceNoTts": "Tidak ada suara sintetis untuk {0} di perangkat ini: hanya subtitel.",
+"voiceDubClick": "Klik halaman untuk mengizinkan suara terjemahan.",
+"voiceInFrame": "Video ini ada di pemutar tersemat ({0}): buka di tab untuk menerjemahkannya.",
+"voiceOpenTab": "Buka video di tab"
 }

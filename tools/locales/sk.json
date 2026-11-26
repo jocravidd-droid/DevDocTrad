@@ -224,5 +224,12 @@
 "popupProgress": "Priebeh prekladu",
 "optUrlInvalid": "Neplatná adresa: zadajte adresu http:// alebo https://, napríklad http://localhost:11434.",
 "optOllamaPermDenied": "Povolenie zamietnuté: DevDocTrad sa nemôže pripojiť k {0}.",
-"keyNoApiKey": "chýba kľúč"
+"keyNoApiKey": "chýba kľúč",
+"popupVoiceMode": "Hlas videa",
+"popupVoiceSubs": "Titulky",
+"popupVoiceDub": "Titulky + preložený hlas (dabing)",
+"voiceNoTts": "V tomto zariadení nie je syntetický hlas pre {0}: iba titulky.",
+"voiceDubClick": "Kliknite na stránku, aby ste povolili preložený hlas.",
+"voiceInFrame": "Toto video je vo vloženom prehrávači ({0}): otvorte ho na karte, aby sa dalo preložiť.",
+"voiceOpenTab": "Otvoriť video na karte"
 }

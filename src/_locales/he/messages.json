@@ -194,6 +194,27 @@
   "voiceSpeakOff": {
     "message": "הפסקת ההקראה"
   },
+  "popupVoiceMode": {
+    "message": "קול הסרטון"
+  },
+  "popupVoiceSubs": {
+    "message": "כתוביות"
+  },
+  "popupVoiceDub": {
+    "message": "כתוביות + קול מתורגם (דיבוב)"
+  },
+  "voiceNoTts": {
+    "message": "אין קול סינתטי ל{0} במכשיר זה: כתוביות בלבד."
+  },
+  "voiceDubClick": {
+    "message": "יש ללחוץ על הדף כדי לאפשר את הקול המתורגם."
+  },
+  "voiceInFrame": {
+    "message": "הסרטון נמצא בנגן מוטמע ({0}): יש לפתוח אותו בכרטיסייה כדי לתרגם."
+  },
+  "voiceOpenTab": {
+    "message": "פתיחת הסרטון בכרטיסייה"
+  },
   "popupSensitive": {
     "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
   },

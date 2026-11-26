@@ -1186,13 +1186,14 @@
     }
 
     /* Commandes envoyées au script « voix » d'un onglet ; il est injecté à la première demande. */
-    function voiceCommand(tabId, cmd, keyId) {
-      function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null }); }
+    function voiceCommand(tabId, cmd, keyId, on) {
+      function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null, on: !!on }); }
       return send().then(function (r) {
         if (r === undefined && cmd !== 'status') throw new Error('no receiver');
         return r || { active: false };
       }).catch(function () {
-        if (cmd === 'status' || cmd === 'stop') return { active: false };
+        // « dub » (doublage marche/arrêt) ne sert qu'à une traduction de la voix déjà lancée
+        if (cmd === 'status' || cmd === 'stop' || cmd === 'dub') return { active: false };
         return api.scripting.executeScript({ target: { tabId: tabId }, files: ['shared.js', 'voice.js'] }).then(send);
       });
     }
@@ -1214,7 +1215,7 @@
         case 'resetKey': return resetKeyState(msg.keyId).then(function () { return { ok: true }; });
         case 'syncAuto': return syncAutoScripts().then(function () { return { ok: true }; });
         case 'transcribe': return transcribe(msg);
-        case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId);
+        case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId, msg.on);
         default: return null;   // message pour un autre destinataire : ne pas répondre à sa place
       }
     }
