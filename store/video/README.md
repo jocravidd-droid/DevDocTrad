@@ -1,14 +1,15 @@
 # Vidéos de présentation : où publier quoi
 
 Fichiers fabriqués par `node tools/video/make.js` (voir `tools/video/README.md`) à partir de vraies
-captures de l'extension. Musique originale synthétisée par le script : aucun droit d'auteur tiers,
+captures de l'extension. Les vidéos 16:9 (1080p) sont dans [`docs/assets/video/`](../../docs/assets/video/)
+(le site les sert : un seul exemplaire dans le dépôt) ; les verticales et les miniatures sont ici. Musique originale synthétisée par le script : aucun droit d'auteur tiers,
 pas de risque de blocage par Content ID. Les textes sont incrustés dans l'image : la vidéo se comprend
 sans le son.
 
 | Fichier | Format | Durée | Pour |
 |---|---|---|---|
-| `devdoctrad-promo-fr-1080p.mp4` | 16:9, 1920×1080 | 39 s | YouTube, X, LinkedIn, Mastodon, site, fiches des boutiques (via YouTube) |
-| `devdoctrad-promo-en-1080p.mp4` | 16:9, 1920×1080 | 39 s | idem, public anglophone |
+| `docs/assets/video/devdoctrad-promo-fr-1080p.mp4` | 16:9, 1920×1080 | 39 s | YouTube, X, LinkedIn, Mastodon, site, fiches des boutiques (via YouTube) |
+| `docs/assets/video/devdoctrad-promo-en-1080p.mp4` | 16:9, 1920×1080 | 39 s | idem, public anglophone |
 | `devdoctrad-promo-fr-vertical.mp4` | 9:16, 1080×1920 | 29,5 s | YouTube Shorts, TikTok, Instagram Reels, Facebook Reels |
 | `devdoctrad-promo-en-vertical.mp4` | 9:16, 1080×1920 | 29,5 s | idem, public anglophone |
 | `thumbnail-fr.png`, `thumbnail-en.png` | 1280×720 | — | miniature personnalisée YouTube |
@@ -32,7 +33,7 @@ Liens à mettre partout :
 | **Mastodon** | `-1080p.mp4` | Limite habituelle : 40 Mo par vidéo (dépend de l'instance) ; les fichiers font moins de 25 Mo. Ajouter une description de la vidéo (texte alternatif), voir plus bas. |
 | **Fiche Firefox (AMO)** | lien YouTube de la vidéo **EN** | Dans le Developer Hub, partie « Media » de la fiche : coller le lien YouTube là où AMO le propose. Sinon, ajouter une ligne « Video: https://youtu.be/… » à la fin de la description (les liens y sont autorisés). Pour la traduction française de la fiche, le lien de la vidéo FR. |
 | **Chrome Web Store / Edge Add-ons** (quand l'extension y sera) | lien YouTube | Champ « Vidéo promotionnelle » (URL YouTube) de la fiche. |
-| **Site** (`docs/`) | lien YouTube | Facultatif : intégrer la vidéo YouTube sur la page d'accueil (aucun fichier lourd dans le dépôt du site). |
+| **Site** (`docs/`) | `-1080p.mp4` | Déjà en place : le site sert directement `docs/assets/video/devdoctrad-promo-<langue>-1080p.mp4` (affiche `poster-<langue>.jpg`). |
 | **README GitHub** | `-1080p.mp4` | GitHub affiche une vidéo si on la glisse dans l'éditeur d'un fichier ou d'une issue (limite 10 Mo pour les comptes gratuits : utiliser plutôt la miniature avec un lien vers YouTube). |
 
 ## Textes prêts à coller

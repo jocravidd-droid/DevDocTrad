@@ -3,7 +3,10 @@
  * Vidéo de présentation de DevDocTrad : 16:9 et 9:16, français et anglais, + miniatures.
  *
  *   python3 build.py              # construit dist/chrome
- *   node tools/video/make.js      # captures réelles + rendu + encodage -> store/video/
+ *   node tools/video/make.js      # captures réelles + rendu + encodage
+ *
+ * Sorties : les vidéos 16:9 (1080p) vont directement dans docs/assets/video/ (servies par le site,
+ * un seul exemplaire dans le dépôt) ; les verticales et les miniatures dans store/video/.
  *
  * Options :
  *   --skip-capture     réutilise dist/video/captures (captures déjà faites)
@@ -26,7 +29,9 @@ const { writeMusic } = require('./music');
 
 const ROOT = path.join(__dirname, '..', '..');
 const WORK = path.join(ROOT, 'dist', 'video');
-const OUT = path.join(ROOT, 'store', 'video');
+const OUT = path.join(ROOT, 'store', 'video');                   // verticales + miniatures
+const OUT_WIDE = path.join(ROOT, 'docs', 'assets', 'video');     // 1080p : servies par le site
+const outDir = (fmt) => (fmt === 'wide' ? OUT_WIDE : OUT);
 const FPS = 30;
 const PORT = 8143;
 const arg = (name, def) => { const i = process.argv.indexOf('--' + name); return i < 0 ? def : (process.argv[i + 1] && !process.argv[i + 1].startsWith('--') ? process.argv[i + 1] : true); };
@@ -67,7 +72,7 @@ async function renderVideo(browser, fmt, lang, crf) {
   const { page, info, shot, errors } = await openStage(browser, fmt, lang);
   const wav = path.join(WORK, name + '.wav');
   writeMusic(wav, info.dur, info.events);
-  const out = path.join(OUT, name + '.mp4');
+  const out = path.join(outDir(fmt), name + '.mp4');
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error',
     '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'png', '-i', '-',
     '-i', wav,
@@ -99,7 +104,7 @@ async function renderVideo(browser, fmt, lang, crf) {
 /* Refait seulement la musique d'une vidéo déjà encodée (image copiée telle quelle). */
 async function remuxAudio(browser, fmt, lang) {
   const name = `devdoctrad-promo-${lang}-${fmt === 'wide' ? '1080p' : 'vertical'}`;
-  const out = path.join(OUT, name + '.mp4');
+  const out = path.join(outDir(fmt), name + '.mp4');
   if (!fs.existsSync(out)) throw new Error(out + ' absent : lance d\'abord le rendu complet');
   const { page, info } = await openStage(browser, fmt, lang);
   await page.close();
@@ -141,6 +146,7 @@ async function thumbnails(browser) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
+  fs.mkdirSync(OUT_WIDE, { recursive: true });
   fs.mkdirSync(WORK, { recursive: true });
   const caps = path.join(WORK, 'captures');
   if (!arg('skip-capture') || !fs.existsSync(path.join(caps, 'manifest.json'))) {

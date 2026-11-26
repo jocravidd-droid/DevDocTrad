@@ -243,17 +243,20 @@
       });
   }
 
-  /* ---------- Images d'exemple en plein écran (clic, flèches, Échap) ---------- */
+  /* ---------- Images d'exemple en plein écran (clic, flèches, Échap ; Tab reste dans la visionneuse) ---------- */
   (function () {
     var gal = d.querySelector('.gallery');
     if (!gal) return;
     var links = Array.prototype.slice.call(gal.querySelectorAll('a.zoom'));
     if (!links.length) return;
     var closeLabel = gal.getAttribute('data-close') || 'Close';
+    var prevLabel = gal.getAttribute('data-prev') || 'Previous image';
+    var nextLabel = gal.getAttribute('data-next') || 'Next image';
     var box = d.createElement('div');
     box.className = 'lightbox';
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', gal.getAttribute('data-title') || '');
     box.innerHTML = '<img alt=""><p></p><button type="button" class="close">\u00d7</button>' +
       '<button type="button" class="nav prev">\u2039</button><button type="button" class="nav next">\u203a</button>';
     d.body.appendChild(box);
@@ -262,6 +265,17 @@
     var closeBtn = box.querySelector('.close');
     closeBtn.setAttribute('aria-label', closeLabel);
     closeBtn.title = closeLabel;
+    var prevBtn = box.querySelector('.prev');
+    var nextBtn = box.querySelector('.next');
+    var rtl = function () { return (root.getAttribute('dir') || '') === 'rtl'; };
+    // De droite à gauche, le bouton « ‹ » avance (comme la flèche gauche du clavier) : le nom suit l'action.
+    function labelNav() {
+      var p = rtl() ? nextLabel : prevLabel;
+      var n = rtl() ? prevLabel : nextLabel;
+      prevBtn.setAttribute('aria-label', p); prevBtn.title = p;
+      nextBtn.setAttribute('aria-label', n); nextBtn.title = n;
+    }
+    labelNav();
     var cur = 0;
     var opener = null;
     function show(i) {
@@ -273,7 +287,7 @@
       var fc = a.parentNode.querySelector('figcaption');
       cap.textContent = fc ? fc.textContent : '';
     }
-    function open(i, from) { opener = from; show(i); box.classList.add('open'); closeBtn.focus(); }
+    function open(i, from) { opener = from; labelNav(); show(i); box.classList.add('open'); closeBtn.focus(); }
     function close() { box.classList.remove('open'); if (opener) opener.focus(); }
     links.forEach(function (a, i) {
       a.addEventListener('click', function (e) {
@@ -282,15 +296,21 @@
         open(i, a);
       });
     });
-    var rtl = function () { return (root.getAttribute('dir') || '') === 'rtl'; };
-    box.querySelector('.prev').addEventListener('click', function (e) { e.stopPropagation(); show(cur + (rtl() ? 1 : -1)); });
-    box.querySelector('.next').addEventListener('click', function (e) { e.stopPropagation(); show(cur + (rtl() ? -1 : 1)); });
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); show(cur + (rtl() ? 1 : -1)); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); show(cur + (rtl() ? -1 : 1)); });
     closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
     box.addEventListener('click', function (e) { if (e.target === box) close(); });
     img.addEventListener('click', function (e) { e.stopPropagation(); });
     d.addEventListener('keydown', function (e) {
       if (!box.classList.contains('open')) return;
       if (e.key === 'Escape') close();
+      else if (e.key === 'Tab') {
+        // focus gardé dans la visionneuse : Tab et Maj+Tab tournent entre ses boutons
+        var f = [closeBtn, prevBtn, nextBtn];
+        var i = f.indexOf(d.activeElement);
+        e.preventDefault();
+        f[i < 0 ? 0 : (i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
       else if (e.key === 'ArrowRight') show(cur + (rtl() ? -1 : 1));
       else if (e.key === 'ArrowLeft') show(cur + (rtl() ? 1 : -1));
     });

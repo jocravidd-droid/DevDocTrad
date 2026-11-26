@@ -10,6 +10,12 @@
  *   (aucune vraie clé, aucun envoi réel) ;
  * - vérifie : sous-titres traduits sur la vidéo, arrêt propre, doublage (fausse synthèse vocale injectée,
  *   Chromium sans tête n'a aucune voix), son enregistré puis transcrit puis traduit.
+ *
+ * Capture d'écran (screenshot-5-voix.png) : par défaut dans un dossier temporaire (chemin affiché à
+ * la fin), pour ne jamais modifier les fichiers suivis par git. Pour mettre à jour celle du dépôt
+ * (store/screenshots/ et docs/assets/) :
+ *
+ *   DDT_SHOTS=1 node tools/e2e_voice.js
  */
 'use strict';
 const { chromium } = require('playwright');
@@ -22,6 +28,10 @@ const { spawn } = require('child_process');
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist', 'chrome');
 const VDIR = path.join(__dirname, 'demo', 'voice');
+// DDT_SHOTS=1 : capture écrite dans les dossiers suivis du dépôt ; sinon dans un dossier temporaire.
+const SHOTS = process.env.DDT_SHOTS === '1'
+  ? [path.join(ROOT, 'store', 'screenshots'), path.join(ROOT, 'docs', 'assets')]
+  : [fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-shots-'))];
 const results = [];
 const check = (name, ok, extra) => { results.push({ name, ok }); console.log((ok ? 'OK   ' : 'FAIL ') + name + (extra ? ' : ' + extra : '')); };
 
@@ -132,7 +142,7 @@ async function waitOverlay(page, test, timeout = 15000) {
     check('sous-titre suivant au bon moment', o && o.tr === 'Commence par installer le paquet avec npm.', o && o.tr);
     const hidden = await page.evaluate(() => document.getElementById('v').textTracks[0].mode);
     check('sous-titres d\'origine masqués pendant la traduction', hidden === 'hidden', hidden);
-    for (const d of [path.join(ROOT, 'store', 'screenshots'), path.join(ROOT, 'docs', 'assets')]) {
+    for (const d of SHOTS) {
       await page.screenshot({ path: path.join(d, 'screenshot-5-voix.png') });
     }
     const stop = await sw.evaluate((id) => self.__DDT_BG.voiceCommand(id, 'stop', null), tabId);
@@ -242,5 +252,6 @@ async function waitOverlay(page, test, timeout = 15000) {
   }
   const failed = results.filter((r) => !r.ok).length;
   console.log(`\n${results.length - failed}/${results.length} vérifications réussies`);
+  console.log('Capture : ' + SHOTS.join(', ') + (process.env.DDT_SHOTS === '1' ? '' : ' (DDT_SHOTS=1 pour mettre à jour celle du dépôt)'));
   process.exit(failed ? 1 : 0);
 })();

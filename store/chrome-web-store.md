@@ -71,6 +71,12 @@ Ce que fait l’extension
 - Glossaire personnel : termes à ne jamais traduire, ou à toujours traduire de la même façon.
 - Interface en 36 langues, selon la langue du navigateur (arabe, hébreu et persan de droite à gauche).
 
+La voix des vidéos traduite, et le doublage (nouveau en 1.2)
+- Active « Traduire la voix des vidéos » dans le popup, ou appuie sur Alt+Maj+V.
+- Vidéo avec sous-titres (pistes HTML5, sous-titres YouTube) : les sous-titres sont traduits et affichés sur la vidéo.
+- Vidéo sans sous-titres : le son est transcrit par Groq Whisper (palier gratuit, avec ta clé Groq gratuite), puis traduit.
+- Doublage : choisis « Sous-titres + voix traduite (doublage) » et la traduction est dite par la synthèse vocale du navigateur, calée sur les sous-titres, pendant que le son d’origine est baissé. Gratuit, sur n’importe quel site.
+
 Gratuit, avec tes propres clés
 - DevDocTrad est gratuite et open source (licence MIT).
 - Elle utilise tes propres clés d’API gratuites : Google Gemini, Groq, Mistral, OpenRouter (uniquement les modèles dont le nom finit par :free), ou un modèle local avec Ollama.
@@ -79,6 +85,7 @@ Gratuit, avec tes propres clés
 
 Confidentialité
 - Le texte de la page que tu traduis est envoyé uniquement au fournisseur que tu as choisi. Rien n’est envoyé au développeur de DevDocTrad.
+- Voix des vidéos : seulement pour une vidéo sans sous-titres et seulement quand tu actives la fonction, de courts morceaux du son de la vidéo sont envoyés à Groq (api.groq.com, transcription Whisper) avec ta clé Groq gratuite. Ton micro n’est jamais utilisé. La voix du doublage est produite par le navigateur.
 - Chaque fournisseur a ses propres conditions. En palier gratuit, Google Gemini et Mistral peuvent réutiliser les textes envoyés. Avec Ollama, le texte reste sur ton ordinateur : c’est le choix à privilégier pour les pages privées.
 - Les pages sensibles (champ mot de passe, banques, mails, pages de connexion) ne sont jamais traduites automatiquement. Le bouton manuel fonctionne quand même.
 - Aucune statistique, aucun pistage, aucune publicité.
@@ -119,6 +126,12 @@ What it does
 - Personal glossary: terms to never translate, or to always translate the same way.
 - Interface in 36 languages, following the browser (Arabic, Hebrew and Persian right to left).
 
+Video voice, translated, and dubbing (new in 1.2)
+- Turn on "Translate the voice in videos" in the popup, or press Alt+Shift+V.
+- Videos with subtitles (HTML5 tracks, YouTube captions): the subtitles are translated and shown on the video.
+- Videos without subtitles: the sound is transcribed by Groq Whisper (free tier, with your free Groq key), then translated.
+- Dubbing: choose "Subtitles + translated voice (dubbing)" and the translation is spoken by your browser's speech synthesis, timed to the subtitles, while the original sound is lowered. Free, on any site.
+
 Free, with your own keys
 - DevDocTrad is free and open source (MIT license).
 - It uses your own free API keys: Google Gemini, Groq, Mistral, OpenRouter (only models whose name ends with :free), or a local model with Ollama.
@@ -127,6 +140,7 @@ Free, with your own keys
 
 Privacy
 - The text of the page you translate is sent only to the provider you chose. Nothing is sent to the DevDocTrad developer.
+- Video voice: only for a video without subtitles and only when you turn the feature on, short chunks of the video's sound are sent to Groq (api.groq.com, Whisper transcription) with your free Groq key. Your microphone is never used. The dubbing voice is produced by the browser.
 - Each provider has its own terms. On free tiers, Google Gemini and Mistral may reuse the text sent. With Ollama, the text stays on your computer: prefer it for private pages.
 - Sensitive pages (password fields, banks, mail, sign-in pages) are never translated automatically. The manual button still works.
 - No analytics, no tracking, no ads.
@@ -181,13 +195,13 @@ Le tableau de bord affiche un champ par permission du manifeste, plus un champ p
 English (to paste):
 
 ```text
-Stores the user's settings (target language, display mode, sites chosen for automatic translation, sensitive-page list), personal glossary, and the API keys the user enters, in chrome.storage.local on the user's device. This data is never synced and never sent to the developer.
+Stores the user's settings (target language, display mode, sites chosen for automatic translation, sensitive-page list), personal glossary, the API keys the user enters and the cache of translations (pages and video subtitles), in chrome.storage.local on the user's device. This data is never synced and never sent to the developer.
 ```
 
 Français (référence) :
 
 ```text
-Enregistre les réglages de l’utilisateur (langue cible, mode d’affichage, sites choisis pour la traduction automatique, liste des pages sensibles), son glossaire personnel et les clés d’API qu’il saisit, dans chrome.storage.local, sur son appareil. Ces données ne sont jamais synchronisées ni envoyées au développeur.
+Enregistre les réglages de l’utilisateur (langue cible, mode d’affichage, sites choisis pour la traduction automatique, liste des pages sensibles), son glossaire personnel, les clés d’API qu’il saisit et le cache des traductions (pages et sous-titres de vidéos), dans chrome.storage.local, sur son appareil. Ces données ne sont jamais synchronisées ni envoyées au développeur.
 ```
 
 ### 6.2 unlimitedStorage
@@ -209,13 +223,13 @@ L’extension garde un cache local des traductions : une page déjà traduite s
 English (to paste):
 
 ```text
-When the user clicks "Translate this page" in the popup or presses the keyboard shortcut, the extension gets temporary access to the current tab only, to read its visible text and insert the translation. It has no access to other tabs, and no access to the page without this user action.
+When the user clicks "Translate this page" or turns on "Translate the voice in videos" in the popup, or presses a keyboard shortcut (Alt+Shift+T or Alt+Shift+V), the extension gets temporary access to the current tab only, to read its visible text (or the video's subtitles and sound) and insert the translation. It has no access to other tabs, and no access to the page without this user action.
 ```
 
 Français (référence) :
 
 ```text
-Quand l’utilisateur clique sur « Traduire cette page » dans le popup ou utilise le raccourci clavier, l’extension obtient un accès temporaire à l’onglet actif uniquement, pour lire son texte visible et y insérer la traduction. Elle n’a aucun accès aux autres onglets, ni à la page sans cette action de l’utilisateur.
+Quand l’utilisateur clique sur « Traduire cette page » ou active « Traduire la voix des vidéos » dans le popup, ou utilise un raccourci clavier (Alt+Maj+T ou Alt+Maj+V), l’extension obtient un accès temporaire à l’onglet actif uniquement, pour lire son texte visible (ou les sous-titres et le son de la vidéo) et y insérer la traduction. Elle n’a aucun accès aux autres onglets, ni à la page sans cette action de l’utilisateur.
 ```
 
 ### 6.4 scripting
@@ -223,13 +237,13 @@ Quand l’utilisateur clique sur « Traduire cette page » dans le popup ou ut
 English (to paste):
 
 ```text
-Used together with activeTab to inject the extension's own packaged scripts (shared.js and content.js) into the current tab when the user asks for a translation. Also used to register the packaged script auto.js only on the sites the user explicitly added to "Translate this site automatically", after the browser granted permission for that site. No remote code is ever injected.
+Used together with activeTab to inject the extension's own packaged scripts (shared.js and content.js) into the current tab when the user asks for a translation; voice.js is injected the same way when the user turns on the video voice. Also used to register the packaged script auto.js only on the sites the user explicitly added to "Translate this site automatically", after the browser granted permission for that site. No remote code is ever injected.
 ```
 
 Français (référence) :
 
 ```text
-Utilisée avec activeTab pour injecter dans l’onglet actif les scripts fournis dans le paquet (shared.js et content.js) quand l’utilisateur demande une traduction. Sert aussi à enregistrer le script du paquet auto.js uniquement sur les sites que l’utilisateur a ajoutés lui-même avec « Traduire automatiquement ce site », après l’autorisation du navigateur pour ce site. Aucun code distant n’est jamais injecté.
+Utilisée avec activeTab pour injecter dans l’onglet actif les scripts fournis dans le paquet (shared.js et content.js) quand l’utilisateur demande une traduction ; voice.js est injecté de la même façon quand l’utilisateur active la voix des vidéos. Sert aussi à enregistrer le script du paquet auto.js uniquement sur les sites que l’utilisateur a ajoutés lui-même avec « Traduire automatiquement ce site », après l’autorisation du navigateur pour ce site. Aucun code distant n’est jamais injecté.
 ```
 
 ### 6.5 Autorisations d’hôtes (host permissions)
@@ -239,21 +253,21 @@ Le tableau de bord n’a souvent qu’un seul champ pour toutes les autorisation
 English (to paste):
 
 ```text
-host_permissions (4 API endpoints): the text of the page the user chose to translate is sent to the translation provider the user configured with their own API key: generativelanguage.googleapis.com (Google Gemini), api.groq.com (Groq), api.mistral.ai (Mistral), openrouter.ai (OpenRouter). They are used only for API requests from the extension's background script, only to providers for which the user added a key. The extension does not read or modify web pages on these domains.
+host_permissions (4 API endpoints): the text of the page the user chose to translate is sent to the translation provider the user configured with their own API key: generativelanguage.googleapis.com (Google Gemini), api.groq.com (Groq), api.mistral.ai (Mistral), openrouter.ai (OpenRouter). api.groq.com is also used for video voice: only when the user turns on "Translate the voice in videos" on a video without subtitles, short chunks of the video's sound (a few seconds each, silent chunks skipped, never the microphone) are sent to Groq's Whisper transcription endpoint (api.groq.com/openai/v1/audio/transcriptions) with the user's own free Groq key. They are used only for API requests from the extension's background script, only to providers for which the user added a key. The extension does not read or modify web pages on these domains. The dubbing voice uses the browser's speech synthesis and needs no host permission.
 
 optional_host_permissions *://*/*: never granted at install. Requested at runtime for one site at a time (that site and its subdomains), only when the user turns on "Translate this site automatically" for that site in the popup. The browser shows its permission prompt for that single site. Removing the site from the list removes the permission.
 
-optional_host_permissions http://localhost:11434/* and http://127.0.0.1:11434/*: requested only when the user adds an Ollama (local) key in the settings, to send text to the Ollama server running on the user's own computer. That text does not leave the computer.
+optional_host_permissions http://localhost:11434/* and http://127.0.0.1:11434/*: requested only when the user adds an Ollama (local) key in the settings, to send text to the Ollama server running on the user's own computer. That text does not leave the computer. The Ollama address can be changed in the settings; for another address, permission is requested for that single origin (through *://*/*), and the text then goes to that machine.
 ```
 
 Français (référence) :
 
 ```text
-host_permissions (4 points d’accès d’API) : le texte de la page que l’utilisateur a choisi de traduire est envoyé au fournisseur de traduction qu’il a configuré avec sa propre clé d’API : generativelanguage.googleapis.com (Google Gemini), api.groq.com (Groq), api.mistral.ai (Mistral), openrouter.ai (OpenRouter). Ces autorisations servent uniquement aux requêtes d’API du script d’arrière-plan, et uniquement vers les fournisseurs pour lesquels l’utilisateur a ajouté une clé. L’extension ne lit ni ne modifie les pages web de ces domaines.
+host_permissions (4 points d’accès d’API) : le texte de la page que l’utilisateur a choisi de traduire est envoyé au fournisseur de traduction qu’il a configuré avec sa propre clé d’API : generativelanguage.googleapis.com (Google Gemini), api.groq.com (Groq), api.mistral.ai (Mistral), openrouter.ai (OpenRouter). api.groq.com sert aussi à la voix des vidéos : uniquement quand l’utilisateur active « Traduire la voix des vidéos » sur une vidéo sans sous-titres, de courts morceaux du son de la vidéo (quelques secondes chacun, morceaux silencieux écartés, jamais le micro) sont envoyés au point d’accès de transcription Whisper de Groq (api.groq.com/openai/v1/audio/transcriptions) avec la clé Groq gratuite de l’utilisateur. Ces autorisations servent uniquement aux requêtes d’API du script d’arrière-plan, et uniquement vers les fournisseurs pour lesquels l’utilisateur a ajouté une clé. L’extension ne lit ni ne modifie les pages web de ces domaines. La voix du doublage utilise la synthèse vocale du navigateur et ne demande aucune autorisation d’hôte.
 
 optional_host_permissions *://*/* : jamais accordée à l’installation. Demandée pendant l’utilisation, pour un seul site à la fois (ce site et ses sous-domaines), uniquement quand l’utilisateur active « Traduire automatiquement ce site » dans le popup. Le navigateur affiche sa demande d’autorisation pour ce seul site. Retirer le site de la liste retire l’autorisation.
 
-optional_host_permissions http://localhost:11434/* et http://127.0.0.1:11434/* : demandées uniquement quand l’utilisateur ajoute une clé Ollama (local) dans les réglages, pour envoyer le texte au serveur Ollama qui tourne sur son propre ordinateur. Ce texte ne quitte pas l’ordinateur.
+optional_host_permissions http://localhost:11434/* et http://127.0.0.1:11434/* : demandées uniquement quand l’utilisateur ajoute une clé Ollama (local) dans les réglages, pour envoyer le texte au serveur Ollama qui tourne sur son propre ordinateur. Ce texte ne quitte pas l’ordinateur. L’adresse d’Ollama se change dans les réglages ; pour une autre adresse, l’autorisation est demandée pour cette seule origine (via *://*/*), et le texte part alors vers cette machine.
 ```
 
 ### 6.6 commands
@@ -263,13 +277,13 @@ optional_host_permissions http://localhost:11434/* et http://127.0.0.1:11434/* 
 English (to paste):
 
 ```text
-Declares one keyboard shortcut, Alt+Shift+T, to translate the current page or go back to the original. The user can change or remove it at chrome://extensions/shortcuts.
+Declares two keyboard shortcuts: Alt+Shift+T, to translate the current page or go back to the original, and Alt+Shift+V, to turn the video voice translation (translated subtitles, optional dubbing) on or off. The user can change or remove them at chrome://extensions/shortcuts.
 ```
 
 Français (référence) :
 
 ```text
-Déclare un seul raccourci clavier, Alt+Maj+T, pour traduire la page actuelle ou revenir à l’original. L’utilisateur peut le changer ou le supprimer dans chrome://extensions/shortcuts.
+Déclare deux raccourcis clavier : Alt+Maj+T, pour traduire la page actuelle ou revenir à l’original, et Alt+Maj+V, pour activer ou couper la traduction de la voix des vidéos (sous-titres traduits, doublage facultatif). L’utilisateur peut les changer ou les supprimer dans chrome://extensions/shortcuts.
 ```
 
 ## 7. Code distant
@@ -306,7 +320,7 @@ Formulaire « Pratiques de confidentialité » (Privacy practices), partie «�
 | Localisation (Location) | Non | Aucune. |
 | Historique Web (Web history) | Non | L’adresse de la page n’est pas envoyée au fournisseur. La liste des sites choisis pour la traduction automatique reste dans le stockage local. |
 | Activité de l’utilisateur (User activity) | Non | Aucune statistique, aucun pistage. |
-| Contenu du site Web (Website content) | **Oui** | Le texte de la page que l’utilisateur traduit est envoyé uniquement au fournisseur de traduction qu’il a choisi (Google Gemini, Groq, Mistral, OpenRouter), ou à Ollama sur son propre ordinateur. Rien n’est envoyé au développeur. |
+| Contenu du site Web (Website content) | **Oui** | Le texte de la page que l’utilisateur traduit est envoyé uniquement au fournisseur de traduction qu’il a choisi (Google Gemini, Groq, Mistral, OpenRouter), ou à Ollama (sur son propre ordinateur par défaut). Voix des vidéos : les sous-titres sont traduits comme le texte ; pour une vidéo sans sous-titres, et seulement si l’utilisateur active la fonction, de courts morceaux du son de la vidéo sont envoyés à `api.groq.com` (transcription Whisper) avec la clé Groq gratuite de l’utilisateur. Le son n’est pas conservé. Rien n’est envoyé au développeur. |
 
 Remarque sur les clés d’API : la clé que l’utilisateur saisit reste dans le stockage local du navigateur. Elle est envoyée uniquement au fournisseur qui l’a délivrée, dans l’en-tête de la requête, pour authentifier la requête de l’utilisateur lui-même. Le développeur ne la reçoit jamais. Si tu préfères être plus transparent, tu peux aussi cocher « Informations d’authentification » avec la même explication ; cela ne change rien au reste du formulaire.
 
@@ -322,7 +336,7 @@ Coche les trois cases :
 
 ### 8.3 Data usage (English summary)
 
-- Website content collected: **Yes**. The text of the page the user translates is sent only to the translation provider the user chose (Google Gemini, Groq, Mistral, OpenRouter), or to Ollama on the user's own computer. Nothing is sent to the developer.
+- Website content collected: **Yes**. The text of the page the user translates is sent only to the translation provider the user chose (Google Gemini, Groq, Mistral, OpenRouter), or to Ollama (on the user's own computer by default). Video voice: subtitles are translated like page text; for a video without subtitles, and only when the user turns the feature on, short chunks of the video's sound are sent to `api.groq.com` (Whisper transcription) with the user's own free Groq key. The sound is not stored. Nothing is sent to the developer.
 - All other data types: **No**. The API key entered by the user stays in local storage and is sent only to the provider that issued it, in the request header.
 - Not sold to third parties: **certified**.
 - Not used or transferred for purposes unrelated to the single purpose: **certified**.
@@ -352,6 +366,7 @@ DevDocTrad needs an API key from a translation provider chosen by the user. All 
 4. Translation tab: by default the target language is the browser language. If the browser is in English, set "Target language" to another language (for example French) so that English pages are translated.
 5. Open a documentation page, for example https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction, click the toolbar icon, then "Translate this page" (or press Alt+Shift+T).
 6. Code elements, commands and URLs stay untouched. Click "Show original" in the badge at the bottom right, or press Alt+Shift+T again, to go back to the original.
+7. Video voice: open a YouTube video that has English captions, then turn on "Translate the voice in videos" in the popup (or press Alt+Shift+V). Translated subtitles appear on the video. For dubbing, choose "Subtitles + translated voice (dubbing)" under the switch: the browser's voice reads the translation while the original sound is lowered. For a video without subtitles, the same Groq key is used for Whisper transcription.
 ```
 
 Les libellés cités (« Translate this page », « Load models », « Model (simple pages) », « Target language », « Show original ») sont ceux de l’interface anglaise de la version 1.2.0.

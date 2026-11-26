@@ -4,3 +4,9 @@ __pycache__/
 design/references/
 .claude/worktrees/
 tools/demo/unknown.txt
+*.log
+.env*
+.DS_Store
+release/notes.md
+test-results/
+playwright-report/

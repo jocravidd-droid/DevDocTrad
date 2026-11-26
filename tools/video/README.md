@@ -3,13 +3,13 @@
 Ce dossier fabrique la vidéo publicitaire de DevDocTrad à partir de **vraies captures de l'extension**,
 sans aucun logiciel payant ni contenu sous droits.
 
-Résultat, dans `store/video/` :
+Résultat :
 
-| Fichier | Format | Durée |
-|---|---|---|
-| `devdoctrad-promo-fr-1080p.mp4`, `devdoctrad-promo-en-1080p.mp4` | 1920×1080, 30 i/s, H.264 yuv420p + AAC | 39 s |
-| `devdoctrad-promo-fr-vertical.mp4`, `devdoctrad-promo-en-vertical.mp4` | 1080×1920 (Shorts, TikTok, Reels) | 29,5 s |
-| `thumbnail-fr.png`, `thumbnail-en.png` | miniature 1280×720 | — |
+| Fichier | Dossier | Format | Durée |
+|---|---|---|---|
+| `devdoctrad-promo-fr-1080p.mp4`, `devdoctrad-promo-en-1080p.mp4` | `docs/assets/video/` (servies par le site, un seul exemplaire dans le dépôt) | 1920×1080, 30 i/s, H.264 yuv420p + AAC | 39 s |
+| `devdoctrad-promo-fr-vertical.mp4`, `devdoctrad-promo-en-vertical.mp4` | `store/video/` | 1080×1920 (Shorts, TikTok, Reels) | 29,5 s |
+| `thumbnail-fr.png`, `thumbnail-en.png` | `store/video/` | miniature 1280×720 | — |
 
 Où publier chaque fichier, avec titres et descriptions prêts à coller : `store/video/README.md`.
 

@@ -59,5 +59,10 @@ test('site et README : liens de téléchargement vers la version actuelle', () =
     const zips = s.match(/devdoctrad-(?:chrome|firefox)-\d+\.\d+\.\d+\.zip/g) || [];
     assert.ok(zips.length >= 2, f);
     for (const z of zips) assert.ok(z.includes(version), `${f} : ${z} n'est pas la version ${version}`);
+    // la page de la dernière version d'abord : elle reste valable quand une nouvelle version retire les anciens zips
+    assert.ok(s.includes('https://github.com/jocravidd-droid/DevDocTrad/releases/latest'), `${f} : lien releases/latest absent`);
+    const direct = s.match(/https:\/\/github\.com\/jocravidd-droid\/DevDocTrad\/raw\/main\/release\/devdoctrad-(?:chrome|firefox)-[\d.]+\.zip/g) || [];
+    assert.ok(direct.length >= 2, `${f} : liens directs raw/main/release absents`);
+    assert.ok(s.indexOf('/releases/latest') < s.indexOf('/raw/main/release/'), `${f} : releases/latest doit venir avant le lien direct`);
   }
 });
