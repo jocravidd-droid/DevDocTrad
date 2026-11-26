@@ -86,6 +86,181 @@ for (const l of langs) {
   });
 }
 
+/* ---------- Firefox sur addons.mozilla.org, démos interactives, site.js ---------- */
+const AMO = 'https://addons.mozilla.org/firefox/addon/devdoctrad/';
+const DEMO_CODE = 'import { readFile } from "node:fs/promises";\n\nconst text = await readFile("config.json", "utf8");\nconst config = JSON.parse(text);';
+const DEMO_KEYS = ['demo_title', 'demo_sub', 'demo_modes', 'demo_orig', 'demo_tr', 'demo_bi', 'demo_h', 'demo_p', 'demo_a', 'demo_note',
+  'vid_title', 'vid_sub', 'vid_label', 'vid_play', 'vid_pause', 'vid_replay', 'vid_1', 'vid_2', 'vid_3',
+  'theme_dark', 'copy', 'copied', 'inst_f_amo', 'inst_f_amo_p', 'inst_f_manual'];
+const codes = (els) => [...els].map((c) => c.textContent);
+
+for (const l of langs) {
+  test(`site ${l} : Firefox s'installe depuis addons.mozilla.org, le zip reste en option`, () => {
+    const d = page(l);
+    const t = load(l);
+    assert.equal(d.querySelector('.hero .btns a[href*="mozilla"]').getAttribute('href'), AMO, 'bouton « Installer sur Firefox »');
+    const card = [...d.querySelectorAll('#install .cols .card')].find((c) => c.querySelector('h3').textContent === 'Firefox');
+    const first = card.querySelector('h3').nextElementSibling.querySelector('a');
+    assert.equal(first.getAttribute('href'), AMO, 'AMO en premier dans la carte Firefox');
+    assert.equal(first.textContent, t.inst_f_amo);
+    assert.ok(/addons\.mozilla\.org/.test(t.inst_f_amo), `${l}.inst_f_amo cite addons.mozilla.org`);
+    const zip = card.querySelector('details.alt a[href$=".zip"]');
+    assert.ok(zip && /firefox/.test(zip.getAttribute('href')), 'zip manuel dans l\'option repliée');
+    assert.equal(JSON.parse(d.querySelector('script[type="application/ld+json"]').textContent).installUrl, AMO);
+  });
+
+  test(`site ${l} : site.js chargé, démo des modes et démo de la voix présentes`, () => {
+    const d = page(l);
+    const t = load(l);
+    const s = d.querySelector('script[src$="site.js"]');
+    assert.ok(s && s.hasAttribute('defer'), 'site.js chargé en defer');
+    // démo des modes : trois boutons, bilingue par défaut (lisible sans JavaScript : tout est affiché)
+    const demo = d.querySelector('#demo .demo');
+    assert.equal(demo.getAttribute('data-mode'), 'bi');
+    const btns = [...demo.querySelectorAll('.modes button[data-mode]')];
+    assert.deepEqual(btns.map((b) => b.getAttribute('data-mode')), ['or', 'tr', 'bi']);
+    assert.deepEqual(btns.map((b) => b.textContent), [t.demo_orig, t.demo_tr, t.demo_bi]);
+    assert.deepEqual(btns.map((b) => b.getAttribute('aria-pressed')), ['false', 'false', 'true']);
+    assert.ok(demo.querySelector('.modes').hasAttribute('hidden'), 'boutons cachés tant que site.js n\'a pas tourné');
+    for (const sel of ['h3', 'p:not(.lk)', 'p.lk a']) {
+      const el = demo.querySelector('.doc ' + sel);
+      assert.ok(el.querySelector('.or').textContent.trim() && el.querySelector('.tr').textContent.trim(), `${l} : ${sel} original et traduit`);
+      assert.equal(el.querySelector('.or').getAttribute('dir'), 'ltr');
+    }
+    // démo de la voix : 3 sous-titres, région annoncée, commandes cachées sans JavaScript
+    const vid = d.querySelector('#voice-demo .vid');
+    const cues = vid.querySelectorAll('.cues li');
+    assert.equal(cues.length, 3);
+    for (const [i, li] of [...cues].entries()) {
+      assert.ok(li.querySelector('.o').textContent.trim(), 'sous-titre original');
+      assert.equal(li.querySelector('.t').textContent.replace(/\s+/g, ' ').trim(),
+        t['vid_' + (i + 1)].replace('{cmd}', 'npm install lru-cache').replace('{f1}', 'fetch()').replace('{f2}', 'cachedFetch()'));
+    }
+    assert.equal(vid.querySelector('.cue').getAttribute('aria-live'), 'polite');
+    assert.ok(vid.querySelector('.big').hasAttribute('hidden') && vid.querySelector('.ctl').hasAttribute('hidden'));
+    for (const k of ['data-play', 'data-pause', 'data-replay']) assert.ok(vid.getAttribute(k).trim(), k);
+    // thème et copie
+    assert.equal(d.querySelector('button.theme').getAttribute('aria-label'), t.theme_dark);
+    assert.equal(d.body.getAttribute('data-copy'), t.copy);
+    assert.equal(d.body.getAttribute('data-copied'), t.copied);
+    assert.equal(d.querySelectorAll('#install code.cp').length, 4, 'chrome://, edge://, brave://, about:debugging');
+  });
+
+  test(`site ${l} : le code des démos est identique au caractère près`, () => {
+    const d = page(l);
+    assert.equal(d.querySelector('#demo pre code').textContent, DEMO_CODE);
+    assert.deepEqual(codes(d.querySelectorAll('#demo .doc p:not(.lk) .tr code')), ['readFile()', 'JSON.parse()']);
+    assert.deepEqual(codes(d.querySelectorAll('#demo .doc p:not(.lk) .or code')), ['readFile()', 'JSON.parse()']);
+    assert.deepEqual(codes(d.querySelectorAll('#voice-demo .cues .t code')), ['npm install lru-cache', 'fetch()', 'cachedFetch()']);
+    assert.equal(d.querySelector('#demo .doc p.lk a').getAttribute('href'), page('fr').querySelector('#demo .doc p.lk a').getAttribute('href'));
+  });
+}
+
+test('démos : textes présents et vraiment traduits dans les 37 langues', () => {
+  const en = load('en');
+  for (const l of langs) {
+    const t = load(l);
+    for (const k of DEMO_KEYS) assert.ok(t[k] && t[k].trim(), `${l}.${k} vide`);
+    if (l === 'en') continue;
+    for (const k of ['demo_h', 'demo_p', 'demo_a', 'vid_1', 'vid_2', 'vid_3', 'demo_sub', 'vid_sub']) {
+      assert.notEqual(t[k], en[k], `${l}.${k} : resté en anglais`);
+    }
+  }
+  // la page anglaise montre une doc française (sinon « traduire » l'anglais en anglais ne montrerait rien)
+  assert.equal(page('en').querySelector('#demo .doc h3 .or').getAttribute('lang'), 'fr');
+  assert.equal(page('ja').querySelector('#demo .doc h3 .or').getAttribute('lang'), 'en');
+  assert.equal(page('ja').querySelector('#demo .doc h3 .or').textContent, load('en').demo_h);
+});
+
+/* ---------- Comportement de site.js (jsdom) ---------- */
+function interactive(l, opts = {}) {
+  let html = fs.readFileSync(pageFile(l), 'utf8').replace(/<script src="[^"]*\.js"[^>]*><\/script>/g, '');
+  if (opts.step) html = html.replace(/data-step="\d+"/, `data-step="${opts.step}"`);
+  const dom = new JSDOM(html, { url: SITE + '/' + (folder(l) ? folder(l) + '/' : ''), runScripts: 'outside-only', pretendToBeVisual: true });
+  const w = dom.window;
+  if (opts.blockStorage) Object.defineProperty(w, 'localStorage', { get() { throw new Error('bloqué'); } });
+  w.eval(fs.readFileSync(path.join(DOCS, 'site.js'), 'utf8'));
+  return w;
+}
+
+test('site.js : les trois modes de la démo changent l\'affichage et aria-pressed', () => {
+  const w = interactive('fr');
+  const d = w.document;
+  const demo = d.querySelector('.demo');
+  assert.equal(d.querySelector('.modes').hidden, false, 'boutons visibles avec JavaScript');
+  const btn = (m) => d.querySelector(`.modes button[data-mode="${m}"]`);
+  for (const m of ['or', 'tr', 'bi']) {
+    btn(m).click();
+    assert.equal(demo.getAttribute('data-mode'), m);
+    for (const o of ['or', 'tr', 'bi']) assert.equal(btn(o).getAttribute('aria-pressed'), String(o === m));
+    assert.equal(d.querySelector('#demo pre code').textContent, DEMO_CODE, 'le code ne bouge pas');
+  }
+  // flèche droite : bouton suivant
+  btn('or').click();
+  btn('or').dispatchEvent(new w.KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+  assert.equal(demo.getAttribute('data-mode'), 'tr');
+  assert.equal(d.activeElement, btn('tr'));
+});
+
+test('site.js : thème mémorisé, et rien ne casse si le stockage est bloqué', () => {
+  let w = interactive('de');
+  const b = w.document.querySelector('button.theme');
+  assert.equal(b.hidden, false);
+  assert.equal(b.getAttribute('aria-pressed'), 'false', 'clair par défaut (système clair dans jsdom)');
+  b.click();
+  assert.equal(w.document.documentElement.getAttribute('data-theme'), 'dark');
+  assert.equal(b.getAttribute('aria-pressed'), 'true');
+  assert.equal(w.localStorage.getItem('ddt-site-theme'), 'dark');
+  b.click();
+  assert.equal(w.localStorage.getItem('ddt-site-theme'), 'light');
+  w = interactive('ar', { blockStorage: true });
+  w.document.querySelector('button.theme').click();
+  assert.equal(w.document.documentElement.getAttribute('data-theme'), 'dark');
+});
+
+test('site.js : boutons copier ajoutés à côté des commandes', () => {
+  const w = interactive('ja');
+  const btns = w.document.querySelectorAll('#install button.copy');
+  assert.equal(btns.length, 4);
+  assert.equal(btns[0].previousElementSibling.textContent, 'chrome://extensions');
+  assert.equal(btns[0].getAttribute('aria-label'), load('ja').copy + ' chrome://extensions');
+  assert.equal(w.document.querySelectorAll('.sr[aria-live=polite]').length, 1, 'annonce « copié » pour les lecteurs d\'écran');
+});
+
+test('site.js : la fausse vidéo fait défiler les 3 sous-titres, se met en pause, puis propose de rejouer', async () => {
+  const es = load('es');
+  // pas par défaut (3,5 s) : lecture puis pause sur le premier sous-titre
+  const w = interactive('es');
+  const v = w.document.querySelector('.vid');
+  assert.equal(v.querySelector('.ctl').hidden, false);
+  assert.equal(v.querySelector('.big').hidden, false);
+  assert.equal(v.querySelector('.cue').textContent, '');
+  v.querySelector('.big').click();
+  assert.equal(v.getAttribute('data-state'), 'playing');
+  assert.equal(v.querySelector('.big').hidden, true);
+  assert.equal(v.querySelector('.pp').getAttribute('aria-label'), es.vid_pause);
+  assert.equal(w.document.activeElement, v.querySelector('.pp'), 'focus gardé sur la commande');
+  await new Promise((r) => setTimeout(r, 120));
+  assert.equal(v.querySelector('.cue .t').textContent, es.vid_1);
+  v.querySelector('.pp').click();
+  assert.equal(v.getAttribute('data-state'), 'paused');
+  assert.equal(v.querySelector('.big').hidden, false);
+  w.close();
+  // pas très court : la démo va au bout
+  const w2 = interactive('es', { step: 25 });
+  const v2 = w2.document.querySelector('.vid');
+  const seen = new Set();
+  new w2.MutationObserver(() => seen.add(v2.querySelector('.cue').textContent)).observe(v2.querySelector('.cue'), { childList: true, subtree: true });
+  v2.querySelector('.big').click();
+  await new Promise((r) => setTimeout(r, 400));
+  assert.equal(v2.getAttribute('data-state'), 'ended');
+  assert.equal(v2.querySelector('.pp').getAttribute('aria-label'), es.vid_replay);
+  assert.equal(v2.querySelector('.big span').textContent, es.vid_replay);
+  assert.equal(v2.querySelector('.cue .t').textContent.replace('cachedFetch()', '{f2}').replace('fetch()', '{f1}'), es.vid_3);
+  assert.equal([...seen].filter(Boolean).length, 3, 'les trois sous-titres sont passés dans la région annoncée');
+  w2.close();
+});
+
 test('sitemap : une adresse par langue, avec toutes les variantes', () => {
   const xml = fs.readFileSync(path.join(DOCS, 'sitemap.xml'), 'utf8');
   assert.equal((xml.match(/<loc>/g) || []).length, langs.length);
@@ -108,7 +283,7 @@ test('site : docs/ est à jour avec tools/site (relancer python3 tools/build_sit
     const rel = path.join(folder(l), 'index.html');
     assert.equal(fs.readFileSync(path.join(tmp, rel), 'utf8'), fs.readFileSync(path.join(DOCS, rel), 'utf8'), 'page périmée : ' + rel);
   }
-  for (const f of ['lang.js', 'llms.txt', 'sitemap.xml']) {
+  for (const f of ['lang.js', 'site.js', 'llms.txt', 'sitemap.xml']) {
     assert.equal(strip(fs.readFileSync(path.join(tmp, f), 'utf8')), strip(fs.readFileSync(path.join(DOCS, f), 'utf8')), 'fichier périmé : ' + f);
   }
   fs.rmSync(tmp, { recursive: true, force: true });
