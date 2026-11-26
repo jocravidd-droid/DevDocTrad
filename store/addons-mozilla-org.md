@@ -2,7 +2,11 @@
 
 Textes prêts à copier pour publier DevDocTrad sur addons.mozilla.org, en français et en anglais, puis la marche à suivre complète.
 
-État : l’extension n’est pas encore publiée. Le paquet à envoyer est `release/devdoctrad-firefox-1.1.0.zip`. Le compte développeur Mozilla est gratuit.
+État : **l’extension est déjà publiée** sur Firefox (version 1.0.0) : https://addons.mozilla.org/fr/firefox/addon/devdoctrad/
+
+**Pour mettre la fiche à jour et envoyer la 1.1.0, utilise le kit [`store/amo/`](amo/README.md)** : 8 captures en 1280 x 800 (`store/amo/en/` et `store/amo/fr/`), tous les textes en anglais et en français (`store/amo/fiche.md`) et un guide clic par clic sur la page d’édition (`store/amo/README.md`). Les textes du kit remplacent ceux de ce fichier (nom avec mots-clés, voix des vidéos, catégories, tags, captures).
+
+Le reste de ce fichier décrit la première publication ; il reste utile pour les explications (collecte de données, code source, `web-ext lint`). Le paquet actuel est `release/devdoctrad-firefox-1.1.0.zip`.
 
 Astuce : sur GitHub, chaque bloc de texte a un bouton de copie en haut à droite. Copie le bloc entier et colle-le tel quel dans le champ indiqué.
 
@@ -36,10 +40,10 @@ Sommaire :
 
 ## 2. Nom
 
-Le nom vient du manifeste (`__MSG_extName__`). AMO le remplit automatiquement.
+Le nom vient du manifeste (`__MSG_extName__`). Depuis la 1.1.0, il contient des mots-clés : voir `store/amo/fiche.md`, section 1.
 
 ```text
-DevDocTrad
+DevDocTrad: Translator for Docs, Code & Videos
 ```
 
 ## 3. Résumé (summary)
@@ -243,6 +247,8 @@ How to test without paying:
 Option : tu peux créer une clé Groq gratuite réservée à l’examen, l’ajouter à la fin de ces notes, puis la supprimer dans la console Groq une fois l’extension acceptée. N’y mets jamais une clé que tu utilises toi-même, ni une clé liée à un moyen de paiement.
 
 ## 10. Captures d’écran et légendes
+
+Remplacé par le kit : les 8 captures de `store/amo/en/` et leurs légendes (`store/amo/fiche.md`, section 4). Le tableau ci-dessous décrit les anciennes captures.
 
 AMO accepte une légende par capture. Les quatre captures font 1280 x 800 pixels.
 
