@@ -98,7 +98,8 @@ test('transcription : envoi multipart à Groq Whisper avec la clé gratuite, tex
   assert.equal(file.type, 'audio/webm');
   assert.equal(Buffer.from(await file.arrayBuffer()).toString(), 'fake-opus-audio-bytes');
   const usage = api.storage.local._data().usage;
-  assert.equal(usage.perKey.g.requests, 1, 'requête comptée');
+  assert.equal(usage.perKey['g:whisper'].requests, 1, 'requête comptée à part (Whisper)');
+  assert.equal(usage.perKey.g, undefined, 'le quota de requêtes du chat n\'est pas consommé');
 });
 
 test('transcription : ogg envoyé avec la bonne extension', async () => {
@@ -126,7 +127,7 @@ test('transcription : clé Groq désactivée ignorée', async () => {
 });
 
 test('transcription : 429 met la clé en pause et passe à la clé Groq suivante', async () => {
-  const { bg, fetch } = makeBackground({
+  const { bg, fetch, api } = makeBackground({
     local: { settings: {}, keys: [key('g1', 'groq', { order: 0 }), key('g2', 'groq', { order: 1, key: 'OTHER-KEY-0123456789abcdef' })] },
     handler: (url, init) => (init.headers.Authorization.includes('TEST-KEY-g1')
       ? response(429, { error: { message: 'Rate limit reached for whisper' } }, { 'retry-after': '30' })
@@ -138,8 +139,10 @@ test('transcription : 429 met la clé en pause et passe à la clé Groq suivante
   const r2 = await bg.transcribe({ audio: AUDIO });
   assert.deepEqual(r2, { ok: true, text: 'Second key works.', via: 'g2' });
   assert.equal(fetch.calls.length, 2);
+  // pause propre à Whisper : la traduction avec g1 reste possible
+  assert.ok(api.storage.session._data().pauses['g1:whisper'] > 0, 'Whisper de g1 en pause');
   const st = await bg.publicState();
-  assert.equal(st.keys.find((k) => k.id === 'g1').available, false);
+  assert.equal(st.keys.find((k) => k.id === 'g1').available, true);
 });
 
 test('transcription : clé refusée (401) désactivée, la clé n\'apparaît jamais dans le message', async () => {

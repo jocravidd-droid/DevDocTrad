@@ -104,7 +104,9 @@ test('cache : la deuxième traduction des mêmes textes ne fait aucun appel ; ch
   assert.equal(r.fromCache, true);
   assert.equal(env.fetch.calls.length, 1, 'pas de nouvel appel');
   await env.bg.flushCache();
-  assert.ok(Object.keys(env.api.storage.local._data().cache).length === 2, 'cache écrit dans storage.local');
+  const stored = env.api.storage.local._data();
+  assert.equal(Object.keys(stored).filter((k) => k.startsWith('c:')).length, 2, 'une entrée par clé de stockage');
+  assert.equal(Object.keys(stored.cacheIndex).length, 2, 'index du cache écrit');
   await env.api.storage.local.set({ settings: settings({ target: 'ru' }) });
   await env.bg.translateTexts(TEXTS, {});
   assert.equal(env.fetch.calls.length, 2, 'nouvelle langue : nouvel appel');
