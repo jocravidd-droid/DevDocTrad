@@ -223,5 +223,6 @@
 "popupPaidOnly": "유료 키만 있습니다. 번역하려면 \"키\" 메뉴에서 유료 키를 선택하세요.",
 "popupProgress": "번역 진행률",
 "optUrlInvalid": "잘못된 주소입니다. http:// 또는 https:// 주소를 입력하세요(예: http://localhost:11434).",
-"optOllamaPermDenied": "권한이 거부되었습니다. DevDocTrad가 {0}에 연결할 수 없습니다."
+"optOllamaPermDenied": "권한이 거부되었습니다. DevDocTrad가 {0}에 연결할 수 없습니다.",
+"keyNoApiKey": "키 없음"
 }

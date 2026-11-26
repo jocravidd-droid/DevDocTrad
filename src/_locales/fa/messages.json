@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "یک مدل انتخاب کنید"
   },
+  "keyNoApiKey": {
+    "message": "کلید نیست"
+  },
   "keyPausedUntil": {
     "message": "متوقف تا {0}"
   },

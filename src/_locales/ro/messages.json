@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "alege un model"
   },
+  "keyNoApiKey": {
+    "message": "lipsește cheia"
+  },
   "keyPausedUntil": {
     "message": "în pauză până la {0}"
   },

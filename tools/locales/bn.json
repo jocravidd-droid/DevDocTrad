@@ -223,5 +223,6 @@
 "popupPaidOnly": "আপনার শুধু পেইড কী আছে: অনুবাদ করতে \"কী\" মেনু থেকে পেইড কী বেছে নিন।",
 "popupProgress": "অনুবাদের অগ্রগতি",
 "optUrlInvalid": "অবৈধ ঠিকানা: http:// বা https:// দিয়ে শুরু হওয়া ঠিকানা লিখুন, যেমন http://localhost:11434।",
-"optOllamaPermDenied": "অনুমতি দেওয়া হয়নি: DevDocTrad {0}-এ পৌঁছাতে পারছে না।"
+"optOllamaPermDenied": "অনুমতি দেওয়া হয়নি: DevDocTrad {0}-এ পৌঁছাতে পারছে না।",
+"keyNoApiKey": "কী নেই"
 }

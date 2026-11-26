@@ -223,5 +223,6 @@
 "popupPaidOnly": "У вас лише платні ключі: щоб перекладати, виберіть платний ключ у меню «Ключ».",
 "popupProgress": "Перебіг перекладу",
 "optUrlInvalid": "Неправильна адреса: введіть адресу http:// або https://, наприклад http://localhost:11434.",
-"optOllamaPermDenied": "Дозвіл відхилено: DevDocTrad не може під'єднатися до {0}."
+"optOllamaPermDenied": "Дозвіл відхилено: DevDocTrad не може під'єднатися до {0}.",
+"keyNoApiKey": "немає ключа"
 }

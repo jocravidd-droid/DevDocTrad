@@ -223,5 +223,6 @@
 "popupPaidOnly": "你只有付费密钥：请在“密钥”菜单中选择付费密钥后再翻译。",
 "popupProgress": "翻译进度",
 "optUrlInvalid": "地址无效：请输入以 http:// 或 https:// 开头的地址，例如 http://localhost:11434。",
-"optOllamaPermDenied": "权限被拒绝：DevDocTrad 无法访问 {0}。"
+"optOllamaPermDenied": "权限被拒绝：DevDocTrad 无法访问 {0}。",
+"keyNoApiKey": "缺少密钥"
 }

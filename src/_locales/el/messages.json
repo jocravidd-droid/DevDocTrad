@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "επιλέξτε μοντέλο"
   },
+  "keyNoApiKey": {
+    "message": "λείπει το κλειδί"
+  },
   "keyPausedUntil": {
     "message": "σε παύση έως {0}"
   },

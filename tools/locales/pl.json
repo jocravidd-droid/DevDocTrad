@@ -223,5 +223,6 @@
 "popupPaidOnly": "Masz tylko płatne klucze: aby tłumaczyć, wybierz płatny klucz w menu „Klucz”.",
 "popupProgress": "Postęp tłumaczenia",
 "optUrlInvalid": "Nieprawidłowy adres: wpisz adres http:// lub https://, na przykład http://localhost:11434.",
-"optOllamaPermDenied": "Odmowa uprawnień: DevDocTrad nie może połączyć się z {0}."
+"optOllamaPermDenied": "Odmowa uprawnień: DevDocTrad nie może połączyć się z {0}.",
+"keyNoApiKey": "brak klucza"
 }

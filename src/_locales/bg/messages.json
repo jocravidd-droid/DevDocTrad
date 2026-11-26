@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "изберете модел"
   },
+  "keyNoApiKey": {
+    "message": "липсва ключ"
+  },
   "keyPausedUntil": {
     "message": "на пауза до {0}"
   },

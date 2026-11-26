@@ -223,5 +223,6 @@
 "popupPaidOnly": "Ai doar chei plătite: pentru a traduce, alege cheia plătită din meniul „Cheie”.",
 "popupProgress": "Progresul traducerii",
 "optUrlInvalid": "Adresă nevalidă: introdu o adresă http:// sau https://, de exemplu http://localhost:11434.",
-"optOllamaPermDenied": "Permisiune refuzată: DevDocTrad nu poate accesa {0}."
+"optOllamaPermDenied": "Permisiune refuzată: DevDocTrad nu poate accesa {0}.",
+"keyNoApiKey": "lipsește cheia"
 }

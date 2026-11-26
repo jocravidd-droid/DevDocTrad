@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "kies een model"
   },
+  "keyNoApiKey": {
+    "message": "sleutel ontbreekt"
+  },
   "keyPausedUntil": {
     "message": "gepauzeerd tot {0}"
   },

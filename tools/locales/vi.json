@@ -223,5 +223,6 @@
 "popupPaidOnly": "Bạn chỉ có khóa trả phí: hãy chọn khóa trả phí trong menu \"Khóa\" để dịch.",
 "popupProgress": "Tiến độ dịch",
 "optUrlInvalid": "Địa chỉ không hợp lệ: hãy nhập địa chỉ http:// hoặc https://, ví dụ http://localhost:11434.",
-"optOllamaPermDenied": "Quyền bị từ chối: DevDocTrad không thể kết nối tới {0}."
+"optOllamaPermDenied": "Quyền bị từ chối: DevDocTrad không thể kết nối tới {0}.",
+"keyNoApiKey": "thiếu khóa"
 }

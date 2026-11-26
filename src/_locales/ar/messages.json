@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "اختر نموذجًا"
   },
+  "keyNoApiKey": {
+    "message": "المفتاح مفقود"
+  },
   "keyPausedUntil": {
     "message": "متوقف مؤقتًا حتى {0}"
   },

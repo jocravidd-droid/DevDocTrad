@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "chagua muundo"
   },
+  "keyNoApiKey": {
+    "message": "ufunguo haupo"
+  },
   "keyPausedUntil": {
     "message": "umesitishwa hadi {0}"
   },

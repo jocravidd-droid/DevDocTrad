@@ -223,5 +223,6 @@
 "popupPaidOnly": "คุณมีเพียงคีย์แบบเสียเงิน: เลือกคีย์แบบเสียเงินในเมนู \"คีย์\" เพื่อแปล",
 "popupProgress": "ความคืบหน้าของการแปล",
 "optUrlInvalid": "ที่อยู่ไม่ถูกต้อง: ป้อนที่อยู่ http:// หรือ https:// เช่น http://localhost:11434",
-"optOllamaPermDenied": "การอนุญาตถูกปฏิเสธ: DevDocTrad เข้าถึง {0} ไม่ได้"
+"optOllamaPermDenied": "การอนุญาตถูกปฏิเสธ: DevDocTrad เข้าถึง {0} ไม่ได้",
+"keyNoApiKey": "ไม่มีคีย์"
 }

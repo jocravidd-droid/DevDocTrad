@@ -223,5 +223,6 @@
 "popupPaidOnly": "Du har bare betalte nøkler: velg den betalte nøkkelen i menyen «Nøkkel» for å oversette.",
 "popupProgress": "Fremdrift for oversettelsen",
 "optUrlInvalid": "Ugyldig adresse: skriv inn en http://- eller https://-adresse, for eksempel http://localhost:11434.",
-"optOllamaPermDenied": "Tillatelse avslått: DevDocTrad kan ikke nå {0}."
+"optOllamaPermDenied": "Tillatelse avslått: DevDocTrad kan ikke nå {0}.",
+"keyNoApiKey": "nøkkel mangler"
 }

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Du hast nur kostenpflichtige Schlüssel: Wähle zum Übersetzen den kostenpflichtigen Schlüssel im Menü „Schlüssel“.",
 "popupProgress": "Fortschritt der Übersetzung",
 "optUrlInvalid": "Ungültige Adresse: Gib eine http://- oder https://-Adresse ein, zum Beispiel http://localhost:11434.",
-"optOllamaPermDenied": "Berechtigung verweigert: DevDocTrad kann {0} nicht erreichen."
+"optOllamaPermDenied": "Berechtigung verweigert: DevDocTrad kann {0} nicht erreichen.",
+"keyNoApiKey": "Schlüssel fehlt"
 }

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Máte jen placené klíče: pro překlad vyberte placený klíč v nabídce „Klíč“.",
 "popupProgress": "Průběh překladu",
 "optUrlInvalid": "Neplatná adresa: zadejte adresu http:// nebo https://, například http://localhost:11434.",
-"optOllamaPermDenied": "Oprávnění zamítnuto: DevDocTrad se nemůže připojit k {0}."
+"optOllamaPermDenied": "Oprávnění zamítnuto: DevDocTrad se nemůže připojit k {0}.",
+"keyNoApiKey": "chybí klíč"
 }

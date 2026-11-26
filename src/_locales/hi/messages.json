@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "मॉडल चुनें"
   },
+  "keyNoApiKey": {
+    "message": "कुंजी नहीं है"
+  },
   "keyPausedUntil": {
     "message": "{0} तक रुका हुआ"
   },

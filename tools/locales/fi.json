@@ -223,5 +223,6 @@
 "popupPaidOnly": "Sinulla on vain maksullisia avaimia: valitse maksullinen avain Avain-valikosta kääntääksesi.",
 "popupProgress": "Käännöksen eteneminen",
 "optUrlInvalid": "Virheellinen osoite: anna http://- tai https://-osoite, esimerkiksi http://localhost:11434.",
-"optOllamaPermDenied": "Lupa evätty: DevDocTrad ei saa yhteyttä kohteeseen {0}."
+"optOllamaPermDenied": "Lupa evätty: DevDocTrad ei saa yhteyttä kohteeseen {0}.",
+"keyNoApiKey": "avain puuttuu"
 }

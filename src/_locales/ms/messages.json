@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "pilih model"
   },
+  "keyNoApiKey": {
+    "message": "kunci tiada"
+  },
   "keyPausedUntil": {
     "message": "dijeda sehingga {0}"
   },

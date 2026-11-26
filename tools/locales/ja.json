@@ -223,5 +223,6 @@
 "popupPaidOnly": "有料キーしかありません。翻訳するには「キー」メニューで有料キーを選んでください。",
 "popupProgress": "翻訳の進行状況",
 "optUrlInvalid": "無効なアドレスです。http:// または https:// で始まるアドレスを入力してください（例: http://localhost:11434）。",
-"optOllamaPermDenied": "許可が拒否されました。DevDocTrad は {0} に接続できません。"
+"optOllamaPermDenied": "許可が拒否されました。DevDocTrad は {0} に接続できません。",
+"keyNoApiKey": "キーがありません"
 }

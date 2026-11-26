@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "välj en modell"
   },
+  "keyNoApiKey": {
+    "message": "nyckel saknas"
+  },
   "keyPausedUntil": {
     "message": "pausad till {0}"
   },

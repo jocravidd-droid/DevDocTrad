@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "请选择模型"
   },
+  "keyNoApiKey": {
+    "message": "缺少密钥"
+  },
   "keyPausedUntil": {
     "message": "暂停至 {0}"
   },

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Csak fizetős kulcsaid vannak: a fordításhoz válaszd ki a fizetős kulcsot a „Kulcs” menüben.",
 "popupProgress": "A fordítás előrehaladása",
 "optUrlInvalid": "Érvénytelen cím: adj meg egy http:// vagy https:// címet, például http://localhost:11434.",
-"optOllamaPermDenied": "Engedély megtagadva: a DevDocTrad nem éri el ezt: {0}."
+"optOllamaPermDenied": "Engedély megtagadva: a DevDocTrad nem éri el ezt: {0}.",
+"keyNoApiKey": "hiányzó kulcs"
 }

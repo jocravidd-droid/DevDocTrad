@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "একটি মডেল বেছে নিন"
   },
+  "keyNoApiKey": {
+    "message": "কী নেই"
+  },
   "keyPausedUntil": {
     "message": "{0} পর্যন্ত বিরতি"
   },

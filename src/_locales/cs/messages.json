@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "vyberte model"
   },
+  "keyNoApiKey": {
+    "message": "chybí klíč"
+  },
   "keyPausedUntil": {
     "message": "pozastaveno do {0}"
   },

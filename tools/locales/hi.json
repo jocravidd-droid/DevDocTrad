@@ -223,5 +223,6 @@
 "popupPaidOnly": "आपके पास केवल सशुल्क कुंजियाँ हैं: अनुवाद के लिए \"कुंजी\" मेनू में सशुल्क कुंजी चुनें।",
 "popupProgress": "अनुवाद की प्रगति",
 "optUrlInvalid": "अमान्य पता: http:// या https:// वाला पता डालें, जैसे http://localhost:11434।",
-"optOllamaPermDenied": "अनुमति अस्वीकृत: DevDocTrad {0} तक नहीं पहुँच सकता।"
+"optOllamaPermDenied": "अनुमति अस्वीकृत: DevDocTrad {0} तक नहीं पहुँच सकता।",
+"keyNoApiKey": "कुंजी नहीं है"
 }

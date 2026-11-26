@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "เลือกโมเดล"
   },
+  "keyNoApiKey": {
+    "message": "ไม่มีคีย์"
+  },
   "keyPausedUntil": {
     "message": "หยุดชั่วคราวถึง {0}"
   },

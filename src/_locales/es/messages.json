@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "elige un modelo"
   },
+  "keyNoApiKey": {
+    "message": "falta la clave"
+  },
   "keyPausedUntil": {
     "message": "en pausa hasta las {0}"
   },

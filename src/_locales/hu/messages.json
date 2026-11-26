@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "válasszon modellt"
   },
+  "keyNoApiKey": {
+    "message": "hiányzó kulcs"
+  },
   "keyPausedUntil": {
     "message": "szünetel eddig: {0}"
   },

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Anda hanya punya kunci berbayar: pilih kunci berbayar di menu \"Kunci\" untuk menerjemahkan.",
 "popupProgress": "Kemajuan terjemahan",
 "optUrlInvalid": "Alamat tidak valid: masukkan alamat http:// atau https://, misalnya http://localhost:11434.",
-"optOllamaPermDenied": "Izin ditolak: DevDocTrad tidak dapat menjangkau {0}."
+"optOllamaPermDenied": "Izin ditolak: DevDocTrad tidak dapat menjangkau {0}.",
+"keyNoApiKey": "kunci belum ada"
 }

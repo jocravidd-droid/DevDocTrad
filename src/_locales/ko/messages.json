@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "모델 선택"
   },
+  "keyNoApiKey": {
+    "message": "키 없음"
+  },
   "keyPausedUntil": {
     "message": "{0}까지 일시 중지"
   },

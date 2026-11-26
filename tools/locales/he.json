@@ -223,5 +223,6 @@
 "popupPaidOnly": "יש לכם רק מפתחות בתשלום: כדי לתרגם, בחרו את המפתח בתשלום בתפריט \"מפתח\".",
 "popupProgress": "התקדמות התרגום",
 "optUrlInvalid": "כתובת לא תקינה: הזינו כתובת http:// או https://, למשל http://localhost:11434.",
-"optOllamaPermDenied": "ההרשאה נדחתה: DevDocTrad לא יכול להתחבר אל {0}."
+"optOllamaPermDenied": "ההרשאה נדחתה: DevDocTrad לא יכול להתחבר אל {0}.",
+"keyNoApiKey": "חסר מפתח"
 }

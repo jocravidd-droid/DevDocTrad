@@ -223,5 +223,6 @@
 "popupPaidOnly": "Du har bara betalda nycklar: välj den betalda nyckeln i menyn ”Nyckel” för att översätta.",
 "popupProgress": "Översättningens förlopp",
 "optUrlInvalid": "Ogiltig adress: ange en http://- eller https://-adress, till exempel http://localhost:11434.",
-"optOllamaPermDenied": "Behörighet nekad: DevDocTrad kan inte nå {0}."
+"optOllamaPermDenied": "Behörighet nekad: DevDocTrad kan inte nå {0}.",
+"keyNoApiKey": "nyckel saknas"
 }

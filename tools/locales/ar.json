@@ -223,5 +223,6 @@
 "popupPaidOnly": "لديك مفاتيح مدفوعة فقط: اختر المفتاح المدفوع من قائمة «المفتاح» للترجمة.",
 "popupProgress": "تقدّم الترجمة",
 "optUrlInvalid": "عنوان غير صالح: أدخل عنوانًا يبدأ بـ http:// أو https://، مثل http://localhost:11434.",
-"optOllamaPermDenied": "تم رفض الإذن: لا يستطيع DevDocTrad الوصول إلى {0}."
+"optOllamaPermDenied": "تم رفض الإذن: لا يستطيع DevDocTrad الوصول إلى {0}.",
+"keyNoApiKey": "المفتاح مفقود"
 }

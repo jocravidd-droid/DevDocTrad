@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "bir model seçin"
   },
+  "keyNoApiKey": {
+    "message": "anahtar yok"
+  },
   "keyPausedUntil": {
     "message": "{0} saatine kadar duraklatıldı"
   },

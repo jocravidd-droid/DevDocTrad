@@ -79,6 +79,7 @@
         name.appendChild(small);
         var c = document.createElement('span');
         if (!k.enabled) chip(c, '', 'off', t('keyDisabled'));
+        else if (k.reason === 'no_key') chip(c, 'warn', 'key', t('keyNoApiKey'));
         else if (!k.configured) chip(c, 'warn', 'alert', t('keyNoModel'));
         else if (k.available) chip(c, 'ok', 'check', t('keyAvailable'));
         else if (k.until) chip(c, 'warn', 'pause', t('keyPausedUntil', [fmtTime(k.until)]));

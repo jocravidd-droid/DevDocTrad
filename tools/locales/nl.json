@@ -223,5 +223,6 @@
 "popupPaidOnly": "Je hebt alleen betaalde sleutels: kies de betaalde sleutel in het menu 'Sleutel' om te vertalen.",
 "popupProgress": "Voortgang van de vertaling",
 "optUrlInvalid": "Ongeldig adres: voer een http://- of https://-adres in, bijvoorbeeld http://localhost:11434.",
-"optOllamaPermDenied": "Toestemming geweigerd: DevDocTrad kan {0} niet bereiken."
+"optOllamaPermDenied": "Toestemming geweigerd: DevDocTrad kan {0} niet bereiken.",
+"keyNoApiKey": "sleutel ontbreekt"
 }

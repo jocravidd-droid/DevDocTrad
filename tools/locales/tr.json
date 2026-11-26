@@ -223,5 +223,6 @@
 "popupPaidOnly": "Yalnızca ücretli anahtarlarınız var: çevirmek için \"Anahtar\" menüsünden ücretli anahtarı seçin.",
 "popupProgress": "Çeviri ilerlemesi",
 "optUrlInvalid": "Geçersiz adres: http:// veya https:// ile başlayan bir adres girin, örneğin http://localhost:11434.",
-"optOllamaPermDenied": "İzin reddedildi: DevDocTrad {0} adresine ulaşamıyor."
+"optOllamaPermDenied": "İzin reddedildi: DevDocTrad {0} adresine ulaşamıyor.",
+"keyNoApiKey": "anahtar yok"
 }

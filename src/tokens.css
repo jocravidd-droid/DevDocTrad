@@ -46,9 +46,9 @@
   --iris-soft: linear-gradient(115deg, rgba(47,123,255,.16), rgba(31,194,239,.14), rgba(45,212,180,.12), rgba(139,92,246,.16));
 
   /* États (toujours accompagnés d'une icône ou d'un texte) */
-  --ok: #138a45;      --ok-bg: rgba(22, 163, 74, .13);
-  --warn: #a35f00;    --warn-bg: rgba(245, 158, 11, .17);
-  --err: #c81e45;     --err-bg: rgba(225, 29, 72, .12);
+  --ok: #0f7a3c;      --ok-bg: rgba(22, 163, 74, .13);
+  --warn: #8a5000;    --warn-bg: rgba(245, 158, 11, .17);
+  --err: #b01a3d;     --err-bg: rgba(225, 29, 72, .12);
   --info: #2357e0;    --info-bg: rgba(47, 107, 255, .12);
 
   /* Ombres et profondeur */

@@ -1183,7 +1183,7 @@
      * Valeurs recopiées de src/tokens.css (vérifiées par tests/design.test.js). Pas d'irisation. */
     var BADGE_CSS = [
       ':host{all:initial;--b-text-1:#12152b;--b-text-2:#4a5071;--b-accent:#2f6bff;--b-focus:rgba(47, 107, 255, .55);',
-      '--b-surface:rgba(255,255,255,.80);--b-solid:#f8f9fd;--b-hairline:rgba(24, 32, 84, .10);--b-err:#c81e45;--b-warn:#a35f00;--b-ok:#138a45;',
+      '--b-surface:rgba(255,255,255,.80);--b-solid:#f8f9fd;--b-hairline:rgba(24, 32, 84, .10);--b-err:#b01a3d;--b-warn:#8a5000;--b-ok:#0f7a3c;',
       '--b-shadow:0 8px 24px rgba(28, 40, 110, .12), 0 1px 2px rgba(20, 28, 80, .06);--b-pill:999px;--b-r:18px}',
       ':host([data-theme=dark]){--b-text-1:#eef0ff;--b-text-2:#a9b0d8;--b-accent:#5b8cff;--b-focus:rgba(110, 160, 255, .6);',
       '--b-surface:rgba(24,28,64,.80);--b-solid:#141836;--b-hairline:rgba(170, 190, 255, .14);--b-err:#fb7185;--b-warn:#fbbf24;--b-ok:#4ade80;',

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Você só tem chaves pagas: escolha a chave paga no menu \"Chave\" para traduzir.",
 "popupProgress": "Progresso da tradução",
 "optUrlInvalid": "Endereço inválido: digite um endereço http:// ou https://, por exemplo http://localhost:11434.",
-"optOllamaPermDenied": "Permissão negada: o DevDocTrad não consegue acessar {0}."
+"optOllamaPermDenied": "Permissão negada: o DevDocTrad não consegue acessar {0}.",
+"keyNoApiKey": "falta a chave"
 }

@@ -223,5 +223,6 @@
 "popupPaidOnly": "Имате само платени ключове: изберете платения ключ от менюто „Ключ“, за да превеждате.",
 "popupProgress": "Напредък на превода",
 "optUrlInvalid": "Невалиден адрес: въведете адрес с http:// или https://, например http://localhost:11434.",
-"optOllamaPermDenied": "Разрешението е отказано: DevDocTrad не може да достигне {0}."
+"optOllamaPermDenied": "Разрешението е отказано: DevDocTrad не може да достигне {0}.",
+"keyNoApiKey": "липсва ключ"
 }

@@ -223,5 +223,6 @@
 "popupPaidOnly": "У вас только платные ключи: чтобы переводить, выберите платный ключ в меню «Ключ».",
 "popupProgress": "Ход перевода",
 "optUrlInvalid": "Неверный адрес: введите адрес http:// или https://, например http://localhost:11434.",
-"optOllamaPermDenied": "Разрешение отклонено: DevDocTrad не может подключиться к {0}."
+"optOllamaPermDenied": "Разрешение отклонено: DevDocTrad не может подключиться к {0}.",
+"keyNoApiKey": "нет ключа"
 }

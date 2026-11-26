@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "chọn mô hình"
   },
+  "keyNoApiKey": {
+    "message": "thiếu khóa"
+  },
   "keyPausedUntil": {
     "message": "tạm dừng đến {0}"
   },

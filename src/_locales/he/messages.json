@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "בחר מודל"
   },
+  "keyNoApiKey": {
+    "message": "חסר מפתח"
+  },
   "keyPausedUntil": {
     "message": "מושהה עד {0}"
   },

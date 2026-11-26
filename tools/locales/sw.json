@@ -223,5 +223,6 @@
 "popupPaidOnly": "Una funguo za kulipia tu: chagua ufunguo wa kulipia kwenye menyu ya \"Ufunguo\" ili kutafsiri.",
 "popupProgress": "Maendeleo ya tafsiri",
 "optUrlInvalid": "Anwani si sahihi: weka anwani ya http:// au https://, kwa mfano http://localhost:11434.",
-"optOllamaPermDenied": "Ruhusa imekataliwa: DevDocTrad haiwezi kufikia {0}."
+"optOllamaPermDenied": "Ruhusa imekataliwa: DevDocTrad haiwezi kufikia {0}.",
+"keyNoApiKey": "ufunguo haupo"
 }

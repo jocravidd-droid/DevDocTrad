@@ -223,5 +223,6 @@
 "popupPaidOnly": "Hai solo chiavi a pagamento: scegli la chiave a pagamento nel menu «Chiave» per tradurre.",
 "popupProgress": "Avanzamento della traduzione",
 "optUrlInvalid": "Indirizzo non valido: inserisci un indirizzo http:// o https://, per esempio http://localhost:11434.",
-"optOllamaPermDenied": "Permesso negato: DevDocTrad non può raggiungere {0}."
+"optOllamaPermDenied": "Permesso negato: DevDocTrad non può raggiungere {0}.",
+"keyNoApiKey": "chiave mancante"
 }

@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "choose a model"
   },
+  "keyNoApiKey": {
+    "message": "key missing"
+  },
   "keyPausedUntil": {
     "message": "paused until {0}"
   },

@@ -74,6 +74,7 @@ M = {
     "keyAvailable": ("disponible", "available"),
     "keyDisabled": ("désactivée", "disabled"),
     "keyNoModel": ("modèle à choisir", "choose a model"),
+    "keyNoApiKey": ("clé à coller", "key missing"),
     "keyPausedUntil": ("en pause jusqu'à {0}", "paused until {0}"),
     "keyProblem": ("problème", "problem"),
     "tier_free": ("gratuite", "free"),

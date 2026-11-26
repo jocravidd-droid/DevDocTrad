@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "vælg en model"
   },
+  "keyNoApiKey": {
+    "message": "nøgle mangler"
+  },
   "keyPausedUntil": {
     "message": "sat på pause til {0}"
   },

@@ -104,6 +104,9 @@
   "keyNoModel": {
     "message": "valitse malli"
   },
+  "keyNoApiKey": {
+    "message": "avain puuttuu"
+  },
   "keyPausedUntil": {
     "message": "tauolla klo {0} asti"
   },
