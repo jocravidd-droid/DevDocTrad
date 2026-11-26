@@ -21,6 +21,18 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Versions : [S
   - Embedded players from other sites: clear message and an "Open the video in a tab" button.
 - 7 nouveaux textes d'interface traduits dans les 36 langues ; 17 nouveaux tests (`tests/voice.test.js`, `tests/popup.test.js`) et 5 vérifications du doublage dans `tools/e2e_voice.js` (fausse synthèse vocale injectée, Chromium sans tête n'a aucune voix).
 
+- **Fichiers texte et Markdown bruts** (README « raw » de GitHub, `.txt`, `.md`) : affichés lisiblement (titres, listes, liens) et traduits, le code reste intact ; avant : « rien à traduire ». / Raw text and Markdown files are now readable and translated.
+- **Nom plus facile à trouver** dans les boutiques, avec les mots les plus cherchés, dans les 36 langues (« DevDocTrad : Traducteur de docs, code et vidéos »). / Keyword-rich extension name.
+- **Site** : démos interactives (Original / Traduction / Bilingue, voix des vidéos), thème clair/sombre, vidéo de présentation, images d'exemple agrandies avec plein écran, bouton Firefox vers addons.mozilla.org. / Interactive website.
+- Tests : test de bout en bout dans un vrai Firefox (`tools/e2e_firefox.js`, aussi sur GitHub Actions) ; tests du popup, des réglages, des frameworks, des pages difficiles.
+
+### Corrigé / Fixed
+- **Firefox** : la voix d'une vidéo sans sous-titres n'était jamais envoyée (blocage de sécurité de Firefox sur le son enregistré) ; silence détecté à tort quand le contexte audio de la page était suspendu.
+- **Firefox et Chrome, pages « qui ne marchent pas »** : sites où le navigateur interdit toute extension (addons.mozilla.org, support.mozilla.org, boutiques) et PDF : message clair dans le popup et « ! » sur l'icône au lieu de ne rien faire.
+- **Sites React, Vue, Next, Docusaurus…** : le texte est modifié sur place, plus aucun nœud de la page n'est retiré (pages qui pouvaient casser) ; « Arrêter » respecté ; contenu chargé plus tard traduit ; titre et mémoire corrects en navigation SPA ; grosses pages plus rapides.
+- **Clés payantes** : le plafond de dépense pouvait être dépassé (jusqu'à 7,5 fois) ; coût réservé avant chaque appel, usage réel compté. Rafales de requêtes sur réponse mal formée bornées ; plusieurs onglets sérialisés ; cache par entrée (plus de relecture de 20 Mo) ; pages sensibles jamais mises en cache ; messages des pages web filtrés.
+- **Interface** : faux coins (feuille du logo) supprimés dans le popup et les réglages ; popup toujours ≤ 600 px dans les 36 langues ; contraste du bouton principal et des étiquettes d'état ; réglages bornés (un prix négatif ne désactive plus le plafond) ; suppression de clé enregistrée tout de suite ; accessibilité.
+
 ### Modifié / Changed
 - Lecture à voix haute : le son de la vidéo n'est plus baissé en continu (25 %) mais seulement pendant que la voix parle (15 %).
 - Vidéo protégée par DRM (`mediaKeys`) : message `voiceNoAudio` tout de suite, sans tenter de capturer le son.
