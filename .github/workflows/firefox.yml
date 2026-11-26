@@ -1,0 +1,30 @@
+# Test de bout en bout dans un vrai Firefox (déjà installé sur ubuntu-latest), à chaque envoi.
+name: Firefox
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: npm ci
+      - run: firefox --version
+      - run: python3 build.py
+      - name: Bout en bout dans Firefox (page, Markdown brut, voix des vidéos)
+        run: node tools/e2e_firefox.js

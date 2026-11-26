@@ -165,6 +165,12 @@ node tools/e2e_voice.js
 Le second vérifie la traduction de la voix des vidéos dans un vrai Chromium (vidéo de démo, sous-titres, son transcrit par un faux Groq).
 
 ```bash
+node tools/e2e_firefox.js
+```
+
+Le troisième fait la même chose dans un vrai Firefox (140 ou plus récent ; `FIREFOX_BIN=/chemin/firefox` si Firefox n'est pas dans le PATH), sans aucune dépendance : il pilote Firefox par son protocole intégré (WebDriver BiDi).
+
+```bash
 python3 tools/build_site.py
 ```
 
