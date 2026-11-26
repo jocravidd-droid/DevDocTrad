@@ -218,5 +218,10 @@
 "voiceSpeakOff": "소리 내어 읽기 중지",
 "popupRestricted": "브라우저가 이 사이트에서 모든 확장 프로그램을 금지합니다(확장 프로그램 스토어, 브라우저 계정 또는 지원). DevDocTrad의 오류가 아닙니다.",
 "popupPdf": "PDF는 브라우저 뷰어에서 열리며, 어떤 확장 프로그램도 들어갈 수 없습니다. HTML 버전이 있으면 그것을 여세요.",
-"popupBlocked": "브라우저가 이 페이지에 대한 접근을 거부했습니다. Firefox에서는 일부 사이트가 제한됩니다: about:addons를 열고 DevDocTrad에서 「제한된 사이트에서 실행」을 허용한 뒤 페이지를 새로 고치세요."
+"popupBlocked": "브라우저가 이 페이지에 대한 접근을 거부했습니다. Firefox에서는 일부 사이트가 제한됩니다: about:addons를 열고 DevDocTrad에서 「제한된 사이트에서 실행」을 허용한 뒤 페이지를 새로 고치세요.",
+"statePaidOnly": "유료 키를 선택하세요",
+"popupPaidOnly": "유료 키만 있습니다. 번역하려면 \"키\" 메뉴에서 유료 키를 선택하세요.",
+"popupProgress": "번역 진행률",
+"optUrlInvalid": "잘못된 주소입니다. http:// 또는 https:// 주소를 입력하세요(예: http://localhost:11434).",
+"optOllamaPermDenied": "권한이 거부되었습니다. DevDocTrad가 {0}에 연결할 수 없습니다."
 }

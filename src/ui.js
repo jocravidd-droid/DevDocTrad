@@ -51,12 +51,14 @@
     }
   }
 
-  /* Notifications : succès 2,5 s, info 4 s, avertissement 7 s, erreur jusqu'à fermeture */
+  /* Notifications : succès 2,5 s, info 4 s, avertissement 7 s, erreur jusqu'à fermeture.
+     Chaque notification porte role=status ou role=alert ; le conteneur n'a pas d'aria-live
+     (sinon les lecteurs d'écran l'annonçaient deux fois). */
   var TYPES = { success: ['check', 2500], info: ['info', 4000], progress: ['info', 0], warning: ['alert', 7000], error: ['error', 0] };
   function toast(type, message, opts) {
     opts = opts || {};
     var box = document.querySelector('.toasts');
-    if (!box) { box = document.createElement('div'); box.className = 'toasts'; box.setAttribute('aria-live', 'polite'); document.body.appendChild(box); }
+    if (!box) { box = document.createElement('div'); box.className = 'toasts'; document.body.appendChild(box); }
     var def = TYPES[type] || TYPES.info;
     var el = document.createElement('div');
     el.className = 'toast m-floating ' + type;

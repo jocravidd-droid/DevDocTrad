@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Pagina nu poate fi tradusă"
   },
+  "statePaidOnly": {
+    "message": "Alege cheia plătită"
+  },
+  "popupPaidOnly": {
+    "message": "Ai doar chei plătite: pentru a traduce, alege cheia plătită din meniul „Cheie”."
+  },
+  "popupProgress": {
+    "message": "Progresul traducerii"
+  },
+  "optUrlInvalid": {
+    "message": "Adresă nevalidă: introdu o adresă http:// sau https://, de exemplu http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Permisiune refuzată: DevDocTrad nu poate accesa {0}."
+  },
   "toastAutoOn": {
     "message": "Traducerea automată a fost activată pentru {0}."
   },

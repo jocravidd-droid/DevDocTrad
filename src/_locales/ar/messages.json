@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "لا يمكن ترجمة الصفحة"
   },
+  "statePaidOnly": {
+    "message": "اختر مفتاحك المدفوع"
+  },
+  "popupPaidOnly": {
+    "message": "لديك مفاتيح مدفوعة فقط: اختر المفتاح المدفوع من قائمة «المفتاح» للترجمة."
+  },
+  "popupProgress": {
+    "message": "تقدّم الترجمة"
+  },
+  "optUrlInvalid": {
+    "message": "عنوان غير صالح: أدخل عنوانًا يبدأ بـ http:// أو https://، مثل http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "تم رفض الإذن: لا يستطيع DevDocTrad الوصول إلى {0}."
+  },
   "toastAutoOn": {
     "message": "فُعّلت الترجمة التلقائية لـ {0}."
   },

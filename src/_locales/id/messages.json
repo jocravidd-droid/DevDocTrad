@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Halaman tidak bisa diterjemahkan"
   },
+  "statePaidOnly": {
+    "message": "Pilih kunci berbayar Anda"
+  },
+  "popupPaidOnly": {
+    "message": "Anda hanya punya kunci berbayar: pilih kunci berbayar di menu \"Kunci\" untuk menerjemahkan."
+  },
+  "popupProgress": {
+    "message": "Kemajuan terjemahan"
+  },
+  "optUrlInvalid": {
+    "message": "Alamat tidak valid: masukkan alamat http:// atau https://, misalnya http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Izin ditolak: DevDocTrad tidak dapat menjangkau {0}."
+  },
   "toastAutoOn": {
     "message": "Terjemahan otomatis diaktifkan untuk {0}."
   },

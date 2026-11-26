@@ -10,10 +10,16 @@
   var host = '';
   var supported = true;
   var hasUsableKey = false;
+  var hasPaidKey = false;   // clé payante prête : utilisable seulement si choisie dans le menu « Clé »
   var lastStatus = null;
+  var lastState = null;
   var pollTimer = null;
   var sensitive = false;
-  var MAX_KEYS = 2;   // le popup ne doit jamais dépasser 600 px de haut (barre de défilement sinon)
+  var autoEntries = [];     // entrées de la liste des sites automatiques qui couvrent ce site
+  var voiceBusy = false;
+  var MAX_KEYS = 2;         // clés listées au plus ; une seule si le popup dépasse 600 px
+  var MAX_HEIGHT = 600;     // au-delà, le navigateur ajoute une barre de défilement au popup
+  var keyLimit = MAX_KEYS;
 
   DDT.localizePage(document);
   UI.fillIcons(document);
@@ -32,8 +38,7 @@
 
   /* ---------- Clés ---------- */
   function renderKeys(state) {
-    var ul = $('keys');
-    ul.textContent = '';
+    lastState = state;
     var sel = $('keySel');
     var current = sel.value;
     sel.textContent = '';
@@ -42,9 +47,29 @@
     auto.textContent = t('popupKeyAuto');
     sel.appendChild(auto);
     hasUsableKey = false;
-    state.keys.forEach(function (k, i) {
+    hasPaidKey = false;
+    state.keys.forEach(function (k) {
       if (k.enabled && k.configured && k.tier !== 'paid') hasUsableKey = true;
-      if (i < MAX_KEYS) {
+      if (k.enabled && k.configured && k.tier === 'paid') hasPaidKey = true;
+      if (k.enabled && k.configured) {
+        var o = document.createElement('option');
+        o.value = k.id;
+        o.textContent = k.label + ' (' + t('tier_' + k.tier) + ')';
+        sel.appendChild(o);
+      }
+    });
+    sel.value = current || '';
+    if (sel.selectedIndex < 0) sel.value = '';   // clé choisie supprimée entre-temps
+    renderKeyList(state);
+    $('noKeys').hidden = state.keys.length > 0;
+  }
+
+  /* Liste des clés : au plus keyLimit lignes, puis « et N autres » */
+  function renderKeyList(state) {
+    var ul = $('keys');
+    ul.textContent = '';
+    state.keys.forEach(function (k, i) {
+      if (i < keyLimit) {
         var li = document.createElement('li');
         var name = document.createElement('span');
         name.className = 'kname';
@@ -58,25 +83,40 @@
         else if (k.available) chip(c, 'ok', 'check', t('keyAvailable'));
         else if (k.until) chip(c, 'warn', 'pause', t('keyPausedUntil', [fmtTime(k.until)]));
         else chip(c, 'err', 'error', t('keyProblem'));
+        name.title = name.textContent;
         li.appendChild(name);
         li.appendChild(c);
         ul.appendChild(li);
       }
-      if (k.enabled && k.configured) {
-        var o = document.createElement('option');
-        o.value = k.id;
-        o.textContent = k.label + ' (' + t('tier_' + k.tier) + ')';
-        sel.appendChild(o);
-      }
     });
-    if (state.keys.length > MAX_KEYS) {
+    if (state.keys.length > keyLimit) {
       var more = document.createElement('li');
       more.className = 'more';
-      more.textContent = t('popupMoreKeys', [state.keys.length - MAX_KEYS]);
+      more.textContent = t('popupMoreKeys', [state.keys.length - keyLimit]);
       ul.appendChild(more);
     }
-    sel.value = current || '';
-    $('noKeys').hidden = state.keys.length > 0;
+  }
+
+  /* ---------- Hauteur : jamais plus de 600 px (sinon barre de défilement) ----------
+     Langue longue + message d'état long + note « page sensible » + 3 clés + raccourci peuvent
+     dépasser 600 px. On retire alors, dans l'ordre : la 2e clé listée, le pied (raccourci), puis on
+     resserre (message d'état et note limités à 2 lignes, texte complet dans title). */
+  function tooTall() { return Math.ceil(document.body.getBoundingClientRect().height) > MAX_HEIGHT; }
+  var fitSig = '';
+  function fitHeight() {
+    var foot = $('foot');
+    // l'actualisation tourne toutes les 800 ms : rien à refaire si le contenu n'a pas changé
+    var sig = [$('status').textContent, $('stop').hidden, $('progress').hidden, $('count').textContent.length, $('stateChip').textContent,
+      $('sensitiveNote').hidden, foot.textContent, foot.classList.contains('hidden'), lastState ? JSON.stringify(lastState.keys) : ''].join('|');
+    if (sig === fitSig) return;
+    fitSig = sig;
+    document.body.classList.remove('tight');
+    foot.classList.remove('squeezed');
+    if (keyLimit !== MAX_KEYS) { keyLimit = MAX_KEYS; if (lastState) renderKeyList(lastState); }
+    if (!tooTall()) return;
+    if (lastState && lastState.keys.length > 1) { keyLimit = 1; renderKeyList(lastState); }
+    if (tooTall()) foot.classList.add('squeezed');
+    if (tooTall()) document.body.classList.add('tight');
   }
 
   /* ---------- État de la page ---------- */
@@ -91,8 +131,9 @@
     var showing = st ? st.showing : 'original';
 
     if (!st || (st.state === 'idle' && !done)) {
-      if (!hasUsableKey) chip(c, 'warn', 'key', t('stateNoKey'));
-      else chip(c, 'info', 'translate', t('stateReady'));
+      if (hasUsableKey || $('keySel').value) chip(c, 'info', 'translate', t('stateReady'));
+      else if (hasPaidKey) { chip(c, 'warn', 'coin', t('statePaidOnly')); msg = t('popupPaidOnly'); }
+      else chip(c, 'warn', 'key', t('stateNoKey'));
     } else if (running) chip(c, 'info', null, t('stateRunning'), true);
     else if (st.state === 'error') { chip(c, 'err', 'error', t('stateError')); msg = st.message; }
     else if (st.state === 'paused') { chip(c, 'warn', 'pause', t('statePaused')); msg = st.message; }
@@ -123,6 +164,8 @@
     });
     $('stop').hidden = !running;
     $('status').textContent = msg || '';
+    $('status').title = msg || '';
+    fitHeight();
   }
 
   function refreshStatus() {
@@ -135,10 +178,15 @@
       if (!state) return;
       renderKeys(state);
       renderTargets(state.settings.targetChoice || state.settings.target);
-      $('autoSite').checked = (state.settings.autoSites || []).some(function (h) {
-        return host === h || host.slice(-(h.length + 1)) === '.' + h;
+      // docs.example.com est couvert par « example.com » : on garde l'entrée réelle de la liste,
+      // c'est elle qu'il faudra retirer si l'utilisateur décoche.
+      var lower = host.toLowerCase();
+      autoEntries = (state.settings.autoSites || []).filter(function (h) {
+        return lower === h || lower.slice(-(h.length + 1)) === '.' + h;
       });
+      $('autoSite').checked = autoEntries.length > 0;
       if (!lastStatus) renderStatus(null);
+      else fitHeight();
     });
   }
 
@@ -150,9 +198,11 @@
   }
 
   $('translate').addEventListener('click', function () {
-    if (!hasUsableKey && !$('keySel').value) { UI.toast('warning', t('badgeNoKey')); return; }
+    if (!hasUsableKey && !$('keySel').value) { UI.toast('warning', t(hasPaidKey ? 'popupPaidOnly' : 'badgeNoKey')); return; }
     cmd('translate');
   });
+  // Choisir une clé (payante notamment) change l'état « prête » du popup
+  $('keySel').addEventListener('change', function () { renderStatus(lastStatus); });
   document.querySelectorAll('input[name=view]').forEach(function (r) {
     r.addEventListener('change', function () {
       if (!r.checked || !lastStatus) return;
@@ -201,37 +251,49 @@
   // Geste utilisateur : la demande de permission part tout de suite, avant tout await (Firefox).
   $('autoSite').addEventListener('change', function (e) {
     if (!host) return;
-    var h = host.replace(/^www\./, '');
+    var h = host.toLowerCase().replace(/^www\./, '');
     if (e.target.checked) {
       api.storage.local.set({ pendingAutoSite: h });
       api.permissions.request({ origins: ['*://' + h + '/*', '*://*.' + h + '/*'] }).then(function (granted) {
         if (!granted) { e.target.checked = false; UI.toast('info', t('toastPermDenied')); return; }
         return send({ type: 'addAutoSite', host: h }).then(function () {
+          autoEntries = [h];
           UI.toast('success', t('toastAutoOn', [h]));
           return api.storage.local.remove('pendingAutoSite');
         });
       }).catch(function () { e.target.checked = false; });
     } else {
-      send({ type: 'removeAutoSite', host: h }).then(function () { UI.toast('info', t('toastAutoOff', [h])); });
+      // Retire les entrées qui couvrent vraiment ce site (« example.com » pour docs.example.com),
+      // l'une après l'autre : chaque retrait relit puis réécrit les réglages.
+      var entries = autoEntries.length ? autoEntries.slice() : [h];
+      entries.reduce(function (p, entry) {
+        return p.then(function () { return send({ type: 'removeAutoSite', host: entry }); });
+      }, Promise.resolve()).then(function () {
+        autoEntries = [];
+        UI.toast('info', t('toastAutoOff', [entries.join(', ')]));
+      });
     }
   });
 
   /* ---------- Voix des vidéos : sous-titres traduits, ou son transcrit (Groq Whisper gratuit) ---------- */
   function voiceStatus() {
-    if (!tab || !supported) return;
+    if (!tab || !supported || voiceBusy) return;
     send({ type: 'voiceCommand', tabId: tab.id, cmd: 'status' }).then(function (r) {
-      $('voiceSwitch').checked = !!(r && r.active);
+      if (!voiceBusy) $('voiceSwitch').checked = !!(r && r.active);
     }).catch(function () { /* page sans script voix */ });
   }
   $('voiceSwitch').addEventListener('change', function (e) {
     if (!tab) return;
     var on = e.target.checked;
+    voiceBusy = true;   // pas de relecture de l'état pendant le démarrage ou l'arrêt
     send({ type: 'voiceCommand', tabId: tab.id, cmd: on ? 'start' : 'stop', keyId: $('keySel').value || null }).then(function (r) {
+      voiceBusy = false;
       if (on && (!r || !r.active)) {
         e.target.checked = false;
         UI.toast('warning', (r && r.message) || t('voiceNoVideo'));
       } else if (on) UI.toast('success', t('voiceOn'));
     }).catch(function (err) {
+      voiceBusy = false;
       e.target.checked = false;
       UI.toast('error', t('badgeError', [String(err && err.message || err)]));
     });
@@ -257,13 +319,20 @@
         var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {});
         sensitive = DDT.isSensitiveHost(host, s.sensitiveExtra);
         $('sensitiveNote').hidden = !sensitive;
+        fitHeight();
       });
     }
     refreshState().then(function () {
       if (supported) {
         refreshStatus();
         voiceStatus();
-        pollTimer = setInterval(refreshStatus, 800);
+        // La voix peut s'arrêter seule (vidéo finie, raccourci Alt+Maj+V, page rechargée) :
+        // son interrupteur est relu une actualisation sur quatre.
+        var ticks = 0;
+        pollTimer = setInterval(function () {
+          refreshStatus();
+          if (++ticks % 4 === 0) voiceStatus();
+        }, 800);
       }
     });
   });
@@ -280,6 +349,7 @@
           kb.textContent = k;
           f.appendChild(kb);
         });
+        fitHeight();
       } else $('foot').classList.add('hidden');
     }).catch(function () { $('foot').classList.add('hidden'); });
   }

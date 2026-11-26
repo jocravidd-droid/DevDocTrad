@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Strony nie można przetłumaczyć"
   },
+  "statePaidOnly": {
+    "message": "Wybierz płatny klucz"
+  },
+  "popupPaidOnly": {
+    "message": "Masz tylko płatne klucze: aby tłumaczyć, wybierz płatny klucz w menu „Klucz”."
+  },
+  "popupProgress": {
+    "message": "Postęp tłumaczenia"
+  },
+  "optUrlInvalid": {
+    "message": "Nieprawidłowy adres: wpisz adres http:// lub https://, na przykład http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Odmowa uprawnień: DevDocTrad nie może połączyć się z {0}."
+  },
   "toastAutoOn": {
     "message": "Włączono automatyczne tłumaczenie dla {0}."
   },

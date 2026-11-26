@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Sesli okumayı durdur",
 "popupRestricted": "Tarayıcı bu sitede tüm eklentileri yasaklıyor (eklenti mağazası, tarayıcı hesabı veya destek). Bu bir DevDocTrad hatası değil.",
 "popupPdf": "PDF'ler tarayıcının görüntüleyicisinde açılır ve hiçbir eklenti oraya giremez. Varsa belgenin HTML sürümünü aç.",
-"popupBlocked": "Tarayıcı bu sayfaya erişimi reddetti. Firefox'ta bazı siteler kısıtlıdır: about:addons'u aç, DevDocTrad'e gir, “Kısıtlamalı sitelerde çalıştır”a izin ver ve sayfayı yenile."
+"popupBlocked": "Tarayıcı bu sayfaya erişimi reddetti. Firefox'ta bazı siteler kısıtlıdır: about:addons'u aç, DevDocTrad'e gir, “Kısıtlamalı sitelerde çalıştır”a izin ver ve sayfayı yenile.",
+"statePaidOnly": "Ücretli anahtarınızı seçin",
+"popupPaidOnly": "Yalnızca ücretli anahtarlarınız var: çevirmek için \"Anahtar\" menüsünden ücretli anahtarı seçin.",
+"popupProgress": "Çeviri ilerlemesi",
+"optUrlInvalid": "Geçersiz adres: http:// veya https:// ile başlayan bir adres girin, örneğin http://localhost:11434.",
+"optOllamaPermDenied": "İzin reddedildi: DevDocTrad {0} adresine ulaşamıyor."
 }

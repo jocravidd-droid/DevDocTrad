@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Oprește citirea cu voce tare",
 "popupRestricted": "Browserul interzice toate extensiile pe acest site (magazin de extensii, contul sau asistența browserului). Nu este o eroare DevDocTrad.",
 "popupPdf": "PDF-urile se deschid în vizualizatorul browserului, unde nicio extensie nu poate intra. Deschide versiunea HTML a documentului, dacă există.",
-"popupBlocked": "Browserul a refuzat accesul la această pagină. În Firefox unele site-uri sunt restricționate: deschide about:addons, DevDocTrad, permite „Rulează pe site-uri cu restricții” și reîncarcă pagina."
+"popupBlocked": "Browserul a refuzat accesul la această pagină. În Firefox unele site-uri sunt restricționate: deschide about:addons, DevDocTrad, permite „Rulează pe site-uri cu restricții” și reîncarcă pagina.",
+"statePaidOnly": "Alege cheia plătită",
+"popupPaidOnly": "Ai doar chei plătite: pentru a traduce, alege cheia plătită din meniul „Cheie”.",
+"popupProgress": "Progresul traducerii",
+"optUrlInvalid": "Adresă nevalidă: introdu o adresă http:// sau https://, de exemplu http://localhost:11434.",
+"optOllamaPermDenied": "Permisiune refuzată: DevDocTrad nu poate accesa {0}."
 }

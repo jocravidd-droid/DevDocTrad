@@ -63,16 +63,66 @@
     savedToast = UI.toast('success', t('optSaved'));
   }
 
-  function saveKeys() {
+  /* Enregistrement des clés : différé de 400 ms pendant la frappe, immédiat pour supprimer, monter,
+     descendre ou ajouter ; l'enregistrement en attente est forcé quand l'onglet se ferme ou passe
+     en arrière-plan (sinon une modification faite juste avant la fermeture était perdue).
+     resetKey (oubli d'une pause ou d'un arrêt 401/402) ne vise que les cartes modifiées : réenregistrer
+     les autres ne doit pas réactiver une clé arrêtée. */
+  var resetIds = {};
+  function saveKeys(changedId, now) {
+    if (changedId) resetIds[changedId] = true;
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(function () {
-      keys.forEach(function (k, i) { k.order = i; });
-      api.storage.local.set({ keys: keys }).then(function () {
-        keys.forEach(function (k) { send({ type: 'resetKey', keyId: k.id }); });
-        notifySaved();
-        refreshPublic();
+    saveTimer = null;
+    if (now) return flushKeys();
+    saveTimer = setTimeout(flushKeys, 400);
+    return Promise.resolve();
+  }
+  function flushKeys() {
+    clearTimeout(saveTimer);
+    saveTimer = null;
+    var ids = Object.keys(resetIds);
+    resetIds = {};
+    keys.forEach(function (k, i) { k.order = i; });
+    return api.storage.local.set({ keys: keys }).then(function () {
+      ids.forEach(function (id) {
+        if (keys.some(function (k) { return k.id === id; })) send({ type: 'resetKey', keyId: id });
       });
-    }, 400);
+      notifySaved();
+      refreshPublic();
+    });
+  }
+  function flushPending() { if (saveTimer) flushKeys(); }
+  window.addEventListener('pagehide', flushPending);
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') flushPending(); });
+
+  /* Champs numériques : mêmes bornes que les attributs min/max de options.html. Une valeur
+     invalide (négative, trop petite, illisible) n'est pas enregistrée ; le champ est marqué. */
+  function numberValue(inp) {
+    if (inp.value === '' && !(inp.validity && inp.validity.badInput)) return { ok: true, value: '' };
+    var n = Number(inp.value);
+    var min = inp.getAttribute('min');
+    var max = inp.getAttribute('max');
+    var bad = inp.validity && (inp.validity.badInput || inp.validity.rangeUnderflow || inp.validity.rangeOverflow);
+    if (bad || inp.value === '' || !isFinite(n) || (min !== null && n < Number(min)) || (max !== null && n > Number(max))) return { ok: false };
+    return { ok: true, value: n };
+  }
+
+  /* Adresse d'Ollama : http(s) seulement ; un « /api » final est retiré (l'extension l'ajoute). */
+  function ollamaUrl(raw) {
+    var v = String(raw || '').trim();
+    if (!v) return { ok: true, value: '' };
+    var u;
+    try { u = new URL(v); } catch (e) { return { ok: false }; }
+    if (!/^https?:$/.test(u.protocol) || !u.hostname) return { ok: false };
+    var p = u.pathname.replace(/\/+$/, '').replace(/\/api$/, '').replace(/\/+$/, '');
+    return { ok: true, value: u.origin + p, origin: u.origin };
+  }
+  function isDefaultOllama(origin) {
+    return DDT.OLLAMA_ORIGINS.some(function (o) { return o === origin + '/*'; });
+  }
+  function markInvalid(inp, message) {
+    if (message) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid');
+    if (inp.setCustomValidity) inp.setCustomValidity(message || '');
   }
   // Relit les réglages avant d'écrire : la liste des sites automatiques peut avoir changé depuis le popup.
   function saveSettings(patch) {
@@ -252,6 +302,19 @@
     }
   }
 
+  /* Après une suppression, le focus ne doit pas retomber sur <body> : carte suivante, sinon le
+     bouton d'ajout visible (sous la liste, ou celui de l'écran « aucune clé »). */
+  function focusAfterDelete(index) {
+    var next = $('keyList').querySelectorAll('.keycard')[index];
+    if (next) {
+      next.setAttribute('tabindex', '-1');
+      next.focus();
+      return;
+    }
+    var add = !$('addGroup').hidden ? $('addKeyBtn') : $('emptyAdd');
+    if (add) add.focus();
+  }
+
   function setResult(card, kind, text) {
     var res = card.querySelector('.kc-result');
     res.hidden = false;
@@ -265,19 +328,35 @@
       var f = e.target.getAttribute('data-f');
       if (!f || f === 'tier') return;
       if (e.target.type === 'checkbox') k[f] = e.target.checked;
-      else if (e.target.type === 'number') k[f] = e.target.value === '' ? '' : Number(e.target.value);
-      else k[f] = e.target.value.trim();
+      else if (e.target.type === 'number') {
+        var num = numberValue(e.target);
+        markInvalid(e.target, num.ok ? '' : (e.target.validationMessage || t('errUnknown')));
+        if (!num.ok) return;   // jamais de prix, de plafond ou de limite négatifs enregistrés
+        k[f] = num.value;
+      } else if (f === 'baseUrl') {
+        var url = ollamaUrl(e.target.value);
+        markInvalid(e.target, url.ok ? '' : t('optUrlInvalid'));
+        if (!url.ok) return;
+        k[f] = url.value;
+      } else k[f] = e.target.value.trim();
       if (f === 'label') card.setAttribute('aria-label', k.label || providerLabel(k.provider));
       if (f === 'priceIn' || f === 'priceOut' || f === 'dailyCap') fillPaidState(card, k);
-      saveKeys();
+      saveKeys(k.id);
     });
     card.addEventListener('change', function (e) {
-      if (e.target.getAttribute('data-f') !== 'tier' || !e.target.checked) return;
+      var f = e.target.getAttribute('data-f');
+      // Fin de saisie : la valeur refusée est signalée (message du navigateur), l'adresse est nettoyée
+      if (e.target.getAttribute('aria-invalid') === 'true') {
+        if (e.target.reportValidity) e.target.reportValidity();
+        return;
+      }
+      if (f === 'baseUrl' && e.target.value.trim() && e.target.value !== k.baseUrl) e.target.value = k.baseUrl;
+      if (f !== 'tier' || !e.target.checked) return;
       k.tier = e.target.value;
       card.querySelector('.f-paid').hidden = k.tier !== 'paid';
       if (k.tier === 'paid') fillPaidState(card, k);
       fillMeta(card, k, keys.indexOf(k));
-      saveKeys();
+      saveKeys(k.id);
     });
     card.addEventListener('click', function (e) {
       var b = e.target.closest('[data-a]');
@@ -301,16 +380,32 @@
       } else if (a === 'del') {
         if (!confirm(t('optDeleteConfirm'))) return;
         keys.splice(i, 1);
-        saveKeys();
+        saveKeys(null, true);
         renderKeys();
+        focusAfterDelete(i);
       } else if (a === 'up' && i > 0) {
-        keys.splice(i - 1, 0, keys.splice(i, 1)[0]); saveKeys(); renderKeys(k.id, 'up');
+        keys.splice(i - 1, 0, keys.splice(i, 1)[0]); saveKeys(null, true); renderKeys(k.id, 'up');
       } else if (a === 'down' && i < keys.length - 1) {
-        keys.splice(i + 1, 0, keys.splice(i, 1)[0]); saveKeys(); renderKeys(k.id, 'down');
+        keys.splice(i + 1, 0, keys.splice(i, 1)[0]); saveKeys(null, true); renderKeys(k.id, 'down');
       } else if (a === 'models' || a === 'test') {
+        var perm = Promise.resolve(true);
+        if (k.provider === 'ollama') {
+          var url = ollamaUrl(card.querySelector('[data-f=baseUrl]').value);
+          if (!url.ok) { setResult(card, 'err', t('optUrlInvalid')); return; }
+          // Ollama ailleurs que sur localhost:11434 : permission pour cette origine, demandée tout de
+          // suite (geste utilisateur, avant tout await : obligatoire dans Firefox).
+          var origin = url.origin || new URL(DDT.PROVIDERS.ollama.base).origin;
+          if (!isDefaultOllama(origin) && api.permissions && api.permissions.request) {
+            perm = api.permissions.request({ origins: [origin + '/*'] }).catch(function () { return false; });
+          }
+        }
         setResult(card, 'busy', t('optWorking'));
         b.disabled = true;
-        send({ type: a === 'test' ? 'testKey' : 'listModels', draft: k }).then(function (r) {
+        perm.then(function (ok) {
+          if (!ok) { b.disabled = false; setResult(card, 'err', t('optOllamaPermDenied', [origin])); return null; }
+          return send({ type: a === 'test' ? 'testKey' : 'listModels', draft: k });
+        }).then(function (r) {
+          if (r === null) return;
           b.disabled = false;
           if (!r || !r.ok) {
             var msg = (r && r.message) || t('errUnknown');
@@ -347,7 +442,7 @@
       api.permissions.request({ origins: DDT.OLLAMA_ORIGINS }).catch(function () { return false; });
     }
     keys.push(k);
-    saveKeys();
+    saveKeys(null, true);
     renderKeys();
     var card = $('keyList').querySelector('[data-id="' + k.id + '"]');
     if (card) {

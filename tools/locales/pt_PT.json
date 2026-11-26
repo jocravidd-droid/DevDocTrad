@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Parar a leitura em voz alta",
 "popupRestricted": "O navegador proíbe todas as extensões neste site (loja de extensões, conta ou apoio do navegador). Não é um erro do DevDocTrad.",
 "popupPdf": "Os PDF abrem no visualizador do navegador, onde nenhuma extensão pode entrar. Abre a versão HTML do documento, se existir.",
-"popupBlocked": "O navegador recusou o acesso a esta página. No Firefox alguns sites são restritos: abre about:addons, DevDocTrad, permite «Executar em sites com restrições» e recarrega a página."
+"popupBlocked": "O navegador recusou o acesso a esta página. No Firefox alguns sites são restritos: abre about:addons, DevDocTrad, permite «Executar em sites com restrições» e recarrega a página.",
+"statePaidOnly": "Escolha a sua chave paga",
+"popupPaidOnly": "Só tem chaves pagas: escolha a chave paga no menu «Chave» para traduzir.",
+"popupProgress": "Progresso da tradução",
+"optUrlInvalid": "Endereço inválido: introduza um endereço http:// ou https://, por exemplo http://localhost:11434.",
+"optOllamaPermDenied": "Permissão recusada: o DevDocTrad não consegue aceder a {0}."
 }

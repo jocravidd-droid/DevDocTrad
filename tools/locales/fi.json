@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Lopeta ääneen lukeminen",
 "popupRestricted": "Selain kieltää kaikki laajennukset tällä sivustolla (laajennuskauppa, selaintili tai tuki). Kyse ei ole DevDocTradin viasta.",
 "popupPdf": "PDF-tiedostot avautuvat selaimen katseluohjelmaan, johon mikään laajennus ei pääse. Avaa asiakirjan HTML-versio, jos sellainen on.",
-"popupBlocked": "Selain esti pääsyn tälle sivulle. Firefoxissa jotkin sivustot ovat rajoitettuja: avaa about:addons, DevDocTrad, salli ”Suorita rajoitetuilla sivustoilla” ja lataa sivu uudelleen."
+"popupBlocked": "Selain esti pääsyn tälle sivulle. Firefoxissa jotkin sivustot ovat rajoitettuja: avaa about:addons, DevDocTrad, salli ”Suorita rajoitetuilla sivustoilla” ja lataa sivu uudelleen.",
+"statePaidOnly": "Valitse maksullinen avain",
+"popupPaidOnly": "Sinulla on vain maksullisia avaimia: valitse maksullinen avain Avain-valikosta kääntääksesi.",
+"popupProgress": "Käännöksen eteneminen",
+"optUrlInvalid": "Virheellinen osoite: anna http://- tai https://-osoite, esimerkiksi http://localhost:11434.",
+"optOllamaPermDenied": "Lupa evätty: DevDocTrad ei saa yhteyttä kohteeseen {0}."
 }

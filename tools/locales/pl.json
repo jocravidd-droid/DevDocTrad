@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Zatrzymaj czytanie na głos",
 "popupRestricted": "Przeglądarka zabrania wszystkim rozszerzeniom działania na tej stronie (sklep z rozszerzeniami, konto lub pomoc przeglądarki). To nie jest błąd DevDocTrad.",
 "popupPdf": "Pliki PDF otwierają się w przeglądarce PDF, do której żadne rozszerzenie nie ma wstępu. Otwórz wersję HTML dokumentu, jeśli istnieje.",
-"popupBlocked": "Przeglądarka odmówiła dostępu do tej strony. W Firefoksie niektóre strony są ograniczone: otwórz about:addons, DevDocTrad, zezwól na „Uruchamiaj na witrynach z ograniczeniami” i przeładuj stronę."
+"popupBlocked": "Przeglądarka odmówiła dostępu do tej strony. W Firefoksie niektóre strony są ograniczone: otwórz about:addons, DevDocTrad, zezwól na „Uruchamiaj na witrynach z ograniczeniami” i przeładuj stronę.",
+"statePaidOnly": "Wybierz płatny klucz",
+"popupPaidOnly": "Masz tylko płatne klucze: aby tłumaczyć, wybierz płatny klucz w menu „Klucz”.",
+"popupProgress": "Postęp tłumaczenia",
+"optUrlInvalid": "Nieprawidłowy adres: wpisz adres http:// lub https://, na przykład http://localhost:11434.",
+"optOllamaPermDenied": "Odmowa uprawnień: DevDocTrad nie może połączyć się z {0}."
 }

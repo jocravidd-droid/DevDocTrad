@@ -218,5 +218,10 @@
 "voiceSpeakOff": "停止朗讀",
 "popupRestricted": "瀏覽器禁止所有擴充功能在此網站上執行（擴充功能商店、瀏覽器帳號或支援頁面）。這不是 DevDocTrad 的故障。",
 "popupPdf": "PDF 會在瀏覽器的檢視器中開啟，任何擴充功能都無法進入。如有 HTML 版本，請開啟 HTML 版本。",
-"popupBlocked": "瀏覽器拒絕存取此頁面。在 Firefox 中，部分網站受到限制：開啟 about:addons，進入 DevDocTrad，允許「在受限網站上執行」，然後重新載入頁面。"
+"popupBlocked": "瀏覽器拒絕存取此頁面。在 Firefox 中，部分網站受到限制：開啟 about:addons，進入 DevDocTrad，允許「在受限網站上執行」，然後重新載入頁面。",
+"statePaidOnly": "請選擇付費金鑰",
+"popupPaidOnly": "你只有付費金鑰：請在「金鑰」選單中選擇付費金鑰後再翻譯。",
+"popupProgress": "翻譯進度",
+"optUrlInvalid": "位址無效：請輸入以 http:// 或 https:// 開頭的位址，例如 http://localhost:11434。",
+"optOllamaPermDenied": "權限遭拒：DevDocTrad 無法連線到 {0}。"
 }

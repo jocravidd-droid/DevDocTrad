@@ -45,6 +45,26 @@ for (const l of locales) {
   });
 }
 
+test('langues : src/_locales correspond exactement à ce que génère tools/gen_locales.py', (t) => {
+  const { spawnSync } = require('child_process');
+  const os = require('os');
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-locales-'));
+  try {
+    const r = spawnSync('python3', [path.join(__dirname, '..', 'tools', 'gen_locales.py'), '--out', out], { encoding: 'utf8' });
+    if (r.error && r.error.code === 'ENOENT') { t.skip('python3 absent'); return; }
+    assert.equal(r.status, 0, r.stderr);
+    const generated = fs.readdirSync(out).sort();
+    assert.deepEqual(generated, locales, 'mêmes dossiers de langue');
+    for (const l of generated) {
+      const want = fs.readFileSync(path.join(out, l, 'messages.json'), 'utf8');
+      const have = fs.readFileSync(path.join(DIR, l, 'messages.json'), 'utf8');
+      assert.ok(want === have, `${l} : src/_locales pas à jour, lancer python3 tools/gen_locales.py`);
+    }
+  } finally {
+    fs.rmSync(out, { recursive: true, force: true });
+  }
+});
+
 test('langues : les noms de produits et les jetons techniques sont gardés tels quels', () => {
   const keep = {
     errOllamaOrigin: ['OLLAMA_ORIGINS', 'chrome-extension://*,moz-extension://*', '403'],

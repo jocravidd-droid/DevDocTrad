@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Ukurasa hauwezi kutafsiriwa"
   },
+  "statePaidOnly": {
+    "message": "Chagua ufunguo wako wa kulipia"
+  },
+  "popupPaidOnly": {
+    "message": "Una funguo za kulipia tu: chagua ufunguo wa kulipia kwenye menyu ya \"Ufunguo\" ili kutafsiri."
+  },
+  "popupProgress": {
+    "message": "Maendeleo ya tafsiri"
+  },
+  "optUrlInvalid": {
+    "message": "Anwani si sahihi: weka anwani ya http:// au https://, kwa mfano http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Ruhusa imekataliwa: DevDocTrad haiwezi kufikia {0}."
+  },
   "toastAutoOn": {
     "message": "Tafsiri ya kiotomatiki imewashwa kwa {0}."
   },

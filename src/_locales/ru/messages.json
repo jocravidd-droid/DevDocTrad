@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Страницу нельзя перевести"
   },
+  "statePaidOnly": {
+    "message": "Выберите платный ключ"
+  },
+  "popupPaidOnly": {
+    "message": "У вас только платные ключи: чтобы переводить, выберите платный ключ в меню «Ключ»."
+  },
+  "popupProgress": {
+    "message": "Ход перевода"
+  },
+  "optUrlInvalid": {
+    "message": "Неверный адрес: введите адрес http:// или https://, например http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Разрешение отклонено: DevDocTrad не может подключиться к {0}."
+  },
   "toastAutoOn": {
     "message": "Автоматический перевод включён для {0}."
   },

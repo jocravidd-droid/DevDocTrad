@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Sayfa çevrilemiyor"
   },
+  "statePaidOnly": {
+    "message": "Ücretli anahtarınızı seçin"
+  },
+  "popupPaidOnly": {
+    "message": "Yalnızca ücretli anahtarlarınız var: çevirmek için \"Anahtar\" menüsünden ücretli anahtarı seçin."
+  },
+  "popupProgress": {
+    "message": "Çeviri ilerlemesi"
+  },
+  "optUrlInvalid": {
+    "message": "Geçersiz adres: http:// veya https:// ile başlayan bir adres girin, örneğin http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "İzin reddedildi: DevDocTrad {0} adresine ulaşamıyor."
+  },
   "toastAutoOn": {
     "message": "{0} için otomatik çeviri açıldı."
   },

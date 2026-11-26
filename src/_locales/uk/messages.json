@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Сторінку не можна перекласти"
   },
+  "statePaidOnly": {
+    "message": "Виберіть платний ключ"
+  },
+  "popupPaidOnly": {
+    "message": "У вас лише платні ключі: щоб перекладати, виберіть платний ключ у меню «Ключ»."
+  },
+  "popupProgress": {
+    "message": "Перебіг перекладу"
+  },
+  "optUrlInvalid": {
+    "message": "Неправильна адреса: введіть адресу http:// або https://, наприклад http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Дозвіл відхилено: DevDocTrad не може під'єднатися до {0}."
+  },
   "toastAutoOn": {
     "message": "Автоматичний переклад увімкнено для {0}."
   },

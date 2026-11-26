@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Page can't be translated"
   },
+  "statePaidOnly": {
+    "message": "Pick your paid key"
+  },
+  "popupPaidOnly": {
+    "message": "You only have paid keys: choose the paid key in the Key menu to translate."
+  },
+  "popupProgress": {
+    "message": "Translation progress"
+  },
+  "optUrlInvalid": {
+    "message": "Invalid address: enter an http:// or https:// address, for example http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Permission denied: DevDocTrad can't reach {0}."
+  },
   "toastAutoOn": {
     "message": "Automatic translation turned on for {0}."
   },

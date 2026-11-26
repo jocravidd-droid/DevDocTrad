@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Pagina niet vertaalbaar"
   },
+  "statePaidOnly": {
+    "message": "Kies je betaalde sleutel"
+  },
+  "popupPaidOnly": {
+    "message": "Je hebt alleen betaalde sleutels: kies de betaalde sleutel in het menu 'Sleutel' om te vertalen."
+  },
+  "popupProgress": {
+    "message": "Voortgang van de vertaling"
+  },
+  "optUrlInvalid": {
+    "message": "Ongeldig adres: voer een http://- of https://-adres in, bijvoorbeeld http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Toestemming geweigerd: DevDocTrad kan {0} niet bereiken."
+  },
   "toastAutoOn": {
     "message": "Automatische vertaling ingeschakeld voor {0}."
   },

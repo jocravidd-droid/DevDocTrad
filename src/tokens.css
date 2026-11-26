@@ -33,14 +33,16 @@
   /* Texte : 3 niveaux, le 3e réservé à l'inactif */
   --text-1: #12152b;
   --text-2: #4a5071;
-  --text-3: #8f94ad;
+  --text-3: #646985;   /* 4,5:1 sur le verre clair (petites étiquettes, textes indicatifs) */
   --text-on-accent: #ffffff;
 
   /* Accent et irisation (couleur transmise, vue sur fond clair) */
   --accent: #2f6bff;
   --accent-press: #2357e0;
+  --link: #2357e0;     /* liens en petit texte : 5:1 sur le verre clair (--accent seul : 4,3:1) */
   --focus: rgba(47, 107, 255, .55);
-  --iris: linear-gradient(115deg, #2f7bff 0%, #1fc2ef 38%, #2dd4b4 62%, #8b5cf6 100%);
+  /* Arrêts foncés : texte blanc du bouton principal à 5:1 au moins (bleu, cyan profond, sarcelle, violet) */
+  --iris: linear-gradient(115deg, #1a5fd6 0%, #0b6fa3 38%, #0f766e 62%, #6d4be0 100%);
   --iris-soft: linear-gradient(115deg, rgba(47,123,255,.16), rgba(31,194,239,.14), rgba(45,212,180,.12), rgba(139,92,246,.16));
 
   /* États (toujours accompagnés d'une icône ou d'un texte) */
@@ -93,11 +95,12 @@
   --track-off: rgba(170, 190, 255, .22);
   --text-1: #eef0ff;
   --text-2: #a9b0d8;
-  --text-3: #6c7299;
+  --text-3: #8a90b8;
   --accent: #5b8cff;
   --accent-press: #4a7bf0;
+  --link: #8fb2ff;
   --focus: rgba(110, 160, 255, .6);
-  --iris: linear-gradient(115deg, #7c5cf6 0%, #3b82f6 34%, #22d3ee 66%, #2dd4b4 100%);
+  --iris: linear-gradient(115deg, #6d4be0 0%, #2563eb 34%, #0e7490 66%, #0f766e 100%);
   --iris-soft: linear-gradient(115deg, rgba(124,92,246,.22), rgba(59,130,246,.18), rgba(34,211,238,.16), rgba(45,212,180,.16));
   --ok: #4ade80;      --ok-bg: rgba(74, 222, 128, .14);
   --warn: #fbbf24;    --warn-bg: rgba(251, 191, 36, .14);
@@ -129,11 +132,12 @@
   --track-off: rgba(170, 190, 255, .22);
     --text-1: #eef0ff;
     --text-2: #a9b0d8;
-    --text-3: #6c7299;
+    --text-3: #8a90b8;
     --accent: #5b8cff;
     --accent-press: #4a7bf0;
+    --link: #8fb2ff;
     --focus: rgba(110, 160, 255, .6);
-    --iris: linear-gradient(115deg, #7c5cf6 0%, #3b82f6 34%, #22d3ee 66%, #2dd4b4 100%);
+    --iris: linear-gradient(115deg, #6d4be0 0%, #2563eb 34%, #0e7490 66%, #0f766e 100%);
     --iris-soft: linear-gradient(115deg, rgba(124,92,246,.22), rgba(59,130,246,.18), rgba(34,211,238,.16), rgba(45,212,180,.16));
     --ok: #4ade80;      --ok-bg: rgba(74, 222, 128, .14);
     --warn: #fbbf24;    --warn-bg: rgba(251, 191, 36, .14);

@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Felolvasás leállítása",
 "popupRestricted": "A böngésző ezen az oldalon minden bővítményt tilt (bővítményáruház, böngészőfiók vagy támogatás). Ez nem a DevDocTrad hibája.",
 "popupPdf": "A PDF-ek a böngésző megjelenítőjében nyílnak meg, ahová egyetlen bővítmény sem léphet be. Ha van, nyisd meg a dokumentum HTML-változatát.",
-"popupBlocked": "A böngésző megtagadta a hozzáférést ehhez az oldalhoz. A Firefoxban egyes oldalak korlátozottak: nyisd meg az about:addons oldalt, a DevDocTradot, engedélyezd a „Futtatás korlátozott webhelyeken” lehetőséget, majd töltsd újra az oldalt."
+"popupBlocked": "A böngésző megtagadta a hozzáférést ehhez az oldalhoz. A Firefoxban egyes oldalak korlátozottak: nyisd meg az about:addons oldalt, a DevDocTradot, engedélyezd a „Futtatás korlátozott webhelyeken” lehetőséget, majd töltsd újra az oldalt.",
+"statePaidOnly": "Válaszd ki a fizetős kulcsot",
+"popupPaidOnly": "Csak fizetős kulcsaid vannak: a fordításhoz válaszd ki a fizetős kulcsot a „Kulcs” menüben.",
+"popupProgress": "A fordítás előrehaladása",
+"optUrlInvalid": "Érvénytelen cím: adj meg egy http:// vagy https:// címet, például http://localhost:11434.",
+"optOllamaPermDenied": "Engedély megtagadva: a DevDocTrad nem éri el ezt: {0}."
 }

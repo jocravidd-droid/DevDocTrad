@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Az oldal nem fordítható"
   },
+  "statePaidOnly": {
+    "message": "Válaszd ki a fizetős kulcsot"
+  },
+  "popupPaidOnly": {
+    "message": "Csak fizetős kulcsaid vannak: a fordításhoz válaszd ki a fizetős kulcsot a „Kulcs” menüben."
+  },
+  "popupProgress": {
+    "message": "A fordítás előrehaladása"
+  },
+  "optUrlInvalid": {
+    "message": "Érvénytelen cím: adj meg egy http:// vagy https:// címet, például http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Engedély megtagadva: a DevDocTrad nem éri el ezt: {0}."
+  },
   "toastAutoOn": {
     "message": "Automatikus fordítás bekapcsolva: {0}."
   },

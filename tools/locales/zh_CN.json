@@ -218,5 +218,10 @@
 "voiceSpeakOff": "停止朗读",
 "popupRestricted": "浏览器禁止所有扩展在此网站上运行（扩展商店、浏览器账户或支持页面）。这不是 DevDocTrad 的故障。",
 "popupPdf": "PDF 会在浏览器的查看器中打开，任何扩展都无法进入。如有 HTML 版本，请打开 HTML 版本。",
-"popupBlocked": "浏览器拒绝访问此页面。在 Firefox 中，部分网站受到限制：打开 about:addons，进入 DevDocTrad，允许「在受限网站上运行」，然后重新加载页面。"
+"popupBlocked": "浏览器拒绝访问此页面。在 Firefox 中，部分网站受到限制：打开 about:addons，进入 DevDocTrad，允许「在受限网站上运行」，然后重新加载页面。",
+"statePaidOnly": "请选择付费密钥",
+"popupPaidOnly": "你只有付费密钥：请在“密钥”菜单中选择付费密钥后再翻译。",
+"popupProgress": "翻译进度",
+"optUrlInvalid": "地址无效：请输入以 http:// 或 https:// 开头的地址，例如 http://localhost:11434。",
+"optOllamaPermDenied": "权限被拒绝：DevDocTrad 无法访问 {0}。"
 }

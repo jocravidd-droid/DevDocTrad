@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Không thể dịch trang"
   },
+  "statePaidOnly": {
+    "message": "Hãy chọn khóa trả phí"
+  },
+  "popupPaidOnly": {
+    "message": "Bạn chỉ có khóa trả phí: hãy chọn khóa trả phí trong menu \"Khóa\" để dịch."
+  },
+  "popupProgress": {
+    "message": "Tiến độ dịch"
+  },
+  "optUrlInvalid": {
+    "message": "Địa chỉ không hợp lệ: hãy nhập địa chỉ http:// hoặc https://, ví dụ http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Quyền bị từ chối: DevDocTrad không thể kết nối tới {0}."
+  },
   "toastAutoOn": {
     "message": "Đã bật tự động dịch cho {0}."
   },

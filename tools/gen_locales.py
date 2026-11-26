@@ -224,6 +224,14 @@ M = {
     "statePaused": ("Limite de la page atteinte", "Page limit reached"),
     "stateError": ("Erreur", "Error"),
     "stateUnavailable": ("Page non traduisible", "Page can't be translated"),
+    # Seules des clés payantes : elles ne servent que si on les choisit dans le menu « Clé » du popup
+    "statePaidOnly": ("Clé payante à choisir", "Pick your paid key"),
+    "popupPaidOnly": ("Tu n'as que des clés payantes : choisis la clé payante dans le menu « Clé » pour traduire.",
+                      "You only have paid keys: choose the paid key in the Key menu to translate."),
+    "popupProgress": ("Avancement de la traduction", "Translation progress"),
+    "optUrlInvalid": ("Adresse invalide : saisis une adresse http:// ou https://, par exemple http://localhost:11434.",
+                      "Invalid address: enter an http:// or https:// address, for example http://localhost:11434."),
+    "optOllamaPermDenied": ("Permission refusée : DevDocTrad ne peut pas joindre {0}.", "Permission denied: DevDocTrad can't reach {0}."),
     "toastAutoOn": ("Traduction automatique activée pour {0}.", "Automatic translation turned on for {0}."),
     "toastAutoOff": ("Traduction automatique désactivée pour {0}.", "Automatic translation turned off for {0}."),
     "toastPermDenied": ("Permission refusée : le site n'a pas été ajouté.", "Permission denied: the site was not added."),
@@ -304,6 +312,11 @@ def write(lang, messages):
 
 
 def main():
+    # --out <dossier> : écrit ailleurs que dans src/_locales (le test de cohérence génère dans un
+    # dossier temporaire puis compare avec src/_locales).
+    global OUT
+    if "--out" in sys.argv:
+        OUT = Path(sys.argv[sys.argv.index("--out") + 1]).resolve()
     errors = []
     for col, lang in ((0, "fr"), (1, "en")):
         n = write(lang, {k: v[col] for k, v in M.items()})

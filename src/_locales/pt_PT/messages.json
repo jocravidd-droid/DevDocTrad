@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Página não traduzível"
   },
+  "statePaidOnly": {
+    "message": "Escolha a sua chave paga"
+  },
+  "popupPaidOnly": {
+    "message": "Só tem chaves pagas: escolha a chave paga no menu «Chave» para traduzir."
+  },
+  "popupProgress": {
+    "message": "Progresso da tradução"
+  },
+  "optUrlInvalid": {
+    "message": "Endereço inválido: introduza um endereço http:// ou https://, por exemplo http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Permissão recusada: o DevDocTrad não consegue aceder a {0}."
+  },
   "toastAutoOn": {
     "message": "Tradução automática ativada para {0}."
   },

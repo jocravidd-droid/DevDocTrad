@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "पेज का अनुवाद संभव नहीं"
   },
+  "statePaidOnly": {
+    "message": "अपनी सशुल्क कुंजी चुनें"
+  },
+  "popupPaidOnly": {
+    "message": "आपके पास केवल सशुल्क कुंजियाँ हैं: अनुवाद के लिए \"कुंजी\" मेनू में सशुल्क कुंजी चुनें।"
+  },
+  "popupProgress": {
+    "message": "अनुवाद की प्रगति"
+  },
+  "optUrlInvalid": {
+    "message": "अमान्य पता: http:// या https:// वाला पता डालें, जैसे http://localhost:11434।"
+  },
+  "optOllamaPermDenied": {
+    "message": "अनुमति अस्वीकृत: DevDocTrad {0} तक नहीं पहुँच सकता।"
+  },
   "toastAutoOn": {
     "message": "{0} के लिए स्वचालित अनुवाद चालू किया गया।"
   },

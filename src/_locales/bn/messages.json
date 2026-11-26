@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "পেজ অনুবাদ করা যাবে না"
   },
+  "statePaidOnly": {
+    "message": "আপনার পেইড কী বেছে নিন"
+  },
+  "popupPaidOnly": {
+    "message": "আপনার শুধু পেইড কী আছে: অনুবাদ করতে \"কী\" মেনু থেকে পেইড কী বেছে নিন।"
+  },
+  "popupProgress": {
+    "message": "অনুবাদের অগ্রগতি"
+  },
+  "optUrlInvalid": {
+    "message": "অবৈধ ঠিকানা: http:// বা https:// দিয়ে শুরু হওয়া ঠিকানা লিখুন, যেমন http://localhost:11434।"
+  },
+  "optOllamaPermDenied": {
+    "message": "অনুমতি দেওয়া হয়নি: DevDocTrad {0}-এ পৌঁছাতে পারছে না।"
+  },
   "toastAutoOn": {
     "message": "{0}-এর জন্য স্বয়ংক্রিয় অনুবাদ চালু হয়েছে।"
   },

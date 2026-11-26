@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Stránku nelze přeložit"
   },
+  "statePaidOnly": {
+    "message": "Vyberte placený klíč"
+  },
+  "popupPaidOnly": {
+    "message": "Máte jen placené klíče: pro překlad vyberte placený klíč v nabídce „Klíč“."
+  },
+  "popupProgress": {
+    "message": "Průběh překladu"
+  },
+  "optUrlInvalid": {
+    "message": "Neplatná adresa: zadejte adresu http:// nebo https://, například http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Oprávnění zamítnuto: DevDocTrad se nemůže připojit k {0}."
+  },
   "toastAutoOn": {
     "message": "Automatický překlad zapnut pro {0}."
   },

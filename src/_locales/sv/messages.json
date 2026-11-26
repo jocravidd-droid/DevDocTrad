@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Sidan kan inte översättas"
   },
+  "statePaidOnly": {
+    "message": "Välj din betalda nyckel"
+  },
+  "popupPaidOnly": {
+    "message": "Du har bara betalda nycklar: välj den betalda nyckeln i menyn ”Nyckel” för att översätta."
+  },
+  "popupProgress": {
+    "message": "Översättningens förlopp"
+  },
+  "optUrlInvalid": {
+    "message": "Ogiltig adress: ange en http://- eller https://-adress, till exempel http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Behörighet nekad: DevDocTrad kan inte nå {0}."
+  },
   "toastAutoOn": {
     "message": "Automatisk översättning aktiverad för {0}."
   },

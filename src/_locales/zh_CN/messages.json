@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "无法翻译此页面"
   },
+  "statePaidOnly": {
+    "message": "请选择付费密钥"
+  },
+  "popupPaidOnly": {
+    "message": "你只有付费密钥：请在“密钥”菜单中选择付费密钥后再翻译。"
+  },
+  "popupProgress": {
+    "message": "翻译进度"
+  },
+  "optUrlInvalid": {
+    "message": "地址无效：请输入以 http:// 或 https:// 开头的地址，例如 http://localhost:11434。"
+  },
+  "optOllamaPermDenied": {
+    "message": "权限被拒绝：DevDocTrad 无法访问 {0}。"
+  },
   "toastAutoOn": {
     "message": "已为 {0} 开启自动翻译。"
   },

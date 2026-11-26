@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "לא ניתן לתרגם את הדף"
   },
+  "statePaidOnly": {
+    "message": "בחרו את המפתח בתשלום"
+  },
+  "popupPaidOnly": {
+    "message": "יש לכם רק מפתחות בתשלום: כדי לתרגם, בחרו את המפתח בתשלום בתפריט \"מפתח\"."
+  },
+  "popupProgress": {
+    "message": "התקדמות התרגום"
+  },
+  "optUrlInvalid": {
+    "message": "כתובת לא תקינה: הזינו כתובת http:// או https://, למשל http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "ההרשאה נדחתה: DevDocTrad לא יכול להתחבר אל {0}."
+  },
   "toastAutoOn": {
     "message": "התרגום האוטומטי הופעל עבור {0}."
   },
