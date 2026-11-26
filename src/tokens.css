@@ -28,7 +28,7 @@
   --hairline: rgba(24, 32, 84, .10);
   --sheet-back: #cfccf8;                    /* feuille arrière (motif du logo) */
   --sheet-edge: rgba(76, 66, 228, .16);
-  --track-off: rgba(24, 32, 84, .18);       /* interrupteur éteint */
+  --track-off: rgba(24, 32, 84, .32);       /* interrupteur éteint */
 
   /* Texte : 3 niveaux, le 3e réservé à l'inactif */
   --text-1: #12152b;

@@ -141,7 +141,7 @@ test('popup : choix sous-titres / doublage enregistré (voiceDub) et appliqué �
   const sel = p.doc.getElementById('voiceDubSel');
   assert.equal(sel.value, 'subs', 'défaut : sous-titres');
   assert.deepEqual(Array.from(sel.options).map((o) => o.textContent), [msg('popupVoiceSubs'), msg('popupVoiceDub')]);
-  assert.equal(sel.title, msg('popupVoiceMode'));
+  assert.equal(sel.title, sel.selectedOptions[0].textContent, 'le titre montre le choix en entier (texte coupé à 360 px)');
   sel.value = 'dub';
   sel.dispatchEvent(new p.w.Event('change'));
   await settle(10);

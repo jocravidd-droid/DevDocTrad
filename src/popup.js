@@ -280,10 +280,11 @@
   function voiceStatus() {
     if (!tab || !supported || voiceBusy) return;
     send({ type: 'voiceCommand', tabId: tab.id, cmd: 'status' }).then(function (r) {
-      if (!voiceBusy) $('voiceSwitch').checked = !!(r && r.active);
+      if (!voiceBusy) { var was = $('voiceSwitch').checked; $('voiceSwitch').checked = !!(r && r.active); if (was !== $('voiceSwitch').checked) fitHeight(); }
     }).catch(function () { /* page sans script voix */ });
   }
   $('voiceSwitch').addEventListener('change', function (e) {
+    fitHeight();   // le menu du doublage apparaît ou disparaît avec l'interrupteur
     if (!tab) return;
     var on = e.target.checked;
     voiceBusy = true;   // pas de relecture de l'état pendant le démarrage ou l'arrêt
@@ -305,8 +306,11 @@
   api.storage.local.get('settings').then(function (r) {
     var s = Object.assign({}, DDT.DEFAULT_SETTINGS, (r && r.settings) || {});
     $('voiceDubSel').value = s.voiceDub ? 'dub' : 'subs';
+    dubTitle();
   });
+  function dubTitle() { var sel = $('voiceDubSel'); var o = sel.selectedOptions && sel.selectedOptions[0]; if (o) sel.title = o.textContent; }
   $('voiceDubSel').addEventListener('change', function (e) {
+    dubTitle();
     var on = e.target.value === 'dub';
     api.storage.local.get('settings').then(function (r) {
       var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {}, { voiceDub: on });
