@@ -50,6 +50,7 @@ Key facts:
 - [Website (日本語)](https://devdoctrad.vercel.app/ja/)
 - [Website (한국어)](https://devdoctrad.vercel.app/ko/)
 - [Website (Kiswahili)](https://devdoctrad.vercel.app/sw/)
+- [Firefox add-on (addons.mozilla.org)](https://addons.mozilla.org/firefox/addon/devdoctrad/)
 - [Source code and install guide](https://github.com/jocravidd-droid/DevDocTrad)
 - [Changelog](https://github.com/jocravidd-droid/DevDocTrad/blob/main/CHANGELOG.md)
 - [Privacy policy](https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md)

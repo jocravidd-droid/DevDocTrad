@@ -24,7 +24,7 @@ Pour tous ceux qui galèrent avec une doc en anglais ou dans une autre langue : 
 
 ## Installation
 
-L'extension n'est pas encore publiée sur les boutiques. En attendant, l'installation se fait à la main, en quelques clics. Les fichiers prêts à installer sont dans le dossier [`release/`](release/).
+Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/devdoctrad/) : un clic suffit. Pour Chrome, Edge et Brave, elle n'est pas encore sur les boutiques : en attendant, l'installation se fait à la main, en quelques clics. Les fichiers prêts à installer sont dans le dossier [`release/`](release/).
 
 ### Chrome, Edge ou Brave
 
@@ -41,13 +41,16 @@ L'extension n'est pas encore publiée sur les boutiques. En attendant, l'install
 
 ### Firefox
 
+**Le plus simple** : ouvre la page [DevDocTrad sur addons.mozilla.org](https://addons.mozilla.org/firefox/addon/devdoctrad/) et clique sur **Ajouter à Firefox**. Les mises à jour arrivent ensuite toutes seules. Firefox version 140 ou plus récente est nécessaire.
+
+**Ou à la main**, avec le zip (module temporaire, utile pour tester une version précise) :
+
 1. Télécharge le fichier [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip) : ouvre le lien, puis clique sur le bouton de téléchargement en haut à droite du fichier.
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
-5. Firefox version 140 ou plus récente est nécessaire.
 
-Attention : sous Firefox, un module chargé de cette façon est **temporaire** et disparaît à la fermeture du navigateur. Il faut refaire les étapes 2 à 4 à chaque démarrage, jusqu'à la publication sur addons.mozilla.org.
+Attention : un module chargé de cette façon est **temporaire** et disparaît à la fermeture du navigateur. Il faut refaire les étapes 2 à 4 à chaque démarrage ; la version d'addons.mozilla.org, elle, reste installée.
 
 ---
 
@@ -207,6 +210,10 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
 
 ### Install (Firefox 140+)
+
+Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/devdoctrad/) (click **Add to Firefox**; updates are automatic).
+
+Or by hand, as a temporary add-on:
 
 1. Download [`release/devdoctrad-firefox-1.1.0.zip`](release/devdoctrad-firefox-1.1.0.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
