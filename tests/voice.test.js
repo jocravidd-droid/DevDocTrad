@@ -750,7 +750,7 @@ function fakeStream(ids) {
 }
 /* Faux AudioContext : état réglable, sources et connexions notées, analyseur qui rend « value » */
 function fakeAudio(state = 'running', value = 0.5) {
-  const log = { sources: [], resumes: 0, closed: 0, ctx: null, analyser: null };
+  const log = { sources: [], gains: [], resumes: 0, closed: 0, ctx: null, analyser: null };
   function AC() { this.state = state; this.destination = { destination: true }; log.ctx = this; }
   AC.prototype.createAnalyser = function () {
     log.analyser = { fftSize: 0, getFloatTimeDomainData(buf) { buf.fill(value); } };
@@ -760,6 +760,11 @@ function fakeAudio(state = 'running', value = 0.5) {
     const src = { ms, out: [], disconnected: false, connect(n) { this.out.push(n); }, disconnect() { this.disconnected = true; } };
     log.sources.push(src);
     return src;
+  };
+  AC.prototype.createGain = function () {
+    const g = { gain: { value: 1 }, out: [], disconnected: false, connect(n) { this.out.push(n); }, disconnect() { this.disconnected = true; } };
+    log.gains.push(g);
+    return g;
   };
   AC.prototype.resume = function () { log.resumes++; return Promise.resolve(); };
   AC.prototype.close = function () { log.closed++; return Promise.resolve(); };
@@ -868,7 +873,9 @@ test('son : pistes remplacées, source audio reconstruite vers l\'analyseur et l
   assert.equal(s1.disconnected, true, 'ancienne source débranchée');
   assert.equal(s2.ms.tracks[0].id, 'b', 'nouvelle source sur la nouvelle piste');
   assert.ok(s2.out.includes(A.log.analyser), 'vers l\'analyseur');
-  assert.ok(s2.out.includes(A.log.ctx.destination), 'mozCaptureStream : son renvoyé aux haut-parleurs');
+  assert.equal(A.log.gains.length, 1, 'un seul gain pour le son renvoyé');
+  assert.ok(s2.out.includes(A.log.gains[0]), 'mozCaptureStream : son renvoyé par le gain…');
+  assert.ok(A.log.gains[0].out.includes(A.log.ctx.destination), '… vers les haut-parleurs');
   assert.equal(recorders[recorders.length - 1].stream.tracks[0].id, 'b', 'enregistrement de la nouvelle piste');
   voice.stop();
 });
@@ -1136,4 +1143,72 @@ test('extension : raccourci de la voix déclaré, voice.js présent, popup avec 
   assert.ok(H.read('popup.html').includes('id="voiceDubSel"'), 'choix sous-titres / doublage');
   assert.equal(DDT.DEFAULT_SETTINGS.voiceDub, false, 'défaut : sous-titres');
   assert.ok(!/tabCapture|offscreen/.test(JSON.stringify(base)), 'aucune nouvelle permission demandée');
+});
+
+/* ---------------- Corrections d'audit ---------------- */
+test('YouTube sans sous-titres, vidéo en pause au démarrage : le son est écouté dès la lecture', async () => {
+  const dom = voiceDom(YT_HTML, { url: 'https://www.youtube.com/watch?v=nocc' });
+  const video = dom.window.document.querySelector('video');
+  let paused = true;
+  Object.defineProperty(video, 'paused', { get: () => paused, configurable: true });
+  let captured = 0;
+  video.captureStream = () => { captured++; return null; };
+  const voice = dom.window.DDT_createVoice(dom.window.document, dom.window, {
+    transport: fakeTransport([]), transcribe: () => null, ytWaitMs: 60, MediaRecorder: function () {}, watchMs: 50
+  });
+  voice.start();
+  await wait(200);
+  assert.equal(voice.status().mode, 'youtube');
+  assert.equal(overlay(dom).msg, 'voicePlay', 'invite à lancer la vidéo');
+  paused = false;
+  video.dispatchEvent(new dom.window.Event('play'));
+  assert.ok(await until(() => voice.status().mode === 'audio', 2500), 'passe à l\'écoute du son après « lecture »');
+  assert.ok(captured >= 1, 'captureStream appelé');
+  voice.stop();
+});
+
+test('erreur de traduction arrivée après « Arrêter » : la bande n\'est pas recréée', async () => {
+  const dom = voiceDom();
+  const w = dom.window;
+  const video = w.document.querySelector('video');
+  Object.defineProperty(video, 'textTracks', { value: [fakeTrack([{ text: 'Hello world', startTime: 0, endTime: 2 }])], configurable: true });
+  const voice = w.DDT_createVoice(w.document, w, {
+    transport: { translate: () => wait(100).then(() => ({ error: 'rate_limited' })) }, transcribe: () => null
+  });
+  voice.start();
+  await wait(20);
+  voice.stop();
+  assert.equal(overlay(dom), null);
+  await wait(300);
+  assert.equal(overlay(dom), null, 'pas de bande après l\'erreur tardive');
+  assert.equal(voice.status().active, false);
+});
+
+test('son (Firefox) : le son renvoyé suit le volume de la vidéo, la sourdine et la baisse du doublage', async () => {
+  const A = fakeAudio();
+  const s = audioSetup(() => ({ ok: true, text: 'Open the terminal' }), { moz: true, stream: fakeStream(['a']), AudioContext: A.AC, chunkMs: 60 });
+  const { w, video, voice } = s;
+  const sp = fakeSpeech(w);
+  video.volume = 0.8;
+  voice.start();
+  assert.ok(await until(() => A.log.gains.length === 1), 'gain créé');
+  const g = A.log.gains[0];
+  assert.ok(g.out.includes(A.log.ctx.destination));
+  assert.equal(g.gain.value, 0.8, 'volume choisi par l\'utilisateur');
+  video.volume = 0.5;
+  video.dispatchEvent(new w.Event('volumechange'));
+  assert.equal(g.gain.value, 0.5, 'réglage du volume suivi');
+  video.muted = true;
+  video.dispatchEvent(new w.Event('volumechange'));
+  assert.equal(g.gain.value, 0, 'sourdine suivie');
+  video.muted = false;
+  video.volume = 0.8;
+  video.dispatchEvent(new w.Event('volumechange'));
+  await voice.setSpeaking(true);
+  assert.ok(await until(() => sp.spoken.length >= 1), 'phrase dite');
+  assert.ok(await until(() => Math.abs(g.gain.value - 0.8 * 0.15) < 1e-6), 'doublage : son renvoyé baissé à 15 % (' + g.gain.value + ')');
+  voice.setSpeaking(false);
+  assert.ok(Math.abs(g.gain.value - 0.8) < 1e-6, 'son remonté à l\'arrêt du doublage');
+  voice.stop();
+  assert.equal(g.disconnected, true, 'gain débranché à l\'arrêt');
 });

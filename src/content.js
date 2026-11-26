@@ -183,7 +183,7 @@
     }
 
     function flushPart(parent, run, out) {
-      if (!run.length) return;
+      if (!run.length || (edits.get(parent) || 0) > MAX_EDITS) return;
       var hasText = false;
       for (var i = 0; i < run.length; i++) {
         var n = run[i];
@@ -467,7 +467,10 @@
       if (unit.kind === 'attr') {
         if (settings.mode !== 'replace') return false;
         if (!stillInPlace(unit)) return false;
-        unit.el.setAttribute(unit.attr, DDT.unescapeText(unit.out));
+        // valeur changée par la page depuis la collecte : traduction périmée (sweep reprend la nouvelle)
+        if (unit.el.getAttribute(unit.attr) !== unit.orig) return false;
+        unit.set = DDT.unescapeText(unit.out);
+        unit.el.setAttribute(unit.attr, unit.set);
         unit.applied = 'replace';
         return true;
       }
@@ -562,12 +565,6 @@
     function restoreOrder(unit) {
       var own = owners(unit);
       function here(n) { return n.parentNode && own.has(n.parentNode); }
-      unit.containers.forEach(function (ct) {
-        var kids = ct.kids.filter(here);
-        var now = Array.prototype.slice.call(ct.el.childNodes);
-        var same = now.length === kids.length && now.every(function (n, i) { return n === kids[i]; });
-        if (!same) kids.forEach(function (k) { ct.el.appendChild(k); });
-      });
       var parent = unit.parent;
       var span = unit.span.filter(here);
       var inSpan = new Set(span);
@@ -579,6 +576,12 @@
         else if (prev.nextSibling !== s) parent.insertBefore(s, prev.nextSibling);
         prev = s;
       });
+      unit.containers.forEach(function (ct) {
+        var kids = ct.kids.filter(here);
+        var now = Array.prototype.slice.call(ct.el.childNodes);
+        var same = now.length === kids.length && now.every(function (n, i) { return n === kids[i]; });
+        if (!same) kids.forEach(function (k) { ct.el.appendChild(k); });
+      });
     }
 
     function restoreUnit(unit) {
@@ -589,7 +592,13 @@
         unit.applied = null;
         return;
       }
-      if (unit.kind === 'attr') { unit.el.setAttribute(unit.attr, unit.orig); unit.applied = null; return; }
+      if (unit.kind === 'attr') {
+        // la page a changé la valeur depuis (aria-label « Replier » après un clic) : on garde la sienne,
+        // sinon « Original » remettrait un état d'accessibilité faux
+        if (unit.el.getAttribute(unit.attr) === unit.set) unit.el.setAttribute(unit.attr, unit.orig);
+        unit.applied = null;
+        return;
+      }
       if (unit.kind === 'comment') {
         if (unit.rec) {
           if (unit.rec.node.data === unit.rec.set) unit.rec.node.data = unit.rec.orig;
@@ -1000,7 +1009,18 @@
       withObserverOff(function () {
         units.forEach(function (u) {
           if (u.gone) return;
-          if (!unitConnected(u)) { if (u.applied) restoreUnit(u); dropUnit(u); return; }
+          if (!unitConnected(u)) {
+            if (u.applied) restoreUnit(u);
+            if (u.kind === 'run' && u.parent.isConnected) edited(u); else dropUnit(u);
+            return;
+          }
+          if (u.kind === 'attr') {
+            // valeur changée par la page (traduite ou en attente de traduction) : unité abandonnée,
+            // la marque __ddtAttrs est retirée (dropUnit) pour que la nouvelle valeur soit reprise
+            var v = u.el.getAttribute(u.attr);
+            if (u.applied ? v !== u.set : v !== u.orig) { u.applied = null; dropUnit(u); }
+            return;
+          }
           if (u.kind !== 'run') return;
           if (u.applied) { if (touched(u)) { restoreUnit(u); edited(u); } }
           else if (!stillInPlace(u)) edited(u);
@@ -1109,7 +1129,11 @@
         observer = new win.MutationObserver(function (records) {
           if (applying) return;
           var relevant = records.some(function (r) {
-            if (r.type === 'attributes') return revealed(r.target);
+            if (r.type === 'attributes') {
+              // attribut traduit (title, aria-label…) réécrit par la page : à reprendre
+              if (ATTRS.indexOf(r.attributeName) >= 0) return !!(r.target.__ddtAttrs && r.target.__ddtAttrs['attr:' + r.attributeName]);
+              return revealed(r.target);
+            }
             if (r.type === 'characterData') return textEdited(r.target);
             for (var i = 0; i < r.addedNodes.length; i++) {
               var n = r.addedNodes[i];
@@ -1125,7 +1149,7 @@
       // Les attributs comptent aussi : beaucoup de pages montrent un texte déjà présent mais caché
       // (menu, section repliée de la barre latérale, résultats de recherche) en changeant une classe.
       // characterData : un framework qui réécrit un texte (nodeValue=) sans remplacer le nœud.
-      observer.observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: REVEAL_ATTRS });
+      observer.observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: REVEAL_ATTRS.concat(ATTRS) });
     }
     /* Un élément vient-il peut-être de devenir visible avec du texte à traduire ? */
     function revealed(el) {

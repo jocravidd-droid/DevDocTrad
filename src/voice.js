@@ -139,6 +139,7 @@
     var baseVolume = null;       // volume d'origine pendant le doublage (null : son non baissé)
     var ducked = false;
     var rampTimer = null;
+    var volumeHook = null;       // Firefox (mozCaptureStream) : recopie le volume de la vidéo sur le son renvoyé
     var unduckTimer = null;
     var resumeHook = null;       // source en cours : redire le bon sous-titre après une pause ou un saut
     var mediaOff = null;         // retire les écouteurs pause / lecture / saut de la vidéo suivie
@@ -278,7 +279,8 @@
       return (pending[s] || Promise.resolve()).then(function () { return memo[s]; });
     }
     function noteError(res) {
-      if (!res) return;
+      // réponse arrivée après « Arrêter » : rien à afficher (sinon la bande est recréée)
+      if (!res || !active) return;
       if (res.error === 'no_key') setMessage(t('badgeNoKey'));
       else if (res.error === 'rate_limited') setMessage(t('badgeRateGiveUp'));
       else if (res.error === 'disconnected') setMessage(t('badgeError', ['disconnected']));
@@ -389,6 +391,7 @@
       box.style.bottom = Math.round(bottom) + 'px';
     }
     function show(original, translated, timing) {
+      if (!active) return;            // réponse asynchrone arrivée après « Arrêter »
       ensureBox();
       var bilingual = settings.mode === 'bilingual';
       box.querySelector('.orig').textContent = bilingual && translated ? original || '' : '';
@@ -405,7 +408,10 @@
       box.querySelector('.orig').textContent = '';
       box.querySelector('.tr').textContent = '';
     }
+    /* Après « Arrêter », aucun message (erreur, transcription en retard) ne recrée la bande,
+       ses écouteurs ni son intervalle. */
     function setMessage(m) {
+      if (!active) return;
       message = m || '';
       ensureBox();
       box.querySelector('.msg').textContent = message;
@@ -445,6 +451,12 @@
     }
     function noVoiceMessage() { return t('voiceNoTts', [DDT.languageName(targetLang())]); }
 
+    /* Volume de la vidéo. Avec mozCaptureStream, c'est le gain du son renvoyé aux haut-parleurs qui
+       compte (video.volume n'agit plus) : il est recopié tout de suite, sans attendre « volumechange ». */
+    function setVolume(v, x) {
+      try { v.volume = x; } catch (e) { /* rien */ }
+      if (volumeHook) volumeHook();
+    }
     /* Son d'origine : baissé en douceur pendant que la voix parle, remonté entre les phrases */
     function ramp(to, done) {
       if (rampTimer) { win.clearInterval(rampTimer); rampTimer = null; }
@@ -454,14 +466,14 @@
       var from = v.volume;
       var steps = Math.max(1, Math.round(rampMs / 40));
       if (!rampMs || Math.abs(from - to) < 0.005) {
-        try { v.volume = to; } catch (e) { /* rien */ }
+        setVolume(v, to);
         if (done) done();
         return;
       }
       var k = 0;
       rampTimer = win.setInterval(function () {
         k++;
-        try { v.volume = Math.max(0, Math.min(1, from + (to - from) * Math.min(1, k / steps))); } catch (e) { /* rien */ }
+        setVolume(v, Math.max(0, Math.min(1, from + (to - from) * Math.min(1, k / steps))));
         if (k >= steps) { win.clearInterval(rampTimer); rampTimer = null; if (done) done(); }
       }, 40);
     }
@@ -488,7 +500,7 @@
     function restoreVolume() {
       if (unduckTimer) { win.clearTimeout(unduckTimer); unduckTimer = null; }
       if (rampTimer) { win.clearInterval(rampTimer); rampTimer = null; }
-      if (baseVolume !== null && video) { try { video.volume = baseVolume; } catch (e) { /* rien */ } }
+      if (baseVolume !== null && video) setVolume(video, baseVolume);
       baseVolume = null;
       ducked = false;
     }
@@ -776,12 +788,18 @@
           translateOne(s).then(function (tr) { if (active && sent === s && tr) show(s, tr); });
         }
       }, 200);
-      var fallback = win.setTimeout(function () {
-        if (seen || !active || mode !== 'youtube') return;
-        if (video && video.paused) { setMessage(t('voicePlay')); return; }
-        stopSource();
-        startAudio();
-      }, ytWaitMs);
+      var fallback = null;
+      // vidéo en pause : on invite à la lancer et on revient voir chaque seconde, sinon le son
+      // n'était jamais capté après « lecture » (vidéo sans sous-titres)
+      function arm(ms) {
+        fallback = win.setTimeout(function () {
+          if (seen || !active || mode !== 'youtube') return;
+          if (video && video.paused) { setMessage(t('voicePlay')); arm(1000); return; }
+          stopSource();
+          startAudio();
+        }, ms);
+      }
+      arm(ytWaitMs);
       function stopYouTube() {
         win.clearInterval(tick);
         win.clearTimeout(fallback);
@@ -868,6 +886,14 @@
       var chain = Promise.resolve();
       var level = 0;
       var meter = null;
+      var gain = null;             // Firefox : son renvoyé, au volume de la vidéo (réglage et doublage)
+      var gainVideo = null;
+      function syncGain() {
+        if (!gain || !gainVideo) return;
+        var g = gainVideo.muted ? 0 : Number(gainVideo.volume);
+        if (!isFinite(g)) g = 1;
+        try { gain.gain.value = Math.max(0, Math.min(1, g)); } catch (e) { /* rien */ }
+      }
 
       function audioTracks() {
         var list = cap.stream.getAudioTracks ? cap.stream.getAudioTracks() : [];
@@ -882,6 +908,11 @@
       function closeGraph() {
         if (meter) win.clearInterval(meter);
         meter = null;
+        if (gainVideo) { try { gainVideo.removeEventListener('volumechange', syncGain); } catch (e) { /* rien */ } }
+        if (volumeHook === syncGain) volumeHook = null;
+        try { if (gain) gain.disconnect(); } catch (e) { /* rien */ }
+        gain = null;
+        gainVideo = null;
         try { if (source) source.disconnect(); } catch (e) { /* rien */ }
         try { if (ctx) { var p = ctx.close(); if (p && p.catch) p.catch(function () {}); } } catch (e) { /* rien */ }
         ctx = null;
@@ -919,8 +950,21 @@
           if (source) { try { source.disconnect(); } catch (e) { /* rien */ } source = null; }
           source = ctx.createMediaStreamSource(new win.MediaStream(tracks));
           source.connect(analyser);
-          // Firefox : mozCaptureStream retire le son de la vidéo ; on le renvoie vers les haut-parleurs.
-          if (cap.moz) source.connect(ctx.destination);
+          // Firefox : mozCaptureStream retire le son de la vidéo ; on le renvoie vers les haut-parleurs,
+          // par un gain qui suit video.volume / video.muted : sinon ni le réglage de l'utilisateur ni la
+          // baisse du doublage n'auraient d'effet (le son capturé ignore le volume de l'élément).
+          if (cap.moz && !ctx.createGain) source.connect(ctx.destination);
+          else if (cap.moz) {
+            if (!gain) {
+              gain = ctx.createGain();
+              gain.connect(ctx.destination);
+              gainVideo = video;
+              gainVideo.addEventListener('volumechange', syncGain);
+              volumeHook = syncGain;
+              syncGain();
+            }
+            source.connect(gain);
+          }
           graphTracks = tracks.slice();
         } catch (e) {
           closeGraph();
