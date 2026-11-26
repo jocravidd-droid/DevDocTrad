@@ -58,3 +58,6 @@ body.tight #status, body.tight .note > span:last-child {
 /* Voix des vidéos : sous-titres seuls ou doublage, aligné sous le texte de l'interrupteur */
 #opts .voice-dub { margin-top: -4px; padding-inline-start: calc(42px + var(--s-3)); }
 #opts .voice-dub select { min-height: 30px; padding-top: 4px; padding-bottom: 4px; font-size: var(--fs-sm); text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
+
+/* Menu du doublage : seulement quand la voix des vidéos est allumée (le popup garde sa place) */
+#opts:has(#voiceSwitch:not(:checked)) .voice-dub { display: none; }

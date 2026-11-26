@@ -193,6 +193,7 @@
   function stateOf(pk) {
     if (!pk) return null;
     if (!pk.enabled) return ['', 'off', t('keyDisabled')];
+    if (pk.reason === 'no_key') return ['warn', 'key', t('keyNoApiKey')];
     if (!pk.configured) return ['warn', 'alert', t('keyNoModel')];
     if (pk.available) return ['ok', 'check', t('keyAvailable')];
     if (pk.until) return ['warn', 'pause', t('keyPausedUntil', [fmtTime(pk.until)])];

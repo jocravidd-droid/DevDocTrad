@@ -96,3 +96,11 @@ test('popup et réglages : couleurs uniquement via les tokens', () => {
     assert.deepEqual(bad, [], f + ' contient des couleurs en dur : ' + bad.join(', '));
   }
 });
+
+test('feuille arrière : ombres nettes sans étalement (même rayon que la carte, aucun faux coin)', () => {
+  const css = read('ui.css');
+  const rule = css.slice(css.indexOf('.m-primary.sheet, .m-secondary.sheet {'), css.indexOf('}', css.indexOf('.m-primary.sheet, .m-secondary.sheet {')));
+  const shadows = rule.replace(/^[^{]*\{\s*box-shadow:/, '').split(/,(?![^(]*\))/).map((x) => x.trim()).filter((x) => /sheet/.test(x));
+  assert.equal(shadows.length, 6);
+  for (const sh of shadows) assert.match(sh, /^-?\d+(px)? -?\d+(px)? 0 0 var\(--sheet-(back|edge)\)$/, 'pas d\'étalement : ' + sh);
+});

@@ -66,16 +66,18 @@ code, .mono { font-family: var(--mono); font-size: .92em; }
 }
 
 /* Motif d'identité : la feuille arrière du logo, décalée vers le haut et le début de ligne, comme une
-   pile de papier. Ombre nette agrandie de 3 px puis décalée de 3 px : elle dépasse de 6 px en haut
-   et à gauche et s'aligne sur les bords droit et bas, donc aucune extrémité arrondie ne fait
-   d'encoche (« faux coin ») en haut à droite ou en bas à gauche. Une ombre nette de l'élément (sans flou ni étalement) : elle garde
-   exactement les mêmes coins arrondis que la carte et n'est jamais dessinée sous la carte, dans
-   Chrome comme dans Firefox, puisque le verre n'est plus sur l'élément mais sur ::before. */
+   pile de papier. Trois ombres nettes (sans flou ni étalement, donc exactement le même rayon que la
+   carte) : décalée en diagonale, vers le haut seul et vers le côté seul. Leur union forme une bande de
+   6 px en haut et sur le côté qui s'amincit en suivant l'arrondi de la carte : aucune extrémité ni
+   croissant (« faux coin »), aucun débord à droite ou en bas. Le filet (1 px) est la même forme
+   décalée de 7 px, peinte dessous. Jamais dessinée sous la carte (le verre est sur ::before). */
 .m-primary.sheet, .m-secondary.sheet {
-  box-shadow: -3px -3px 0 3px var(--sheet-back), -3px -3px 0 4px var(--sheet-edge), var(--shadow-2);
+  box-shadow: -6px -6px 0 0 var(--sheet-back), 0 -6px 0 0 var(--sheet-back), -6px 0 0 0 var(--sheet-back),
+    -7px -7px 0 0 var(--sheet-edge), 0 -7px 0 0 var(--sheet-edge), -7px 0 0 0 var(--sheet-edge), var(--shadow-2);
 }
 [dir=rtl] .m-primary.sheet, [dir=rtl] .m-secondary.sheet {
-  box-shadow: 3px -3px 0 3px var(--sheet-back), 3px -3px 0 4px var(--sheet-edge), var(--shadow-2);
+  box-shadow: 6px -6px 0 0 var(--sheet-back), 0 -6px 0 0 var(--sheet-back), 6px 0 0 0 var(--sheet-back),
+    7px -7px 0 0 var(--sheet-edge), 0 -7px 0 0 var(--sheet-edge), 7px 0 0 0 var(--sheet-edge), var(--shadow-2);
 }
 
 /* ---------- Boutons ---------- */
@@ -207,10 +209,13 @@ kbd { font: 600 var(--fs-xs)/1 var(--mono); padding: 3px 6px; border-radius: var
 .toast .tx { border: 0; background: transparent; color: var(--text-2); cursor: pointer; padding: 0 2px; font-size: 16px; line-height: 1; }
 .toast.success .ti { color: var(--ok); } .toast.warning .ti { color: var(--warn); }
 .toast.error .ti { color: var(--err); } .toast.info .ti, .toast.progress .ti { color: var(--info); }
-.toast.error { box-shadow: var(--shadow-3), inset 3px 0 0 var(--err); }
-.toast.warning { box-shadow: var(--shadow-3), inset 3px 0 0 var(--warn); }
-[dir=rtl] .toast.error { box-shadow: var(--shadow-3), inset -3px 0 0 var(--err); }
-[dir=rtl] .toast.warning { box-shadow: var(--shadow-3), inset -3px 0 0 var(--warn); }
+/* Liseré d'erreur/avertissement : au-dessus du verre (::before), découpé aux mêmes coins */
+.toast.error::after, .toast.warning::after { content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 3px;
+  pointer-events: none; clip-path: inset(0 round var(--m-r) 0 0 var(--m-r)); }
+[dir=rtl] .toast.error::after, [dir=rtl] .toast.warning::after { clip-path: inset(0 round 0 var(--m-r) var(--m-r) 0); }
+.toast.error::after { background: var(--err); }
+.toast.warning::after { background: var(--warn); }
+.toast .tm, #status { unicode-bidi: plaintext; }
 @keyframes ddt-toast-in { from { opacity: 0; transform: translateY(8px) scale(.98); } }
 @keyframes ddt-toast-out { to { opacity: 0; transform: translateY(6px); } }
 

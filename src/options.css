@@ -204,6 +204,7 @@ label.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; 
   .brand { padding: 0 2px 0 4px; }
   .brand img { width: 28px; height: 28px; }
   .brand-id { display: none; }
+  .nav a:focus-visible { outline-offset: -3px; }
   .nav { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; scroll-padding: 0 18px;
     /* fondu sur les bords : indique que la rangée défile (seul l'alpha du dégradé compte) */
     -webkit-mask-image: linear-gradient(90deg, transparent, var(--text-1) 14px, var(--text-1) calc(100% - 14px), transparent);
