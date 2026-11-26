@@ -16,6 +16,18 @@
   var CACHE_MAX_BYTES = 20 * 1024 * 1024;
   var MAX_ATTEMPTS_PER_CHUNK = 6;
 
+  /* Verrou simple : les fonctions passées s'exécutent l'une après l'autre (chaîne de promesses).
+   * Sert aux lectures-modifications-écritures du stockage partagées par plusieurs onglets. */
+  function makeLock() {
+    var tail = Promise.resolve();
+    return function (fn) {
+      var p = tail.then(fn);
+      tail = p.catch(function () { /* l'erreur reste à l'appelant, la chaîne continue */ });
+      return p;
+    };
+  }
+  function undoneList(n) { var a = []; for (var i = 0; i < n; i++) a.push(undefined); return a; }
+
   function ProviderError(kind, message, extra) {
     this.kind = kind;
     this.message = message || kind;
@@ -30,9 +42,12 @@
     var log = deps.log || function () { /* silence par défaut */ };
 
     var memSession = {};
-    var cacheMem = null;
     var cacheTimer = null;
     var lastReq = {};          // en mémoire + recopié dans storage.session
+    var usageLock = makeLock();     // dépense et compteurs du jour
+    var sessionLock = makeLock();   // pauses, clés désactivées, dernière requête
+    var cacheLock = makeLock();     // index du cache et écritures
+    var intervalQueue = {};         // file par clé pour l'écart minimal entre deux requêtes
 
     /* ---------------- Stockage ---------------- */
     function local() { return api.storage.local; }
@@ -43,7 +58,12 @@
 
     function getSessionState() {
       var s = session();
-      if (!s) return Promise.resolve(Object.assign({ pauses: {}, disabled: {}, lastReq: {} }, memSession));
+      if (!s) {
+        return Promise.resolve({
+          pauses: Object.assign({}, memSession.pauses), disabled: Object.assign({}, memSession.disabled),
+          lastReq: Object.assign({}, memSession.lastReq)
+        });
+      }
       return s.get(['pauses', 'disabled', 'lastReq']).then(function (r) {
         return { pauses: r.pauses || {}, disabled: r.disabled || {}, lastReq: r.lastReq || {} };
       });
@@ -53,6 +73,16 @@
       Object.assign(memSession, patch);
       if (!s) return Promise.resolve();
       return s.set(patch);
+    }
+    /* Modification de l'état de session sous verrou : l'état est relu juste avant d'être modifié,
+     * pour ne jamais réécrire un instantané ancien (qui réactiverait une clé désactivée ailleurs). */
+    function updateSession(fn) {
+      return sessionLock(function () {
+        return getSessionState().then(function (st) {
+          var patch = fn(st);
+          return patch ? setSessionState(patch).then(function () { return patch; }) : null;
+        });
+      });
     }
 
     function loadAll() {
@@ -74,43 +104,129 @@
       if (!u || u.day !== day) return { day: day, perKey: {} };
       return u;
     }
-    function bumpUsage(keyId, requests, cost) {
-      return getLocal('usage').then(function (r) {
-        var u = normalizeUsage(r.usage);
-        var k = u.perKey[keyId] || { requests: 0, cost: 0 };
-        k.requests += requests || 0;
-        k.cost = Math.round((k.cost + (cost || 0)) * 1e6) / 1e6;
-        u.perKey[keyId] = k;
-        return setLocal({ usage: u }).then(function () { return u; });
+    function roundCost(c) { return Math.max(0, Math.round(c * 1e9) / 1e9); }
+    /* Compteurs du jour modifiés sous verrou (plusieurs onglets traduisent en même temps). */
+    function changeUsage(keyId, fn, env) {
+      return usageLock(function () {
+        return getLocal('usage').then(function (r) {
+          var u = normalizeUsage(r.usage);
+          var k = u.perKey[keyId] || { requests: 0, cost: 0 };
+          fn(k);
+          k.cost = roundCost(k.cost);
+          u.perKey[keyId] = k;
+          return setLocal({ usage: u }).then(function () { if (env) env.usage = u; return u; });
+        });
       });
     }
+    function bumpUsage(keyId, requests, cost, env) {
+      return changeUsage(keyId, function (k) { k.requests += requests || 0; k.cost += cost || 0; }, env);
+    }
+    /* Réservation du coût AVANT l'appel, sous verrou : refus si la dépense du jour plus ce que
+     * cet appel peut coûter dépasse le plafond. La dépense en mémoire (env.usage) est mise à jour. */
+    function reserveCall(key, cost, env) {
+      return changeUsage(key.id, function (k) {
+        if (tierOf(key) === 'paid') {
+          var cap = parseFloat(key.dailyCap);
+          if (!(cap > 0) || k.cost + cost > cap) {
+            throw new ProviderError('paid_cap', DDT.t('errPaidCap', [k.cost.toFixed(4), cap]));
+          }
+        }
+        k.requests += 1;
+        k.cost += cost || 0;
+      }, env);
+    }
 
-    /* ---------------- Cache ---------------- */
-    function loadCache() {
-      if (cacheMem) return Promise.resolve(cacheMem);
-      return getLocal('cache').then(function (r) {
-        cacheMem = r.cache || {};
-        return cacheMem;
+    /* ---------------- Cache ----------------
+     * Une entrée par clé de stockage (« c:<hash> ») et un petit index { hash: [date, octets] }
+     * pour l'éviction : on ne lit que les entrées demandées et on n'écrit que les nouvelles.
+     * L'ancien format (tout le cache sous la clé « cache ») est converti au premier chargement. */
+    var CACHE_PREFIX = 'c:';
+    var cacheIndex = null;      // en mémoire une fois chargé
+    var cachePending = {};      // nouvelles entrées pas encore écrites
+    var cacheDrop = [];         // clés de stockage à retirer à la prochaine écriture
+    function entryBytes(h, e) { return (CACHE_PREFIX.length + h.length + JSON.stringify(e).length) * 2; }
+
+    function loadIndex() {
+      if (cacheIndex) return Promise.resolve(cacheIndex);
+      return cacheLock(function () {
+        if (cacheIndex) return cacheIndex;
+        return getLocal(['cacheIndex', 'cache']).then(function (r) {
+          var idx = r.cacheIndex && typeof r.cacheIndex === 'object' ? r.cacheIndex : {};
+          var old = r.cache && typeof r.cache === 'object' ? r.cache : null;
+          if (!old) { cacheIndex = idx; return cacheIndex; }
+          // Migration : chaque entrée de l'ancien cache devient sa propre clé de stockage.
+          var put = {};
+          Object.keys(old).forEach(function (h) {
+            var e = old[h];
+            if (!e || typeof e.t !== 'string') return;
+            put[CACHE_PREFIX + h] = e;
+            idx[h] = [e.ts || 0, entryBytes(h, e)];
+          });
+          put.cacheIndex = idx;
+          return setLocal(put).then(function () { return local().remove('cache'); }).then(function () {
+            cacheIndex = idx;
+            return cacheIndex;
+          });
+        });
       });
+    }
+    /* Lecture ciblée : seulement les entrées connues de l'index parmi celles demandées. */
+    function cacheGet(hashes) {
+      return loadIndex().then(function (idx) {
+        var out = {};
+        var want = [];
+        hashes.forEach(function (h) {
+          if (cachePending[h]) out[h] = cachePending[h];
+          else if (idx[h] && want.indexOf(CACHE_PREFIX + h) === -1) want.push(CACHE_PREFIX + h);
+        });
+        if (!want.length) return out;
+        return getLocal(want).then(function (r) {
+          want.forEach(function (k) { if (r[k]) out[k.slice(CACHE_PREFIX.length)] = r[k]; });
+          return out;
+        });
+      });
+    }
+    function cachePut(h, entry) {
+      if (!cacheIndex) return;
+      cachePending[h] = entry;
+      cacheIndex[h] = [entry.ts, entryBytes(h, entry)];
+      scheduleCacheWrite();
     }
     function scheduleCacheWrite() {
       if (cacheTimer) return;
       cacheTimer = setTimeout(function () {
         cacheTimer = null;
-        flushCache();
+        flushCache().catch(function (e) { log('cache', String(e && e.message)); });
       }, 3000);
     }
     function flushCache() {
-      if (!cacheMem) return Promise.resolve();
-      var keys = Object.keys(cacheMem);
-      var size = JSON.stringify(cacheMem).length * 2;
-      if (keys.length > CACHE_MAX_ENTRIES || size > CACHE_MAX_BYTES) {
-        keys.sort(function (a, b) { return cacheMem[a].ts - cacheMem[b].ts; });
-        var target = Math.floor(Math.min(keys.length, CACHE_MAX_ENTRIES) * 0.9);
-        var drop = keys.length - target;
-        for (var i = 0; i < drop; i++) delete cacheMem[keys[i]];
-      }
-      return setLocal({ cache: cacheMem });
+      return cacheLock(function () {
+        if (!cacheIndex) return null;
+        var idx = cacheIndex;
+        var hs = Object.keys(idx);
+        var size = 0;
+        hs.forEach(function (h) { size += idx[h][1] || 0; });
+        if (hs.length > CACHE_MAX_ENTRIES || size > CACHE_MAX_BYTES) {
+          hs.sort(function (a, b) { return idx[a][0] - idx[b][0]; });
+          var target = Math.floor(Math.min(hs.length, CACHE_MAX_ENTRIES) * 0.9);
+          var drop = hs.length - target;
+          for (var i = 0; i < drop; i++) {
+            delete idx[hs[i]];
+            if (cachePending[hs[i]]) delete cachePending[hs[i]];
+            else cacheDrop.push(CACHE_PREFIX + hs[i]);
+          }
+        }
+        var pend = Object.keys(cachePending);
+        var dropNow = cacheDrop;
+        if (!pend.length && !dropNow.length) return null;
+        var put = { cacheIndex: idx };
+        pend.forEach(function (h) { put[CACHE_PREFIX + h] = cachePending[h]; });
+        cachePending = {};
+        cacheDrop = [];
+        return setLocal(put).then(function () {
+          return dropNow.length ? local().remove(dropNow) : null;
+        });
+      });
     }
     function cacheKey(settings, glossaryHash, src) {
       return DDT.sha256hex([DDT.PROMPT_VERSION, settings.target, settings.explainTerms ? 1 : 0, glossaryHash, src].join('\u0001'));
@@ -167,28 +283,40 @@
       }, 20000);
     }
 
-    function fetchWithTimeout(url, init, timeoutMs) {
+    /* Requête + lecture complète du corps : le délai maximal et le maintien en vie couvrent aussi
+     * la lecture du corps (un serveur peut envoyer les en-têtes puis rester bloqué). Résout { res, body }. */
+    function fetchRead(url, init, timeoutMs) {
       var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
       var timer = null;
       var alive = keepAlive();
+      var timedOut = false;
       if (ctrl) {
         init.signal = ctrl.signal;
-        timer = setTimeout(function () { ctrl.abort(); }, timeoutMs);
+        timer = setTimeout(function () { timedOut = true; ctrl.abort(); }, timeoutMs);
       }
-      return fetchFn(url, init).then(function (r) { if (timer) clearTimeout(timer); if (alive) clearInterval(alive); return r; }, function (e) {
-        if (timer) clearTimeout(timer);
-        if (alive) clearInterval(alive);
-        if (ctrl && ctrl.signal.aborted && e && typeof e === 'object') { try { e.timedOut = true; } catch (x) { /* rien */ } }
-        throw e;
+      function stop() { if (timer) clearTimeout(timer); if (alive) clearInterval(alive); timer = null; alive = null; }
+      function mark(e) {
+        if (timedOut || (ctrl && ctrl.signal.aborted)) {
+          if (!e || typeof e !== 'object') e = new Error('timeout');
+          try { e.timedOut = true; } catch (x) { /* rien */ }
+        }
+        return e;
+      }
+      return fetchFn(url, init).then(function (res) {
+        return Promise.resolve().then(function () { return res.text(); }).then(function (txt) {
+          stop();
+          var json = null;
+          try { json = JSON.parse(txt); } catch (e) { /* texte brut */ }
+          return { res: res, body: { text: txt, json: json } };
+        }, function (e) {
+          stop();
+          if (timedOut || (ctrl && ctrl.signal.aborted)) throw mark(e);
+          return { res: res, body: { text: '', json: null } };
+        });
+      }, function (e) {
+        stop();
+        throw mark(e);
       });
-    }
-
-    function readBody(res) {
-      return res.text().then(function (txt) {
-        var json = null;
-        try { json = JSON.parse(txt); } catch (e) { /* texte brut */ }
-        return { text: txt, json: json };
-      }).catch(function () { return { text: '', json: null }; });
     }
 
     function classify(key, res, body) {
@@ -241,20 +369,40 @@
       return Math.min(8192, Math.max(512, Math.ceil(chars * 1.5) + 256));
     }
 
-    function callProvider(key, model, system, user) {
+    /* Jetons réellement comptés par le fournisseur (compatibles OpenAI ou Gemini), sinon null. */
+    function usageFrom(j) {
+      if (!j || typeof j !== 'object') return null;
+      if (j.usage && (j.usage.prompt_tokens !== undefined || j.usage.completion_tokens !== undefined)) {
+        return { in: Number(j.usage.prompt_tokens) || 0, out: Number(j.usage.completion_tokens) || 0 };
+      }
+      var m = j.usageMetadata;
+      if (m && (m.promptTokenCount !== undefined || m.candidatesTokenCount !== undefined)) {
+        // les jetons de réflexion (thoughtsTokenCount) sont facturés comme la sortie
+        return { in: Number(m.promptTokenCount) || 0, out: (Number(m.candidatesTokenCount) || 0) + (Number(m.thoughtsTokenCount) || 0) };
+      }
+      return null;
+    }
+
+    /* hooks (facultatif) : maxTokens (plafond de sortie, clé payante), beforeResend() appelé avant
+     * tout second envoi (repli sans response_format, Ollama sans schéma), usage rempli à la réponse. */
+    function callProvider(key, model, system, user, hooks) {
+      hooks = hooks || {};
+      var resend = function () { return hooks.beforeResend ? Promise.resolve(hooks.beforeResend()) : Promise.resolve(); };
       var p = key.provider;
       var timeout = Number(key.timeoutMs) || providerDefaults(key).timeoutMs || 60000;
       var url;
       var init;
       if (p === 'gemini') {
         url = baseOf(key) + '/models/' + encodeURIComponent(cleanModel(model)) + ':generateContent';
+        var gen = { temperature: 0, responseMimeType: 'application/json' };
+        if (hooks.maxTokens) gen.maxOutputTokens = hooks.maxTokens;
         init = {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key.key },
           body: JSON.stringify({
             systemInstruction: { parts: [{ text: system }] },
             contents: [{ role: 'user', parts: [{ text: user }] }],
-            generationConfig: { temperature: 0, responseMimeType: 'application/json' }
+            generationConfig: gen
           })
         };
         return send(url, init, timeout, function (j) {
@@ -284,7 +432,7 @@
             if (!err || !err.timedOut) throw err;
             ollamaSchemaSlow[model] = true;
             log('ollama: schéma trop lent, JSON libre pour', model);
-            return askOllama('json', timeout);
+            return resend().then(function () { return askOllama('json', timeout); });
           });
         }
         return askOllama(typeof schema === 'object' ? 'json' : schema, timeout);
@@ -298,6 +446,7 @@
       };
       // Modèles qui « réfléchissent » (gpt-oss chez Groq) : réflexion courte, beaucoup moins de jetons
       if (p === 'groq' && /gpt-oss/i.test(model)) body.reasoning_effort = 'low';
+      if (hooks.maxTokens) body.max_tokens = hooks.maxTokens;
       var headers = { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key.key };
       if (p === 'openrouter') headers['X-Title'] = 'DevDocTrad';
       var pick = function (j) {
@@ -308,18 +457,22 @@
         .catch(function (e) {
           if (e.kind === 'bad_request' && /response_format|json_object|json mode|json/i.test(e.message)) {
             delete body.response_format;
-            return send(url, { method: 'POST', headers: headers, body: JSON.stringify(body) }, timeout, pick);
+            // second envoi : compté (requête, coût réservé) comme le premier
+            return resend().then(function () {
+              return send(url, { method: 'POST', headers: headers, body: JSON.stringify(body) }, timeout, pick);
+            });
           }
           throw e;
         });
 
       function send(u, i, to, picker) {
-        return fetchWithTimeout(u, i, to).then(function (res) {
-          return readBody(res).then(function (b) {
-            if (!res.ok) throw classify(key, res, b);
-            noteRateHeaders(key, res.headers);
-            return picker(b.json);
-          });
+        return fetchRead(u, i, to).then(function (r) {
+          var res = r.res;
+          var b = r.body;
+          if (!res.ok) throw classify(key, res, b);
+          noteRateHeaders(key, res.headers);
+          hooks.usage = usageFrom(b.json);
+          return picker(b.json);
         }, function (err) {
           if (err instanceof ProviderError) throw err;
           var kind = key.provider === 'ollama' ? 'ollama_down' : 'network';
@@ -349,47 +502,84 @@
       var reset = parseDuration(headers.get('x-ratelimit-reset-tokens'));
       if (rem === null || rem === undefined || rem === '' || isNaN(+rem) || +rem >= LOW_TOKENS || !reset) return;
       var wait = Math.min(reset + 500, 90000);
-      getSessionState().then(function (st) {
-        var pauses = Object.assign({}, st.pauses);
-        pauses[key.id] = Math.max(pauses[key.id] || 0, now() + wait);
-        return setSessionState({ pauses: pauses });
-      });
       softPause[key.id] = now() + wait;
+      updateSession(function (st) {
+        st.pauses[key.id] = Math.max(st.pauses[key.id] || 0, now() + wait);
+        return { pauses: st.pauses };
+      }).catch(function (e) { log('pause douce', String(e && e.message)); });
     }
     var softPause = {};
 
-    /* Une requête, avec un seul nouvel essai après 2 s pour 5xx / réseau */
-    function callOnce(key, model, system, user, ctx) {
-      return waitInterval(key).then(function () {
+    function chunkLimit(ctx) { return MAX_ATTEMPTS_PER_CHUNK + (ctx.extraBudget || 0); }
+
+    /* Une requête, avec un seul nouvel essai après 2 s pour 5xx / réseau.
+     * call = { cost: coût maximal réservé avant l'envoi, maxTokens } ; env.usage est tenu à jour. */
+    function callOnce(key, model, system, user, ctx, env, call) {
+      call = call || {};
+      var reserved = 0;
+      var paid = tierOf(key) === 'paid';
+      var reserve = function () {
         ctx.attempts++;
-        return bumpUsage(key.id, 1, ctx.costPerCall || 0);
-      }).then(function () {
-        return callProvider(key, model, system, user);
-      }).catch(function (e) {
-        if ((e.kind === 'server' || e.kind === 'network') && !ctx.retried && ctx.attempts < MAX_ATTEMPTS_PER_CHUNK) {
-          ctx.retried = true;
-          return sleep(2000).then(function () { return callOnce(key, model, system, user, ctx); });
-        }
-        throw e;
+        return reserveCall(key, call.cost || 0, env).then(function () { reserved += call.cost || 0; });
+      };
+      var hooks = { maxTokens: call.maxTokens || 0, beforeResend: reserve, usage: null };
+      return waitInterval(key).then(reserve).then(function () {
+        return callProvider(key, model, system, user, hooks);
+      }).then(function (text) {
+        // Dépense corrigée avec les jetons réellement comptés (prix de la clé)
+        if (!paid || !hooks.usage) return text;
+        var actual = DDT.tokensCost(hooks.usage.in, hooks.usage.out, key.priceIn, key.priceOut);
+        return changeUsage(key.id, function (k) { k.cost += actual - reserved; }, env).then(function () { return text; });
+      }, function (e) {
+        // Réponse d'erreur du fournisseur (aucun jeton généré) : la réservation est rendue.
+        var refund = paid && reserved > 0 && e && e.status && e.kind !== 'paid_cap'
+          ? changeUsage(key.id, function (k) { k.cost -= reserved; }, env).catch(function () { /* rien */ })
+          : Promise.resolve();
+        return refund.then(function () {
+          if ((e.kind === 'server' || e.kind === 'network') && !ctx.retried && ctx.attempts < chunkLimit(ctx)) {
+            ctx.retried = true;
+            return sleep(2000).then(function () { return callOnce(key, model, system, user, ctx, env, call); });
+          }
+          throw e;
+        });
       });
     }
 
+    /* Écart minimal entre deux requêtes d'une même clé : file par clé, pour que deux onglets
+     * ne partent pas au même instant. Seule l'attente est sérialisée, pas la requête. */
     function waitInterval(key) {
-      return getSessionState().then(function (st) {
-        var last = Math.max(lastReq[key.id] || 0, st.lastReq[key.id] || 0);
-        var wait = last + keyInterval(key) - now();
-        var stamp = function () {
-          lastReq[key.id] = now();
-          var lr = Object.assign({}, st.lastReq);
-          lr[key.id] = lastReq[key.id];
-          return setSessionState({ lastReq: lr });
-        };
-        if (wait > 0) return sleep(wait).then(stamp);
-        return stamp();
+      var id = key.id;
+      var prev = intervalQueue[id] || Promise.resolve();
+      var mine = prev.then(function () {
+        return getSessionState().then(function (st) {
+          var last = Math.max(lastReq[id] || 0, st.lastReq[id] || 0);
+          var wait = last + keyInterval(key) - now();
+          return wait > 0 ? sleep(wait) : null;
+        }, function () { return null; }).then(function () {
+          lastReq[id] = now();
+          var stamp = lastReq[id];
+          updateSession(function (st2) {
+            st2.lastReq[id] = Math.max(st2.lastReq[id] || 0, stamp);
+            return { lastReq: st2.lastReq };
+          }).catch(function (e) { log('lastReq', String(e && e.message)); });
+        });
       });
+      intervalQueue[id] = mine.catch(function () { /* rien */ });
+      return mine;
     }
 
     /* ---------------- Garde-fous avant appel ---------------- */
+    /* Prix et plafond d'une clé payante : nombres finis, prix positifs ou nuls, plafond > 0. */
+    function priceOk(v) {
+      if (v === '' || v === null || v === undefined || typeof v === 'boolean') return false;
+      if (typeof v === 'string' && !/^\s*[+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?\s*$/.test(v)) return false;
+      var n = Number(v);
+      return isFinite(n) && n >= 0;
+    }
+    function paidConfigOk(key) {
+      var cap = Number(key.dailyCap);
+      return priceOk(key.dailyCap) && cap > 0 && priceOk(key.priceIn) && priceOk(key.priceOut);
+    }
     function checkGuards(key, chars, usage) {
       var tier = tierOf(key);
       if (key.provider === 'openrouter' && tier === 'free' && !/:free$/.test(cleanModel(key.modelEasy) + '') ) {
@@ -399,14 +589,11 @@
         return new ProviderError('config', DDT.t('errOpenRouterFree'));
       }
       if (tier === 'paid') {
+        if (!paidConfigOk(key)) return new ProviderError('paid_unset', DDT.t('errPaidUnset'));
         var cap = parseFloat(key.dailyCap);
-        var pin = parseFloat(key.priceIn);
-        var pout = parseFloat(key.priceOut);
-        if (!(cap > 0) || isNaN(pin) || isNaN(pout) || key.priceIn === '' || key.priceOut === '') {
-          return new ProviderError('paid_unset', DDT.t('errPaidUnset'));
-        }
-        var est = DDT.estimateCost(chars, pin, pout);
+        var est = DDT.estimateCost(chars, parseFloat(key.priceIn), parseFloat(key.priceOut));
         var spent = (usage.perKey[key.id] || {}).cost || 0;
+        // contrôle rapide ; le vrai refus se fait à la réservation, sous verrou, juste avant l'envoi
         if (spent + est > cap) return new ProviderError('paid_cap', DDT.t('errPaidCap', [spent.toFixed(4), cap]));
         return { cost: est };
       }
@@ -414,15 +601,31 @@
     }
 
     /* ---------------- Traduction d'un morceau, avec validation et découpage ---------------- */
+    /* Erreur au milieu d'un découpage : les textes déjà traduits sont gardés dans err.partial
+     * (undefined = pas encore fait, à remettre en file ; null = laissé en original). */
+    function withPartial(err, partial) {
+      if (err && typeof err === 'object') err.partial = partial;
+      return err;
+    }
+
     function translateChunk(key, srcs, env, ctx) {
+      // Nombre total d'appels borné par morceau : au-delà, les textes restent en original.
+      if (ctx.attempts >= chunkLimit(ctx)) return Promise.resolve(srcs.map(function () { return null; }));
       var hard = DDT.isHardBatch(srcs);
       var model = hard && key.modelHard ? key.modelHard : key.modelEasy;
       return requestTranslations(key, model, srcs, env, ctx).then(function (resp) {
         if (!resp || !Array.isArray(resp.translations) || resp.translations.length !== srcs.length) {
           if (srcs.length === 1) return retrySingle(key, srcs[0], env, ctx).then(function (v) { return [v]; });
           var mid = Math.ceil(srcs.length / 2);
-          return translateChunk(key, srcs.slice(0, mid), env, ctx).then(function (a) {
-            return translateChunk(key, srcs.slice(mid), env, ctx).then(function (b) { return a.concat(b); });
+          var first = srcs.slice(0, mid);
+          var second = srcs.slice(mid);
+          return translateChunk(key, first, env, ctx).then(function (a) {
+            return translateChunk(key, second, env, ctx).then(function (b) { return a.concat(b); }, function (e) {
+              throw withPartial(e, a.concat(e && e.partial && e.partial.length === second.length ? e.partial : undoneList(second.length)));
+            });
+          }, function (e) {
+            var pa = e && e.partial && e.partial.length === first.length ? e.partial : undoneList(first.length);
+            throw withPartial(e, pa.concat(undoneList(second.length)));
           });
         }
         if (Array.isArray(resp.glossed)) resp.glossed.forEach(function (g) { if (typeof g === 'string') env.glossed.add(g); });
@@ -434,17 +637,20 @@
         });
         if (env.settings.explainTerms) out = DDT.addTermGlosses(out, resp.terms, env.glossed);
         var seq = Promise.resolve();
+        var left = bad.slice();
         bad.forEach(function (i) {
           seq = seq.then(function () {
-            return retrySingle(key, srcs[i], env, ctx).then(function (v) { out[i] = v; });
+            return retrySingle(key, srcs[i], env, ctx).then(function (v) { out[i] = v; left.shift(); });
           });
         });
-        return seq.then(function () { return out; });
+        return seq.then(function () { return out; }, function (e) {
+          throw withPartial(e, out.map(function (v, i) { return left.indexOf(i) !== -1 ? undefined : v; }));
+        });
       });
     }
 
     function retrySingle(key, src, env, ctx) {
-      if (ctx.attempts >= MAX_ATTEMPTS_PER_CHUNK + ctx.extraBudget) return Promise.resolve(null);
+      if (ctx.attempts >= chunkLimit(ctx)) return Promise.resolve(null);
       var model = key.modelHard || key.modelEasy;
       return requestTranslations(key, model, [src], env, ctx).then(function (resp) {
         if (!resp || !Array.isArray(resp.translations) || resp.translations.length !== 1) return null;
@@ -459,13 +665,27 @@
       var chars = srcs.reduce(function (a, s) { return a + s.length; }, 0);
       var guard = checkGuards(key, chars, env.usage);
       if (guard instanceof ProviderError) return Promise.reject(guard);
-      ctx.costPerCall = guard.cost;
       var system = DDT.buildSystemPrompt(env.settings.target, env.settings.explainTerms);
       var gl = DDT.glossaryForTexts(env.glossary, srcs);
       var user = DDT.buildUserMessage(env.settings.target, srcs, gl, Array.from(env.glossed), env.settings.explainTerms);
-      return callOnce(key, model, system, user, ctx).then(function (text) {
+      var call = { cost: 0, maxTokens: 0 };
+      if (tierOf(key) === 'paid') {
+        // Clé payante : sortie plafonnée, et coût maximal de l'appel réservé avant l'envoi
+        call.maxTokens = DDT.maxOutputTokens(chars, env.settings.target) + reasoningMargin(key, model);
+        var tin = (system.length + user.length) / 3.5;
+        call.cost = Math.max(guard.cost, DDT.tokensCost(tin, call.maxTokens, key.priceIn, key.priceOut));
+      }
+      return callOnce(key, model, system, user, ctx, env, call).then(function (text) {
         return DDT.extractJson(text);
       });
+    }
+
+    /* Modèles qui « réfléchissent » : leurs jetons de réflexion comptent dans le plafond de sortie. */
+    function reasoningMargin(key, model) {
+      var m = String(model || '');
+      if (key.provider === 'groq' && /gpt-oss/i.test(m)) return 1024;   // réflexion courte demandée
+      if (/gemini-(2\.5|[3-9])|thinking|magistral|deepseek-r1|qwq|gpt-oss|(^|\/)o[1-9](-|$)|reason/i.test(m)) return 2048;
+      return 0;
     }
 
     /* ---------------- Point d'entrée : traduire une liste de textes ---------------- */
@@ -484,7 +704,7 @@
         return DDT.sha256hex(JSON.stringify(all.glossary)).then(function (gh) {
           return Promise.all(texts.map(function (s) { return cacheKey(settings, gh, s); }));
         }).then(function (hashes) {
-          return loadCache().then(function (cache) {
+          return cacheGet(hashes).then(function (cache) {
             var misses = [];
             texts.forEach(function (s, i) {
               var hit = cache[hashes[i]];
@@ -537,23 +757,25 @@
               chunk.push(idx);
               size += texts[idx].length;
             }
-            var ctx = { attempts: 0, retried: false, extraBudget: chunk.length * 2 };
+            var ctx = { attempts: 0, retried: false, extraBudget: Math.min(chunk.length, 8) };
             var srcs = chunk.map(function (i2) { return texts[i2]; });
             return translateChunk(key, srcs, env, ctx).then(function (vals) {
               via = { label: key.label || DDT.PROVIDERS[key.provider].label, local: isLocal(key), provider: key.provider };
-              var g = Array.from(env.glossed);
-              chunk.forEach(function (i3, j) {
-                results[i3] = vals[j];
-                if (typeof vals[j] === 'string') {
-                  cacheMem[hashes[i3]] = { t: vals[j], g: termsIn(vals[j], g), ts: now() };
-                }
-              });
-              g.forEach(function (x) { glossedOut.push(x); });
-              scheduleCacheWrite();
+              keep(chunk, vals);
               return step();
             }, function (err) {
-              queue = chunk.concat(queue);
-              return handleKeyError(key, err, st).then(function (msg) {
+              // Erreur au milieu d'un découpage : les moitiés déjà traduites sont gardées.
+              var pending = chunk;
+              if (err && Array.isArray(err.partial) && err.partial.length === chunk.length) {
+                pending = chunk.filter(function (i4, j) { return err.partial[j] === undefined; });
+                if (pending.length < chunk.length) {
+                  via = { label: key.label || DDT.PROVIDERS[key.provider].label, local: isLocal(key), provider: key.provider };
+                  keep(chunk.filter(function (i4, j) { return err.partial[j] !== undefined; }),
+                    err.partial.filter(function (v) { return v !== undefined; }));
+                }
+              }
+              queue = pending.concat(queue);
+              return handleKeyError(key, err).then(function (msg) {
                 if (msg) notice = msg;
                 if (err.kind === 'paid_cap' || err.kind === 'paid_unset') {
                   return done({ error: 'error', message: err.message });
@@ -564,6 +786,18 @@
             });
           });
         });
+      }
+
+      function keep(idxs, vals) {
+        var g = Array.from(env.glossed);
+        idxs.forEach(function (i3, j) {
+          results[i3] = vals[j];
+          // Pages sensibles : jamais de traduction écrite dans le cache.
+          if (typeof vals[j] === 'string' && !opts.sensitive) {
+            cachePut(hashes[i3], { t: vals[j], g: termsIn(vals[j], g), ts: now() });
+          }
+        });
+        g.forEach(function (x) { glossedOut.push(x); });
       }
 
       function termsIn(text, terms) {
@@ -585,17 +819,20 @@
       return step();
     }
 
-    function handleKeyError(key, err, st) {
+    /* opts.pauseId : identifiant des pauses (« id:whisper » pour la transcription) ; les clés
+     * refusées (auth, paiement) restent désactivées sous leur propre identifiant. */
+    function handleKeyError(key, err, opts) {
       var label = key.label || (DDT.PROVIDERS[key.provider] || {}).label || key.provider;
-      var pauses = Object.assign({}, st.pauses);
-      var disabled = Object.assign({}, st.disabled);
+      var pauseId = (opts && opts.pauseId) || key.id;
+      var pauses = {};
+      var disabled = {};
       var msg = '';
       log('key error', key.provider, err.kind);
       if (err.kind === 'rate') {
         var ms = err.retryAfterMs || (err.daily ? PAUSE_DAILY_MS : PAUSE_DEFAULT_MS);
-        pauses[key.id] = now() + ms;
+        pauses[pauseId] = now() + ms;
       } else if (err.kind === 'ollama_down') {
-        pauses[key.id] = now() + PAUSE_DEFAULT_MS;
+        pauses[pauseId] = now() + PAUSE_DEFAULT_MS;
         msg = DDT.t('errOllamaDown');
       } else if (err.kind === 'ollama_origin') {
         disabled[key.id] = 'ollama_origin';
@@ -614,7 +851,13 @@
       } else {
         msg = DDT.t('badgeKeyProblem', [label, DDT.sanitize(err.message, [key.key]).slice(0, 160)]);
       }
-      return setSessionState({ pauses: pauses, disabled: disabled }).then(function () { return msg; });
+      if (!Object.keys(pauses).length && !Object.keys(disabled).length) return Promise.resolve(msg);
+      // État relu sous verrou au moment d'écrire : seules les entrées de cette clé changent.
+      return updateSession(function (st) {
+        Object.keys(pauses).forEach(function (id) { st.pauses[id] = Math.max(st.pauses[id] || 0, pauses[id]); });
+        Object.keys(disabled).forEach(function (id) { st.disabled[id] = disabled[id]; });
+        return { pauses: st.pauses, disabled: st.disabled };
+      }).then(function () { return msg; });
     }
 
     /* ---------------- Liste des modèles / test de clé ---------------- */
@@ -635,17 +878,17 @@
       var pages = 0;
       var geminiModels = [];
       function getPage(u) {
-        return fetchWithTimeout(u, { method: 'GET', headers: headers }, timeout).then(function (res) {
-          return readBody(res).then(function (b) {
-            if (!res.ok) throw classify(key, res, b);
-            var j0 = b.json || {};
-            if (p === 'gemini') {
-              geminiModels = geminiModels.concat(j0.models || []);
-              if (j0.nextPageToken && ++pages < 5) return getPage(url + '&pageToken=' + encodeURIComponent(j0.nextPageToken));
-              return { res: res, b: { json: { models: geminiModels } } };
-            }
-            return { res: res, b: b };
-          });
+        return fetchRead(u, { method: 'GET', headers: headers }, timeout).then(function (r0) {
+          var res = r0.res;
+          var b = r0.body;
+          if (!res.ok) throw classify(key, res, b);
+          var j0 = b.json || {};
+          if (p === 'gemini') {
+            geminiModels = geminiModels.concat(j0.models || []);
+            if (j0.nextPageToken && ++pages < 5) return getPage(url + '&pageToken=' + encodeURIComponent(j0.nextPageToken));
+            return { res: res, b: { json: { models: geminiModels } } };
+          }
+          return { res: res, b: b };
         });
       }
       return getPage(url).then(function (r) {
@@ -689,10 +932,10 @@
      * OLLAMA_ORIGINS n'est pas réglé : le test fait donc aussi un petit POST /api/show. */
     function ollamaPostCheck(key, list) {
       var model = key.modelEasy || (list[0] && list[0].id) || 'x';
-      return fetchWithTimeout(baseOf(key) + '/api/show', {
+      return fetchRead(baseOf(key) + '/api/show', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: model })
-      }, 15000).then(function (res) {
-        if (res.status === 403) return readBody(res).then(function (b) { throw classify(key, res, b); });
+      }, 15000).then(function (r) {
+        if (r.res.status === 403) throw classify(key, r.res, r.body);
         return list;
       }, function (err) {
         throw new ProviderError('ollama_down', DDT.sanitize(err && err.message));
@@ -722,11 +965,14 @@
         var keys = all.keys.map(function (k) {
           var av = keyAvailability(k, st, all.usage);
           var u = all.usage.perKey[k.id] || { requests: 0, cost: 0 };
+          // même condition que buildChain : un modèle ET une clé d'API (sauf Ollama)
+          var hasKey = !!k.key || isLocal(k);
           return {
             id: k.id, provider: k.provider, label: k.label || (DDT.PROVIDERS[k.provider] || {}).label,
             tier: tierOf(k), enabled: k.enabled !== false, masked: DDT.maskKey(k.key),
-            available: av.ok && k.enabled !== false, until: av.until || null, reason: av.reason || null,
-            requests: u.requests, cost: u.cost, maxPerDay: keyMaxPerDay(k), configured: !!k.modelEasy
+            available: av.ok && k.enabled !== false && hasKey, until: av.until || null,
+            reason: av.reason || (hasKey ? null : 'no_key'),
+            requests: u.requests, cost: u.cost, maxPerDay: keyMaxPerDay(k), configured: !!k.modelEasy && hasKey
           };
         });
         return { keys: keys, settings: all.settings };
@@ -827,19 +1073,41 @@
     }
 
     function cacheInfo() {
-      return loadCache().then(function (c) {
-        return { entries: Object.keys(c).length, bytes: JSON.stringify(c).length * 2 };
+      return loadIndex().then(function (idx) {
+        var hs = Object.keys(idx);
+        var bytes = 0;
+        hs.forEach(function (h) { bytes += idx[h][1] || 0; });
+        return { entries: hs.length, bytes: bytes };
       });
     }
     function clearCache() {
-      cacheMem = {};
-      return setLocal({ cache: {} }).then(function () { return { ok: true }; });
+      return loadIndex().then(function () {
+        return cacheLock(function () {
+          var keys = Object.keys(cacheIndex).map(function (h) { return CACHE_PREFIX + h; }).concat(cacheDrop);
+          cacheIndex = {};
+          cachePending = {};
+          cacheDrop = [];
+          // Entrées orphelines éventuelles (index perdu) : getKeys quand le navigateur le permet.
+          var more = typeof local().getKeys === 'function'
+            ? local().getKeys().then(function (all) {
+              return (all || []).filter(function (k) { return k.indexOf(CACHE_PREFIX) === 0; });
+            }).catch(function () { return []; })
+            : Promise.resolve([]);
+          return more.then(function (extra) {
+            var all = keys.concat(extra.filter(function (k) { return keys.indexOf(k) === -1; }));
+            return setLocal({ cacheIndex: {} }).then(function () {
+              return local().remove(all.concat(['cache']));
+            });
+          });
+        });
+      }).then(function () { return { ok: true }; });
     }
     function resetKeyState(keyId) {
-      return getSessionState().then(function (st) {
+      return updateSession(function (st) {
         delete st.pauses[keyId];
         delete st.disabled[keyId];
-        return setSessionState({ pauses: st.pauses, disabled: st.disabled });
+        delete st.pauses[keyId + ':whisper'];
+        return { pauses: st.pauses, disabled: st.disabled };
       });
     }
 
@@ -857,6 +1125,17 @@
         return k.provider === DDT.WHISPER.provider && k.enabled !== false && k.key && tierOf(k) === 'free';
       });
     }
+    /* Whisper a ses propres limites chez Groq : pauses et compteur sous « id:whisper », séparés
+     * de la traduction. Une clé refusée (auth, paiement) l'est pour les deux. */
+    function whisperId(key) { return key.id + ':whisper'; }
+    function whisperAvailability(key, st) {
+      var wid = whisperId(key);
+      if (st.disabled[key.id]) return { ok: false, reason: st.disabled[key.id] };
+      if (st.disabled[wid]) return { ok: false, reason: st.disabled[wid] };
+      var until = st.pauses[wid] || 0;
+      if (until > now()) return { ok: false, until: until, reason: 'paused' };
+      return { ok: true };
+    }
     function transcribe(msg) {
       var audio = String((msg && msg.audio) || '');
       var mime = String((msg && msg.mime) || 'audio/webm').split(';')[0];
@@ -870,7 +1149,7 @@
           var minUntil = Infinity;
           keys.forEach(function (k) {
             if (key) return;
-            var av = keyAvailability(k, st, all.usage);
+            var av = whisperAvailability(k, st);
             if (av.ok) key = k; else if (av.until) minUntil = Math.min(minUntil, av.until);
           });
           if (!key && !isFinite(minUntil)) return { ok: false, error: 'no_groq' };   // clés désactivées (refusées)
@@ -882,20 +1161,22 @@
           form.append('response_format', 'json');
           form.append('temperature', '0');
           var url = DDT.PROVIDERS.groq.base + DDT.WHISPER.path;
-          return fetchWithTimeout(url, { method: 'POST', headers: { Authorization: 'Bearer ' + key.key }, body: form }, 60000)
-            .then(function (res) {
-              return readBody(res).then(function (b) {
-                if (!res.ok) throw classify(key, res, b);
-                return bumpUsage(key.id, 1, 0).then(function () {
-                  return { ok: true, text: DDT.cleanTranscript(b.json && b.json.text), via: key.label || 'Groq' };
-                });
+          var wid = whisperId(key);
+          return fetchRead(url, { method: 'POST', headers: { Authorization: 'Bearer ' + key.key }, body: form }, 60000)
+            .then(function (r) {
+              var res = r.res;
+              var b = r.body;
+              if (!res.ok) throw classify(key, res, b);
+              // compteur propre à Whisper : ne consomme pas le quota de requêtes du chat
+              return bumpUsage(wid, 1, 0).then(function () {
+                return { ok: true, text: DDT.cleanTranscript(b.json && b.json.text), via: key.label || 'Groq' };
               });
             }, function (e) {
               throw new ProviderError('network', DDT.sanitize(e && e.message, [key.key]));
             })
             .catch(function (err) {
               if (!(err instanceof ProviderError)) err = new ProviderError('network', DDT.sanitize(err && err.message, [key.key]));
-              return handleKeyError(key, err, st).then(function (m) {
+              return handleKeyError(key, err, { pauseId: wid }).then(function (m) {
                 if (err.kind === 'rate') return { ok: false, error: 'rate_limited', waitMs: err.retryAfterMs || PAUSE_DEFAULT_MS };
                 return { ok: false, error: err.kind, message: m || DDT.sanitize(err.message, [key.key]).slice(0, 160) };
               });
@@ -958,6 +1239,20 @@
 
   root.DDT_createBackground = createBackground;
 
+  /* Messages acceptés depuis un script de contenu (page web) : seulement ceux dont il a besoin.
+   * Tout le reste (clés, réglages, cache, onglets) ne vient que des pages de l'extension
+   * (popup, réglages), reconnues à leur adresse. */
+  var CONTENT_SCRIPT_TYPES = { autoCheck: true, transcribe: true };
+  function isTrustedSender(msg, sender, api) {
+    if (!msg || !msg.type) return false;
+    if (CONTENT_SCRIPT_TYPES[msg.type]) return true;
+    var base = '';
+    try { base = api && api.runtime && api.runtime.getURL ? api.runtime.getURL('') : ''; } catch (e) { base = ''; }
+    var url = sender && typeof sender.url === 'string' ? sender.url : '';
+    return !!base && !!url && url.indexOf(base) === 0;
+  }
+  root.DDT_isTrustedSender = isTrustedSender;
+
   /* ---------------- Branchement sur le navigateur ---------------- */
   var api = DDT.api;
   if (!api || !api.runtime || !api.runtime.onConnect || root.__DDT_TEST) return;
@@ -979,6 +1274,7 @@
 
   api.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg || !msg.type || msg.to === 'content') return;
+    if (!isTrustedSender(msg, sender, api)) return;   // ne pas répondre : un autre destinataire peut le faire
     var p = bg.onMessage(msg);
     if (!p) return;
     p.then(sendResponse, function (e) { sendResponse({ ok: false, message: DDT.sanitize(e && e.message) }); });

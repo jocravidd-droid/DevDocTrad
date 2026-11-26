@@ -52,7 +52,7 @@
 
   /* ---------- Fournisseurs : valeurs par défaut ---------- */
   var PROVIDERS = {
-    gemini: { label: 'Gemini', base: 'https://generativelanguage.googleapis.com/v1beta', maxChars: 8000, minIntervalMs: 3000, timeoutMs: 60000 },
+    gemini: { label: 'Gemini', base: 'https://generativelanguage.googleapis.com/v1beta', maxChars: 8000, minIntervalMs: 6500, timeoutMs: 60000 },
     groq: { label: 'Groq', base: 'https://api.groq.com/openai/v1', maxChars: 3000, minIntervalMs: 2500, timeoutMs: 60000 },
     mistral: { label: 'Mistral', base: 'https://api.mistral.ai/v1', maxChars: 6000, minIntervalMs: 1500, timeoutMs: 60000 },
     openrouter: { label: 'OpenRouter', base: 'https://openrouter.ai/api/v1', maxChars: 4000, minIntervalMs: 3500, timeoutMs: 60000, maxRequestsPerDay: 50 },
@@ -463,6 +463,18 @@
     var tout = (chars / 3.5) * 1.2;
     return (tin * Number(priceIn || 0) + tout * Number(priceOut || 0)) / 1e6;
   }
+  /* Coût réel d'un appel à partir des jetons comptés par le fournisseur. */
+  function tokensCost(tokensIn, tokensOut, priceIn, priceOut) {
+    return ((Number(tokensIn) || 0) * Number(priceIn || 0) + (Number(tokensOut) || 0) * Number(priceOut || 0)) / 1e6;
+  }
+  /* Plafond de jetons de sortie pour une clé payante : environ 1,5 caractère traduit par caractère
+   * source, 3,5 caractères par jeton, plus une marge fixe. Les écritures non latines (cyrillique,
+   * arabe, indiennes, CJK, thaï...) prennent bien plus de jetons : on double la part variable. */
+  var DENSE_TARGETS = /^(ru|uk|bg|sr|el|ar|fa|ur|he|hi|bn|ta|te|mr|gu|kn|ml|pa|th|zh|ja|ko|my|km|lo|ka|hy|am)(-|$)/i;
+  function maxOutputTokens(chars, target) {
+    var perChar = DENSE_TARGETS.test(String(target || '')) ? 3 : 1.5;
+    return Math.ceil((Number(chars) || 0) * perChar / 3.5) + 256;
+  }
 
   /* ---------- Clés : ne jamais les afficher ---------- */
   var KEY_PATTERNS = [/AIza[0-9A-Za-z_\-]{20,}/g, /gsk_[0-9A-Za-z]{20,}/g, /sk-[0-9A-Za-z_\-]{20,}/g,
@@ -621,6 +633,8 @@
     glossaryForTexts: glossaryForTexts,
     isHardBatch: isHardBatch,
     estimateCost: estimateCost,
+    tokensCost: tokensCost,
+    maxOutputTokens: maxOutputTokens,
     sanitize: sanitize,
     maskKey: maskKey,
     sha256hex: sha256hex,
