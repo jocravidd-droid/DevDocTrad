@@ -328,3 +328,16 @@ test('bandeau : rien si la page est déjà dans la bonne langue, si la langue es
 test('bandeau : la deuxième langue préférée sert si la première n\'existe pas', () => {
   assert.equal(banner('fr', ['gsw-CH', 'it-CH']).out.href, '/it/');
 });
+
+test('galerie : grandes images cliquables (plein écran), lien direct vers l\'image sans JavaScript', () => {
+  const css = fs.readFileSync(path.join(DOCS, 'style.css'), 'utf8');
+  assert.ok(/\.gallery\{[^}]*minmax\(min\(100%,460px\)/.test(css), '2 grandes colonnes au plus');
+  for (const l of langs) {
+    const d = page(l);
+    const links = [...d.querySelectorAll('.gallery a.zoom')];
+    assert.equal(links.length, 4, l);
+    for (const a of links) assert.equal(a.getAttribute('href'), a.querySelector('img').getAttribute('src'), l);
+    assert.ok(d.querySelector('.gallery').getAttribute('data-close'), l + ' : libellé Fermer');
+  }
+  assert.ok(fs.readFileSync(path.join(DOCS, 'site.js'), 'utf8').includes('lightbox'));
+});

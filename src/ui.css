@@ -66,14 +66,16 @@ code, .mono { font-family: var(--mono); font-size: .92em; }
 }
 
 /* Motif d'identité : la feuille arrière du logo, décalée vers le haut et le début de ligne, comme une
-   pile de papier. Une ombre nette et décalée de l'élément (sans flou ni étalement) : elle garde
+   pile de papier. Ombre nette agrandie de 3 px puis décalée de 3 px : elle dépasse de 6 px en haut
+   et à gauche et s'aligne sur les bords droit et bas, donc aucune extrémité arrondie ne fait
+   d'encoche (« faux coin ») en haut à droite ou en bas à gauche. Une ombre nette de l'élément (sans flou ni étalement) : elle garde
    exactement les mêmes coins arrondis que la carte et n'est jamais dessinée sous la carte, dans
    Chrome comme dans Firefox, puisque le verre n'est plus sur l'élément mais sur ::before. */
 .m-primary.sheet, .m-secondary.sheet {
-  box-shadow: -6px -6px 0 0 var(--sheet-back), -6px -6px 0 1px var(--sheet-edge), var(--shadow-2);
+  box-shadow: -3px -3px 0 3px var(--sheet-back), -3px -3px 0 4px var(--sheet-edge), var(--shadow-2);
 }
 [dir=rtl] .m-primary.sheet, [dir=rtl] .m-secondary.sheet {
-  box-shadow: 6px -6px 0 0 var(--sheet-back), 6px -6px 0 1px var(--sheet-edge), var(--shadow-2);
+  box-shadow: 3px -3px 0 3px var(--sheet-back), 3px -3px 0 4px var(--sheet-edge), var(--shadow-2);
 }
 
 /* ---------- Boutons ---------- */

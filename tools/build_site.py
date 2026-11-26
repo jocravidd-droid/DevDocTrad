@@ -201,7 +201,7 @@ def page(code, t, version, all_codes, orig, orig_code):
         for f in FEATURES
     )
     gallery = "".join(
-        f'<figure class="glass"><img src="{a}{img}" alt="{esc(plain(t[cap]))}" width="1280" height="800" loading="lazy">'
+        f'<figure class="glass"><a class="zoom" href="{a}{img}"><img src="{a}{img}" alt="{esc(plain(t[cap]))}" width="1280" height="800" loading="lazy"></a>'
         f'<figcaption>{tx(cap)}</figcaption></figure>'
         for img, cap in (("screenshot-2-bilingue.png", "cap_bilingual"), ("screenshot-5-voix.png", "cap_voice"),
                          ("screenshot-4-russe.png", "cap_russian"), ("screenshot-3-reglages.png", "cap_settings"))
@@ -306,7 +306,7 @@ def page(code, t, version, all_codes, orig, orig_code):
 <section id="features"><h2>{tx("feat_title")}</h2><p class="sub">{tx("feat_sub")}</p><div class="grid">{cards}</div></section>
 {demo}
 {video}
-<section><h2>{tx("gal_title")}</h2><div class="gallery">{gallery}</div></section>
+<section><h2>{tx("gal_title")}</h2><div class="gallery" data-close="{esc(plain(t["suggest_close"]))}">{gallery}</div></section>
 <section id="install"><h2>{tx("inst_title")}</h2><p class="sub">{tx("inst_sub")}</p>
   <div class="cols">
     <div class="glass card"><h3>Chrome · Edge · Brave</h3>{ol(["inst_c1", "inst_c2", "inst_c3", "inst_c4"], {"{zip}": f'<a href="{rel}{chrome_zip}">{chrome_zip}</a>'})}</div>

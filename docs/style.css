@@ -54,7 +54,7 @@ details summary::-webkit-details-marker{display:none}
 details summary::after{content:"+";float:inline-end;color:var(--text2);font-weight:400}
 details[open] summary::after{content:"–"}
 details p{color:var(--text2);margin:10px 0 0;font-size:15.5px}
-.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
 .gallery figure{margin:0;padding:8px}
 .gallery img{width:100%;height:auto;border-radius:14px;display:block}
 .gallery figcaption{font-size:14px;color:var(--text2);padding:8px 6px 2px;text-align:center}
@@ -179,3 +179,16 @@ code.cp{overflow-wrap:anywhere}
 .vid.live .screen{aspect-ratio:4/3}.vid .slide{inset:16% 30% 22% 7%}.vid.live .slide{inset:16% 30% 42% 7%}.vid .big{font-size:15px;padding:10px 18px 10px 14px}}
 @media (prefers-reduced-motion:reduce){.rv{transition:none}.rv:not(.in){opacity:1;transform:none}.doc.swap .or,.doc.swap .tr,.vid .cue.in{animation:none}}
 @media print{.rv{opacity:1!important;transform:none!important}}
+
+/* Images d'exemple : 2 grandes colonnes, clic = plein écran (sans JS : l'image s'ouvre seule) */
+.gallery a.zoom{display:block;cursor:zoom-in;border-radius:14px}
+.gallery a.zoom:hover img{filter:brightness(1.03)}
+.lightbox{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:clamp(8px,3vw,40px);background:rgba(8,10,24,.86);cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:calc(100% - 44px);margin-bottom:34px;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);cursor:default}
+.lightbox button{all:unset;position:absolute;top:14px;inset-inline-end:14px;width:44px;height:44px;border-radius:22px;display:grid;place-items:center;color:#fff;font-size:26px;background:rgba(255,255,255,.14);cursor:pointer}
+.lightbox button:focus-visible{outline:3px solid #4da3ff}
+.lightbox .nav{top:50%;transform:translateY(-50%);font-size:30px}
+.lightbox .prev{inset-inline-start:14px;inset-inline-end:auto}
+.lightbox .next{inset-inline-end:14px}
+.lightbox p{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#e9ecff;font-size:15px;margin:0;padding:0 60px}
