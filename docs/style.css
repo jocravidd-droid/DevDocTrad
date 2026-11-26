@@ -192,3 +192,5 @@ code.cp{overflow-wrap:anywhere}
 .lightbox .prev{inset-inline-start:14px;inset-inline-end:auto}
 .lightbox .next{inset-inline-end:14px}
 .lightbox p{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#e9ecff;font-size:15px;margin:0;padding:0 60px}
+.promo{max-width:1000px;margin:24px auto 0;padding:8px}
+.promo video{display:block;width:100%;height:auto;border-radius:16px;background:#000}

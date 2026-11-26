@@ -306,7 +306,7 @@ def page(code, t, version, all_codes, orig, orig_code):
 <section id="features"><h2>{tx("feat_title")}</h2><p class="sub">{tx("feat_sub")}</p><div class="grid">{cards}</div></section>
 {demo}
 {video}
-<section><h2>{tx("gal_title")}</h2><div class="gallery" data-close="{esc(plain(t["suggest_close"]))}">{gallery}</div></section>
+<section><h2>{tx("gal_title")}</h2><div class="promo glass"><video controls preload="none" playsinline poster="{a}video/poster-{'fr' if code == 'fr' else 'en'}.jpg" width="1920" height="1080"><source src="{a}video/devdoctrad-promo-{'fr' if code == 'fr' else 'en'}-1080p.mp4" type="video/mp4"></video></div><div class="gallery" data-close="{esc(plain(t["suggest_close"]))}">{gallery}</div></section>
 <section id="install"><h2>{tx("inst_title")}</h2><p class="sub">{tx("inst_sub")}</p>
   <div class="cols">
     <div class="glass card"><h3>Chrome · Edge · Brave</h3>{ol(["inst_c1", "inst_c2", "inst_c3", "inst_c4"], {"{zip}": f'<a href="{rel}{chrome_zip}">{chrome_zip}</a>'})}</div>
