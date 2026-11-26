@@ -23,6 +23,8 @@
   var YT_STABLE_MS = 700;        // texte YouTube stable depuis ce délai : on le traduit
   var YT_MAX_WAIT_MS = 2500;     // texte qui défile sans arrêt : traduit quand même après ce délai
   var BATCH = 40;                // sous-titres traduits par demande
+  var WATCH_MS = 1000;           // surveillance : vidéo retirée ou remplacée, vidéo YouTube suivante
+  var OWN_LABEL = 'DevDocTrad';  // piste texte ajoutée pour le plein écran natif (jamais prise comme source)
 
   function cueText(s) {
     return String(s || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
@@ -37,12 +39,15 @@
     var keyId = null;
     var chunkMs = deps.chunkMs || CHUNK_MS;
     var ytWaitMs = deps.ytWaitMs || YT_WAIT_MS;
+    var watchMs = deps.watchMs || WATCH_MS;
 
     var active = false;
     var mode = null;             // 'track' | 'youtube' | 'audio'
     var video = null;
     var message = '';
-    var cleanups = [];
+    var cleanups = [];           // bande et surveillance : défaits à l'arrêt
+    var srcCleanups = [];        // source en cours (pistes, YouTube, son) : défaits aussi au changement de vidéo
+    var ytCurrent = null;        // identifiant de la vidéo YouTube en cours (null : pas YouTube)
     var memo = {};               // texte original -> traduction
     var pending = {};            // texte original -> promesse
     var speaking = false;
@@ -74,6 +79,7 @@
       var tl = v && v.textTracks;
       if (!tl) return out;
       for (var i = 0; i < tl.length; i++) {
+        if (tl[i].label === OWN_LABEL) continue;   // notre propre piste du plein écran
         if (tl[i].kind === 'subtitles' || tl[i].kind === 'captions') out.push(tl[i]);
       }
       return out;
@@ -81,8 +87,12 @@
 
     /* ---------------- Traduction ---------------- */
     function translateMany(texts) {
+      // mémoire capturée : une traduction qui arrive après un changement de vidéo YouTube
+      // ne remplit pas la nouvelle mémoire
+      var store = memo;
+      var pend = pending;
       var todo = [];
-      texts.forEach(function (s) { if (s && !(s in memo) && !pending[s] && todo.indexOf(s) === -1) todo.push(s); });
+      texts.forEach(function (s) { if (s && !(s in store) && !pend[s] && todo.indexOf(s) === -1) todo.push(s); });
       if (!todo.length) return Promise.resolve();
       var batches = [];
       for (var i = 0; i < todo.length; i += BATCH) batches.push(todo.slice(i, i + BATCH));
@@ -94,13 +104,13 @@
             if (!res || res.error) { noteError(res); return; }
             b.forEach(function (s, j) {
               var tr = res.translations && res.translations[j];
-              if (typeof tr === 'string') { memo[s] = DDT.plainText(tr); stats.translated++; }
+              if (typeof tr === 'string') { store[s] = DDT.plainText(tr); stats.translated++; }
             });
           });
         });
-        b.forEach(function (s) { pending[s] = p; });
-        seq = p.then(function () { b.forEach(function (s) { delete pending[s]; }); },
-          function () { b.forEach(function (s) { delete pending[s]; }); });
+        b.forEach(function (s) { pend[s] = p; });
+        seq = p.then(function () { b.forEach(function (s) { delete pend[s]; }); },
+          function () { b.forEach(function (s) { delete pend[s]; }); });
       });
       return seq;
     }
@@ -151,9 +161,10 @@
       box = doc.createElement('div');
       box.className = 'box';
       box.setAttribute('role', 'region');
-      box.setAttribute('aria-live', 'polite');
       box.setAttribute('aria-label', t('popupVoice'));
-      box.innerHTML = '<div class="line orig"></div><div class="line tr"></div>' +
+      // aria-live seulement sur la traduction (pas sur les boutons ni les messages), et coupé
+      // pendant la lecture à voix haute : sinon le lecteur d'écran la lirait une seconde fois
+      box.innerHTML = '<div class="line orig"></div><div class="line tr" aria-live="' + (speaking ? 'off' : 'polite') + '"></div>' +
         '<div class="bar"><span class="msg"></span><button class="speak" type="button" aria-pressed="false">' + ICON_SPEAK +
         '</button><button class="close" type="button">' + ICON_CLOSE + '</button></div>';
       sr.appendChild(box);
@@ -250,6 +261,7 @@
         var label = t(speaking ? 'voiceSpeakOff' : 'voiceSpeak');
         b.title = label;
         b.setAttribute('aria-label', label);
+        box.querySelector('.tr').setAttribute('aria-live', speaking ? 'off' : 'polite');
       }
       if (video) {
         if (speaking && savedVolume === null) { savedVolume = video.volume; video.volume = Math.min(video.volume, 0.25); }
@@ -279,10 +291,70 @@
         var now = video ? video.currentTime : 0;
         var order = texts.map(function (s, i2) { return { s: s, d: Math.abs((track.cues[i2].startTime || 0) - now) }; })
           .sort(function (a, b) { return a.d - b.d; }).map(function (x) { return x.s; });
-        translateMany(order);
+        translateMany(order).then(syncFullscreen);
       }
+
+      /* Plein écran natif de la vidéo : la bande ne peut pas s'afficher dans une <video>. Les traductions
+         passent alors par une piste texte ajoutée à la vidéo et dessinée par le navigateur, « showing »
+         seulement pendant ce plein écran, avec les temps des sous-titres d'origine. */
+      var fsTrack = null;
+      var fsAdded = {};              // index des sous-titres d'origine déjà copiés
+      var fsLang = DDT.resolveTarget(settings.target);
+      function nativeFullscreen() {
+        var fs = doc.fullscreenElement || doc.webkitFullscreenElement;
+        return (!!fs && fs === video) || !!video.webkitDisplayingFullscreen;
+      }
+      function emptyTrack(tt) {
+        try { if (tt.mode === 'disabled') tt.mode = 'hidden'; } catch (e) { /* rien */ }   // piste désactivée : cues === null
+        var list = Array.prototype.slice.call(tt.cues || []);
+        list.forEach(function (c) { try { tt.removeCue(c); } catch (e) { /* rien */ } });
+      }
+      function ownTrack() {
+        if (fsTrack) return fsTrack;
+        // une piste laissée par un démarrage précédent est reprise (addTextTrack ne se retire pas)
+        var tl = video.textTracks || [];
+        for (var i = 0; i < tl.length; i++) {
+          if (tl[i].label === OWN_LABEL) { fsTrack = tl[i]; emptyTrack(fsTrack); return fsTrack; }
+        }
+        if (typeof video.addTextTrack !== 'function' || !win.VTTCue) return null;
+        try { fsTrack = video.addTextTrack('subtitles', OWN_LABEL, fsLang); } catch (e) { fsTrack = null; }
+        return fsTrack;
+      }
+      function syncFullscreen() {
+        if (!active) return;
+        if (!nativeFullscreen()) {
+          if (fsTrack && fsTrack.mode !== 'disabled') fsTrack.mode = 'disabled';
+          return;
+        }
+        var own = ownTrack();
+        if (!own) return;
+        var cues = track.cues || [];
+        for (var i = 0; i < cues.length; i++) {
+          if (fsAdded[i]) continue;
+          var s = cueText(cues[i].text);
+          var tr = memo[s];
+          if (!tr) continue;
+          var text = settings.mode === 'bilingual' ? s + '\n' + tr : tr;
+          try { own.addCue(new win.VTTCue(cues[i].startTime, cues[i].endTime, text)); fsAdded[i] = true; } catch (e) { /* rien */ }
+        }
+        if (own.mode !== 'showing') own.mode = 'showing';
+      }
+      function dropFullscreenTrack() {
+        if (!fsTrack) return;
+        emptyTrack(fsTrack);
+        try { fsTrack.mode = 'disabled'; } catch (e) { /* rien */ }
+        fsTrack = null;
+        fsAdded = {};
+      }
+      doc.addEventListener('fullscreenchange', syncFullscreen);
+      doc.addEventListener('webkitfullscreenchange', syncFullscreen);
+      video.addEventListener('webkitbeginfullscreen', syncFullscreen);   // Safari iOS
+      video.addEventListener('webkitendfullscreen', syncFullscreen);
+      var fsVideo = video;
+
       function onCue() {
         prepare();
+        syncFullscreen();
         var list = track.activeCues || [];
         var parts = [];
         for (var i = 0; i < list.length; i++) parts.push(cueText(list[i].text));
@@ -295,6 +367,7 @@
           var l2 = track.activeCues || [];
           for (var j = 0; j < l2.length; j++) cur.push(cueText(l2[j].text));
           if (active && cur.join('\n').trim() === s) show(s, tr || '');
+          syncFullscreen();
         });
       }
       track.addEventListener('cuechange', onCue);
@@ -302,9 +375,14 @@
       win.setTimeout(function () { win.clearInterval(poll); }, 15000);
       prepare();
       onCue();
-      cleanups.push(function () {
+      srcCleanups.push(function () {
         track.removeEventListener('cuechange', onCue);
         win.clearInterval(poll);
+        doc.removeEventListener('fullscreenchange', syncFullscreen);
+        doc.removeEventListener('webkitfullscreenchange', syncFullscreen);
+        fsVideo.removeEventListener('webkitbeginfullscreen', syncFullscreen);
+        fsVideo.removeEventListener('webkitendfullscreen', syncFullscreen);
+        dropFullscreenTrack();
         try { track.mode = before; } catch (e) { /* rien */ }
       });
     }
@@ -351,7 +429,7 @@
       var fallback = win.setTimeout(function () {
         if (seen || !active || mode !== 'youtube') return;
         if (video && video.paused) { setMessage(t('voicePlay')); return; }
-        stopYouTube();
+        stopSource();
         startAudio();
       }, ytWaitMs);
       function stopYouTube() {
@@ -361,7 +439,7 @@
         if (turnedOn && btn && btn.getAttribute('aria-pressed') === 'true') btn.click();
         turnedOn = false;
       }
-      cleanups.push(stopYouTube);
+      srcCleanups.push(stopYouTube);
     }
 
     /* ---------------- 3. Son de la vidéo -> Groq Whisper ---------------- */
@@ -381,60 +459,126 @@
         fr.readAsDataURL(blob);
       });
     }
+    /* Son de la vidéo lisible par la page ? Même origine, blob: (MediaSource, YouTube), data:,
+       ou vidéo chargée avec CORS (attribut crossorigin). */
+    function mediaReadable(v) {
+      if (v.crossOrigin != null || (v.hasAttribute && v.hasAttribute('crossorigin'))) return true;
+      var src = v.currentSrc || v.src || '';
+      if (!src && v.querySelector) { var so = v.querySelector('source[src]'); src = so ? so.src : ''; }
+      if (!src) return true;                    // rien de chargé, ou srcObject (flux de la page)
+      if (/^(blob|data):/i.test(src)) return true;
+      try { return new URL(src, doc.baseURI).origin === win.location.origin; } catch (e) { return false; }
+    }
     function captureAudio(v) {
       var stream = null;
       var moz = false;
       try {
         if (typeof v.captureStream === 'function') stream = v.captureStream();
-        else if (typeof v.mozCaptureStream === 'function') { stream = v.mozCaptureStream(); moz = true; }
+        else if (typeof v.mozCaptureStream === 'function') {
+          // Firefox : mozCaptureStream retire le son de l'élément. Vidéo d'une autre origine sans CORS :
+          // la capture ne rend que du silence et MediaRecorder échoue, la vidéo resterait muette.
+          if (!mediaReadable(v)) return null;
+          stream = v.mozCaptureStream();
+          moz = true;
+        }
       } catch (e) { stream = null; }
       return stream ? { stream: stream, moz: moz } : null;
+    }
+    /* Arrêter les pistes capturées : avec mozCaptureStream, c'est ce qui rend le son à la vidéo. */
+    function releaseCapture(cap) {
+      if (!cap || !cap.stream) return;
+      try {
+        var list = cap.stream.getTracks ? cap.stream.getTracks() : (cap.stream.getAudioTracks ? cap.stream.getAudioTracks() : []);
+        Array.prototype.slice.call(list).forEach(function (tr) { try { tr.stop(); } catch (e) { /* rien */ } });
+      } catch (e) { /* rien */ }
+    }
+    function sameTracks(a, b) {
+      if (!a || a.length !== b.length) return false;
+      for (var i = 0; i < a.length; i++) {
+        if (a[i] !== b[i] && !(a[i].id && a[i].id === b[i].id)) return false;
+      }
+      return true;
     }
     function startAudio() {
       mode = 'audio';
       var MR = deps.MediaRecorder || win.MediaRecorder;
       var AC = deps.AudioContext || win.AudioContext || win.webkitAudioContext;
       var cap = captureAudio(video);
-      if (!MR || !cap) { setMessage(t('voiceNoAudio')); return; }
+      if (!MR || !cap) { releaseCapture(cap); setMessage(t('voiceNoAudio')); return; }
       var mime = pickMime(MR);
       setMessage(t('voiceListening'));
       var ctx = null;
       var analyser = null;
       var source = null;
+      var graphTracks = null;      // pistes branchées sur l'analyseur
+      var buf = null;
       var stopped = false;
       var recorder = null;
       var chain = Promise.resolve();
       var level = 0;
       var meter = null;
 
-      function audioTracks() { return cap.stream.getAudioTracks ? cap.stream.getAudioTracks() : []; }
+      function audioTracks() {
+        var list = cap.stream.getAudioTracks ? cap.stream.getAudioTracks() : [];
+        return Array.prototype.filter.call(list, function (tr) { return tr.readyState !== 'ended'; });
+      }
+      // Le contexte audio d'une page démarre souvent « suspendu » (pas de clic sur la page) : il ne
+      // mesure alors que des zéros. On tente de le relancer ; sinon, pas de détection de silence.
+      function wake() {
+        if (!ctx || ctx.state === 'running' || !ctx.resume) return;
+        try { var p = ctx.resume(); if (p && p.catch) p.catch(function () {}); } catch (e) { /* rien */ }
+      }
+      function closeGraph() {
+        if (meter) win.clearInterval(meter);
+        meter = null;
+        try { if (source) source.disconnect(); } catch (e) { /* rien */ }
+        try { if (ctx) { var p = ctx.close(); if (p && p.catch) p.catch(function () {}); } } catch (e) { /* rien */ }
+        ctx = null;
+        analyser = null;
+        source = null;
+        graphTracks = null;
+      }
       function setupGraph(tracks) {
-        if (!AC || ctx) return;
+        if (!AC) {
+          // Firefox sans Web Audio : le son capturé ne pourrait pas revenir aux haut-parleurs
+          if (cap.moz) fail();
+          return;
+        }
         try {
-          ctx = new AC();
+          if (!ctx) {
+            ctx = new AC();
+            analyser = ctx.createAnalyser();
+            analyser.fftSize = 1024;
+            // Tampon créé côté page : dans Firefox, un tableau du script d'extension passé à une méthode
+            // de la page n'est pas rempli (frontière Xray) et tout semblait silencieux.
+            buf = new (win.Float32Array || Float32Array)(analyser.fftSize);
+            meter = win.setInterval(function () {
+              if (!ctx || !analyser) return;
+              if (ctx.state !== 'running') { level = 1; return; }
+              analyser.getFloatTimeDomainData(buf);
+              var sum = 0;
+              for (var i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+              level = Math.max(level, Math.sqrt(sum / buf.length));
+            }, 100);
+          }
+          if (source && sameTracks(graphTracks, tracks)) return;
+          // Pistes changées (vidéo suivante, publicité) : captureStream a terminé les anciennes et en a
+          // créé d'autres. La source est reconstruite, sinon l'analyseur écoute des pistes mortes (tout
+          // semble silencieux) et, avec mozCaptureStream, le son des nouvelles pistes n'est plus entendu.
+          if (source) { try { source.disconnect(); } catch (e) { /* rien */ } source = null; }
           source = ctx.createMediaStreamSource(new win.MediaStream(tracks));
-          analyser = ctx.createAnalyser();
-          analyser.fftSize = 1024;
           source.connect(analyser);
           // Firefox : mozCaptureStream retire le son de la vidéo ; on le renvoie vers les haut-parleurs.
           if (cap.moz) source.connect(ctx.destination);
-          // Tampon créé côté page : dans Firefox, un tableau du script d'extension passé à une méthode
-          // de la page n'est pas rempli (frontière Xray) et tout semblait silencieux.
-          var buf = new (win.Float32Array || Float32Array)(analyser.fftSize);
-          // Le contexte audio d'une page démarre souvent « suspendu » (pas de clic sur la page) : il ne
-          // mesure alors que des zéros. On tente de le relancer ; sinon, pas de détection de silence.
-          if (ctx.state !== 'running' && ctx.resume) { try { ctx.resume().catch(function () {}); } catch (e) { /* rien */ } }
-          meter = win.setInterval(function () {
-            if (ctx.state !== 'running') { level = 1; return; }
-            analyser.getFloatTimeDomainData(buf);
-            var sum = 0;
-            for (var i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
-            level = Math.max(level, Math.sqrt(sum / buf.length));
-          }, 100);
-        } catch (e) { ctx = null; analyser = null; }
+          graphTracks = tracks.slice();
+        } catch (e) {
+          closeGraph();
+          if (cap.moz) fail();                  // sans graphe, la vidéo resterait muette
+        }
       }
       function recordOne() {
         if (stopped || !active) return;
+        if (video.isConnected === false) { checkVideo(); return; }   // vidéo retirée : on suit la nouvelle
         var tracks = audioTracks();
         if (!tracks.length) {                      // pas encore de son (vidéo en pause ou pas chargée)
           if (video.paused) setMessage(t('voicePlay'));
@@ -442,14 +586,20 @@
           return;
         }
         setupGraph(tracks);
+        if (stopped) return;
+        wake();
+        // contexte suspendu : l'analyseur ne lit que des zéros, le silence n'est pas détectable
+        level = (analyser && ctx.state === 'running') ? 0 : 1;
         var chunks = [];
-        level = analyser ? 0 : 1;
         var startedPlaying = !video.paused;
+        var rec;
         try {
-          recorder = new MR(new win.MediaStream(tracks), mime ? { mimeType: mime } : undefined);
-        } catch (e) { setMessage(t('voiceNoAudio')); return; }
-        recorder.ondataavailable = function (ev) { if (ev.data && ev.data.size) chunks.push(ev.data); };
-        recorder.onstop = function () {
+          rec = new MR(new win.MediaStream(tracks), mime ? { mimeType: mime } : undefined);
+        } catch (e) { fail(); return; }
+        recorder = rec;
+        rec.ondataavailable = function (ev) { if (ev.data && ev.data.size) chunks.push(ev.data); };
+        rec.onerror = function () { fail(); };
+        rec.onstop = function () {
           var silent = level < SILENCE_RMS;
           var wasPlaying = startedPlaying || !video.paused;
           var blob = chunks.length ? new win.Blob(chunks, { type: (mime || 'audio/webm').split(';')[0] }) : null;
@@ -458,16 +608,25 @@
           // traitement dans l'ordre d'arrivée : les sous-titres ne se doublent jamais
           chain = chain.then(function () { return handleChunk(blob, mime); }).catch(function () { /* rien */ });
         };
-        try { recorder.start(); } catch (e) { setMessage(t('voiceNoAudio')); return; }
-        win.setTimeout(function () { try { if (recorder.state !== 'inactive') recorder.stop(); } catch (e) { /* rien */ } }, chunkMs);
+        try { rec.start(); } catch (e) { fail(); return; }
+        // « rec » et non « recorder » : si cet enregistreur s'arrête tout seul (pistes terminées), ce
+        // minuteur ne doit pas couper le morceau suivant
+        win.setTimeout(function () { try { if (rec.state !== 'inactive') rec.stop(); } catch (e) { /* rien */ } }, chunkMs);
       }
-      recordOne();
-      cleanups.push(function () {
+      function release() {
+        if (stopped) return;
         stopped = true;
         try { if (recorder && recorder.state !== 'inactive') recorder.stop(); } catch (e) { /* rien */ }
-        if (meter) win.clearInterval(meter);
-        try { if (ctx) ctx.close(); } catch (e) { /* rien */ }
-      });
+        releaseCapture(cap);                       // d'abord : le son revient à la vidéo (Firefox)
+        closeGraph();
+      }
+      function fail() {
+        if (stopped) return;
+        release();
+        if (active) setMessage(t('voiceNoAudio'));
+      }
+      recordOne();
+      srcCleanups.push(release);
     }
     function handleChunk(blob, mime) {
       if (!active) return Promise.resolve();
@@ -490,6 +649,71 @@
       });
     }
 
+    /* ---------------- Choix de la source, suivi de la vidéo ---------------- */
+    function startSource() {
+      var tracks = textTracks(video);
+      if (tracks.length) startTrack(tracks);
+      else if (isYouTube()) startYouTube();
+      else startAudio();
+    }
+    function stopSource() {
+      var list = srcCleanups;
+      srcCleanups = [];
+      list.reverse().forEach(function (fn) { try { fn(); } catch (e) { /* rien */ } });
+      mode = null;
+    }
+    function useVideo(next) {
+      if (next === video) return;
+      // volume baissé pour la lecture à voix haute : rendu à l'ancienne vidéo, appliqué à la nouvelle
+      if (savedVolume !== null && video) { try { video.volume = savedVolume; } catch (e) { /* rien */ } }
+      savedVolume = null;
+      video = next;
+      if (speaking && video) { savedVolume = video.volume; video.volume = Math.min(video.volume, 0.25); }
+    }
+    /* Vidéo retirée ou remplacée (application d'une seule page, YouTube) : la référence est périmée.
+       On suit la nouvelle vidéo avec la source adaptée, sinon on arrête proprement. */
+    function checkVideo() {
+      if (!active || !video || video.isConnected !== false) return;
+      stopSource();
+      var next = pickVideo();
+      if (!next) { stop(); return; }
+      useVideo(next);
+      lastShown = '';
+      clearLines();
+      startSource();
+    }
+    /* YouTube : vidéo suivante (navigation interne « yt-navigate-finish » ou autre « v= » dans l'adresse).
+       Mémoire des sous-titres et détection (sous-titres présents ou non) remises à zéro. */
+    function ytVideoId() {
+      var loc = win.location;
+      var m = /[?&]v=([^&#]+)/.exec(loc.search || '') || /^\/(?:shorts|live|embed)\/([^/?#]+)/.exec(loc.pathname || '');
+      return m ? m[1] : '';
+    }
+    function checkYouTubeVideo() {
+      if (!active || ytCurrent === null) return;
+      var id = ytVideoId();
+      if (id === ytCurrent) return;
+      ytCurrent = id;
+      memo = {};
+      pending = {};
+      lastShown = '';
+      clearLines();
+      stopSource();
+      var next = pickVideo();
+      if (next) useVideo(next);
+      if (!video || video.isConnected === false) { stop(); return; }
+      startSource();
+    }
+    function watch() {
+      var check = function () { checkVideo(); checkYouTubeVideo(); };
+      var timer = win.setInterval(check, watchMs);
+      doc.addEventListener('yt-navigate-finish', check);
+      cleanups.push(function () {
+        win.clearInterval(timer);
+        doc.removeEventListener('yt-navigate-finish', check);
+      });
+    }
+
     /* ---------------- Commandes ---------------- */
     function start(opts) {
       opts = opts || {};
@@ -502,22 +726,23 @@
       memo = {};
       pending = {};
       lastShown = '';
+      ytCurrent = isYouTube() ? ytVideoId() : null;
       ensureBox();
-      var tracks = textTracks(video);
-      if (tracks.length) startTrack(tracks);
-      else if (isYouTube()) startYouTube();
-      else startAudio();
+      watch();
+      startSource();
       return status();
     }
     function stop() {
       if (!active && !host) return status();
       active = false;
       setSpeaking(false);
+      stopSource();
       var list = cleanups;
       cleanups = [];
       list.reverse().forEach(function (fn) { try { fn(); } catch (e) { /* rien */ } });
       mode = null;
       message = '';
+      ytCurrent = null;
       return status();
     }
     function toggle(opts) { return active ? stop() : start(opts); }
