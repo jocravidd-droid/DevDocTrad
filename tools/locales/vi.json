@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Dừng đọc to",
 "popupRestricted": "Trình duyệt cấm mọi tiện ích trên trang này (cửa hàng tiện ích, tài khoản hoặc hỗ trợ của trình duyệt). Đây không phải lỗi của DevDocTrad.",
 "popupPdf": "PDF mở trong trình xem của trình duyệt, nơi không tiện ích nào vào được. Hãy mở bản HTML của tài liệu nếu có.",
-"popupBlocked": "Trình duyệt đã từ chối truy cập trang này. Trong Firefox, một số trang bị hạn chế: mở about:addons, DevDocTrad, cho phép «Chạy trên các trang bị hạn chế», rồi tải lại trang."
+"popupBlocked": "Trình duyệt đã từ chối truy cập trang này. Trong Firefox, một số trang bị hạn chế: mở about:addons, DevDocTrad, cho phép «Chạy trên các trang bị hạn chế», rồi tải lại trang.",
+"statePaidOnly": "Hãy chọn khóa trả phí",
+"popupPaidOnly": "Bạn chỉ có khóa trả phí: hãy chọn khóa trả phí trong menu \"Khóa\" để dịch.",
+"popupProgress": "Tiến độ dịch",
+"optUrlInvalid": "Địa chỉ không hợp lệ: hãy nhập địa chỉ http:// hoặc https://, ví dụ http://localhost:11434.",
+"optOllamaPermDenied": "Quyền bị từ chối: DevDocTrad không thể kết nối tới {0}."
 }

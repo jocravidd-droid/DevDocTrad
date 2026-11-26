@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "無法翻譯此頁面"
   },
+  "statePaidOnly": {
+    "message": "請選擇付費金鑰"
+  },
+  "popupPaidOnly": {
+    "message": "你只有付費金鑰：請在「金鑰」選單中選擇付費金鑰後再翻譯。"
+  },
+  "popupProgress": {
+    "message": "翻譯進度"
+  },
+  "optUrlInvalid": {
+    "message": "位址無效：請輸入以 http:// 或 https:// 開頭的位址，例如 http://localhost:11434。"
+  },
+  "optOllamaPermDenied": {
+    "message": "權限遭拒：DevDocTrad 無法連線到 {0}。"
+  },
   "toastAutoOn": {
     "message": "已為 {0} 開啟自動翻譯。"
   },

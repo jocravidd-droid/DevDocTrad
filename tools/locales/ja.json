@@ -218,5 +218,10 @@
 "voiceSpeakOff": "読み上げを停止",
 "popupRestricted": "このサイトでは、ブラウザーがすべての拡張機能を禁止しています（拡張機能ストア、ブラウザーのアカウントやサポート）。DevDocTrad の不具合ではありません。",
 "popupPdf": "PDF はブラウザーのビューアーで開かれ、拡張機能は中に入れません。HTML 版があればそちらを開いてください。",
-"popupBlocked": "ブラウザーがこのページへのアクセスを拒否しました。Firefox では一部のサイトが制限されています：about:addons を開き、DevDocTrad で「制限付きサイトで実行」を許可して、ページを再読み込みしてください。"
+"popupBlocked": "ブラウザーがこのページへのアクセスを拒否しました。Firefox では一部のサイトが制限されています：about:addons を開き、DevDocTrad で「制限付きサイトで実行」を許可して、ページを再読み込みしてください。",
+"statePaidOnly": "有料キーを選択してください",
+"popupPaidOnly": "有料キーしかありません。翻訳するには「キー」メニューで有料キーを選んでください。",
+"popupProgress": "翻訳の進行状況",
+"optUrlInvalid": "無効なアドレスです。http:// または https:// で始まるアドレスを入力してください（例: http://localhost:11434）。",
+"optOllamaPermDenied": "許可が拒否されました。DevDocTrad は {0} に接続できません。"
 }

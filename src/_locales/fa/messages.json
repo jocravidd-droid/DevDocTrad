@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "صفحه ترجمه‌پذیر نیست"
   },
+  "statePaidOnly": {
+    "message": "کلید پولی خود را انتخاب کنید"
+  },
+  "popupPaidOnly": {
+    "message": "فقط کلید پولی دارید: برای ترجمه، کلید پولی را از منوی «کلید» انتخاب کنید."
+  },
+  "popupProgress": {
+    "message": "پیشرفت ترجمه"
+  },
+  "optUrlInvalid": {
+    "message": "نشانی نامعتبر: یک نشانی http:// یا https:// وارد کنید، مثلاً http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "اجازه رد شد: DevDocTrad نمی‌تواند به {0} دسترسی پیدا کند."
+  },
   "toastAutoOn": {
     "message": "ترجمهٔ خودکار برای {0} روشن شد."
   },

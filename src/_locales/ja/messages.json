@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "翻訳できないページです"
   },
+  "statePaidOnly": {
+    "message": "有料キーを選択してください"
+  },
+  "popupPaidOnly": {
+    "message": "有料キーしかありません。翻訳するには「キー」メニューで有料キーを選んでください。"
+  },
+  "popupProgress": {
+    "message": "翻訳の進行状況"
+  },
+  "optUrlInvalid": {
+    "message": "無効なアドレスです。http:// または https:// で始まるアドレスを入力してください（例: http://localhost:11434）。"
+  },
+  "optOllamaPermDenied": {
+    "message": "許可が拒否されました。DevDocTrad は {0} に接続できません。"
+  },
   "toastAutoOn": {
     "message": "{0} の自動翻訳をオンにしました。"
   },

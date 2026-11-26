@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Voorlezen stoppen",
 "popupRestricted": "De browser verbiedt alle extensies op deze site (extensiewinkel, browseraccount of ondersteuning). Dit is geen fout van DevDocTrad.",
 "popupPdf": "PDF's openen in de viewer van de browser, waar geen enkele extensie in kan. Open de HTML-versie van het document als die er is.",
-"popupBlocked": "De browser weigerde toegang tot deze pagina. In Firefox zijn sommige sites beperkt: open about:addons, DevDocTrad, sta „Uitvoeren op websites met beperkingen” toe en herlaad de pagina."
+"popupBlocked": "De browser weigerde toegang tot deze pagina. In Firefox zijn sommige sites beperkt: open about:addons, DevDocTrad, sta „Uitvoeren op websites met beperkingen” toe en herlaad de pagina.",
+"statePaidOnly": "Kies je betaalde sleutel",
+"popupPaidOnly": "Je hebt alleen betaalde sleutels: kies de betaalde sleutel in het menu 'Sleutel' om te vertalen.",
+"popupProgress": "Voortgang van de vertaling",
+"optUrlInvalid": "Ongeldig adres: voer een http://- of https://-adres in, bijvoorbeeld http://localhost:11434.",
+"optOllamaPermDenied": "Toestemming geweigerd: DevDocTrad kan {0} niet bereiken."
 }

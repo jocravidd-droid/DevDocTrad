@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Hentikan pembacaan",
 "popupRestricted": "Browser melarang semua ekstensi di situs ini (toko ekstensi, akun, atau dukungan browser). Ini bukan kesalahan DevDocTrad.",
 "popupPdf": "PDF dibuka di penampil browser, yang tidak bisa dimasuki ekstensi apa pun. Buka versi HTML dokumen jika ada.",
-"popupBlocked": "Browser menolak akses ke halaman ini. Di Firefox beberapa situs dibatasi: buka about:addons, DevDocTrad, izinkan «Jalankan di situs dengan pembatasan», lalu muat ulang halaman."
+"popupBlocked": "Browser menolak akses ke halaman ini. Di Firefox beberapa situs dibatasi: buka about:addons, DevDocTrad, izinkan «Jalankan di situs dengan pembatasan», lalu muat ulang halaman.",
+"statePaidOnly": "Pilih kunci berbayar Anda",
+"popupPaidOnly": "Anda hanya punya kunci berbayar: pilih kunci berbayar di menu \"Kunci\" untuk menerjemahkan.",
+"popupProgress": "Kemajuan terjemahan",
+"optUrlInvalid": "Alamat tidak valid: masukkan alamat http:// atau https://, misalnya http://localhost:11434.",
+"optOllamaPermDenied": "Izin ditolak: DevDocTrad tidak dapat menjangkau {0}."
 }

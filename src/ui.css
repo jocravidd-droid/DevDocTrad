@@ -17,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background-color var(--t-base) var(--ease), color var(--t-base) var(--ease);
 }
-a { color: var(--accent); text-decoration: none; }
+a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
 h1, h2, h3 { margin: 0; letter-spacing: -.015em; font-family: var(--font-display); }
 p { margin: 0; }
@@ -106,7 +106,7 @@ code, .mono { font-family: var(--mono); font-size: .92em; }
 }
 .btn.hero::after {   /* reflet spéculaire fixe en haut */
   content: ""; position: absolute; inset: 0 0 50% 0; border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,0)); pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0)); pointer-events: none;   /* léger : le texte blanc garde 4,5:1 */
 }
 .btn.hero:hover { background-position: 60% 50%; box-shadow: 0 10px 28px rgba(47, 107, 255, .42), inset 0 1px 0 rgba(255, 255, 255, .5); }
 .btn.hero:active { transform: scale(.985); }

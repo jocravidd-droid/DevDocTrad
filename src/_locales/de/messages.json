@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Seite nicht übersetzbar"
   },
+  "statePaidOnly": {
+    "message": "Kostenpflichtigen Schlüssel wählen"
+  },
+  "popupPaidOnly": {
+    "message": "Du hast nur kostenpflichtige Schlüssel: Wähle zum Übersetzen den kostenpflichtigen Schlüssel im Menü „Schlüssel“."
+  },
+  "popupProgress": {
+    "message": "Fortschritt der Übersetzung"
+  },
+  "optUrlInvalid": {
+    "message": "Ungültige Adresse: Gib eine http://- oder https://-Adresse ein, zum Beispiel http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Berechtigung verweigert: DevDocTrad kann {0} nicht erreichen."
+  },
   "toastAutoOn": {
     "message": "Automatische Übersetzung für {0} aktiviert."
   },

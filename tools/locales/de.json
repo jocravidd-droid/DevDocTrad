@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Vorlesen beenden",
 "popupRestricted": "Der Browser verbietet allen Erweiterungen diese Website (Erweiterungs-Store, Browserkonto oder Support). Das ist kein Fehler von DevDocTrad.",
 "popupPdf": "PDFs öffnen sich im PDF-Viewer des Browsers, auf den keine Erweiterung zugreifen kann. Öffne die HTML-Version des Dokuments, falls es eine gibt.",
-"popupBlocked": "Der Browser hat den Zugriff auf diese Seite verweigert. In Firefox sind manche Websites eingeschränkt: Öffne about:addons, DevDocTrad, erlaube „Auf Websites mit Einschränkungen ausführen“ und lade die Seite neu."
+"popupBlocked": "Der Browser hat den Zugriff auf diese Seite verweigert. In Firefox sind manche Websites eingeschränkt: Öffne about:addons, DevDocTrad, erlaube „Auf Websites mit Einschränkungen ausführen“ und lade die Seite neu.",
+"statePaidOnly": "Kostenpflichtigen Schlüssel wählen",
+"popupPaidOnly": "Du hast nur kostenpflichtige Schlüssel: Wähle zum Übersetzen den kostenpflichtigen Schlüssel im Menü „Schlüssel“.",
+"popupProgress": "Fortschritt der Übersetzung",
+"optUrlInvalid": "Ungültige Adresse: Gib eine http://- oder https://-Adresse ein, zum Beispiel http://localhost:11434.",
+"optOllamaPermDenied": "Berechtigung verweigert: DevDocTrad kann {0} nicht erreichen."
 }

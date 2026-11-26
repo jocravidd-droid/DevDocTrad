@@ -11,9 +11,16 @@ main { padding: 4px 14px 4px; display: flex; flex-direction: column; gap: 8px; }
 .count { font-size: var(--fs-sm); color: var(--text-2); }
 .controls { gap: var(--s-2); }
 .controls .seg { flex: 1; min-width: 0; }
-.controls .seg label > span { padding: 6px 8px; }
+/* Libellés du segment : coupés avec « … » plutôt que de passer sous le bouton Stop (texte complet en title) */
+.controls .seg label { min-width: 0; }
+.controls .seg label > span { padding: 6px 8px; min-width: 0; }
+.controls .seg .seg-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Pendant une traduction, le bouton Stop prend la place des icônes du segment */
+.controls:has(#stop:not([hidden])) .seg svg { display: none; }
 .controls .btn { flex: none; }
 #status:empty { display: none; }
+/* Message d'état : 4 lignes au plus (texte complet dans title) */
+#status { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden; overflow-wrap: anywhere; }
 .field { display: block; }
 .note { display: flex; gap: 8px; align-items: flex-start; }
 .note svg { width: 15px; height: 15px; flex: none; margin-top: 1px; color: var(--warn); }
@@ -39,4 +46,12 @@ h3 { font-size: var(--fs-md); font-weight: 650; }
 .count { white-space: nowrap; flex: none; }
 #main .row.between { gap: var(--s-2); }
 #main .chip { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-#opts .switch { font-size: var(--fs-md); line-height: 1.3; }
+/* Interrupteurs : toujours sur une ligne, coupés avec « … » (texte complet dans title) */
+#opts .switch { display: flex; min-width: 0; font-size: var(--fs-md); line-height: 1.3; }
+#opts .switch .sw-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Popup trop haut malgré tout (voir fitHeight dans popup.js) : pied masqué, textes resserrés */
+.foot.squeezed { display: none; }
+body.tight main { gap: 6px; }
+body.tight .card { gap: 7px; padding-block: 9px; }
+body.tight #status, body.tight .note > span:last-child {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }

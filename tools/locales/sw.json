@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Acha kusoma kwa sauti",
 "popupRestricted": "Kivinjari kinazuia viendelezi vyote kwenye tovuti hii (duka la viendelezi, akaunti au usaidizi wa kivinjari). Si hitilafu ya DevDocTrad.",
 "popupPdf": "PDF hufunguka kwenye kitazamaji cha kivinjari, ambacho hakuna kiendelezi kinachoweza kukiingia. Fungua toleo la HTML la hati ikiwa lipo.",
-"popupBlocked": "Kivinjari kimekataa ufikiaji wa ukurasa huu. Kwenye Firefox baadhi ya tovuti zimezuiwa: fungua about:addons, DevDocTrad, ruhusu «Endesha kwenye tovuti zenye vikwazo», kisha pakia upya ukurasa."
+"popupBlocked": "Kivinjari kimekataa ufikiaji wa ukurasa huu. Kwenye Firefox baadhi ya tovuti zimezuiwa: fungua about:addons, DevDocTrad, ruhusu «Endesha kwenye tovuti zenye vikwazo», kisha pakia upya ukurasa.",
+"statePaidOnly": "Chagua ufunguo wako wa kulipia",
+"popupPaidOnly": "Una funguo za kulipia tu: chagua ufunguo wa kulipia kwenye menyu ya \"Ufunguo\" ili kutafsiri.",
+"popupProgress": "Maendeleo ya tafsiri",
+"optUrlInvalid": "Anwani si sahihi: weka anwani ya http:// au https://, kwa mfano http://localhost:11434.",
+"optOllamaPermDenied": "Ruhusa imekataliwa: DevDocTrad haiwezi kufikia {0}."
 }

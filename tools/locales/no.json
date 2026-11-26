@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Stopp høytlesing",
 "popupRestricted": "Nettleseren forbyr alle utvidelser på dette nettstedet (utvidelsesbutikk, nettleserkonto eller støtte). Dette er ikke en feil i DevDocTrad.",
 "popupPdf": "PDF-er åpnes i nettleserens visningsprogram, der ingen utvidelse kommer inn. Åpne HTML-versjonen av dokumentet hvis den finnes.",
-"popupBlocked": "Nettleseren nektet tilgang til denne siden. I Firefox er noen nettsteder begrenset: åpne about:addons, DevDocTrad, tillat «Kjør på nettsteder med begrensninger», og last inn siden på nytt."
+"popupBlocked": "Nettleseren nektet tilgang til denne siden. I Firefox er noen nettsteder begrenset: åpne about:addons, DevDocTrad, tillat «Kjør på nettsteder med begrensninger», og last inn siden på nytt.",
+"statePaidOnly": "Velg den betalte nøkkelen",
+"popupPaidOnly": "Du har bare betalte nøkler: velg den betalte nøkkelen i menyen «Nøkkel» for å oversette.",
+"popupProgress": "Fremdrift for oversettelsen",
+"optUrlInvalid": "Ugyldig adresse: skriv inn en http://- eller https://-adresse, for eksempel http://localhost:11434.",
+"optOllamaPermDenied": "Tillatelse avslått: DevDocTrad kan ikke nå {0}."
 }

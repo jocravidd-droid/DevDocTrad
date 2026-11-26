@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Sivua ei voi kääntää"
   },
+  "statePaidOnly": {
+    "message": "Valitse maksullinen avain"
+  },
+  "popupPaidOnly": {
+    "message": "Sinulla on vain maksullisia avaimia: valitse maksullinen avain Avain-valikosta kääntääksesi."
+  },
+  "popupProgress": {
+    "message": "Käännöksen eteneminen"
+  },
+  "optUrlInvalid": {
+    "message": "Virheellinen osoite: anna http://- tai https://-osoite, esimerkiksi http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Lupa evätty: DevDocTrad ei saa yhteyttä kohteeseen {0}."
+  },
   "toastAutoOn": {
     "message": "Automaattinen käännös otettu käyttöön: {0}."
   },

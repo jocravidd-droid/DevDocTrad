@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Page non traduisible"
   },
+  "statePaidOnly": {
+    "message": "Clé payante à choisir"
+  },
+  "popupPaidOnly": {
+    "message": "Tu n'as que des clés payantes : choisis la clé payante dans le menu « Clé » pour traduire."
+  },
+  "popupProgress": {
+    "message": "Avancement de la traduction"
+  },
+  "optUrlInvalid": {
+    "message": "Adresse invalide : saisis une adresse http:// ou https://, par exemple http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Permission refusée : DevDocTrad ne peut pas joindre {0}."
+  },
   "toastAutoOn": {
     "message": "Traduction automatique activée pour {0}."
   },

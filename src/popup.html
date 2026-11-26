@@ -26,11 +26,11 @@
       <span class="count mono" id="count"></span>
     </div>
     <button class="btn hero" id="translate"><span data-icon="translate"></span><span id="translateLabel" data-i18n="popupTranslate"></span></button>
-    <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+    <div class="progress" id="progress" role="progressbar" data-i18n-aria="popupProgress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
     <div class="row controls">
       <div class="seg" role="radiogroup" data-i18n-aria="popupView">
-        <label><input type="radio" name="view" value="original"><span><span data-icon="original"></span><span data-i18n="segOriginal"></span></span></label>
-        <label><input type="radio" name="view" value="translated"><span><span data-icon="translate"></span><span data-i18n="segTranslation"></span></span></label>
+        <label data-i18n-title="segOriginal"><input type="radio" name="view" value="original"><span><span data-icon="original"></span><span class="seg-text" data-i18n="segOriginal"></span></span></label>
+        <label data-i18n-title="segTranslation"><input type="radio" name="view" value="translated"><span><span data-icon="translate"></span><span class="seg-text" data-i18n="segTranslation"></span></span></label>
       </div>
       <button class="btn" id="stop" hidden><span data-icon="stop"></span><span data-i18n="btnStop"></span></button>
     </div>
@@ -53,17 +53,17 @@
         <select id="keySel"></select>
       </label>
     </div>
-    <label class="switch">
+    <label class="switch" data-i18n-title="popupAuto">
       <input type="checkbox" id="autoSite">
       <span class="track"></span>
-      <span data-i18n="popupAuto"></span>
+      <span class="sw-text" data-i18n="popupAuto"></span>
     </label>
-    <label class="switch" id="voiceRow">
+    <label class="switch" id="voiceRow" data-i18n-title="popupVoice">
       <input type="checkbox" id="voiceSwitch">
       <span class="track"></span>
-      <span data-i18n="popupVoice"></span>
+      <span class="sw-text" data-i18n="popupVoice"></span>
     </label>
-    <p class="help note" id="sensitiveNote" hidden><span data-icon="shield"></span><span data-i18n="popupSensitive"></span></p>
+    <p class="help note" id="sensitiveNote" data-i18n-title="popupSensitive" hidden><span data-icon="shield"></span><span data-i18n="popupSensitive"></span></p>
   </section>
 
   <section class="m-secondary card enter enter-4">

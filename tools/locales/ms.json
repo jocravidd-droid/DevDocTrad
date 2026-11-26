@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Berhenti membaca dengan kuat",
 "popupRestricted": "Pelayar melarang semua sambungan di laman ini (kedai sambungan, akaun atau sokongan pelayar). Ini bukan ralat DevDocTrad.",
 "popupPdf": "PDF dibuka dalam pemapar pelayar, yang tidak boleh dimasuki oleh sambungan. Buka versi HTML dokumen jika ada.",
-"popupBlocked": "Pelayar menolak akses ke halaman ini. Dalam Firefox sesetengah laman dihadkan: buka about:addons, DevDocTrad, benarkan «Jalankan di laman dengan sekatan», kemudian muat semula halaman."
+"popupBlocked": "Pelayar menolak akses ke halaman ini. Dalam Firefox sesetengah laman dihadkan: buka about:addons, DevDocTrad, benarkan «Jalankan di laman dengan sekatan», kemudian muat semula halaman.",
+"statePaidOnly": "Pilih kunci berbayar anda",
+"popupPaidOnly": "Anda hanya ada kunci berbayar: pilih kunci berbayar dalam menu \"Kunci\" untuk menterjemah.",
+"popupProgress": "Kemajuan terjemahan",
+"optUrlInvalid": "Alamat tidak sah: masukkan alamat http:// atau https://, contohnya http://localhost:11434.",
+"optOllamaPermDenied": "Kebenaran ditolak: DevDocTrad tidak dapat mencapai {0}."
 }

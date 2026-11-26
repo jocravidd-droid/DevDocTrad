@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Siden kan ikke oversættes"
   },
+  "statePaidOnly": {
+    "message": "Vælg din betalte nøgle"
+  },
+  "popupPaidOnly": {
+    "message": "Du har kun betalte nøgler: vælg den betalte nøgle i menuen \"Nøgle\" for at oversætte."
+  },
+  "popupProgress": {
+    "message": "Oversættelsens fremskridt"
+  },
+  "optUrlInvalid": {
+    "message": "Ugyldig adresse: indtast en http://- eller https://-adresse, for eksempel http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Tilladelse nægtet: DevDocTrad kan ikke nå {0}."
+  },
   "toastAutoOn": {
     "message": "Automatisk oversættelse slået til for {0}."
   },

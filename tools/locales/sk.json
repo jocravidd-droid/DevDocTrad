@@ -218,5 +218,10 @@
 "voiceSpeakOff": "Zastaviť čítanie nahlas",
 "popupRestricted": "Prehliadač na tejto stránke zakazuje všetky rozšírenia (obchod s rozšíreniami, účet alebo podpora prehliadača). Nejde o chybu DevDocTrad.",
 "popupPdf": "PDF sa otvárajú v zobrazovači prehliadača, kam žiadne rozšírenie nesmie. Otvor HTML verziu dokumentu, ak existuje.",
-"popupBlocked": "Prehliadač odmietol prístup k tejto stránke. Vo Firefoxe sú niektoré stránky obmedzené: otvor about:addons, DevDocTrad, povoľ „Spúšťať na stránkach s obmedzeniami“ a stránku načítaj znova."
+"popupBlocked": "Prehliadač odmietol prístup k tejto stránke. Vo Firefoxe sú niektoré stránky obmedzené: otvor about:addons, DevDocTrad, povoľ „Spúšťať na stránkach s obmedzeniami“ a stránku načítaj znova.",
+"statePaidOnly": "Vyberte platený kľúč",
+"popupPaidOnly": "Máte len platené kľúče: na preklad vyberte platený kľúč v ponuke „Kľúč“.",
+"popupProgress": "Priebeh prekladu",
+"optUrlInvalid": "Neplatná adresa: zadajte adresu http:// alebo https://, napríklad http://localhost:11434.",
+"optOllamaPermDenied": "Povolenie zamietnuté: DevDocTrad sa nemôže pripojiť k {0}."
 }

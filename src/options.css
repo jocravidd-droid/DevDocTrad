@@ -227,3 +227,15 @@ label.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; 
   .note-line .who { flex-basis: 100%; }
   .trio { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Choix segmentés (Affichage, Thème) : jamais rognés sur un écran étroit, le texte passe à la ligne */
+.line .ctl { min-width: 0; max-width: 100%; }
+.line .ctl .seg { max-width: 100%; flex-wrap: wrap; }
+.line .ctl .seg label { flex: 1 1 auto; min-width: 0; }
+.line .ctl .seg label > span { white-space: normal; text-align: center; overflow-wrap: anywhere; }
+
+/* Carte qui reçoit le focus après la suppression de la précédente */
+.keycard:focus { outline: none; }
+.keycard:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+/* Valeur refusée (nombre hors bornes, adresse invalide) : elle n'est pas enregistrée */
+input[aria-invalid="true"] { border-color: var(--err); box-shadow: 0 0 0 1px var(--err); }

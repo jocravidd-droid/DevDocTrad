@@ -494,6 +494,21 @@
   "stateUnavailable": {
     "message": "Страницата не може да се преведе"
   },
+  "statePaidOnly": {
+    "message": "Изберете платения ключ"
+  },
+  "popupPaidOnly": {
+    "message": "Имате само платени ключове: изберете платения ключ от менюто „Ключ“, за да превеждате."
+  },
+  "popupProgress": {
+    "message": "Напредък на превода"
+  },
+  "optUrlInvalid": {
+    "message": "Невалиден адрес: въведете адрес с http:// или https://, например http://localhost:11434."
+  },
+  "optOllamaPermDenied": {
+    "message": "Разрешението е отказано: DevDocTrad не може да достигне {0}."
+  },
   "toastAutoOn": {
     "message": "Автоматичният превод е включен за {0}."
   },
