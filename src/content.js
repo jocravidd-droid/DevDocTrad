@@ -1002,11 +1002,21 @@
           if (u.gone) return;
           if (!unitConnected(u)) { if (u.applied) restoreUnit(u); dropUnit(u); return; }
           if (u.kind !== 'run') return;
-          if (u.applied) { if (touched(u)) { restoreUnit(u); dropUnit(u); } }
-          else if (!stillInPlace(u)) dropUnit(u);
+          if (u.applied) { if (touched(u)) { restoreUnit(u); edited(u); } }
+          else if (!stillInPlace(u)) edited(u);
         });
       });
       units = units.filter(function (u) { return !u.gone; });
+    }
+    /* Texte réécrit par la page : retraduit, sauf s'il change sans cesse au même endroit (horloge,
+     * compteur, « il y a 3 s ») : au-delà de MAX_EDITS, il reste tel que la page l'écrit (quota). */
+    var MAX_EDITS = 5;
+    var edits = new WeakMap();
+    function edited(u) {
+      var n = (edits.get(u.parent) || 0) + 1;
+      edits.set(u.parent, n);
+      if (n > MAX_EDITS) { u.gone = true; return; }   // nœuds gardés comme « vus » : plus repris
+      dropUnit(u);
     }
 
     /* ---------------- Commandes publiques ---------------- */

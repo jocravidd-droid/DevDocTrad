@@ -406,3 +406,18 @@ test('M11 : nouvelle langue pendant un lot : la réponse de l\'ancienne langue e
   await run;
   assert.equal(doc.getElementById('p').textContent, 'NEUE SPRACHE.');
 });
+
+test('C1 : texte qui change sans cesse (horloge) : retraduit quelques fois seulement (quota)', async () => {
+  const dom = makeDom('<html><body><p id="p">Updated just now.</p></body></html>');
+  const p = dom.window.document.getElementById('p');
+  const { engine, calls } = makeEngine(dom);
+  await engine.start();
+  for (let i = 1; i <= 7; i++) {
+    p.firstChild.data = `Updated ${i} seconds ago.`;
+    await tick(900);
+  }
+  assert.equal(calls.length, 1 + 5, 'cinq retraductions au plus');
+  assert.equal(p.textContent, 'Updated 7 seconds ago.', 'le texte de la page reste visible');
+  engine.showOriginal();
+  assert.equal(p.textContent, 'Updated 7 seconds ago.');
+});
