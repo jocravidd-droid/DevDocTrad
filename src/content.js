@@ -19,6 +19,10 @@
     'TABLE', 'THEAD', 'TBODY', 'TFOOT', 'TR', 'TD', 'TH', 'CAPTION', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER',
     'NAV', 'ASIDE', 'MAIN', 'BLOCKQUOTE', 'PRE', 'FIGURE', 'FIGCAPTION', 'DL', 'DT', 'DD', 'FORM', 'FIELDSET',
     'LEGEND', 'DETAILS', 'SUMMARY', 'HR', 'ADDRESS', 'DIALOG', 'MENU', 'CENTER', 'OPTION', 'OPTGROUP']);
+  // Éléments qu'on ne doit ni dupliquer (bilingue) ni déplacer (remplacer) : une copie recharge une vidéo
+  // ou une iframe, un déplacement perd la saisie d'un champ. Une séquence en ligne est coupée sur eux.
+  var HEAVY_TAGS = new Set(['IFRAME', 'VIDEO', 'AUDIO', 'INPUT', 'SELECT', 'TEXTAREA', 'OBJECT', 'EMBED', 'CANVAS']);
+  var HEAVY_SEL = 'iframe, video, audio, input, select, textarea, object, embed, canvas';
   var ATTRS = ['title', 'alt', 'placeholder', 'aria-label'];
   var REVEAL_ATTRS = ['class', 'style', 'hidden', 'open', 'aria-hidden', 'aria-expanded'];
   var COMMENT_SELECTOR = '.token.comment, .hljs-comment, .pl-c, .highlight .c, .highlight .c1, .highlight .cm, ' +
@@ -57,6 +61,9 @@
     var badge = null;
     var runPromise = null;
     var onUrlChange = deps.onUrlChange || null;
+    var gen = 0;                   // change avec la langue cible : un lot d'une ancienne langue est ignoré
+    var closed = false;            // badge fermé par l'utilisateur (rouvert seulement par start/toggle)
+    var announced = null;          // dernier état annoncé aux lecteurs d'écran
 
     /* ---------------- Classement des éléments ---------------- */
     function cs(el) {
@@ -104,6 +111,10 @@
       blockDescCache.set(el, res);
       return res;
     }
+    function hasHeavy(el) {
+      if (HEAVY_TAGS.has(el.tagName.toUpperCase())) return true;
+      return !!(el.querySelector && el.querySelector(HEAVY_SEL));
+    }
     function isAtom(el) {
       var tag = el.tagName.toUpperCase();
       if (VOID_TAGS.has(tag)) return true;
@@ -125,14 +136,17 @@
       var kids = parent.childNodes;
       for (var i = 0; i < kids.length; i++) {
         var n = kids[i];
-        if (n.nodeType === 3 || n.nodeType === 8) { run.push(n); continue; }
+        // Les commentaires HTML (ancres de Vue « <!--v-if--> », marqueurs de React) ne font pas partie
+        // des séquences : on n'y touche jamais, ils restent là où le framework les attend.
+        if (n.nodeType === 8) continue;
+        if (n.nodeType === 3) { run.push(n); continue; }
         if (n.nodeType !== 1) continue;
         if (isUi(n)) { flush(parent, run, out); run = []; continue; }
         if (isHidden(n)) {
-          if (isInlineEl(n)) run.push(n); else { flush(parent, run, out); run = []; }
+          if (isInlineEl(n) && !hasHeavy(n)) run.push(n); else { flush(parent, run, out); run = []; }
           continue;
         }
-        if (isInlineEl(n) && !hasBlockDescendant(n)) { run.push(n); continue; }
+        if (isInlineEl(n) && !hasBlockDescendant(n) && !hasHeavy(n)) { run.push(n); continue; }
         flush(parent, run, out);
         run = [];
         if (!isSkipped(n)) {
@@ -144,12 +158,35 @@
       flush(parent, run, out);
     }
 
+    /* Une séquence peut contenir des nœuds déjà traités (texte ajouté à côté d'un passage traduit) :
+     * on la coupe sur ces nœuds au lieu de l'abandonner, sinon le nouveau texte n'est jamais traduit. */
     function flush(parent, run, out) {
+      var part = [];
+      for (var i = 0; i < run.length; i++) {
+        var n = run[i];
+        if (built.has(n) || seen.has(n)) { flushPart(parent, part, out); part = []; continue; }
+        part.push(n);
+      }
+      flushPart(parent, part, out);
+    }
+
+    /* Tous les nœuds texte d'une séquence (y compris dans les éléments) avec leur contenu au moment
+     * de la collecte : sert à voir si la page a changé le texte pendant qu'un lot était en cours. */
+    function textsOf(nodes, acc) {
+      acc = acc || [];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.nodeType === 3) acc.push({ node: n, data: n.data });
+        else if (n.nodeType === 1) textsOf(n.childNodes, acc);
+      }
+      return acc;
+    }
+
+    function flushPart(parent, run, out) {
       if (!run.length) return;
       var hasText = false;
       for (var i = 0; i < run.length; i++) {
         var n = run[i];
-        if (built.has(n) || seen.has(n)) return;     // déjà traité
         if (n.nodeType === 3 && /\S/.test(n.data)) hasText = true;
         else if (n.nodeType === 1) hasText = hasText || /\S/.test(n.textContent || '');
       }
@@ -167,9 +204,13 @@
       var trail = last.nodeType === 3 ? (last.data.match(/\s+$/) || [''])[0] : '';
       if (run.length === 1 && first.nodeType === 3 && !/\S/.test(first.data)) return;
       for (i = 0; i < run.length; i++) seen.add(run[i]);
+      // les éléments internes aussi : si une traduction en remonte un d'un niveau, il ne doit pas
+      // être repris comme du texte nouveau
+      for (var id in ctx.map) seen.add(ctx.map[id].el);
       out.push({
         uid: nextUnitId++, kind: 'run', parent: parent, nodes: run.slice(), src: src, map: ctx.map,
-        lead: lead, trail: trail, out: null, applied: null, saved: null, builtTop: null, anchor: null, bi: null
+        lead: lead, trail: trail, texts: textsOf(run), out: null, applied: null, recs: null, added: null,
+        containers: null, span: null, moved: false, bi: null
       });
     }
 
@@ -212,7 +253,9 @@
       if (isNoTranslate(el)) return;
       var all = el.querySelectorAll('[title],[alt],[placeholder],[aria-label]');
       for (var i = 0; i < all.length; i++) {
-        if (all[i].closest('[translate=no],.notranslate')) continue;
+        // <html translate="no"> est posé par markPage (avant scan) : il ne compte pas ici
+        var nt = all[i].closest('[translate=no],.notranslate');
+        if (nt && nt !== doc.documentElement) continue;
         collectAttrs(all[i], out);
       }
     }
@@ -294,14 +337,132 @@
         for (var i = 0; i < unit.nodes.length; i++) {
           if (unit.nodes[i].parentNode !== unit.parent || !unit.nodes[i].isConnected) return false;
         }
+        // texte changé par la page pendant qu'un lot était en cours : l'ancienne traduction ne doit
+        // pas écraser le nouveau texte
+        var tx = unit.texts || [];
+        for (i = 0; i < tx.length; i++) if (tx[i].node.data !== tx[i].data) return false;
         return true;
       }
       if (unit.kind === 'attr' || unit.kind === 'comment') return unit.el.isConnected;
       return true;
     }
 
+    /* L'unité est-elle encore dans la page (pour l'oublier après une navigation SPA) ? */
+    function unitConnected(unit) {
+      if (unit.kind === 'run') {
+        if (!unit.parent.isConnected) return false;
+        for (var i = 0; i < unit.nodes.length; i++) if (unit.nodes[i].isConnected) return true;
+        return false;
+      }
+      if (unit.kind === 'attr' || unit.kind === 'comment') return unit.el.isConnected;
+      return true;
+    }
+
+    function titleIs(v) {
+      return String(doc.title).replace(/\s+/g, ' ').trim() === String(v).replace(/\s+/g, ' ').trim();
+    }
+
+    /* Le texte de la traduction en arbre : [{ text }, { id, kids: null (atome) | [...] (élément) }] */
+    function tokenTree(outStr) {
+      var tokens = DDT.tokenize(outStr);
+      var rootList = [];
+      var stack = [rootList];
+      for (var i = 0; i < tokens.length; i++) {
+        var tk = tokens[i];
+        var cur = stack[stack.length - 1];
+        if (tk.t === 'text') cur.push({ text: DDT.unescapeText(tk.v) });
+        else if (tk.t === 'atom') cur.push({ id: tk.id, kids: null });
+        else if (tk.t === 'open') { var it = { id: tk.id, kids: [] }; cur.push(it); stack.push(it.kids); }
+        else if (tk.t === 'close' && stack.length > 1) stack.pop();
+      }
+      return rootList;
+    }
+
+    /* Liste traduite -> éléments et textes entre eux (gaps[k] = texte avant l'élément k). */
+    function splitItems(list) {
+      var els = [];
+      var gaps = [''];
+      for (var i = 0; i < list.length; i++) {
+        if ('text' in list[i]) gaps[gaps.length - 1] += list[i].text;
+        else { els.push(list[i]); gaps.push(''); }
+      }
+      return { els: els, gaps: gaps };
+    }
+    /* Nœuds d'origine d'un conteneur -> éléments et nœuds texte entre eux (commentaires ignorés). */
+    function splitNodes(nodes) {
+      var els = [];
+      var gaps = [[]];
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i];
+        if (n.nodeType === 3) gaps[gaps.length - 1].push(n);
+        else if (n.nodeType === 1) { els.push(n); gaps.push([]); }
+      }
+      return { els: els, gaps: gaps };
+    }
+
+    function newText(ctx, data) {
+      var tn = doc.createTextNode(data);
+      built.add(tn);
+      ctx.added.push(tn);
+      return tn;
+    }
+
+    /*
+     * Remplit un conteneur (le parent de la séquence ou un élément en ligne) avec la traduction en
+     * RÉUTILISANT ses nœuds texte d'origine : React, Vue, Next, Docusaurus ou VitePress gardent des
+     * références vers ces nœuds (removeChild, insertBefore, nodeValue=) ; s'ils étaient retirés de la
+     * page, le framework planterait (NotFoundError) ou écrirait dans un nœud détaché.
+     * - mêmes éléments dans le même ordre (cas courant) : seul le contenu des nœuds texte change,
+     *   rien n'est déplacé ; un nouveau nœud texte n'est créé que là où il n'y en avait aucun ;
+     * - ordre changé par la grammaire : les éléments sont déplacés dans le même parent (jamais retirés),
+     *   les nœuds texte d'origine servent d'emplacements dans l'ordre, ceux en trop sont vidés.
+     */
+    function fillContainer(unit, container, origNodes, items, isTop, ctx) {
+      var o = splitNodes(origNodes);
+      var t = splitItems(items);
+      var N = t.els.length;
+      if (isTop) { t.gaps[0] = unit.lead + t.gaps[0]; t.gaps[N] += unit.trail; }
+      var tEls = t.els.map(function (it) { return unit.map[it.id].el; });
+      var same = tEls.length === o.els.length && tEls.every(function (e, i) { return e === o.els[i]; });
+      var k, j, tn;
+      if (same) {
+        for (k = 0; k <= N; k++) {
+          var g = o.gaps[k];
+          var text = t.gaps[k];
+          if (g.length) {
+            if (g[0].data !== text) g[0].data = text;
+            for (j = 1; j < g.length; j++) if (g[j].data !== '') g[j].data = '';
+          } else if (text) {
+            tn = newText(ctx, text);
+            container.insertBefore(tn, k < N ? o.els[k] : o.els[N - 1].nextSibling);
+          }
+        }
+      } else {
+        unit.moved = true;
+        var pool = [];
+        for (k = 0; k < o.gaps.length; k++) pool = pool.concat(o.gaps[k]);
+        var seq = [];
+        for (k = 0; k <= N; k++) {
+          if (t.gaps[k]) {
+            tn = pool.length ? pool.shift() : newText(ctx, t.gaps[k]);
+            if (tn.data !== t.gaps[k]) tn.data = t.gaps[k];
+            seq.push(tn);
+          }
+          if (k < N) seq.push(tEls[k]);
+        }
+        for (k = 0; k < pool.length; k++) if (pool[k].data !== '') pool[k].data = '';
+        for (k = 0; k < seq.length; k++) {
+          if (isTop) container.insertBefore(seq[k], ctx.ref);
+          else container.appendChild(seq[k]);
+        }
+      }
+      for (k = 0; k < N; k++) {
+        if (t.els[k].kids) fillContainer(unit, tEls[k], ctx.kids.get(tEls[k]) || [], t.els[k].kids, false, ctx);
+      }
+    }
+
     function applyUnit(unit) {
-      if (!unit.out || unit.applied) return false;
+      if (!unit.out || unit.applied || unit.gone) return false;
       if (unit.kind === 'title') { doc.title = DDT.unescapeText(unit.out); unit.applied = 'replace'; return true; }
       if (unit.kind === 'attr') {
         if (settings.mode !== 'replace') return false;
@@ -312,16 +473,27 @@
       }
       if (unit.kind === 'comment') {
         if (!stillInPlace(unit)) return false;
-        unit.saved = Array.prototype.slice.call(unit.el.childNodes);
-        while (unit.el.firstChild) unit.el.removeChild(unit.el.firstChild);
-        var tn = doc.createTextNode(unit.prefix + DDT.unescapeText(unit.out) + unit.suffix);
-        built.add(tn);
-        unit.el.appendChild(tn);
+        var ctext = unit.prefix + DDT.unescapeText(unit.out) + unit.suffix;
+        var only = unit.el.childNodes.length === 1 && unit.el.firstChild.nodeType === 3 ? unit.el.firstChild : null;
+        if (only) {
+          // un seul nœud texte : modifié sur place, comme pour le texte de la page
+          unit.rec = { node: only, orig: only.data, set: ctext };
+          only.data = ctext;
+          unit.saved = null;
+        } else {
+          unit.rec = null;
+          unit.saved = Array.prototype.slice.call(unit.el.childNodes);
+          while (unit.el.firstChild) unit.el.removeChild(unit.el.firstChild);
+          var tn = doc.createTextNode(ctext);
+          built.add(tn);
+          unit.el.appendChild(tn);
+        }
         unit.applied = 'replace';
         return true;
       }
       if (!stillInPlace(unit)) return false;
       var parent = unit.parent;
+      var first = unit.nodes[0];
       var last = unit.nodes[unit.nodes.length - 1];
       if (settings.mode === 'bilingual') {
         // traduction identique à l'original (nom de produit...) : rien à ajouter
@@ -343,42 +515,89 @@
         unit.applied = 'bilingual';
         return true;
       }
-      // mode remplacer
-      var anchor = doc.createComment('ddt');
-      built.add(anchor);
-      parent.insertBefore(anchor, unit.nodes[0]);
-      unit.anchor = anchor;
-      unit.saved = [];
-      var id;
-      for (id in unit.map) {
+      // mode remplacer : les nœuds d'origine restent dans la page, seul leur contenu change
+      var ctx = { added: [], kids: new Map(), ref: last.nextSibling };
+      unit.containers = [];
+      for (var id in unit.map) {
         if (unit.map[id].type === 'wrap') {
-          unit.saved.push({ el: unit.map[id].el, kids: Array.prototype.slice.call(unit.map[id].el.childNodes) });
+          var w = unit.map[id].el;
+          var kids = Array.prototype.slice.call(w.childNodes);
+          ctx.kids.set(w, kids);
+          unit.containers.push({ el: w, kids: kids });
         }
       }
-      for (i = 0; i < unit.nodes.length; i++) {
-        if (unit.nodes[i].parentNode === parent) parent.removeChild(unit.nodes[i]);
-      }
-      for (i = 0; i < unit.saved.length; i++) {
-        var w = unit.saved[i].el;
-        while (w.firstChild) w.removeChild(w.firstChild);
-      }
-      var top = buildNodes(unit, unit.out, false);
-      if (unit.lead) { var l = doc.createTextNode(unit.lead); built.add(l); top.unshift(l); }
-      if (unit.trail) { var tr = doc.createTextNode(unit.trail); built.add(tr); top.push(tr); }
-      var ref = anchor.nextSibling;
-      for (i = 0; i < top.length; i++) parent.insertBefore(top[i], ref);
-      unit.builtTop = top;
+      // tout ce qui est entre le premier et le dernier nœud (commentaires compris), pour l'ordre
+      unit.span = [];
+      for (var c = first; c; c = c.nextSibling) { unit.span.push(c); if (c === last) break; }
+      // contenu d'origine de chaque nœud texte touché
+      unit.recs = [];
+      var texts = splitNodes(unit.nodes).gaps;
+      unit.containers.forEach(function (ct) { texts = texts.concat(splitNodes(ct.kids).gaps); });
+      texts.forEach(function (g) { g.forEach(function (n) { unit.recs.push({ node: n, orig: n.data, set: null }); }); });
+      unit.moved = false;
+      fillContainer(unit, parent, unit.nodes, tokenTree(unit.out), true, ctx);
+      unit.recs.forEach(function (r) { r.set = r.node.data; });
+      unit.added = ctx.added;
       unit.applied = 'replace';
       return true;
     }
 
+    /* La page a-t-elle modifié un passage déjà traduit (texte réécrit, nœud retiré) ? */
+    function owners(unit) {
+      var set = new Set([unit.parent]);
+      (unit.containers || []).forEach(function (ct) { set.add(ct.el); });
+      return set;
+    }
+    function touched(unit) {
+      if (unit.kind !== 'run' || !unit.applied) return false;
+      if (unit.applied === 'bilingual') return !stillInPlace(unit);
+      for (var i = 0; i < unit.recs.length; i++) if (unit.recs[i].node.data !== unit.recs[i].set) return true;
+      var own = owners(unit);
+      for (i = 0; i < unit.nodes.length; i++) if (!own.has(unit.nodes[i].parentNode)) return true;
+      return false;
+    }
+
+    /* Remet l'ordre d'origine des nœuds après une traduction qui en a déplacé. Seuls les nœuds encore
+     * dans un conteneur de l'unité sont replacés : un nœud retiré par la page n'est pas ressuscité. */
+    function restoreOrder(unit) {
+      var own = owners(unit);
+      function here(n) { return n.parentNode && own.has(n.parentNode); }
+      unit.containers.forEach(function (ct) {
+        var kids = ct.kids.filter(here);
+        var now = Array.prototype.slice.call(ct.el.childNodes);
+        var same = now.length === kids.length && now.every(function (n, i) { return n === kids[i]; });
+        if (!same) kids.forEach(function (k) { ct.el.appendChild(k); });
+      });
+      var parent = unit.parent;
+      var span = unit.span.filter(here);
+      var inSpan = new Set(span);
+      var head = null;
+      for (var c = parent.firstChild; c; c = c.nextSibling) if (inSpan.has(c)) { head = c; break; }
+      var prev = null;
+      span.forEach(function (s) {
+        if (!prev) { if (s !== head) parent.insertBefore(s, head); }
+        else if (prev.nextSibling !== s) parent.insertBefore(s, prev.nextSibling);
+        prev = s;
+      });
+    }
+
     function restoreUnit(unit) {
       if (!unit.applied) return;
-      if (unit.kind === 'title') { doc.title = unit.orig; unit.applied = null; return; }
+      if (unit.kind === 'title') {
+        // après une navigation SPA, la page a pu mettre son propre titre : on n'y touche pas
+        if (titleIs(DDT.unescapeText(unit.out))) doc.title = unit.orig;
+        unit.applied = null;
+        return;
+      }
       if (unit.kind === 'attr') { unit.el.setAttribute(unit.attr, unit.orig); unit.applied = null; return; }
       if (unit.kind === 'comment') {
-        while (unit.el.firstChild) unit.el.removeChild(unit.el.firstChild);
-        for (var c = 0; c < unit.saved.length; c++) unit.el.appendChild(unit.saved[c]);
+        if (unit.rec) {
+          if (unit.rec.node.data === unit.rec.set) unit.rec.node.data = unit.rec.orig;
+        } else {
+          while (unit.el.firstChild) unit.el.removeChild(unit.el.firstChild);
+          for (var c = 0; c < unit.saved.length; c++) unit.el.appendChild(unit.saved[c]);
+        }
+        unit.rec = null;
         unit.saved = null;
         unit.applied = null;
         return;
@@ -389,27 +608,22 @@
         unit.applied = null;
         return;
       }
-      var parent = unit.parent;
       var i;
-      for (i = 0; i < unit.builtTop.length; i++) {
-        var n = unit.builtTop[i];
+      for (i = 0; i < unit.added.length; i++) {
+        var n = unit.added[i];
         if (n.parentNode) n.parentNode.removeChild(n);
       }
-      for (i = 0; i < unit.saved.length; i++) {
-        var w = unit.saved[i].el;
-        while (w.firstChild) w.removeChild(w.firstChild);
+      // un texte réécrit entre-temps par la page garde la valeur de la page
+      for (i = 0; i < unit.recs.length; i++) {
+        var r = unit.recs[i];
+        if (r.node.data === r.set && r.node.data !== r.orig) r.node.data = r.orig;
       }
-      for (i = 0; i < unit.saved.length; i++) {
-        var s = unit.saved[i];
-        for (var k = 0; k < s.kids.length; k++) s.el.appendChild(s.kids[k]);
-      }
-      if (unit.anchor && unit.anchor.parentNode === parent) {
-        for (i = 0; i < unit.nodes.length; i++) parent.insertBefore(unit.nodes[i], unit.anchor);
-        parent.removeChild(unit.anchor);
-      }
-      unit.anchor = null;
-      unit.builtTop = null;
-      unit.saved = null;
+      if (unit.moved) restoreOrder(unit);
+      unit.recs = null;
+      unit.added = null;
+      unit.containers = null;
+      unit.span = null;
+      unit.moved = false;
       unit.applied = null;
     }
 
@@ -540,6 +754,16 @@
       plain.pre.style.display = translated ? 'none' : plain.display;
     }
 
+    /* Oublie une unité (disparue, ou texte changé par la page) : ses nœuds pourront être repris. */
+    function dropUnit(unit) {
+      unit.gone = true;
+      if (unit.kind === 'run') {
+        unit.nodes.forEach(function (n) { seen.delete(n); });
+        for (var id in unit.map) seen.delete(unit.map[id].el);
+      } else if (unit.kind === 'comment') seen.delete(unit.el);
+      else if (unit.kind === 'attr' && unit.el.__ddtAttrs) delete unit.el.__ddtAttrs['attr:' + unit.attr];
+    }
+
     /* ---------------- Page : marques anti-traduction du navigateur ---------------- */
     function markPage() {
       showPlain(true);
@@ -599,37 +823,40 @@
       var side = el.closest(SIDE_SEL);
       return !(side && m.contains(side));   // menu ou encadré à l'intérieur du contenu principal : après
     }
-    function orderUnits(list) {
+    /* Rang de chaque unité nouvellement collectée, calculé une seule fois par scan() (et non à chaque
+     * lot : getBoundingClientRect + closest par unité devenait quadratique sur 10 000 unités). */
+    function rankUnits(list) {
       var h = win.innerHeight || 800;
-      var buckets = [[], [], [], [], []];
       list.forEach(function (u) {
-        if (u.kind === 'title') { buckets[0].push(u); return; }
+        if (u.kind === 'title') { u.rank = 0; return; }
+        if (u.main === undefined) u.main = isMainContent(u);
         var r = unitRect(u);
         var visible = r && r.bottom >= -h && r.top <= h * 2;
-        var main = isMainContent(u);
-        buckets[visible ? (main ? 1 : 2) : (main ? 3 : 4)].push(u);
+        u.rank = visible ? (u.main ? 1 : 2) : (u.main ? 3 : 4);
       });
-      return buckets[0].concat(buckets[1], buckets[2], buckets[3], buckets[4]);
     }
+    function byRank(a, b) { return (a.rank - b.rank) || (a.uid - b.uid); }
 
     /* ---------------- Boucle de traduction ---------------- */
+    /* En bilingue, les attributs ne sont jamais appliqués : inutile de les envoyer (quota). */
+    function activeUnit(u) {
+      return !u.gone && (u.kind !== 'attr' || settings.mode === 'replace');
+    }
     function pendingUnits() {
-      return units.filter(function (u) { return !u.out && !u.failed && !u.gone; });
+      return units.filter(function (u) { return !u.out && !u.failed && activeUnit(u); });
     }
 
-    function makeBatches(list) {
+    function firstBatch(list) {
       var max = settings.batchChars || 6000;
-      var batches = [];
       var cur = [];
       var size = 0;
-      list.forEach(function (u) {
-        var len = u.src.length;
-        if (cur.length && (size + len > max || cur.length >= 60)) { batches.push(cur); cur = []; size = 0; }
-        cur.push(u);
+      for (var i = 0; i < list.length; i++) {
+        var len = list[i].src.length;
+        if (cur.length && (size + len > max || cur.length >= 60)) break;
+        cur.push(list[i]);
         size += len;
-      });
-      if (cur.length) batches.push(cur);
-      return batches;
+      }
+      return cur;
     }
 
     function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
@@ -648,6 +875,7 @@
       if (res && res.glossed) res.glossed.forEach(function (g) { glossed.add(g); });
       if (res && res.via) lastVia = res.via;
       var tr = (res && res.translations) || [];
+      var lost = false;
       withObserverOff(function () {
         batch.forEach(function (u, i) {
           var v = tr[i];
@@ -655,7 +883,8 @@
             u.out = v;
             if (u.glossed) u.glossed.forEach(function (g) { glossed.add(g); });
             if (showing === 'translated' && !applyUnit(u)) {
-              if (!stillInPlace(u)) u.gone = true;
+              // retirée ou texte changé par la page pendant le lot : oubliée, ses nœuds seront repris
+              if (!u.gone && !stillInPlace(u)) { dropUnit(u); lost = true; }
             }
           } else if (v === null && !(res && res.error)) {
             u.failed = true;
@@ -663,20 +892,22 @@
           }
         });
       });
+      if (lost) units = units.filter(function (u) { return !u.gone; });
     }
 
     function run() {
-      if (runPromise) return runPromise;
+      // « Arrêter » puis « Traduire » pendant un lot : la boucle en cours repart au lieu de s'arrêter
+      if (runPromise) { stopFlag = false; state = 'running'; updateBadge(); return runPromise; }
       runPromise = (async function () {
         state = 'running';
         stopFlag = false;
+        lastMessage = '';
         updateBadge();
         var rateTries = 0;
         while (!stopFlag) {
-          var todo = orderUnits(pendingUnits());
+          var todo = pendingUnits();
           if (!todo.length) break;
-          var batches = makeBatches(todo);
-          var batch = batches[0];
+          var batch = firstBatch(todo);
           var chars = batch.reduce(function (a, u) { return a + u.src.length; }, 0);
           if (sentChars + chars > capLimit() && sentChars > 0) {
             state = 'paused';
@@ -685,16 +916,19 @@
             runPromise = null;
             return;
           }
+          var myGen = gen;
           var res;
           try {
             res = await translateBatch(batch);
           } catch (e) {
             res = { error: 'error', message: String(e && e.message || e) };
           }
-          if (res && res.error === 'disconnected') {
+          if (res && res.error === 'disconnected' && myGen === gen) {
             res = await translateBatch(batch).catch(function (e) { return { error: 'error', message: String(e) }; });
           }
           sentChars += chars;
+          // langue cible changée pendant le lot : réponse dans l'ancienne langue, ignorée
+          if (myGen !== gen) continue;
           handleResult(batch, res || {});
           if (res && res.error) {
             if (res.error === 'rate_limited') {
@@ -728,6 +962,12 @@
       return runPromise;
     }
 
+    /* Relance automatique (contenu ajouté, navigation SPA) seulement après une traduction terminée :
+     * jamais après « Arrêter », une erreur (pas de clé, limite) ou une pause (plafond de la page). */
+    function canRestart() {
+      return state === 'done' || state === 'idle';
+    }
+
     function withObserverOff(fn) {
       applying = true;
       if (observer) observer.disconnect();
@@ -746,14 +986,44 @@
       var found = [];
       if (doc.body) collect(doc.body, found);
       collectTitle(found);
-      units = units.concat(found);
+      if (found.length) {
+        rankUnits(found);
+        units = units.concat(found).sort(byRank);
+      }
       return found;
+    }
+
+    /* Oublie les unités dont les nœuds ont disparu ; une unité appliquée que la page a modifiée
+     * (React qui réécrit un texte, Vue qui retire un nœud) est rendue à la page puis oubliée, pour
+     * que le nouveau texte soit retraduit. */
+    function sweep() {
+      withObserverOff(function () {
+        units.forEach(function (u) {
+          if (u.gone) return;
+          if (!unitConnected(u)) { if (u.applied) restoreUnit(u); dropUnit(u); return; }
+          if (u.kind !== 'run') return;
+          if (u.applied) { if (touched(u)) { restoreUnit(u); edited(u); } }
+          else if (!stillInPlace(u)) edited(u);
+        });
+      });
+      units = units.filter(function (u) { return !u.gone; });
+    }
+    /* Texte réécrit par la page : retraduit, sauf s'il change sans cesse au même endroit (horloge,
+     * compteur, « il y a 3 s ») : au-delà de MAX_EDITS, il reste tel que la page l'écrit (quota). */
+    var MAX_EDITS = 5;
+    var edits = new WeakMap();
+    function edited(u) {
+      var n = (edits.get(u.parent) || 0) + 1;
+      edits.set(u.parent, n);
+      if (n > MAX_EDITS) { u.gone = true; return; }   // nœuds gardés comme « vus » : plus repris
+      dropUnit(u);
     }
 
     /* ---------------- Commandes publiques ---------------- */
     function start(opts) {
       options = Object.assign({}, options, opts || {});
       if (opts && opts.settings) settings = Object.assign(settings, opts.settings);
+      closed = false;
       ensureBadge();
       withObserverOff(preparePlain);
       markPage();
@@ -762,14 +1032,15 @@
         units.forEach(function (u) { if (u.out && !u.applied) applyUnit(u); });
       });
       scan();
+      // page encore vide (SPA qui affiche son contenu ensuite) : on observe quand même
+      observeStart();
+      watchUrl();
       if (!units.length) {
         state = 'done';
         lastMessage = t('badgeNothing');
         updateBadge();
         return Promise.resolve();
       }
-      observeStart();
-      watchUrl();
       return run();
     }
 
@@ -789,6 +1060,9 @@
       withObserverOff(function () {
         units.forEach(function (u) { if (u.out && !u.applied) applyUnit(u); });
       });
+      // ce que la page a changé pendant l'affichage de l'original est repris
+      sweep();
+      scan();
       observeStart();
       updateBadge();
       if (pendingUnits().length && state !== 'running') return run();
@@ -796,6 +1070,7 @@
     }
 
     function toggle(opts) {
+      closed = false;
       if (showing === 'translated') { showOriginal(); return Promise.resolve(); }
       if (units.some(function (u) { return u.out; })) return showTranslation();
       return start(opts);
@@ -814,9 +1089,15 @@
     }
 
     function status() {
-      var done = units.filter(function (u) { return u.out; }).length;
+      var done = 0;
+      var total = 0;
+      units.forEach(function (u) {
+        if (!activeUnit(u)) return;
+        total++;
+        if (u.out) done++;
+      });
       return {
-        state: state, showing: showing, done: done, total: units.length, failed: failed,
+        state: state, showing: showing, done: done, total: total, failed: failed,
         message: lastMessage, via: lastVia
       };
     }
@@ -829,6 +1110,7 @@
           if (applying) return;
           var relevant = records.some(function (r) {
             if (r.type === 'attributes') return revealed(r.target);
+            if (r.type === 'characterData') return textEdited(r.target);
             for (var i = 0; i < r.addedNodes.length; i++) {
               var n = r.addedNodes[i];
               if (built.has(n)) continue;
@@ -842,7 +1124,8 @@
       }
       // Les attributs comptent aussi : beaucoup de pages montrent un texte déjà présent mais caché
       // (menu, section repliée de la barre latérale, résultats de recherche) en changeant une classe.
-      observer.observe(doc.body, { childList: true, subtree: true, attributes: true, attributeFilter: REVEAL_ATTRS });
+      // characterData : un framework qui réécrit un texte (nodeValue=) sans remplacer le nœud.
+      observer.observe(doc.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: REVEAL_ATTRS });
     }
     /* Un élément vient-il peut-être de devenir visible avec du texte à traduire ? */
     function revealed(el) {
@@ -850,6 +1133,13 @@
       if (el.closest && el.closest('[data-tr-ui],[data-tr-bi],pre,code,script,style,textarea')) return false;
       if (!/[^\s\d]/.test(el.textContent || '')) return false;
       try { return win.getComputedStyle(el).display !== 'none'; } catch (e) { return false; }
+    }
+    /* Un texte de la page vient d'être réécrit (hors code, hors interface de l'extension) ? */
+    function textEdited(n) {
+      if (!n || n.nodeType !== 3 || built.has(n)) return false;
+      var p = n.parentElement;
+      if (!p) return false;
+      return !(p.closest && p.closest('[data-tr-ui],[data-tr-bi],pre,code,script,style,textarea'));
     }
     function observeStop() {
       if (observer) observer.disconnect();
@@ -859,9 +1149,9 @@
       debounceTimer = setTimeout(function () {
         checkUrl();
         if (showing !== 'translated') return;
-        units.forEach(function (u) { if (!u.applied && !u.gone && u.kind === 'run' && !stillInPlace(u)) u.gone = true; });
+        sweep();
         var found = scan();
-        if (found.length && state !== 'running') run();
+        if (found.length && canRestart()) run();
       }, 800);
     }
     function checkUrl() {
@@ -869,11 +1159,17 @@
       if (href !== lastUrl) {
         lastUrl = href;
         glossed = new Set();
-        units = units.filter(function (u) { return u.applied || (u.kind === 'run' ? stillInPlace(u) : true); });
+        // unités détachées (ancienne page) : oubliées, sinon fuite mémoire et total qui gonfle
+        sweep();
+        // titre remplacé par la nouvelle page : l'ancienne unité titre ne doit plus le restaurer
+        units = units.filter(function (u) {
+          if (u.kind !== 'title') return true;
+          return titleIs(u.applied ? DDT.unescapeText(u.out) : u.orig);
+        });
         if (onUrlChange) onUrlChange(href);
         if (showing === 'translated') {
           var found = scan();
-          if (found.length && state !== 'running') run();
+          if (found.length && canRestart()) run();
         }
       }
     }
@@ -917,6 +1213,7 @@
       'button.txt{padding:0 9px;color:var(--b-accent)}',
       '.bar{height:2px;background:var(--b-hairline)}.fill{height:100%;width:0;background:var(--b-accent);transition:width .3s cubic-bezier(.2,.8,.2,1)}',
       '.hide{display:none!important}',
+      '.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}',
       '.min{--b-cr:var(--b-pill)}.min .row{padding:5px}.min .msg,.min [data-a=stop],.min [data-a=toggle],.min [data-a=continue],.min [data-a=close],.min .bar{display:none}',
       '.min [data-a=min]{width:26px}',
       '@media (prefers-reduced-motion:reduce){.b,.fill,button{transition:none}}'
@@ -950,7 +1247,10 @@
       box.setAttribute('role', 'region');
       box.setAttribute('aria-label', 'DevDocTrad');
       box.innerHTML = '<div class="row">' + svg('sym', true) +
-        '<span class="msg" aria-live="polite"></span>' +
+        '<span class="msg"></span>' +
+        // région annoncée aux lecteurs d'écran : seulement les changements d'état, pas chaque lot
+        // ni chaque seconde du compte à rebours
+        '<span class="sr" role="status" aria-live="polite"></span>' +
         '<button data-a="continue" class="txt hide"></button>' +
         '<button data-a="stop">' + svg('stop') + '</button>' +
         '<button data-a="toggle"></button>' +
@@ -974,7 +1274,7 @@
           b.innerHTML = svg(m ? 'max' : 'min');
           b.setAttribute('aria-label', m ? t('badgeShowBadge') : t('btnMinimize'));
           b.title = b.getAttribute('aria-label');
-        } else if (a === 'close') host.style.display = 'none';
+        } else if (a === 'close') { closed = true; host.style.display = 'none'; }
         else if (a === 'stop') stop();
         else if (a === 'toggle') toggle();
         else if (a === 'continue') continueAfterCap();
@@ -994,7 +1294,7 @@
     function updateBadge() {
       if (!badge) return;
       var st = status();
-      badge.host.style.display = '';
+      badge.host.style.display = closed ? 'none' : '';
       var msg = st.message;
       var kind = '';
       if (st.state === 'error') kind = 'err';
@@ -1020,6 +1320,10 @@
       tg.setAttribute('aria-label', label);
       tg.title = label;
       tg.classList.toggle('hide', !st.done);
+      if (st.state !== announced) {
+        announced = st.state;
+        badge.box.querySelector('.sr').textContent = full || '';
+      }
     }
 
     /* ---------------- Infos de page (pour l'automatique) ---------------- */
@@ -1043,14 +1347,19 @@
         applyBadgeTheme();
         // Nouvelle langue cible (choisie dans le popup) : on revient à l'original et on oublie les
         // traductions déjà faites, pour que « Traduire » retraduise dans la nouvelle langue.
-        if (DDT.resolveTarget(settings.target) !== before && units.some(function (u) { return u.out; })) {
+        if (DDT.resolveTarget(settings.target) === before) return;
+        // un lot en cours est dans l'ancienne langue : sa réponse sera ignorée
+        gen++;
+        // les échecs de l'ancienne langue ne valent pas pour la nouvelle
+        units.forEach(function (u) { u.failed = false; });
+        failed = 0;
+        if (units.some(function (u) { return u.out; })) {
           if (showing === 'translated') showOriginal();
           units.forEach(function (u) { u.out = null; });
           glossed = new Set();
-          failed = 0;
           if (state !== 'running') state = 'idle';
-          updateBadge();
         }
+        updateBadge();
       }
     };
   }
