@@ -1,4 +1,6 @@
-# Publie une version GitHub (avec les deux zips) quand une étiquette v1.2.3 est envoyée.
+# Publie une version GitHub (avec les deux zips) quand une étiquette v1.2.3 est envoyée,
+# ou à la main (onglet Actions > Version > Run workflow) : l'étiquette v<version du manifeste>
+# est alors créée par GitHub sur le commit lancé.
 # Deux jobs : la construction tourne en lecture seule (aucun jeton d'écriture pendant npm ci,
 # les tests et build.py) ; seule la publication reçoit contents: write, sans exécuter le code du dépôt.
 name: Version
@@ -6,6 +8,7 @@ name: Version
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,6 +19,8 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -30,13 +35,16 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: python3 build.py
-      - name: Vérifier que l'étiquette correspond à la version
+      - name: Étiquette (celle envoyée, ou v<version> si lancé à la main) et vérification
+        id: tag
         run: |
           V=$(python3 -c "import json;print(json.load(open('manifests/base.json'))['version'])")
-          test "v$V" = "$GITHUB_REF_NAME"
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then T="$GITHUB_REF_NAME"; else T="v$V"; fi
+          test "v$V" = "$T"
+          echo "tag=$T" >> "$GITHUB_OUTPUT"
       - name: Notes de version (section du CHANGELOG)
         run: |
-          V="${GITHUB_REF_NAME#v}"
+          V=$(python3 -c "import json;print(json.load(open('manifests/base.json'))['version'])")
           awk -v v="$V" '$0 ~ "^## \\["v"\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md > release/notes.md
           # pas de version publiée sans notes : section absente ou vide dans CHANGELOG.md = échec
           test -s release/notes.md || { echo "Notes de version vides : ajoute la section [$V] dans CHANGELOG.md"; exit 1; }
@@ -65,6 +73,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.build.outputs.tag }}
         run: |
-          gh release create "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS.txt --title "DevDocTrad $GITHUB_REF_NAME" --notes-file release/notes.md \
-            || gh release upload "$GITHUB_REF_NAME" release/*.zip release/SHA256SUMS.txt --clobber
+          gh release create "$TAG" release/*.zip release/SHA256SUMS.txt --target "$GITHUB_SHA" --title "DevDocTrad $TAG" --notes-file release/notes.md \
+            || gh release upload "$TAG" release/*.zip release/SHA256SUMS.txt --clobber
