@@ -32,7 +32,7 @@
   }
   function chip(el, kind, iconName, text, spin) {
     el.className = 'chip ' + (kind || '');
-    el.innerHTML = spin ? '<span class="spinner" aria-hidden="true"></span>' : UI.icon(iconName);
+    UI.setOnly(el, spin ? UI.spinner() : UI.icon(iconName));
     el.appendChild(document.createTextNode(text));
   }
 
@@ -155,8 +155,13 @@
     hero.classList.toggle('busy', !!running);
     $('translateLabel').textContent = running ? t('popupTranslating') : t('popupTranslate');
     var heroIcon = hero.querySelector('[data-icon], .spinner');
-    if (running && heroIcon && !heroIcon.classList.contains('spinner')) heroIcon.outerHTML = '<span class="spinner" aria-hidden="true"></span>';
-    if (!running && heroIcon && heroIcon.classList.contains('spinner')) { heroIcon.outerHTML = '<span data-icon="translate"></span>'; UI.fillIcons(hero); }
+    if (running && heroIcon && !heroIcon.classList.contains('spinner')) heroIcon.replaceWith(UI.spinner());
+    if (!running && heroIcon && heroIcon.classList.contains('spinner')) {
+      var back = document.createElement('span');
+      back.setAttribute('data-icon', 'translate');
+      heroIcon.replaceWith(back);
+      UI.fillIcons(hero);
+    }
 
     var radios = document.querySelectorAll('input[name=view]');
     radios.forEach(function (r) {

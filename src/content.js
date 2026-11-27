@@ -1244,18 +1244,31 @@
     ].join('');
 
     var BI = {
-      sym: '<rect x="2.6" y="2.2" width="7.4" height="9.4" rx="1.8" transform="rotate(-9 6.3 6.9)" fill="currentColor" opacity=".45"/><rect x="6" y="4.6" width="7.6" height="9.6" rx="1.9" fill="currentColor"/>',
-      stop: '<rect x="6" y="6" width="12" height="12" rx="2.5"/>',
-      original: '<path d="M4 12s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z"/><circle cx="12" cy="12" r="2.5"/>',
-      translate: '<rect x="3.5" y="3" width="11" height="14" rx="2.5" transform="rotate(-8 9 10)"/><rect x="9.5" y="7" width="11" height="14" rx="2.5"/>',
-      min: '<path d="M6 12h12"/>',
-      max: '<path d="M7 14l5-5 5 5"/>',
-      close: '<path d="M7 7l10 10M17 7L7 17"/>'
+      sym: [['rect', { x: '2.6', y: '2.2', width: '7.4', height: '9.4', rx: '1.8', transform: 'rotate(-9 6.3 6.9)', fill: 'currentColor', opacity: '.45' }], ['rect', { x: '6', y: '4.6', width: '7.6', height: '9.6', rx: '1.9', fill: 'currentColor' }]],
+      stop: [['rect', { x: '6', y: '6', width: '12', height: '12', rx: '2.5' }]],
+      original: [['path', { d: 'M4 12s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6Z' }], ['circle', { cx: '12', cy: '12', r: '2.5' }]],
+      translate: [['rect', { x: '3.5', y: '3', width: '11', height: '14', rx: '2.5', transform: 'rotate(-8 9 10)' }], ['rect', { x: '9.5', y: '7', width: '11', height: '14', rx: '2.5' }]],
+      min: [['path', { d: 'M6 12h12' }]],
+      max: [['path', { d: 'M7 14l5-5 5 5' }]],
+      close: [['path', { d: 'M7 7l10 10M17 7L7 17' }]]
     };
+    /* Construction DOM sans chaîne HTML analysée (copie minimale de ui.js, le badge vit dans la
+       page, en shadow DOM) : icônes par createElementNS, éléments par createElement. */
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    function setAttrs(e, attrs) { for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
     function svg(name, fillMode) {
-      if (fillMode) return '<svg class="sym" viewBox="0 0 16 16" aria-hidden="true">' + BI[name] + '</svg>';
-      return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + BI[name] + '</svg>';
+      var s = setAttrs(doc.createElementNS(SVG_NS, 'svg'), fillMode ?
+        { 'class': 'sym', viewBox: '0 0 16 16', 'aria-hidden': 'true' } :
+        { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': '1.9', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'aria-hidden': 'true' });
+      BI[name].forEach(function (p) { s.appendChild(setAttrs(doc.createElementNS(SVG_NS, p[0]), p[1])); });
+      return s;
     }
+    function mkEl(tag, attrs, children) {
+      var e = setAttrs(doc.createElement(tag), attrs || {});
+      (children || []).forEach(function (c) { e.appendChild(c); });
+      return e;
+    }
+    function setIcon(b, name) { b.textContent = ''; b.appendChild(svg(name)); }
 
     function ensureBadge() {
       if (badge || deps.noBadge) return;
@@ -1270,17 +1283,19 @@
       box.className = 'b';
       box.setAttribute('role', 'region');
       box.setAttribute('aria-label', 'DevDocTrad');
-      box.innerHTML = '<div class="row">' + svg('sym', true) +
-        '<span class="msg"></span>' +
+      box.appendChild(mkEl('div', { 'class': 'row' }, [
+        svg('sym', true),
+        mkEl('span', { 'class': 'msg' }),
         // région annoncée aux lecteurs d'écran : seulement les changements d'état, pas chaque lot
         // ni chaque seconde du compte à rebours
-        '<span class="sr" role="status" aria-live="polite"></span>' +
-        '<button data-a="continue" class="txt hide"></button>' +
-        '<button data-a="stop">' + svg('stop') + '</button>' +
-        '<button data-a="toggle"></button>' +
-        '<button data-a="min">' + svg('min') + '</button>' +
-        '<button data-a="close">' + svg('close') + '</button></div>' +
-        '<div class="bar"><div class="fill"></div></div>';
+        mkEl('span', { 'class': 'sr', role: 'status', 'aria-live': 'polite' }),
+        mkEl('button', { 'data-a': 'continue', 'class': 'txt hide' }),
+        mkEl('button', { 'data-a': 'stop' }, [svg('stop')]),
+        mkEl('button', { 'data-a': 'toggle' }),
+        mkEl('button', { 'data-a': 'min' }, [svg('min')]),
+        mkEl('button', { 'data-a': 'close' }, [svg('close')])
+      ]));
+      box.appendChild(mkEl('div', { 'class': 'bar' }, [mkEl('div', { 'class': 'fill' })]));
       sr.appendChild(box);
       box.querySelector('[data-a=continue]').textContent = t('btnContinue');
       box.querySelector('[data-a=stop]').setAttribute('aria-label', t('btnStop'));
@@ -1295,7 +1310,7 @@
         var a = b.getAttribute('data-a');
         if (a === 'min') {
           var m = box.classList.toggle('min');
-          b.innerHTML = svg(m ? 'max' : 'min');
+          setIcon(b, m ? 'max' : 'min');
           b.setAttribute('aria-label', m ? t('badgeShowBadge') : t('btnMinimize'));
           b.title = b.getAttribute('aria-label');
         } else if (a === 'close') { closed = true; host.style.display = 'none'; }
@@ -1340,7 +1355,7 @@
       badge.box.querySelector('[data-a=continue]').classList.toggle('hide', st.state !== 'paused');
       var tg = badge.box.querySelector('[data-a=toggle]');
       var label = st.showing === 'translated' ? t('btnOriginal') : t('btnTranslation');
-      tg.innerHTML = svg(st.showing === 'translated' ? 'original' : 'translate');
+      setIcon(tg, st.showing === 'translated' ? 'original' : 'translate');
       tg.setAttribute('aria-label', label);
       tg.title = label;
       tg.classList.toggle('hide', !st.done);
