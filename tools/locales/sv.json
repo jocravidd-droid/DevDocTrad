@@ -231,5 +231,11 @@
 "voiceNoTts": "Ingen talsyntesröst för {0} på den här enheten: bara undertexter.",
 "voiceDubClick": "Klicka på sidan för att tillåta den översatta rösten.",
 "voiceInFrame": "Videon finns i en inbäddad spelare ({0}): öppna den i en flik för att översätta den.",
-"voiceOpenTab": "Öppna videon i en flik"
+"voiceOpenTab": "Öppna videon i en flik",
+"popupVoiceOnly": "Endast översatt röst (utan undertexter)",
+"optVoiceRate": "Hastighet för den översatta rösten",
+"optVoiceRateHelp": "Rösten i videor (dubbning och endast röst). 1× = normal hastighet; rösten ökar lite för att hinna med undertexterna.",
+"voiceSlower": "Långsammare röst",
+"voiceFaster": "Snabbare röst",
+"voiceRateValue": "Rösthastighet: {0}"
 }

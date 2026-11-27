@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Deschide videoclipul într-o filă"
   },
+  "popupVoiceOnly": {
+    "message": "Doar voce tradusă (fără subtitrări)"
+  },
+  "optVoiceRate": {
+    "message": "Viteza vocii traduse"
+  },
+  "optVoiceRateHelp": {
+    "message": "Vocea din videoclipuri (dublaj și doar voce). 1× = viteză normală; vocea accelerează puțin ca să țină pasul cu subtitrările."
+  },
+  "voiceSlower": {
+    "message": "Voce mai lentă"
+  },
+  "voiceFaster": {
+    "message": "Voce mai rapidă"
+  },
+  "voiceRateValue": {
+    "message": "Viteza vocii: {0}"
+  },
   "popupSensitive": {
     "message": "Pagină sensibilă: nu se traduce niciodată automat. Butonul funcționează, Ollama este folosit primul dacă este configurat."
   },

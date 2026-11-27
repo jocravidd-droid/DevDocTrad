@@ -5,6 +5,18 @@ An update with fixes and improvements is prepared every 15 days (on the 1st and 
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Versions : [SemVer](https://semver.org/lang/fr/).
 
+## [1.3.0] - 2026-11-27
+
+### Corrigé / Fixed
+- **La voix traduite (doublage) restait muette** sous Chrome, Edge et Brave. Cause : la voix était produite par `speechSynthesis` dans la page, et Chrome refuse `speechSynthesis.speak()` (erreur `not-allowed`) tant que la page n'a reçu aucun clic ; le clic dans le popup ne compte pas pour la page. Reproduit dans un vrai Chromium (`tools/e2e_voice.js`, vérification « cause (1.2) »). Désormais **c'est l'extension qui parle** : message `speak` / `stopSpeaking` / `ttsVoices` de `voice.js` au background, qui utilise `chrome.tts` (permission `tts`, Chrome seulement, sans avertissement à l'installation ; voix choisie avec `chrome.tts.getVoices`, même ordre de préférence ; phrases mises en file d'attente ; fin de phrase renvoyée à la page pour remonter le son d'origine). Firefox (pas de `browser.tts`) : `speechSynthesis` de la page de fond, que Gecko ne bloque pas faute de clic. Repli sur la synthèse de la page si l'extension ne peut pas parler, avec le message « Clique une fois dans la page » et la phrase redite au premier clic. Garde-fous : texte ≤ 1000 caractères, vitesse bornée, langue vérifiée, une fin de phrase perdue ne laisse jamais le son baissé.
+  - The dubbing voice was silent in Chrome/Edge/Brave: Chrome blocks `speechSynthesis.speak()` in a page that has not been clicked (`not-allowed`), and the popup click does not count. The extension now speaks itself (`chrome.tts` in the background; background-page `speechSynthesis` in Firefox), with a page fallback.
+- Bande de la vidéo construite élément par élément (`createElement` / `createElementNS`) : plus d'`innerHTML` dans `voice.js` (signalé par le validateur Mozilla `addons-linter`, UNSAFE_VAR_ASSIGNMENT). / No more `innerHTML` in `voice.js`.
+
+### Ajouté / Added
+- **Voix traduite seule** : dans le popup, sous « Traduire la voix des vidéos », trois choix : **Sous-titres**, **Sous-titres + voix traduite**, **Voix traduite seule (sans sous-titres)**. En voix seule, la bande ne montre plus de texte, seulement sa barre (message, haut-parleur, vitesse, fermer) ; sans voix disponible (ou haut-parleur coupé), les sous-titres reviennent. Réglage `voiceMode` (`subs` | `dub` | `voice`), l'ancien booléen `voiceDub` est repris à la mise à jour. / "Translated voice only" mode.
+- **Vitesse de la voix** : réglage `voiceRate` (0,5× à 2×, pas de 0,1, 1× par défaut), curseur dans Réglages > Traduction et boutons − / + (avec la valeur, ex. « 1,2× ») dans la barre de la bande, appliqués dès la phrase suivante (y compris un changement fait dans les réglages pendant la lecture). Le calage automatique sur la durée du sous-titre est multiplié par ce réglage puis borné entre 0,5 et 3. / Voice speed setting and −/+ buttons.
+- 6 nouveaux textes d'interface dans les 36 langues ; 16 nouveaux tests unitaires (chrome.tts et page de fond Firefox simulés, voix seule, vitesse, repli, migration) ; `tools/e2e_voice.js` : espions à la place de `chrome.tts.speak` / `stop` / `getVoices` dans le service worker d'un vrai Chromium (texte, langue, voix, vitesse, son baissé puis remonté sur « end », voix seule, boutons − / +) ; `tools/e2e_firefox.js` : espion de la synthèse de la page de fond Firefox.
+
 ## [1.2.0] - 2026-11-26
 
 ### Ajouté / Added

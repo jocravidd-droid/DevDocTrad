@@ -231,5 +231,11 @@
 "voiceNoTts": "Tiada suara sintetik untuk {0} pada peranti ini: sari kata sahaja.",
 "voiceDubClick": "Klik halaman untuk membenarkan suara terjemahan.",
 "voiceInFrame": "Video ini berada dalam pemain terbenam ({0}): bukanya dalam tab untuk menterjemahkannya.",
-"voiceOpenTab": "Buka video dalam tab"
+"voiceOpenTab": "Buka video dalam tab",
+"popupVoiceOnly": "Suara terjemahan sahaja (tanpa sari kata)",
+"optVoiceRate": "Kelajuan suara terjemahan",
+"optVoiceRateHelp": "Suara video (alih suara dan suara sahaja). 1× = kelajuan biasa; suara dipercepat sedikit untuk mengikut sari kata.",
+"voiceSlower": "Suara lebih perlahan",
+"voiceFaster": "Suara lebih laju",
+"voiceRateValue": "Kelajuan suara: {0}"
 }

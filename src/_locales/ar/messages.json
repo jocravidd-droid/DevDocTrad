@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "فتح الفيديو في علامة تبويب"
   },
+  "popupVoiceOnly": {
+    "message": "الصوت المترجم فقط (بدون ترجمة نصية)"
+  },
+  "optVoiceRate": {
+    "message": "سرعة الصوت المترجم"
+  },
+  "optVoiceRateHelp": {
+    "message": "صوت الفيديوهات (الدبلجة والصوت فقط). ‎1×‎ = السرعة العادية؛ يتسارع الصوت قليلًا ليواكب الترجمة النصية."
+  },
+  "voiceSlower": {
+    "message": "صوت أبطأ"
+  },
+  "voiceFaster": {
+    "message": "صوت أسرع"
+  },
+  "voiceRateValue": {
+    "message": "سرعة الصوت: {0}"
+  },
   "popupSensitive": {
     "message": "صفحة حساسة: لا تُترجم تلقائيًا أبدًا. الزر يعمل، ويُستخدم Ollama أولًا إن كان مُعدًّا."
   },

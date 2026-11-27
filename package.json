@@ -1,6 +1,6 @@
 {
   "name": "devdoctrad",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "description": "Faithfully translates developer documentation and programming websites, without ever touching the code.",
   "license": "MIT",

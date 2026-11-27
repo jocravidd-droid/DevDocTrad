@@ -231,5 +231,11 @@
 "voiceNoTts": "Thiết bị này không có giọng tổng hợp cho {0}: chỉ hiển thị phụ đề.",
 "voiceDubClick": "Nhấp vào trang để cho phép giọng dịch.",
 "voiceInFrame": "Video này nằm trong trình phát nhúng ({0}): mở nó trong một thẻ để dịch.",
-"voiceOpenTab": "Mở video trong một thẻ"
+"voiceOpenTab": "Mở video trong một thẻ",
+"popupVoiceOnly": "Chỉ giọng dịch (không phụ đề)",
+"optVoiceRate": "Tốc độ giọng dịch",
+"optVoiceRateHelp": "Giọng trong video (lồng tiếng và chỉ giọng). 1× = tốc độ bình thường; giọng nhanh hơn một chút để theo kịp phụ đề.",
+"voiceSlower": "Giọng chậm hơn",
+"voiceFaster": "Giọng nhanh hơn",
+"voiceRateValue": "Tốc độ giọng: {0}"
 }

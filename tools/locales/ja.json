@@ -231,5 +231,11 @@
 "voiceNoTts": "この端末には{0}の合成音声がありません：字幕のみ表示します。",
 "voiceDubClick": "翻訳音声を許可するにはページをクリックしてください。",
 "voiceInFrame": "この動画は埋め込みプレーヤー（{0}）内にあります：翻訳するにはタブで開いてください。",
-"voiceOpenTab": "動画をタブで開く"
+"voiceOpenTab": "動画をタブで開く",
+"popupVoiceOnly": "翻訳音声のみ（字幕なし）",
+"optVoiceRate": "翻訳音声の速さ",
+"optVoiceRateHelp": "動画の音声（吹き替えと音声のみ）。1× = 通常の速さ。字幕に追いつくため、音声は少し速くなります。",
+"voiceSlower": "遅くする",
+"voiceFaster": "速くする",
+"voiceRateValue": "音声の速さ：{0}"
 }

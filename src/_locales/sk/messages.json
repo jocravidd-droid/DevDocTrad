@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Otvoriť video na karte"
   },
+  "popupVoiceOnly": {
+    "message": "Iba preložený hlas (bez titulkov)"
+  },
+  "optVoiceRate": {
+    "message": "Rýchlosť preloženého hlasu"
+  },
+  "optVoiceRateHelp": {
+    "message": "Hlas vo videách (dabing a iba hlas). 1× = normálna rýchlosť; hlas mierne zrýchli, aby stíhal titulky."
+  },
+  "voiceSlower": {
+    "message": "Pomalší hlas"
+  },
+  "voiceFaster": {
+    "message": "Rýchlejší hlas"
+  },
+  "voiceRateValue": {
+    "message": "Rýchlosť hlasu: {0}"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy sa neprekladá automaticky. Tlačidlo funguje, Ollama sa použije ako prvá, ak je nastavená."
   },

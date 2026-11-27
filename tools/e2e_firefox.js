@@ -14,6 +14,12 @@
  * Vérifie, dans Firefox : traduction d'une page de doc (code intact, retour à l'original exact),
  * Markdown brut (vue lisible), voix des vidéos avec sous-titres, et voix sans sous-titres
  * (son capturé, envoyé au faux Groq, traduit) : les cas cassés trouvés en vrai dans Firefox 161.
+ *
+ * Doublage (1.3) : Firefox n'a pas browser.tts ; la voix sort de speechSynthesis de la page de fond.
+ * Un espion remplace speechSynthesis dans cette page de fond (testbg.js, chargé après background.js) :
+ * il prouve que la vraie chaîne page -> runtime.sendMessage -> background -> speechSynthesis est suivie,
+ * avec le bon texte, la bonne langue, la bonne voix et la bonne vitesse. Firefox sans tête n'a souvent
+ * aucune voix système : sans espion, on ne pourrait rien entendre ni mesurer.
  */
 'use strict';
 const { spawn, execFileSync } = require('child_process');
@@ -54,9 +60,27 @@ const BG = `browser.storage.local.set({ keys: [
   { id: 'k-ollama', provider: 'ollama', label: 'Ollama', tier: 'local', enabled: true, modelEasy: 'demo-model:latest', baseUrl: 'http://127.0.0.1:11434', order: 0 },
   { id: 'k-groq', provider: 'groq', label: 'Groq', key: 'gsk_DEMO_NOT_A_REAL_KEY_000000000000', tier: 'free', enabled: true, modelEasy: 'demo', order: 5 }],
   settings: { termsStyle: 3, target: 'fr', mode: 'replace', explainTerms: false, translateComments: false, pageCap: 150000, batchChars: 6000, sensitiveExtra: [], autoSites: [] } });
+// Espion de la synthèse vocale de la page de fond (Firefox : pas de browser.tts). La vraie est d'abord décrite.
+const ttsLog = { realSynth: typeof self.speechSynthesis, realUtterance: typeof self.SpeechSynthesisUtterance, realVoices: -1, calls: [], cancels: 0 };
+try { ttsLog.realVoices = self.speechSynthesis.getVoices().length; } catch (e) { /* rien */ }
+const ttsLive = [];
+Object.defineProperty(self, 'SpeechSynthesisUtterance', { configurable: true, writable: true, value: function (text) { this.text = text; } });
+Object.defineProperty(self, 'speechSynthesis', { configurable: true, value: {
+  getVoices: () => [{ name: 'Fake English', lang: 'en-US' }, { name: 'Faux Google français', lang: 'fr-FR' }, { name: 'Faux basique', lang: 'fr-FR' }],
+  addEventListener() {}, removeEventListener() {},
+  speak(u) { ttsLog.calls.push({ text: u.text, lang: u.lang, rate: u.rate, voice: u.voice && u.voice.name }); ttsLive.push(u); },
+  cancel() { ttsLog.cancels++; ttsLive.splice(0).forEach((u) => u.onerror && u.onerror({ error: 'interrupted' })); }
+} });
+async function setVoiceMode(mode) {
+  const r = await browser.storage.local.get('settings');
+  await browser.storage.local.set({ settings: Object.assign({}, r.settings, { voiceMode: mode }) });
+}
 browser.runtime.onConnect.addListener((port) => {
   if (port.name !== 'ddt-test') return;
   port.onMessage.addListener((m) => {
+    if (m.cmd === 'ttsLog') { port.postMessage(JSON.parse(JSON.stringify(ttsLog))); return; }
+    if (m.cmd === 'ttsEnd') { const u = ttsLive.shift(); if (u && u.onend) u.onend({}); port.postMessage({ ended: !!u }); return; }
+    if (m.cmd === 'dubOn' || m.cmd === 'dubOff') { setVoiceMode(m.cmd === 'dubOn' ? 'dub' : 'subs').then(() => port.postMessage({ ok: true })); return; }
     const fn = m.voice ? self.__DDT_BG.voiceCommand : self.__DDT_BG.tabCommand;
     fn(port.sender.tab.id, m.cmd, null).then((r) => port.postMessage(r || {}), (e) => port.postMessage({ injectError: String(e && e.message || e) }));
   });
@@ -193,6 +217,35 @@ async function startFirefox(bin, extDir) {
     for (let i = 0; i < 20 && !/Bienvenue|Commence|Ouvre/.test(tr); i++) { await sleep(500); tr = await ev(overlay); }
     check('voix : sous-titres traduits sur la vidéo (Firefox)', /Bienvenue|Commence|Ouvre/.test(tr), tr);
     await cmd('stop', true);
+
+    // 3 bis. Doublage : la voix sort de speechSynthesis de la page de fond (espion), pas de la page
+    const reply = async (c) => { await cmd(c); const raw = await ev('document.documentElement.getAttribute("data-ddt-test")'); return raw ? JSON.parse(raw) : {}; };
+    await reply('dubOn');
+    await go('/track.html');
+    await ev('(()=>{const v=document.getElementById("v");v.volume=1;v.currentTime=0;return v.play().then(()=>1,()=>0)})()');
+    await cmd('start', true);
+    let tlog = {};
+    let minVol = 1;
+    for (let i = 0; i < 25; i++) {
+      tlog = await reply('ttsLog');
+      minVol = Math.min(minVol, Number(await ev('document.getElementById("v").volume')));
+      if (tlog.calls && tlog.calls.length && minVol < 0.2) break;
+      await sleep(200);
+    }
+    const said = (tlog.calls || [])[0];
+    check('doublage (Firefox) : page -> background -> speechSynthesis de la page de fond, sous-titre traduit',
+      !!said && /Bienvenue|Commence|Ouvre/.test(said.text), JSON.stringify(tlog));
+    check('doublage (Firefox) : langue fr-FR, meilleure voix française, vitesse calée (0,9 à 1,7)',
+      !!said && said.lang === 'fr-FR' && said.voice === 'Faux Google français' && said.rate >= 0.9 && said.rate <= 1.7, JSON.stringify(said));
+    check('doublage (Firefox) : speechSynthesis présente dans la page de fond (sans browser.tts)',
+      tlog.realSynth === 'object' && tlog.realUtterance === 'function', `speechSynthesis ${tlog.realSynth}, voix système : ${tlog.realVoices}`);
+    check('doublage (Firefox) : son d\'origine baissé pendant la voix', minVol < 0.2, String(minVol));
+    await reply('ttsEnd');
+    let back = 0;
+    for (let i = 0; i < 20 && back < 0.95; i++) { await sleep(150); back = Number(await ev('document.getElementById("v").volume')); }
+    check('doublage (Firefox) : fin de phrase -> son d\'origine remonté', back >= 0.95, String(back));
+    await cmd('stop', true);
+    await reply('dubOff');
 
     // 4. Voix : son capturé -> faux Groq -> traduction
     await go('/audio.html');

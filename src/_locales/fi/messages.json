@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Avaa video välilehdellä"
   },
+  "popupVoiceOnly": {
+    "message": "Vain käännetty ääni (ei tekstitystä)"
+  },
+  "optVoiceRate": {
+    "message": "Käännetyn äänen nopeus"
+  },
+  "optVoiceRateHelp": {
+    "message": "Videoiden ääni (jälkiäänitys ja vain ääni). 1× = normaali nopeus; ääni nopeutuu hieman pysyäkseen tekstityksen tahdissa."
+  },
+  "voiceSlower": {
+    "message": "Hitaampi ääni"
+  },
+  "voiceFaster": {
+    "message": "Nopeampi ääni"
+  },
+  "voiceRateValue": {
+    "message": "Äänen nopeus: {0}"
+  },
   "popupSensitive": {
     "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
   },

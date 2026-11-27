@@ -18,7 +18,7 @@ test.after(() => { opened.forEach((w) => { try { w.close(); } catch (e) { /* dé
 
 function storedKey(keys, id) { return keys.filter((k) => k.id === id)[0]; }
 
-async function openOptions(keys) {
+async function openOptions(keys, settings) {
   const html = fs.readFileSync(path.join(SRC, 'options.html'), 'utf8');
   const vc = new VirtualConsole();   // jsdom : « not implemented » (scrollTo…) sans bruit
   const dom = new JSDOM(html, { url: 'chrome-extension://test/options.html#keys', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc });
@@ -26,7 +26,7 @@ async function openOptions(keys) {
   opened.push(w);
   const sent = [];
   const perms = [];
-  const local = fakeArea({ keys, settings: { target: 'auto', autoSites: [], theme: 'system', sensitiveExtra: [] }, glossary: [] });
+  const local = fakeArea({ keys, settings: Object.assign({ target: 'auto', autoSites: [], theme: 'system', sensitiveExtra: [] }, settings), glossary: [] });
   w.setInterval = () => 0;
   w.confirm = () => true;
   w.chrome = {
@@ -181,4 +181,33 @@ test('notifications : pas d\'aria-live sur le conteneur, chaque notification a s
   const box = o.doc.querySelector('.toasts');
   assert.equal(box.hasAttribute('aria-live'), false);
   assert.deepEqual(Array.from(box.children).map((t) => t.getAttribute('role')), ['status', 'alert']);
+});
+
+test('réglages : vitesse de la voix traduite (curseur 0,5 à 2, pas de 0,1), enregistrée dans voiceRate', async () => {
+  const o = await openOptions([K('a')]);
+  const r = o.doc.getElementById('voiceRate');
+  assert.equal(r.type, 'range');
+  assert.deepEqual([r.min, r.max, r.step], ['0.5', '2', '0.1']);
+  assert.equal(r.value, '1', 'défaut : 1');
+  assert.equal(o.doc.getElementById('voiceRateOut').textContent, '1.0\u00d7');
+  r.value = '1.3';
+  r.dispatchEvent(new o.w.Event('input'));
+  assert.equal(o.doc.getElementById('voiceRateOut').textContent, '1.3\u00d7', 'valeur affichée pendant le glissement');
+  r.dispatchEvent(new o.w.Event('change'));
+  await settle();
+  let s = (await o.local.get('settings')).settings;
+  assert.equal(s.voiceRate, 1.3);
+  assert.equal(s.target, 'auto', 'autres réglages gardés');
+  assert.equal(r.getAttribute('aria-valuetext'), '1.3\u00d7');
+  r.value = '5';                        // le curseur borne lui-même à 2
+  r.dispatchEvent(new o.w.Event('change'));
+  await settle();
+  s = (await o.local.get('settings')).settings;
+  assert.equal(s.voiceRate, 2);
+  // réglage relu à l'ouverture ; valeur invalide enregistrée par une ancienne version : 1
+  const o2 = await openOptions([K('a')], { voiceRate: 0.7 });
+  assert.equal(o2.doc.getElementById('voiceRate').value, '0.7');
+  assert.equal(o2.doc.getElementById('voiceRateOut').textContent, '0.7\u00d7');
+  const o3 = await openOptions([K('a')], { voiceRate: 'abc' });
+  assert.equal(o3.doc.getElementById('voiceRate').value, '1');
 });

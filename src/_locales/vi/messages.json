@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Mở video trong một thẻ"
   },
+  "popupVoiceOnly": {
+    "message": "Chỉ giọng dịch (không phụ đề)"
+  },
+  "optVoiceRate": {
+    "message": "Tốc độ giọng dịch"
+  },
+  "optVoiceRateHelp": {
+    "message": "Giọng trong video (lồng tiếng và chỉ giọng). 1× = tốc độ bình thường; giọng nhanh hơn một chút để theo kịp phụ đề."
+  },
+  "voiceSlower": {
+    "message": "Giọng chậm hơn"
+  },
+  "voiceFaster": {
+    "message": "Giọng nhanh hơn"
+  },
+  "voiceRateValue": {
+    "message": "Tốc độ giọng: {0}"
+  },
   "popupSensitive": {
     "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
   },

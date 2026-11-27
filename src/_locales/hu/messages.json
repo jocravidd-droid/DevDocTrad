@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Videó megnyitása egy lapon"
   },
+  "popupVoiceOnly": {
+    "message": "Csak lefordított hang (felirat nélkül)"
+  },
+  "optVoiceRate": {
+    "message": "A lefordított hang sebessége"
+  },
+  "optVoiceRateHelp": {
+    "message": "Videók hangja (szinkron és csak hang). 1× = normál sebesség; a hang kicsit gyorsít, hogy lépést tartson a feliratokkal."
+  },
+  "voiceSlower": {
+    "message": "Lassabb hang"
+  },
+  "voiceFaster": {
+    "message": "Gyorsabb hang"
+  },
+  "voiceRateValue": {
+    "message": "Hang sebessége: {0}"
+  },
   "popupSensitive": {
     "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
   },

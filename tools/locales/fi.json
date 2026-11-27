@@ -231,5 +231,11 @@
 "voiceNoTts": "Laitteessa ei ole puhesynteesiääntä kielelle {0}: vain tekstitykset.",
 "voiceDubClick": "Napsauta sivua salliaksesi käännetyn äänen.",
 "voiceInFrame": "Video on upotetussa soittimessa ({0}): avaa se välilehdellä kääntääksesi sen.",
-"voiceOpenTab": "Avaa video välilehdellä"
+"voiceOpenTab": "Avaa video välilehdellä",
+"popupVoiceOnly": "Vain käännetty ääni (ei tekstitystä)",
+"optVoiceRate": "Käännetyn äänen nopeus",
+"optVoiceRateHelp": "Videoiden ääni (jälkiäänitys ja vain ääni). 1× = normaali nopeus; ääni nopeutuu hieman pysyäkseen tekstityksen tahdissa.",
+"voiceSlower": "Hitaampi ääni",
+"voiceFaster": "Nopeampi ääni",
+"voiceRateValue": "Äänen nopeus: {0}"
 }

@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "동영상을 탭에서 열기"
   },
+  "popupVoiceOnly": {
+    "message": "번역된 음성만 (자막 없음)"
+  },
+  "optVoiceRate": {
+    "message": "번역 음성 속도"
+  },
+  "optVoiceRateHelp": {
+    "message": "동영상 음성(더빙 및 음성만). 1× = 보통 속도이며, 자막을 따라가도록 음성이 조금 빨라집니다."
+  },
+  "voiceSlower": {
+    "message": "느리게"
+  },
+  "voiceFaster": {
+    "message": "빠르게"
+  },
+  "voiceRateValue": {
+    "message": "음성 속도: {0}"
+  },
   "popupSensitive": {
     "message": "민감한 페이지: 자동으로 번역하지 않습니다. 버튼은 작동하며, 설정되어 있으면 Ollama를 먼저 사용합니다."
   },

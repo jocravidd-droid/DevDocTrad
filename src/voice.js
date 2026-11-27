@@ -7,8 +7,12 @@
  *   2. les sous-titres de YouTube (activés automatiquement s'ils existent) ;
  *   3. sinon, le son de la vidéo : morceaux de quelques secondes transcrits par Groq Whisper
  *      (palier gratuit, avec la clé Groq de l'utilisateur), puis traduits comme le reste.
- * Option « doublage » : la traduction est lue par une voix de synthèse du navigateur (speechSynthesis,
- * gratuite), calée sur les sous-titres, pendant que le son d'origine est baissé.
+ * Trois modes (popup) : sous-titres ; sous-titres + voix traduite (doublage) ; voix traduite seule.
+ * La voix est produite par l'extension elle-même (message « speak » au background : chrome.tts sous
+ * Chrome / Edge / Brave, speechSynthesis de la page de fond sous Firefox), gratuite, calée sur les
+ * sous-titres et multipliée par la vitesse choisie, pendant que le son d'origine est baissé.
+ * Pourquoi pas speechSynthesis dans la page : Chrome la refuse (« not-allowed ») tant que la page n'a
+ * reçu aucun clic, et le clic dans le popup ne compte pas. Elle ne sert plus que de repli.
  *
  * Vidéos et sons (<video>, <audio>) cherchés aussi dans les shadow roots ouverts (lecteurs en composants
  * web). Lecteur intégré d'un autre site (<iframe> YouTube, Vimeo...) : lien pour l'ouvrir dans un onglet.
@@ -33,8 +37,11 @@
   var RAMP_MS = 280;             // durée de la baisse ou de la remontée du son
   var UNDUCK_MS = 350;           // silence entre deux phrases avant de remonter le son
   var MAX_LAG_MS = 2000;         // retard de la voix au-delà duquel la phrase en cours est coupée
-  var RATE_MIN = 0.9;
+  var RATE_MIN = 0.9;            // calage sur la durée du sous-titre
   var RATE_MAX = 1.7;
+  var FINAL_RATE_MIN = 0.5;      // après la vitesse choisie par l'utilisateur
+  var FINAL_RATE_MAX = 3;
+  var TTS_MAX_CHARS = 1000;      // texte d'une phrase envoyée à la synthèse (limite du background)
   var VOICES_WAIT_MS = 1500;     // attente de « voiceschanged » (liste des voix chargée plus tard)
   var MAX_SHADOW_DEPTH = 8;
 
@@ -130,7 +137,18 @@
     var speaking = false;        // doublage (lecture à voix haute) en marche
     var frameAnchor = null;      // <iframe> de lecteur signalé quand la page n'a pas de vidéo
     var ttsVoice = null;         // voix de synthèse choisie pour la langue cible
-    var voicesPromise = null;
+    var ttsKind = null;          // moteur de cette voix : 'tts' (chrome.tts), 'synth' (Firefox, page de fond), 'page'
+    var voicesPromise = null;    // voix de la page (repli)
+    var choicePromise = null;    // voix choisie : { kind: 'ext' | 'page', voice, engine }
+    var extBroken = false;       // synthèse de l'extension indisponible : repli sur la page
+    var extUsed = false;         // au moins une phrase envoyée au background (à couper à l'arrêt)
+    var clickArmed = false;      // repli page sous Chrome : phrase redite au premier clic
+    var lastRate = null;         // vitesse de la dernière phrase envoyée
+    var rawSettings = deps.settings || {};
+    var voiceMode = DDT.voiceModeOf(rawSettings);
+    var userRate = DDT.clampVoiceRate(rawSettings.voiceRate);
+    var frameMode = false;       // message « lecteur intégré » affiché (pas de voix)
+    var fsSync = null;           // plein écran natif : resynchronise la piste DevDocTrad (mode voix seule)
     var speakGen = 0;            // incrémenté à chaque annulation : les rappels des phrases annulées sont ignorés
     var queued = 0;              // phrases envoyées à la synthèse et pas encore finies
     var speakEnd = 0;            // heure (ms) prévue de fin des phrases en file
@@ -296,23 +314,56 @@
       '.line{pointer-events:auto;max-width:100%;padding:6px 14px;border-radius:12px;background:rgba(0,0,0,.78);color:#fff;',
       'text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.6);white-space:pre-wrap}',
       '.orig{font-size:.72em;font-weight:500;opacity:.82}',
-      '.orig:empty,.tr:empty{display:none}',
+      '.orig:empty,.tr:empty,.line[hidden]{display:none}',
       '.bar{pointer-events:auto;display:flex;gap:6px;align-items:center;font:500 12px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;',
       'color:#fff;background:rgba(0,0,0,.6);border-radius:999px;padding:3px 4px 3px 10px}',
       '.bar button{all:unset;cursor:pointer;width:24px;height:24px;border-radius:12px;display:grid;place-items:center}',
       '.bar button:hover{background:rgba(255,255,255,.18)}',
       '.bar button:focus-visible{outline:2px solid #4da3ff;outline-offset:1px}',
       '.bar button[aria-pressed=true]{background:#0a84ff}',
+      '.bar button[disabled]{opacity:.4;cursor:default;background:none}',
       '.bar svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}',
       '.msg{max-width:46ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}',
+      '.msg:empty{display:none}',
       '.msg.long{white-space:normal;max-width:60ch;padding:3px 0}',
+      '.rates{display:flex;align-items:center;gap:1px}',
+      '.rates[hidden],.bar button[hidden]{display:none}',
+      '.rate{min-width:3.4em;text-align:center;font-variant-numeric:tabular-nums}',
       '.bar button.open{width:auto;padding:0 10px;background:#0a84ff;font-weight:600;white-space:nowrap}',
-      '.bar button.open:hover{background:#3d9bff}',
-      '.bar button.open[hidden]{display:none}'
+      '.bar button.open:hover{background:#3d9bff}'
     ].join('');
-    var ICON_SPEAK = '<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12"/></svg>';
-    var ICON_CLOSE = '<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var ICON_SPEAK = ['M4 9v6h4l5 4V5L8 9z', 'M16.5 8.5a5 5 0 010 7M19 6a8.5 8.5 0 010 12'];
+    var ICON_CLOSE = ['M6 6l12 12M18 6L6 18'];
+    var ICON_MINUS = ['M6 12h12'];
+    var ICON_PLUS = ['M12 6v12M6 12h12'];
 
+    /* Bande construite élément par élément (jamais de HTML en texte : rien de la page ni des
+       traductions ne peut y devenir du code) */
+    function make(tag, cls) {
+      var e = doc.createElement(tag);
+      if (cls) e.className = cls;
+      return e;
+    }
+    function icon(paths) {
+      var svg = doc.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('aria-hidden', 'true');
+      paths.forEach(function (d) {
+        var p = doc.createElementNS(SVG_NS, 'path');
+        p.setAttribute('d', d);
+        svg.appendChild(p);
+      });
+      return svg;
+    }
+    function iconButton(cls, paths, label) {
+      var b = make('button', cls);
+      b.type = 'button';
+      b.title = label;
+      b.setAttribute('aria-label', label);
+      b.appendChild(icon(paths));
+      return b;
+    }
     function ensureBox() {
       if (host) return;
       host = doc.createElement('div');
@@ -322,32 +373,46 @@
       var style = doc.createElement('style');
       style.textContent = CSS;
       sr.appendChild(style);
-      box = doc.createElement('div');
-      box.className = 'box';
+      box = make('div', 'box');
       box.setAttribute('role', 'region');
       box.setAttribute('aria-label', t('popupVoice'));
+      var orig = make('div', 'line orig');
+      var tr = make('div', 'line tr');
       // aria-live seulement sur la traduction (pas sur les boutons ni les messages), et coupé
       // pendant la lecture à voix haute : sinon le lecteur d'écran la lirait une seconde fois
-      box.innerHTML = '<div class="line orig"></div><div class="line tr" aria-live="' + (speaking ? 'off' : 'polite') + '"></div>' +
-        '<div class="bar"><span class="msg"></span><button class="open" type="button" hidden></button>' +
-        '<button class="speak" type="button" aria-pressed="false">' + ICON_SPEAK +
-        '</button><button class="close" type="button">' + ICON_CLOSE + '</button></div>';
-      sr.appendChild(box);
-      var speak = box.querySelector('.speak');
-      speak.title = t('voiceSpeak');
-      speak.setAttribute('aria-label', t('voiceSpeak'));
-      speak.addEventListener('click', function () { setSpeaking(!speaking); });
-      var open = box.querySelector('.open');
+      tr.setAttribute('aria-live', speaking ? 'off' : 'polite');
+      var bar = make('div', 'bar');
+      var msg = make('span', 'msg');
+      var open = make('button', 'open');
+      open.type = 'button';
+      open.hidden = true;
       open.textContent = t('voiceOpenTab');
       open.addEventListener('click', function () {
         var url = open.getAttribute('data-url');
         if (url) { try { win.open(url, '_blank', 'noopener'); } catch (e) { /* rien */ } }
         stop();
       });
-      var close = box.querySelector('.close');
-      close.title = t('btnClose');
-      close.setAttribute('aria-label', t('btnClose'));
+      var speak = iconButton('speak', ICON_SPEAK, t('voiceSpeak'));
+      speak.setAttribute('aria-pressed', 'false');
+      speak.addEventListener('click', function () { setSpeaking(!speaking); });
+      // vitesse de la voix : − / valeur / +, appliquée dès la phrase suivante et enregistrée
+      var rates = make('span', 'rates');
+      rates.setAttribute('role', 'group');
+      rates.setAttribute('aria-label', t('optVoiceRate'));
+      var slower = iconButton('slower', ICON_MINUS, t('voiceSlower'));
+      var value = make('span', 'rate');
+      var faster = iconButton('faster', ICON_PLUS, t('voiceFaster'));
+      slower.addEventListener('click', function () { setRate(userRate - 0.1, true); });
+      faster.addEventListener('click', function () { setRate(userRate + 0.1, true); });
+      rates.appendChild(slower);
+      rates.appendChild(value);
+      rates.appendChild(faster);
+      var close = iconButton('close', ICON_CLOSE, t('btnClose'));
       close.addEventListener('click', function () { stop(); });
+      [msg, open, speak, rates, close].forEach(function (n) { bar.appendChild(n); });
+      [orig, tr, bar].forEach(function (n) { box.appendChild(n); });
+      sr.appendChild(box);
+      renderSpeak();
       placeHost();
       var onFs = function () { placeHost(); position(); };
       doc.addEventListener('fullscreenchange', onFs);
@@ -390,6 +455,9 @@
       box.style.width = Math.round(width) + 'px';
       box.style.bottom = Math.round(bottom) + 'px';
     }
+    /* « Voix traduite seule » : pas de lignes de texte tant que la voix parle (seulement la barre).
+       Sans voix (aucune pour la langue, haut-parleur coupé) : les sous-titres reviennent. */
+    function linesHidden() { return voiceMode === 'voice' && speaking; }
     function show(original, translated, timing) {
       if (!active) return;            // réponse asynchrone arrivée après « Arrêter »
       ensureBox();
@@ -420,10 +488,14 @@
       position();
     }
 
-    /* ---------------- Doublage : voix de synthèse du navigateur (locale, gratuite) ---------------- */
+    /* ---------------- Doublage : voix de synthèse (locale ou du navigateur, gratuite) ----------------
+     * D'abord la synthèse de l'extension (deps.tts : messages au background, qui utilise chrome.tts sous
+     * Chrome / Edge / Brave, speechSynthesis de sa page de fond sous Firefox) : elle parle sans clic dans
+     * la page. Repli : speechSynthesis de la page (Chrome exige alors un clic dans la page). */
     function synth() { return win.speechSynthesis || null; }
+    function pageSynthOk() { return !!synth() && !!win.SpeechSynthesisUtterance; }
     function targetLang() { return DDT.resolveTarget(settings.target); }
-    /* Liste des voix : souvent vide au premier appel, remplie à l'événement « voiceschanged » */
+    /* Liste des voix de la page : souvent vide au premier appel, remplie à l'événement « voiceschanged » */
     function loadVoices() {
       if (voicesPromise) return voicesPromise;
       var s = synth();
@@ -448,6 +520,29 @@
         win.setTimeout(finish, deps.voicesWaitMs || VOICES_WAIT_MS);
       });
       return voicesPromise;
+    }
+    /* Voix choisie : celle de l'extension si elle en a une pour la langue cible (même ordre de
+       préférence), sinon celle de la page. null : aucune voix, sous-titres seuls. */
+    function ensureVoice() {
+      if (choicePromise) return choicePromise;
+      var target = targetLang();
+      var ext = deps.tts && !extBroken
+        ? Promise.resolve().then(function () { return deps.tts.voices(); }).catch(function () { return null; })
+        : Promise.resolve(null);
+      var p = ext.then(function (r) {
+        var v = r && r.ok ? pickTtsVoice(r.voices, target) : null;
+        if (v) return { kind: 'ext', voice: v, engine: r.engine || 'tts' };
+        if (!pageSynthOk()) return null;
+        return loadVoices().then(function (list) {
+          var pv = pickTtsVoice(list, target);
+          return pv ? { kind: 'page', voice: pv, engine: 'page' } : null;
+        });
+      });
+      choicePromise = p.then(function (c) {
+        if (!c) choicePromise = null;           // nouvel essai plus tard (voix installée, liste chargée)
+        return c;
+      });
+      return choicePromise;
     }
     function noVoiceMessage() { return t('voiceNoTts', [DDT.languageName(targetLang())]); }
 
@@ -505,6 +600,7 @@
       ducked = false;
     }
     function cancelSpeech() {
+      var had = queued;
       speakGen++;
       queued = 0;
       speakEnd = 0;
@@ -512,14 +608,63 @@
       live = [];
       var s = synth();
       if (s) { try { s.cancel(); } catch (e) { /* rien */ } }
+      if (had && extUsed && deps.tts) {
+        try { Promise.resolve(deps.tts.stop()).catch(function () { /* rien */ }); } catch (e) { /* rien */ }
+      }
       if (ducked) scheduleUnduck();
+    }
+    /* Chrome, repli sur la synthèse de la page : la page n'a reçu aucun clic. Message clair, et la
+       phrase affichée est redite au premier clic dans la page. */
+    function needClick() {
+      setMessage(t('voiceDubClick'));
+      if (clickArmed) return;
+      clickArmed = true;
+      var onClick = function () {
+        doc.removeEventListener('pointerdown', onClick, true);
+        doc.removeEventListener('keydown', onClick, true);
+        clickArmed = false;
+        if (!active || !speaking || !lastShown) return;
+        if (message === t('voiceDubClick')) setMessage('');
+        lastSaid = '';
+        win.setTimeout(function () { say(lastShown, null); }, 0);
+      };
+      doc.addEventListener('pointerdown', onClick, true);
+      doc.addEventListener('keydown', onClick, true);
+      cleanups.push(function () {
+        doc.removeEventListener('pointerdown', onClick, true);
+        doc.removeEventListener('keydown', onClick, true);
+        clickArmed = false;
+      });
+    }
+    /* Synthèse de la page : une phrase, réponse à sa fin (comme le message « speak » du background) */
+    function pageSpeak(text, voice, lang, rate) {
+      var s = synth();
+      return new Promise(function (resolve) {
+        var u = new win.SpeechSynthesisUtterance(text);
+        u.voice = voice;
+        u.lang = lang;
+        u.rate = rate;
+        var done = function (ev) {
+          live = live.filter(function (x) { return x !== u; });
+          resolve(ev && ev.error ? { ok: false, type: 'error', error: ev.error } : { ok: true, type: 'end' });
+        };
+        u.onend = done;
+        u.onerror = done;
+        live.push(u);                 // gardée en mémoire : Chrome perd sinon ses événements
+        try { s.speak(u); } catch (e) { done({ error: 'error' }); }
+      });
+    }
+    /* Vitesse d'une phrase : calage sur la durée du sous-titre (0,9 à 1,7), multiplié par la vitesse
+       choisie par l'utilisateur, puis borné entre 0,5 et 3. */
+    function finalRate(text, availSec, lagSec, lang) {
+      var r = dubRate(text, availSec, lagSec, lang) * userRate;
+      return Math.round(Math.min(FINAL_RATE_MAX, Math.max(FINAL_RATE_MIN, r)) * 100) / 100;
     }
     /* Une phrase traduite à dire. timing.end : fin du sous-titre (temps de la vidéo), pour caler la vitesse. */
     function say(text, timing) {
-      var s = synth();
-      if (!s || !win.SpeechSynthesisUtterance || !text) return;
-      loadVoices().then(function () {
-        if (!speaking || !active || !ttsVoice) return;
+      if (!text) return;
+      ensureVoice().then(function (choice) {
+        if (!speaking || !active || !choice) return;
         if (video && video.paused) return;            // reprise à la lecture (resumeHook)
         if (text === lastSaid && queued) return;       // déjà en cours (sous-titre redit après un saut)
         var availSec = null;
@@ -531,33 +676,47 @@
         var lagMs = queued ? Math.max(0, speakEnd - now) : 0;
         // retard trop grand : la phrase en cours est coupée ; sinon la suivante est accélérée
         if (lagMs > MAX_LAG_MS) { cancelSpeech(); lagMs = 0; }
-        var lang = ttsVoice.lang || targetLang();
-        var rate = dubRate(text, availSec, lagMs / 1000, lang);
-        var u = new win.SpeechSynthesisUtterance(text);
-        u.voice = ttsVoice;
-        u.lang = lang;
-        u.rate = rate;
+        var lang = choice.voice.lang || targetLang();
+        var rate = finalRate(text, availSec, lagMs / 1000, lang);
+        var spoken = text.length > TTS_MAX_CHARS ? text.slice(0, TTS_MAX_CHARS) : text;
         var gen = speakGen;
         var finished = false;
-        var end = function (ev) {
+        var guard = null;
+        var end = function (res) {
           if (finished) return;
           finished = true;
-          live = live.filter(function (x) { return x !== u; });
+          if (guard) win.clearTimeout(guard);
           if (gen !== speakGen) return;
           queued = Math.max(0, queued - 1);
+          var err = res && res.ok === false ? res.error || res.type : '';
           // Chrome refuse de parler tant que la page n'a reçu aucun clic : on le dit
-          if (ev && ev.error === 'not-allowed') setMessage(t('voiceDubClick'));
+          if (err === 'not-allowed') needClick();
+          // l'extension ne sait pas parler : repli sur la page. Message perdu (service worker relancé) :
+          // la voix de l'extension est redemandée à la phrase suivante, sans repli définitif sur la page
+          // (que Chrome bloquerait sans clic).
+          if (choice.kind === 'ext' && err === 'no_tts') { extBroken = true; choicePromise = null; }
+          else if (choice.kind === 'ext' && err === 'disconnected') choicePromise = null;
           if (!queued) { speakEnd = 0; scheduleUnduck(); }
         };
-        u.onstart = function () { if (gen === speakGen) duck(); };
-        u.onend = end;
-        u.onerror = end;
         queued++;
         speakEnd = Math.max(now, speakEnd) + speechSeconds(text, lang) / rate * 1000;
         lastSaid = text;
-        live.push(u);
+        lastRate = rate;
         duck();
-        try { s.speak(u); } catch (e) { end(); }
+        // garde-fou : une fin de phrase perdue ne laisse jamais le son d'origine baissé
+        guard = win.setTimeout(function () { end({ ok: false, type: 'timeout' }); },
+          speechSeconds(text, lang) / rate * 2000 + 6000);
+        var p;
+        if (choice.kind === 'ext') {
+          extUsed = true;
+          p = Promise.resolve().then(function () {
+            return deps.tts.speak({ text: spoken, lang: lang, rate: rate, voiceName: choice.voice.name });
+          });
+        } else {
+          p = pageSpeak(spoken, choice.voice, lang, rate);
+        }
+        p.then(function (res) { end(res || { ok: false, error: 'disconnected' }); },
+          function () { end({ ok: false, error: 'disconnected' }); });
       });
     }
     function renderSpeak() {
@@ -568,10 +727,39 @@
       b.title = label;
       b.setAttribute('aria-label', label);
       box.querySelector('.tr').setAttribute('aria-live', speaking ? 'off' : 'polite');
+      var hide = linesHidden();
+      box.querySelector('.orig').hidden = hide;
+      box.querySelector('.tr').hidden = hide;
+      box.classList.toggle('voiceonly', hide);
+      box.querySelector('.rates').hidden = !speaking || frameMode;
+      renderRate();
+      if (fsSync) fsSync();
+    }
+    function renderRate() {
+      if (!box) return;
+      var label = DDT.formatVoiceRate(userRate);
+      var v = box.querySelector('.rate');
+      v.textContent = label;
+      v.title = t('voiceRateValue', [label]);
+      box.querySelector('.slower').disabled = userRate <= DDT.VOICE_RATE_MIN;
+      box.querySelector('.faster').disabled = userRate >= DDT.VOICE_RATE_MAX;
+    }
+    /* Vitesse choisie (0,5 à 2, pas de 0,1) : prise en compte dès la phrase suivante.
+       save : enregistrée dans les réglages (boutons de la bande) ; sinon venue des réglages. */
+    function setRate(x, save) {
+      var r = DDT.clampVoiceRate(Math.round(Number(x) * 10) / 10);
+      var changed = r !== userRate;
+      userRate = r;
+      settings.voiceRate = r;
+      renderRate();
+      if (changed && save && deps.saveRate) {
+        try { Promise.resolve(deps.saveRate(r)).catch(function () { /* rien */ }); } catch (e) { /* rien */ }
+      }
+      return status();
     }
     /* Doublage marche/arrêt. Sans voix pour la langue cible : message clair, sous-titres seuls. */
     function setSpeaking(on) {
-      var want = !!on && !!synth() && !!win.SpeechSynthesisUtterance;
+      var want = !!on && (!!deps.tts || pageSynthOk());
       if (!want) {
         speaking = false;
         renderSpeak();
@@ -582,19 +770,30 @@
       }
       speaking = true;
       renderSpeak();
-      return loadVoices().then(function (list) {
+      return ensureVoice().then(function (choice) {
         if (!speaking) return false;
-        ttsVoice = pickTtsVoice(list, targetLang());
-        if (!ttsVoice) {
+        if (!choice) {
           speaking = false;
           renderSpeak();
           if (active) setMessage(noVoiceMessage());
           return false;
         }
+        ttsVoice = choice.voice;
+        ttsKind = choice.engine;
         renderSpeak();
         if (lastShown && active) say(lastShown, null);
         return true;
       });
+    }
+    /* Mode choisi dans le popup : 'subs' (sous-titres), 'dub' (sous-titres + voix), 'voice' (voix seule) */
+    function setMode(m) {
+      voiceMode = DDT.VOICE_MODES.indexOf(m) !== -1 ? m : 'subs';
+      settings.voiceMode = voiceMode;
+      if (!active) return Promise.resolve(status());
+      var want = voiceMode !== 'subs';
+      var p = want === speaking ? Promise.resolve(speaking) : setSpeaking(want);
+      renderSpeak();
+      return p.then(function () { return status(); });
     }
     /* Pause de la vidéo : la voix se tait ; lecture : elle reprend au sous-titre affiché ;
        saut dans la vidéo : la voix repart au sous-titre du nouvel endroit. */
@@ -676,7 +875,7 @@
       }
       function syncFullscreen() {
         if (!active) return;
-        if (!nativeFullscreen()) {
+        if (!nativeFullscreen() || linesHidden()) {   // voix seule : aucun texte, même en plein écran
           if (fsTrack && fsTrack.mode !== 'disabled') fsTrack.mode = 'disabled';
           return;
         }
@@ -700,6 +899,7 @@
         fsTrack = null;
         fsAdded = {};
       }
+      fsSync = syncFullscreen;
       doc.addEventListener('fullscreenchange', syncFullscreen);
       doc.addEventListener('webkitfullscreenchange', syncFullscreen);
       video.addEventListener('webkitbeginfullscreen', syncFullscreen);   // Safari iOS
@@ -738,6 +938,7 @@
       onCue();
       srcCleanups.push(function () {
         resumeHook = defaultResume;
+        if (fsSync === syncFullscreen) fsSync = null;
         track.removeEventListener('cuechange', onCue);
         win.clearInterval(poll);
         doc.removeEventListener('fullscreenchange', syncFullscreen);
@@ -1112,9 +1313,16 @@
     /* ---------------- Commandes ---------------- */
     function start(opts) {
       opts = opts || {};
-      if (opts.settings) settings = Object.assign({}, DDT.DEFAULT_SETTINGS, opts.settings);
+      if (opts.settings) {
+        settings = Object.assign({}, DDT.DEFAULT_SETTINGS, opts.settings);
+        voiceMode = DDT.voiceModeOf(opts.settings);
+        userRate = DDT.clampVoiceRate(opts.settings.voiceRate);
+      }
+      settings.voiceMode = voiceMode;
+      settings.voiceRate = userRate;
       keyId = opts.keyId || null;
       if (active) return status();
+      choicePromise = null;         // langue cible peut-être changée : voix choisie à nouveau
       var found = scan();
       video = pickVideo();
       if (!video) {
@@ -1126,6 +1334,7 @@
           var hostName = '';
           try { hostName = new URL(url).hostname.replace(/^www\./, ''); } catch (e) { /* rien */ }
           message = t('voiceInFrame', [hostName]);
+          frameMode = true;
           ensureBox();
           var m = box.querySelector('.msg');
           m.textContent = message;
@@ -1135,6 +1344,7 @@
           open.hidden = false;
           open.setAttribute('data-url', url);
           box.querySelector('.speak').hidden = true;
+          box.querySelector('.rates').hidden = true;
           box.classList.add('on');
           position();
           return status({ ok: false, error: 'iframe_player', url: url });
@@ -1143,6 +1353,7 @@
         return status({ ok: false, error: 'no_video' });
       }
       if (host) stop();             // message d'un lecteur intégré encore affiché
+      frameMode = false;
       active = true;
       memo = {};
       pending = {};
@@ -1153,7 +1364,7 @@
       bindMedia(video);
       watch();
       startSource();
-      if (settings.voiceDub) setSpeaking(true);
+      if (voiceMode !== 'subs') setSpeaking(true);
       return status();
     }
     function stop() {
@@ -1164,6 +1375,7 @@
       mediaOff = null;
       resumeHook = null;
       frameAnchor = null;
+      frameMode = false;
       stopSource();
       var list = cleanups;
       cleanups = [];
@@ -1176,13 +1388,17 @@
     function toggle(opts) { return active ? stop() : start(opts); }
     function status(extra) {
       return Object.assign({ ok: true, active: active, mode: mode, message: message, speaking: speaking,
-        dubVoice: speaking && ttsVoice ? ttsVoice.name : null, media: video ? video.tagName.toLowerCase() : null,
+        dubVoice: speaking && ttsVoice ? ttsVoice.name : null, ttsEngine: speaking ? ttsKind : null,
+        voiceMode: voiceMode, voiceRate: userRate, lastRate: lastRate,
+        media: video ? video.tagName.toLowerCase() : null,
         translated: stats.translated, transcribed: stats.transcribed }, extra || {});
     }
 
     return {
       start: start, stop: stop, toggle: toggle, status: status, setSpeaking: setSpeaking,
-      setDub: function (on) { if (active) setSpeaking(on); return status(); },
+      setMode: setMode, setRate: function (x) { return setRate(x, false); },
+      // ancien message « dub » (1.2) : marche = doublage, arrêt = sous-titres
+      setDub: function (on) { return setMode(on ? 'dub' : 'subs'); },
       _memo: function () { return memo; }, _video: function () { return video; }
     };
   }
@@ -1191,6 +1407,7 @@
   root.DDT_cueText = cueText;
   root.DDT_pickTtsVoice = pickTtsVoice;
   root.DDT_dubRate = dubRate;
+  root.DDT_VOICE_LIMITS = { min: FINAL_RATE_MIN, max: FINAL_RATE_MAX, chars: TTS_MAX_CHARS };
 
   /* ---------------- Mise en route dans l'extension ---------------- */
   var api = DDT && DDT.api;
@@ -1230,16 +1447,48 @@
     });
   }
 
-  var voice = createVoice(document, window, { transport: transport, transcribe: transcribe });
+  /* Voix traduite : produite par le background (chrome.tts, ou speechSynthesis de la page de fond
+     sous Firefox), qui n'a pas besoin d'un clic dans la page. La réponse à « speak » arrive en fin de phrase. */
+  var tts = {
+    voices: function () { return api.runtime.sendMessage({ type: 'ttsVoices' }); },
+    speak: function (o) {
+      return api.runtime.sendMessage({ type: 'speak', text: o.text, lang: o.lang, rate: o.rate, voiceName: o.voiceName });
+    },
+    stop: function () { return api.runtime.sendMessage({ type: 'stopSpeaking' }); }
+  };
+  /* Vitesse changée avec − / + sur la vidéo : enregistrée (relue avant d'écrire : autre réglage modifié ailleurs) */
+  function saveRate(rate) {
+    return api.storage.local.get('settings').then(function (r) {
+      var s = Object.assign({}, (r && r.settings) || {}, { voiceRate: rate });
+      return api.storage.local.set({ settings: s });
+    });
+  }
+
+  var voice = createVoice(document, window, { transport: transport, transcribe: transcribe, tts: tts, saveRate: saveRate });
   root.__DDT_VOICE = voice;
+
+  // vitesse changée dans les réglages (ou dans un autre onglet) : appliquée tout de suite
+  if (api.storage.onChanged) {
+    api.storage.onChanged.addListener(function (changes, area) {
+      if (area !== 'local' || !changes.settings || !changes.settings.newValue) return;
+      var nv = changes.settings.newValue;
+      if (nv.voiceRate != null && DDT.clampVoiceRate(nv.voiceRate) !== voice.status().voiceRate) voice.setRate(nv.voiceRate);
+    });
+  }
 
   api.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg || msg.to !== 'voice') return;
     if (msg.cmd === 'status') { sendResponse(voice.status()); return; }
     if (msg.cmd === 'stop') { sendResponse(voice.stop()); return; }
-    if (msg.cmd === 'dub') { sendResponse(voice.setDub(!!msg.on)); return; }
+    if (msg.cmd === 'dub') {
+      // choix du popup appliqué tout de suite à la voix déjà lancée
+      var m = DDT.VOICE_MODES.indexOf(msg.mode) !== -1 ? msg.mode : (msg.on ? 'dub' : 'subs');
+      voice.setMode(m).then(sendResponse, function (e) { sendResponse({ ok: false, error: String(e) }); });
+      return true;
+    }
     api.storage.local.get('settings').then(function (r) {
-      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, (r && r.settings) || {});
+      var raw = (r && r.settings) || {};
+      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, raw, { voiceMode: DDT.voiceModeOf(raw) });
       var opts = { settings: s, keyId: msg.keyId };
       sendResponse(msg.cmd === 'toggle' ? voice.toggle(opts) : voice.start(opts));
     }).catch(function (e) { sendResponse({ ok: false, error: String(e) }); });

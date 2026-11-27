@@ -231,5 +231,11 @@
 "voiceNoTts": "Brak syntezatora mowy dla języka {0} na tym urządzeniu: tylko napisy.",
 "voiceDubClick": "Kliknij stronę, aby zezwolić na przetłumaczony głos.",
 "voiceInFrame": "Ten film jest w osadzonym odtwarzaczu ({0}): otwórz go w karcie, aby go przetłumaczyć.",
-"voiceOpenTab": "Otwórz film w karcie"
+"voiceOpenTab": "Otwórz film w karcie",
+"popupVoiceOnly": "Tylko przetłumaczony głos (bez napisów)",
+"optVoiceRate": "Szybkość przetłumaczonego głosu",
+"optVoiceRateHelp": "Głos w filmach (dubbing i tylko głos). 1× = normalna szybkość; głos lekko przyspiesza, by nadążyć za napisami.",
+"voiceSlower": "Wolniejszy głos",
+"voiceFaster": "Szybszy głos",
+"voiceRateValue": "Szybkość głosu: {0}"
 }

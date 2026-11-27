@@ -231,5 +231,11 @@
 "voiceNoTts": "Ezen az eszközön nincs beszédszintetizáló hang ehhez: {0}. Csak feliratok.",
 "voiceDubClick": "Kattints az oldalra a lefordított hang engedélyezéséhez.",
 "voiceInFrame": "Ez a videó egy beágyazott lejátszóban van ({0}): nyisd meg egy lapon a fordításhoz.",
-"voiceOpenTab": "Videó megnyitása egy lapon"
+"voiceOpenTab": "Videó megnyitása egy lapon",
+"popupVoiceOnly": "Csak lefordított hang (felirat nélkül)",
+"optVoiceRate": "A lefordított hang sebessége",
+"optVoiceRateHelp": "Videók hangja (szinkron és csak hang). 1× = normál sebesség; a hang kicsit gyorsít, hogy lépést tartson a feliratokkal.",
+"voiceSlower": "Lassabb hang",
+"voiceFaster": "Gyorsabb hang",
+"voiceRateValue": "Hang sebessége: {0}"
 }

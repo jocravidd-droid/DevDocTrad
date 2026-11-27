@@ -34,9 +34,16 @@ FIXED_DATE = (2026, 1, 1, 0, 0, 0)
 
 
 def merge(a, b):
+    """Fusionne deux manifestes. Les permissions s'ajoutent (« tts » seulement pour Chrome : Firefox
+    n'a pas browser.tts et signalerait une permission inconnue) ; les autres listes sont remplacées."""
     out = dict(a)
     for k, v in b.items():
-        out[k] = merge(out[k], v) if isinstance(v, dict) and isinstance(out.get(k), dict) else v
+        if k == "permissions" and isinstance(v, list) and isinstance(out.get(k), list):
+            out[k] = out[k] + [p for p in v if p not in out[k]]
+        elif isinstance(v, dict) and isinstance(out.get(k), dict):
+            out[k] = merge(out[k], v)
+        else:
+            out[k] = v
     return out
 
 

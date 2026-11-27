@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Videoyu bir sekmede aç"
   },
+  "popupVoiceOnly": {
+    "message": "Yalnızca çevrilmiş ses (altyazısız)"
+  },
+  "optVoiceRate": {
+    "message": "Çevrilmiş sesin hızı"
+  },
+  "optVoiceRateHelp": {
+    "message": "Videoların sesi (dublaj ve yalnızca ses). 1× = normal hız; ses altyazılara yetişmek için biraz hızlanır."
+  },
+  "voiceSlower": {
+    "message": "Daha yavaş ses"
+  },
+  "voiceFaster": {
+    "message": "Daha hızlı ses"
+  },
+  "voiceRateValue": {
+    "message": "Ses hızı: {0}"
+  },
   "popupSensitive": {
     "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
   },

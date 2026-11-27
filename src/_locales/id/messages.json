@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Buka video di tab"
   },
+  "popupVoiceOnly": {
+    "message": "Hanya suara terjemahan (tanpa subtitle)"
+  },
+  "optVoiceRate": {
+    "message": "Kecepatan suara terjemahan"
+  },
+  "optVoiceRateHelp": {
+    "message": "Suara video (sulih suara dan hanya suara). 1× = kecepatan normal; suara sedikit dipercepat agar mengikuti subtitle."
+  },
+  "voiceSlower": {
+    "message": "Suara lebih lambat"
+  },
+  "voiceFaster": {
+    "message": "Suara lebih cepat"
+  },
+  "voiceRateValue": {
+    "message": "Kecepatan suara: {0}"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemahkan otomatis. Tombol tetap berfungsi, Ollama dipakai lebih dulu jika sudah diatur."
   },

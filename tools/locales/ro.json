@@ -231,5 +231,11 @@
 "voiceNoTts": "Nicio voce sintetizată pentru {0} pe acest dispozitiv: doar subtitrări.",
 "voiceDubClick": "Dă clic pe pagină pentru a permite vocea tradusă.",
 "voiceInFrame": "Acest videoclip este într-un player încorporat ({0}): deschide-l într-o filă pentru a-l traduce.",
-"voiceOpenTab": "Deschide videoclipul într-o filă"
+"voiceOpenTab": "Deschide videoclipul într-o filă",
+"popupVoiceOnly": "Doar voce tradusă (fără subtitrări)",
+"optVoiceRate": "Viteza vocii traduse",
+"optVoiceRateHelp": "Vocea din videoclipuri (dublaj și doar voce). 1× = viteză normală; vocea accelerează puțin ca să țină pasul cu subtitrările.",
+"voiceSlower": "Voce mai lentă",
+"voiceFaster": "Voce mai rapidă",
+"voiceRateValue": "Viteza vocii: {0}"
 }

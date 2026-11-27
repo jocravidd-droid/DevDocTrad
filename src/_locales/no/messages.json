@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Åpne videoen i en fane"
   },
+  "popupVoiceOnly": {
+    "message": "Bare oversatt stemme (uten undertekster)"
+  },
+  "optVoiceRate": {
+    "message": "Hastighet for oversatt stemme"
+  },
+  "optVoiceRateHelp": {
+    "message": "Stemmen i videoer (dubbing og bare stemme). 1× = normal hastighet; stemmen øker litt for å holde følge med undertekstene."
+  },
+  "voiceSlower": {
+    "message": "Saktere stemme"
+  },
+  "voiceFaster": {
+    "message": "Raskere stemme"
+  },
+  "voiceRateValue": {
+    "message": "Stemmehastighet: {0}"
+  },
   "popupSensitive": {
     "message": "Sensitiv side: oversettes aldri automatisk. Knappen virker, Ollama brukes først hvis det er satt opp."
   },

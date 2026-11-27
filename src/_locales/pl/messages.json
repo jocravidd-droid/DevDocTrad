@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Otwórz film w karcie"
   },
+  "popupVoiceOnly": {
+    "message": "Tylko przetłumaczony głos (bez napisów)"
+  },
+  "optVoiceRate": {
+    "message": "Szybkość przetłumaczonego głosu"
+  },
+  "optVoiceRateHelp": {
+    "message": "Głos w filmach (dubbing i tylko głos). 1× = normalna szybkość; głos lekko przyspiesza, by nadążyć za napisami."
+  },
+  "voiceSlower": {
+    "message": "Wolniejszy głos"
+  },
+  "voiceFaster": {
+    "message": "Szybszy głos"
+  },
+  "voiceRateValue": {
+    "message": "Szybkość głosu: {0}"
+  },
   "popupSensitive": {
     "message": "Strona wrażliwa: nigdy nie jest tłumaczona automatycznie. Przycisk działa; jeśli Ollama jest skonfigurowana, jest używana jako pierwsza."
   },

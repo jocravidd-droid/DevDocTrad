@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "ভিডিওটি একটি ট্যাবে খুলুন"
   },
+  "popupVoiceOnly": {
+    "message": "শুধু অনূদিত কণ্ঠ (সাবটাইটেল ছাড়া)"
+  },
+  "optVoiceRate": {
+    "message": "অনূদিত কণ্ঠের গতি"
+  },
+  "optVoiceRateHelp": {
+    "message": "ভিডিওর কণ্ঠ (ডাবিং ও শুধু কণ্ঠ)। 1× = স্বাভাবিক গতি; সাবটাইটেলের সাথে তাল রাখতে কণ্ঠ একটু দ্রুত হয়।"
+  },
+  "voiceSlower": {
+    "message": "ধীর কণ্ঠ"
+  },
+  "voiceFaster": {
+    "message": "দ্রুত কণ্ঠ"
+  },
+  "voiceRateValue": {
+    "message": "কণ্ঠের গতি: {0}"
+  },
   "popupSensitive": {
     "message": "সংবেদনশীল পেজ: কখনও স্বয়ংক্রিয় অনুবাদ হয় না। বোতাম কাজ করে, সেট থাকলে Ollama আগে ব্যবহৃত হয়।"
   },

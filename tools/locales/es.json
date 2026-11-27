@@ -231,5 +231,11 @@
 "voiceNoTts": "No hay voz sintética en {0} en este dispositivo: solo subtítulos.",
 "voiceDubClick": "Haz clic en la página para permitir la voz traducida.",
 "voiceInFrame": "Este vídeo está en un reproductor integrado ({0}): ábrelo en una pestaña para traducirlo.",
-"voiceOpenTab": "Abrir el vídeo en una pestaña"
+"voiceOpenTab": "Abrir el vídeo en una pestaña",
+"popupVoiceOnly": "Solo voz traducida (sin subtítulos)",
+"optVoiceRate": "Velocidad de la voz traducida",
+"optVoiceRateHelp": "Voz de los vídeos (doblaje y solo voz). 1× = velocidad normal; la voz acelera un poco para seguir los subtítulos.",
+"voiceSlower": "Voz más lenta",
+"voiceFaster": "Voz más rápida",
+"voiceRateValue": "Velocidad de la voz: {0}"
 }

@@ -231,5 +231,11 @@
 "voiceNoTts": "Tidak ada suara sintetis untuk {0} di perangkat ini: hanya subtitel.",
 "voiceDubClick": "Klik halaman untuk mengizinkan suara terjemahan.",
 "voiceInFrame": "Video ini ada di pemutar tersemat ({0}): buka di tab untuk menerjemahkannya.",
-"voiceOpenTab": "Buka video di tab"
+"voiceOpenTab": "Buka video di tab",
+"popupVoiceOnly": "Hanya suara terjemahan (tanpa subtitle)",
+"optVoiceRate": "Kecepatan suara terjemahan",
+"optVoiceRateHelp": "Suara video (sulih suara dan hanya suara). 1× = kecepatan normal; suara sedikit dipercepat agar mengikuti subtitle.",
+"voiceSlower": "Suara lebih lambat",
+"voiceFaster": "Suara lebih cepat",
+"voiceRateValue": "Kecepatan suara: {0}"
 }
