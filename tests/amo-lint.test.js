@@ -13,12 +13,8 @@ const { spawnSync } = require('child_process');
 const ROOT = path.join(__dirname, '..');
 const LINTER = path.join(ROOT, 'node_modules', 'addons-linter', 'bin', 'addons-linter');
 
-/* Avertissements tolérés le temps qu'un travail en cours les supprime. À vider dès que possible :
-   chaque entrée encore présente mais devenue inutile fait échouer le test, pour ne pas l'oublier.
-   - voice.js : la bande de sous-titres est en cours de réécriture (construction DOM sans innerHTML). */
-const PENDING = [
-  { code: 'UNSAFE_VAR_ASSIGNMENT', file: 'voice.js' }
-];
+/* Avertissements tolérés temporairement (vide = aucun) : une entrée devenue inutile fait échouer le test. */
+const PENDING = [];
 
 let dir;
 test.before(() => {
