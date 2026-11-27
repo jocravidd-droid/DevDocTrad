@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "باز کردن تنظیمات"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "زیرنویس‌های YouTube فعلاً خوانا نیستند: یک کلید رایگان Groq اضافه کن تا به‌جای آن صدا شنیده شود."
+  },
+  "voiceNoTtsLinux": {
+    "message": "هیچ صدای گفتار برای {0} نیست: Chrome را با --enable-speech-dispatcher اجرا کن (و speech-dispatcher + espeak-ng را نصب کن) تا صدا داشته باشی."
+  },
+  "voiceNoVoiceShort": {
+    "message": "بدون صدا"
+  },
+  "voiceRobotic": {
+    "message": "صدای رباتیک ({0}): برای صدایی واضح و رایگان از Google Chrome یا Microsoft Edge استفاده کن (صداهای طبیعی Google/Microsoft) یا یک صدای Piper نصب کن."
+  },
+  "voiceRoboticShort": {
+    "message": "صدای رباتیک"
+  },
+  "optVoiceName": {
+    "message": "صدای ترجمه‌شده"
+  },
+  "optVoiceNameHelp": {
+    "message": "فقط صداهای زبان مقصد. خودکار واضح‌ترین را انتخاب می‌کند (Google، سپس صداهای طبیعی؛ eSpeak در آخر)."
+  },
+  "optVoiceAuto": {
+    "message": "خودکار (بهترین صدا)"
+  },
+  "optVoiceTest": {
+    "message": "آزمایش صدا"
+  },
+  "optVoiceUsed": {
+    "message": "صدای در حال استفاده: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "اینجا در دسترس نیست"
+  },
   "popupSensitive": {
     "message": "صفحهٔ حساس: هرگز به‌طور خودکار ترجمه نمی‌شود. دکمه کار می‌کند و اگر Ollama تنظیم شده باشد، اول از آن استفاده می‌شود."
   },

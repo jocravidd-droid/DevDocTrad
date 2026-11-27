@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "設定を開く"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "今は YouTube の字幕を読めません：代わりに音声を聞くには無料の Groq キーを追加してください。"
+  },
+  "voiceNoTtsLinux": {
+    "message": "{0} の読み上げ音声がありません：音声を使うには Chrome を --enable-speech-dispatcher 付きで起動してください（speech-dispatcher + espeak-ng もインストール）。"
+  },
+  "voiceNoVoiceShort": {
+    "message": "音声なし"
+  },
+  "voiceRobotic": {
+    "message": "ロボットのような音声（{0}）：はっきりした無料の音声には Google Chrome か Microsoft Edge（自然な Google/Microsoft 音声）を使うか、Piper の音声をインストールしてください。"
+  },
+  "voiceRoboticShort": {
+    "message": "ロボット音声"
+  },
+  "optVoiceName": {
+    "message": "翻訳音声"
+  },
+  "optVoiceNameHelp": {
+    "message": "対象言語の音声のみ。自動では最も聞き取りやすいものを選びます（Google、次に自然な音声、eSpeak は最後）。"
+  },
+  "optVoiceAuto": {
+    "message": "自動（最適な音声）"
+  },
+  "optVoiceTest": {
+    "message": "音声をテスト"
+  },
+  "optVoiceUsed": {
+    "message": "使用中の音声：{0}"
+  },
+  "optVoiceMissing": {
+    "message": "ここでは使用不可"
+  },
   "popupSensitive": {
     "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
   },

@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Ondertitels vertaald door YouTube (gratis), gelijk met de video",
 "voiceYtScreen": "YouTube-transcript niet beschikbaar: de ondertitels op het scherm worden gelezen",
 "voiceNoCaptionsGroq": "Deze video heeft geen ondertitels: een gratis Groq-sleutel is nodig om naar het geluid te luisteren.",
-"voiceOpenSettings": "Instellingen openen"
+"voiceOpenSettings": "Instellingen openen",
+"voiceYtUnreadableGroq": "YouTube-ondertitels zijn nu niet leesbaar: voeg een gratis Groq-sleutel toe om in plaats daarvan naar het geluid te luisteren.",
+"voiceNoTtsLinux": "Geen spraakstem voor {0}: start Chrome met --enable-speech-dispatcher (en installeer speech-dispatcher + espeak-ng) om een stem te krijgen.",
+"voiceNoVoiceShort": "Geen stem",
+"voiceRobotic": "Robotstem ({0}): gebruik voor een duidelijke, gratis stem Google Chrome of Microsoft Edge (natuurlijke Google/Microsoft-stemmen), of installeer een Piper-stem.",
+"voiceRoboticShort": "Robotstem",
+"optVoiceName": "Vertaalde stem",
+"optVoiceNameHelp": "Alleen stemmen in de doeltaal. Automatisch kiest de duidelijkste (Google, dan natuurlijke stemmen; eSpeak als laatste).",
+"optVoiceAuto": "Automatisch (beste stem)",
+"optVoiceTest": "Stem testen",
+"optVoiceUsed": "Gebruikte stem: {0}",
+"optVoiceMissing": "hier niet beschikbaar"
 }

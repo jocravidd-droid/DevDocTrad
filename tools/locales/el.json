@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Υπότιτλοι μεταφρασμένοι από το YouTube (δωρεάν), συγχρονισμένοι με το βίντεο",
 "voiceYtScreen": "Η απομαγνητοφώνηση YouTube δεν είναι διαθέσιμη: ανάγνωση των υποτίτλων της οθόνης",
 "voiceNoCaptionsGroq": "Αυτό το βίντεο δεν έχει υπότιτλους: χρειάζεται δωρεάν κλειδί Groq για ακρόαση του ήχου.",
-"voiceOpenSettings": "Άνοιγμα ρυθμίσεων"
+"voiceOpenSettings": "Άνοιγμα ρυθμίσεων",
+"voiceYtUnreadableGroq": "Οι υπότιτλοι του YouTube δεν διαβάζονται τώρα: πρόσθεσε ένα δωρεάν κλειδί Groq για να ακούς τον ήχο αντί γι' αυτό.",
+"voiceNoTtsLinux": "Καμία φωνή σύνθεσης για {0}: άνοιξε το Chrome με --enable-speech-dispatcher (και εγκατάστησε speech-dispatcher + espeak-ng) για να έχεις φωνή.",
+"voiceNoVoiceShort": "Χωρίς φωνή",
+"voiceRobotic": "Ρομποτική φωνή ({0}): για καθαρή δωρεάν φωνή χρησιμοποίησε Google Chrome ή Microsoft Edge (φυσικές φωνές Google/Microsoft) ή εγκατάστησε μια φωνή Piper.",
+"voiceRoboticShort": "Ρομποτική φωνή",
+"optVoiceName": "Μεταφρασμένη φωνή",
+"optVoiceNameHelp": "Μόνο φωνές της γλώσσας προορισμού. Το Αυτόματο διαλέγει την πιο καθαρή (Google, μετά φυσικές φωνές· eSpeak τελευταία).",
+"optVoiceAuto": "Αυτόματο (καλύτερη φωνή)",
+"optVoiceTest": "Δοκιμή φωνής",
+"optVoiceUsed": "Φωνή σε χρήση: {0}",
+"optVoiceMissing": "μη διαθέσιμη εδώ"
 }

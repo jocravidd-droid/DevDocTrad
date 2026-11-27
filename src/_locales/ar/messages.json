@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "فتح الإعدادات"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "لا يمكن قراءة ترجمات YouTube الآن: أضف مفتاح Groq مجانيًا للاستماع إلى الصوت بدلًا منها."
+  },
+  "voiceNoTtsLinux": {
+    "message": "لا يوجد صوت تركيب كلام لـ {0}: شغّل Chrome مع --enable-speech-dispatcher (وثبّت speech-dispatcher + espeak-ng) للحصول على صوت."
+  },
+  "voiceNoVoiceShort": {
+    "message": "لا صوت"
+  },
+  "voiceRobotic": {
+    "message": "صوت آلي ({0}): للحصول على صوت واضح ومجاني استخدم Google Chrome أو Microsoft Edge (أصوات Google/Microsoft طبيعية) أو ثبّت صوت Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "صوت آلي"
+  },
+  "optVoiceName": {
+    "message": "الصوت المترجم"
+  },
+  "optVoiceNameHelp": {
+    "message": "أصوات اللغة الهدف فقط. التلقائي يختار الأوضح (Google، ثم الأصوات الطبيعية؛ eSpeak أخيرًا)."
+  },
+  "optVoiceAuto": {
+    "message": "تلقائي (أفضل صوت)"
+  },
+  "optVoiceTest": {
+    "message": "اختبار الصوت"
+  },
+  "optVoiceUsed": {
+    "message": "الصوت المستخدم: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "غير متاح هنا"
+  },
   "popupSensitive": {
     "message": "صفحة حساسة: لا تُترجم تلقائيًا أبدًا. الزر يعمل، ويُستخدم Ollama أولًا إن كان مُعدًّا."
   },

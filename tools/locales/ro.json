@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Subtitrări traduse de YouTube (gratuit), sincronizate cu videoclipul",
 "voiceYtScreen": "Transcrierea YouTube nu este disponibilă: se citesc subtitrările de pe ecran",
 "voiceNoCaptionsGroq": "Acest videoclip nu are subtitrări: este nevoie de o cheie Groq gratuită pentru a asculta sunetul.",
-"voiceOpenSettings": "Deschide setările"
+"voiceOpenSettings": "Deschide setările",
+"voiceYtUnreadableGroq": "Subtitrările YouTube nu pot fi citite acum: adaugă o cheie Groq gratuită pentru a asculta sunetul în schimb.",
+"voiceNoTtsLinux": "Nicio voce de sinteză pentru {0}: pornește Chrome cu --enable-speech-dispatcher (și instalează speech-dispatcher + espeak-ng) ca să ai o voce.",
+"voiceNoVoiceShort": "Fără voce",
+"voiceRobotic": "Voce robotică ({0}): pentru o voce clară și gratuită, folosește Google Chrome sau Microsoft Edge (voci naturale Google/Microsoft) ori instalează o voce Piper.",
+"voiceRoboticShort": "Voce robotică",
+"optVoiceName": "Voce tradusă",
+"optVoiceNameHelp": "Doar voci din limba țintă. Automat alege vocea cea mai clară (Google, apoi voci naturale; eSpeak la final).",
+"optVoiceAuto": "Automat (cea mai bună voce)",
+"optVoiceTest": "Testează vocea",
+"optVoiceUsed": "Voce folosită: {0}",
+"optVoiceMissing": "indisponibilă aici"
 }

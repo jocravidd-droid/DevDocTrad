@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "সেটিংস খুলুন"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube সাবটাইটেল এখন পড়া যাচ্ছে না: বদলে শব্দ শুনতে একটি বিনামূল্যের Groq কী যোগ করুন।"
+  },
+  "voiceNoTtsLinux": {
+    "message": "{0}-এর জন্য কোনো কণ্ঠ নেই: কণ্ঠ পেতে Chrome --enable-speech-dispatcher দিয়ে চালু করুন (এবং speech-dispatcher + espeak-ng ইনস্টল করুন)।"
+  },
+  "voiceNoVoiceShort": {
+    "message": "কণ্ঠ নেই"
+  },
+  "voiceRobotic": {
+    "message": "যান্ত্রিক কণ্ঠ ({0}): পরিষ্কার ও বিনামূল্যের কণ্ঠের জন্য Google Chrome বা Microsoft Edge ব্যবহার করুন (স্বাভাবিক Google/Microsoft কণ্ঠ), অথবা একটি Piper কণ্ঠ ইনস্টল করুন।"
+  },
+  "voiceRoboticShort": {
+    "message": "যান্ত্রিক কণ্ঠ"
+  },
+  "optVoiceName": {
+    "message": "অনূদিত কণ্ঠ"
+  },
+  "optVoiceNameHelp": {
+    "message": "শুধু লক্ষ্য ভাষার কণ্ঠ। স্বয়ংক্রিয় সবচেয়ে পরিষ্কারটি বেছে নেয় (Google, তারপর স্বাভাবিক কণ্ঠ; eSpeak সবার শেষে)।"
+  },
+  "optVoiceAuto": {
+    "message": "স্বয়ংক্রিয় (সেরা কণ্ঠ)"
+  },
+  "optVoiceTest": {
+    "message": "কণ্ঠ পরীক্ষা করুন"
+  },
+  "optVoiceUsed": {
+    "message": "ব্যবহৃত কণ্ঠ: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "এখানে নেই"
+  },
   "popupSensitive": {
     "message": "সংবেদনশীল পেজ: কখনও স্বয়ংক্রিয় অনুবাদ হয় না। বোতাম কাজ করে, সেট থাকলে Ollama আগে ব্যবহৃত হয়।"
   },

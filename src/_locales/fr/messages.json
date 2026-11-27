@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Ouvrir les réglages"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Sous-titres YouTube illisibles pour l'instant : ajoute une clé Groq gratuite pour écouter le son à la place."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Aucune voix de synthèse en {0} : lance Chrome avec --enable-speech-dispatcher (et installe speech-dispatcher + espeak-ng) pour avoir une voix."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Pas de voix"
+  },
+  "voiceRobotic": {
+    "message": "Voix robotique ({0}) : pour une voix claire et gratuite, utilise Google Chrome ou Microsoft Edge (voix Google/Microsoft naturelles), ou installe une voix Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Voix robotique"
+  },
+  "optVoiceName": {
+    "message": "Voix traduite"
+  },
+  "optVoiceNameHelp": {
+    "message": "Seulement les voix de la langue cible. Automatique prend la plus claire (Google, puis voix naturelles ; eSpeak en dernier)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatique (meilleure voix)"
+  },
+  "optVoiceTest": {
+    "message": "Tester la voix"
+  },
+  "optVoiceUsed": {
+    "message": "Voix utilisée : {0}"
+  },
+  "optVoiceMissing": {
+    "message": "indisponible ici"
+  },
   "popupSensitive": {
     "message": "Page sensible : jamais de traduction automatique ici. Le bouton fonctionne, Ollama est utilisé en premier s'il est réglé."
   },

@@ -490,12 +490,13 @@
     $('pageCap').value = settings.pageCap;
     $('voiceRate').value = String(DDT.clampVoiceRate(settings.voiceRate));
     renderVoiceRate();
+    renderVoices();
     var pats = $('sensitiveBase');
     pats.textContent = '';
     DDT.DEFAULT_SENSITIVE.forEach(function (p) { pats.appendChild(el('span', 'pat', p)); });
     $('sensitiveExtra').value = (settings.sensitiveExtra || []).join('\n');
   }
-  $('target').addEventListener('change', function (e) { saveSettings({ target: e.target.value }); });
+  $('target').addEventListener('change', function (e) { saveSettings({ target: e.target.value }).then(renderVoices); });
   document.querySelectorAll('input[name=mode]').forEach(function (r) {
     r.addEventListener('change', function () { if (r.checked) saveSettings({ mode: r.value }); });
   });
@@ -525,6 +526,64 @@
     if (rateTimer) { clearTimeout(rateTimer); rateTimer = null; }
     renderVoiceRate();
     saveSettings({ voiceRate: DDT.clampVoiceRate($('voiceRate').value) });
+  });
+  /* Voix de la voix traduite : voix de la langue cible seulement (liste du background : chrome.tts, ou
+     speechSynthesis de la page de fond sous Firefox), « Automatique » par défaut (la meilleure : Google,
+     puis naturelle, puis locale, eSpeak en dernier) ; nom de la voix utilisée ; « Tester la voix ». */
+  var voiceList = null;
+  var linuxUA = DDT.isLinuxUA(navigator.userAgent);
+  function voiceTarget() { return DDT.resolveTarget(settings.target); }
+  function usedVoice() {
+    return voiceList ? DDT.pickTtsVoice(voiceList, voiceTarget(), { name: settings.voiceName || '', linux: linuxUA }) : null;
+  }
+  function renderVoices() {
+    var sel = $('voiceName');
+    var target = voiceTarget();
+    var opts = { linux: linuxUA };
+    sel.textContent = '';
+    var auto = el('option', null, t('optVoiceAuto'));
+    auto.value = '';
+    sel.appendChild(auto);
+    var list = DDT.voicesFor(voiceList || [], target).slice().sort(function (a, b) {
+      return (DDT.voiceTier(b, opts) - DDT.voiceTier(a, opts)) || String(a.name).localeCompare(String(b.name));
+    });
+    list.forEach(function (v) {
+      var o = el('option', null, v.name + ' (' + v.lang + ')' + (DDT.isRoboticVoice(v, opts) ? ' \u2013 ' + t('voiceRoboticShort') : ''));
+      o.value = v.name;
+      sel.appendChild(o);
+    });
+    var saved = settings.voiceName || '';
+    // voix choisie absente (autre langue, autre appareil) : gardée dans la liste, l'automatique sert
+    if (saved && !list.some(function (v) { return v.name === saved; })) {
+      var miss = el('option', null, saved + ' \u2013 ' + t('optVoiceMissing'));
+      miss.value = saved;
+      sel.appendChild(miss);
+    }
+    sel.value = saved;
+    var info = $('voiceUsed');
+    var used = usedVoice();
+    var lang = DDT.languageName(target);
+    info.classList.toggle('warn', !!voiceList && (!used || DDT.isRoboticVoice(used, opts)));
+    if (!voiceList) info.textContent = '';
+    else if (!used) info.textContent = t('voiceNoTts', [lang]);
+    else if (DDT.isRoboticVoice(used, opts)) info.textContent = t('voiceRobotic', [used.name]);
+    else info.textContent = t('optVoiceUsed', [used.name]);
+    $('voiceTest').disabled = !used;
+  }
+  function loadVoiceList() {
+    return Promise.resolve(send({ type: 'ttsVoices' })).then(function (r) {
+      voiceList = r && r.ok && Array.isArray(r.voices) ? r.voices : [];
+    }, function () { voiceList = []; }).then(renderVoices);
+  }
+  $('voiceName').addEventListener('change', function (e) { saveSettings({ voiceName: e.target.value }).then(renderVoices); });
+  $('voiceTest').addEventListener('click', function () {
+    var v = usedVoice();
+    if (!v) return;
+    var target = voiceTarget();
+    send({ type: 'speak', text: DDT.voiceSample(target), lang: v.lang || target, rate: DDT.clampVoiceRate(settings.voiceRate),
+      voiceName: v.name }).then(function (r) {
+      if (r && r.ok === false && r.type !== 'interrupted') UI.toast('error', t('badgeError', [String(r.error || r.type || '?')]));
+    }, function () { /* rien */ });
   });
   $('sensitiveExtra').addEventListener('change', function (e) {
     saveSettings({ sensitiveExtra: e.target.value.split(/\n+/).map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean) });
@@ -752,6 +811,7 @@
     glossary = r.glossary || [];
     renderKeys();
     renderSettings();
+    loadVoiceList();
     renderGlossary();
     renderShortcut();
     checkApiPerms();

@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "زیرنویس‌های ترجمه‌شده توسط YouTube (رایگان)، هماهنگ با ویدیو",
 "voiceYtScreen": "رونوشت YouTube در دسترس نیست: خواندن زیرنویس‌های روی صفحه",
 "voiceNoCaptionsGroq": "این ویدیو زیرنویس ندارد: برای شنیدن صدا یک کلید رایگان Groq لازم است.",
-"voiceOpenSettings": "باز کردن تنظیمات"
+"voiceOpenSettings": "باز کردن تنظیمات",
+"voiceYtUnreadableGroq": "زیرنویس‌های YouTube فعلاً خوانا نیستند: یک کلید رایگان Groq اضافه کن تا به‌جای آن صدا شنیده شود.",
+"voiceNoTtsLinux": "هیچ صدای گفتار برای {0} نیست: Chrome را با --enable-speech-dispatcher اجرا کن (و speech-dispatcher + espeak-ng را نصب کن) تا صدا داشته باشی.",
+"voiceNoVoiceShort": "بدون صدا",
+"voiceRobotic": "صدای رباتیک ({0}): برای صدایی واضح و رایگان از Google Chrome یا Microsoft Edge استفاده کن (صداهای طبیعی Google/Microsoft) یا یک صدای Piper نصب کن.",
+"voiceRoboticShort": "صدای رباتیک",
+"optVoiceName": "صدای ترجمه‌شده",
+"optVoiceNameHelp": "فقط صداهای زبان مقصد. خودکار واضح‌ترین را انتخاب می‌کند (Google، سپس صداهای طبیعی؛ eSpeak در آخر).",
+"optVoiceAuto": "خودکار (بهترین صدا)",
+"optVoiceTest": "آزمایش صدا",
+"optVoiceUsed": "صدای در حال استفاده: {0}",
+"optVoiceMissing": "اینجا در دسترس نیست"
 }

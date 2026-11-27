@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "由 YouTube 翻譯的字幕（免費），與影片同步",
 "voiceYtScreen": "無法取得 YouTube 逐字稿：改為讀取畫面上的字幕",
 "voiceNoCaptionsGroq": "這部影片沒有字幕：需要免費的 Groq 金鑰才能聆聽聲音。",
-"voiceOpenSettings": "開啟設定"
+"voiceOpenSettings": "開啟設定",
+"voiceYtUnreadableGroq": "目前無法讀取 YouTube 字幕：加入免費的 Groq 金鑰，改為收聽聲音。",
+"voiceNoTtsLinux": "沒有{0}的語音：使用 --enable-speech-dispatcher 啟動 Chrome（並安裝 speech-dispatcher + espeak-ng）即可取得語音。",
+"voiceNoVoiceShort": "沒有語音",
+"voiceRobotic": "機械音（{0}）：想要清晰且免費的語音，請使用 Google Chrome 或 Microsoft Edge（自然的 Google/Microsoft 語音），或安裝 Piper 語音。",
+"voiceRoboticShort": "機械音",
+"optVoiceName": "翻譯語音",
+"optVoiceNameHelp": "僅列出目標語言的語音。自動會選最清晰的（Google，其次是自然語音；eSpeak 最後）。",
+"optVoiceAuto": "自動（最佳語音）",
+"optVoiceTest": "試聽語音",
+"optVoiceUsed": "目前語音：{0}",
+"optVoiceMissing": "此處無法使用"
 }

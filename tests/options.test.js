@@ -18,7 +18,7 @@ test.after(() => { opened.forEach((w) => { try { w.close(); } catch (e) { /* dé
 
 function storedKey(keys, id) { return keys.filter((k) => k.id === id)[0]; }
 
-async function openOptions(keys, settings) {
+async function openOptions(keys, settings, reply) {
   const html = fs.readFileSync(path.join(SRC, 'options.html'), 'utf8');
   const vc = new VirtualConsole();   // jsdom : « not implemented » (scrollTo…) sans bruit
   const dom = new JSDOM(html, { url: 'chrome-extension://test/options.html#keys', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc });
@@ -32,7 +32,7 @@ async function openOptions(keys, settings) {
   w.chrome = {
     i18n: { getMessage: (k) => (EN[k] ? EN[k].message : ''), getUILanguage: () => 'en' },
     runtime: {
-      sendMessage: (m) => { sent.push(m); return Promise.resolve(m.type === 'getState' ? { keys: [], settings: {} } : { ok: true, models: [] }); },
+      sendMessage: (m) => { sent.push(m); const own = reply && reply(m); if (own) return Promise.resolve(own); return Promise.resolve(m.type === 'getState' ? { keys: [], settings: {} } : { ok: true, models: [] }); },
       getManifest: () => ({ version: '1.1.0' })
     },
     storage: { local, onChanged: { addListener: () => {} } },
@@ -210,4 +210,42 @@ test('réglages : vitesse de la voix traduite (curseur 0,5 à 2, pas de 0,1), en
   assert.equal(o2.doc.getElementById('voiceRateOut').textContent, '0.7\u00d7');
   const o3 = await openOptions([K('a')], { voiceRate: 'abc' });
   assert.equal(o3.doc.getElementById('voiceRate').value, '1');
+});
+
+test('réglages : voix traduite (1.4.1) : voix de la langue cible seulement, « Automatique », voix utilisée, Tester la voix, voix choisie enregistrée', async () => {
+  const voices = [{ name: 'Google Deutsch', lang: 'de-DE', remote: true, default: true }, { name: 'Google français', lang: 'fr-FR', remote: true },
+    { name: 'eSpeak French', lang: 'fr' }, { name: 'Microsoft Hortense', lang: 'fr-FR' }];
+  const o = await openOptions([], { target: 'fr', voiceRate: 1.2 }, (m) => (m.type === 'ttsVoices' ? { ok: true, engine: 'tts', voices } : m.type === 'speak' ? { ok: true, type: 'end' } : null));
+  await settle();
+  const sel = o.doc.getElementById('voiceName');
+  const opts = [...sel.options].map((x) => x.value);
+  assert.deepEqual(opts, ['', 'Google français', 'Microsoft Hortense', 'eSpeak French'], 'Automatique, puis par qualité ; jamais Google Deutsch');
+  assert.equal(sel.options[0].textContent, EN.optVoiceAuto.message);
+  assert.ok(/Robotic voice/.test(sel.options[3].textContent), 'eSpeak signalé');
+  assert.equal(o.doc.getElementById('voiceUsed').textContent, EN.optVoiceUsed.message.replace('{0}', 'Google français'));
+  o.doc.getElementById('voiceTest').click();
+  await settle();
+  const sp = o.sent.filter((m) => m.type === 'speak');
+  assert.equal(sp.length, 1);
+  assert.equal(sp[0].voiceName, 'Google français');
+  assert.equal(sp[0].lang, 'fr-FR');
+  assert.equal(sp[0].rate, 1.2);
+  assert.ok(/voix/.test(sp[0].text), 'phrase de test en français : ' + sp[0].text);
+  sel.value = 'eSpeak French';
+  sel.dispatchEvent(new o.w.Event('change'));
+  await settle();
+  assert.equal((await o.local.get('settings')).settings.voiceName, 'eSpeak French');
+  const used = o.doc.getElementById('voiceUsed');
+  assert.ok(used.classList.contains('warn') && /eSpeak French/.test(used.textContent) && /Piper/.test(used.textContent), used.textContent);
+  o.doc.getElementById('voiceTest').click();
+  await settle();
+  assert.equal(o.sent.filter((m) => m.type === 'speak')[1].voiceName, 'eSpeak French');
+});
+
+test('réglages : aucune voix de la langue cible : message clair, bouton Tester désactivé', async () => {
+  const o = await openOptions([], { target: 'fr' }, (m) => (m.type === 'ttsVoices' ? { ok: true, engine: 'tts', voices: [{ name: 'Google Deutsch', lang: 'de-DE', default: true }] } : null));
+  await settle();
+  assert.equal(o.doc.getElementById('voiceTest').disabled, true);
+  assert.ok(o.doc.getElementById('voiceUsed').classList.contains('warn'));
+  assert.equal([...o.doc.getElementById('voiceName').options].length, 1);
 });

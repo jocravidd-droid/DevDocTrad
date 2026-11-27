@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Open settings"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube subtitles can't be read right now: add a free Groq key to listen to the sound instead."
+  },
+  "voiceNoTtsLinux": {
+    "message": "No speech voice for {0}: start Chrome with --enable-speech-dispatcher (and install speech-dispatcher + espeak-ng) to get a voice."
+  },
+  "voiceNoVoiceShort": {
+    "message": "No voice"
+  },
+  "voiceRobotic": {
+    "message": "Robotic voice ({0}): for a clear, free voice, use Google Chrome or Microsoft Edge (natural Google/Microsoft voices), or install a Piper voice."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotic voice"
+  },
+  "optVoiceName": {
+    "message": "Translated voice"
+  },
+  "optVoiceNameHelp": {
+    "message": "Only voices in the target language. Automatic picks the clearest one (Google, then natural voices; eSpeak last)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatic (best voice)"
+  },
+  "optVoiceTest": {
+    "message": "Test the voice"
+  },
+  "optVoiceUsed": {
+    "message": "Voice used: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "not available here"
+  },
   "popupSensitive": {
     "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."
   },

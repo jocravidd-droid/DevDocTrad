@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Undertekster oversatt av YouTube (gratis), synkronisert med videoen",
 "voiceYtScreen": "YouTube-transkripsjon ikke tilgjengelig: leser undertekstene på skjermen",
 "voiceNoCaptionsGroq": "Denne videoen har ingen undertekster: en gratis Groq-nøkkel trengs for å lytte til lyden.",
-"voiceOpenSettings": "Åpne innstillinger"
+"voiceOpenSettings": "Åpne innstillinger",
+"voiceYtUnreadableGroq": "YouTube-tekstingen kan ikke leses akkurat nå: legg til en gratis Groq-nøkkel for å lytte til lyden i stedet.",
+"voiceNoTtsLinux": "Ingen talesyntesestemme for {0}: start Chrome med --enable-speech-dispatcher (og installer speech-dispatcher + espeak-ng) for å få en stemme.",
+"voiceNoVoiceShort": "Ingen stemme",
+"voiceRobotic": "Robotstemme ({0}): for en klar, gratis stemme, bruk Google Chrome eller Microsoft Edge (naturlige Google/Microsoft-stemmer), eller installer en Piper-stemme.",
+"voiceRoboticShort": "Robotstemme",
+"optVoiceName": "Oversatt stemme",
+"optVoiceNameHelp": "Bare stemmer på målspråket. Automatisk velger den tydeligste (Google, så naturlige stemmer; eSpeak sist).",
+"optVoiceAuto": "Automatisk (beste stemme)",
+"optVoiceTest": "Test stemmen",
+"optVoiceUsed": "Stemme som brukes: {0}",
+"optVoiceMissing": "ikke tilgjengelig her"
 }

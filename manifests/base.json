@@ -3,7 +3,7 @@
   "name": "__MSG_extName__",
   "short_name": "DevDocTrad",
   "description": "__MSG_extDescription__",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "default_locale": "en",
   "homepage_url": "https://github.com/jocravidd-droid/DevDocTrad",
   "icons": {

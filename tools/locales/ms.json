@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Sari kata diterjemah oleh YouTube (percuma), selari dengan video",
 "voiceYtScreen": "Transkrip YouTube tidak tersedia: membaca sari kata pada skrin",
 "voiceNoCaptionsGroq": "Video ini tiada sari kata: kunci Groq percuma diperlukan untuk mendengar bunyinya.",
-"voiceOpenSettings": "Buka tetapan"
+"voiceOpenSettings": "Buka tetapan",
+"voiceYtUnreadableGroq": "Sari kata YouTube tidak dapat dibaca sekarang: tambah kunci Groq percuma untuk mendengar bunyi sebagai ganti.",
+"voiceNoTtsLinux": "Tiada suara sintesis untuk {0}: mulakan Chrome dengan --enable-speech-dispatcher (dan pasang speech-dispatcher + espeak-ng) untuk mendapat suara.",
+"voiceNoVoiceShort": "Tiada suara",
+"voiceRobotic": "Suara robotik ({0}): untuk suara yang jelas dan percuma, gunakan Google Chrome atau Microsoft Edge (suara semula jadi Google/Microsoft), atau pasang suara Piper.",
+"voiceRoboticShort": "Suara robotik",
+"optVoiceName": "Suara terjemahan",
+"optVoiceNameHelp": "Hanya suara dalam bahasa sasaran. Automatik memilih yang paling jelas (Google, kemudian suara semula jadi; eSpeak terakhir).",
+"optVoiceAuto": "Automatik (suara terbaik)",
+"optVoiceTest": "Uji suara",
+"optVoiceUsed": "Suara digunakan: {0}",
+"optVoiceMissing": "tiada di sini"
 }

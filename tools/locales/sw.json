@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Manukuu yaliyotafsiriwa na YouTube (bure), yanayolingana na video",
 "voiceYtScreen": "Nakala ya YouTube haipatikani: inasoma manukuu yaliyo kwenye skrini",
 "voiceNoCaptionsGroq": "Video hii haina manukuu: ufunguo wa bure wa Groq unahitajika kusikiliza sauti.",
-"voiceOpenSettings": "Fungua mipangilio"
+"voiceOpenSettings": "Fungua mipangilio",
+"voiceYtUnreadableGroq": "Manukuu ya YouTube hayasomeki sasa: ongeza ufunguo wa bure wa Groq ili usikilize sauti badala yake.",
+"voiceNoTtsLinux": "Hakuna sauti ya usanisi kwa {0}: anzisha Chrome kwa --enable-speech-dispatcher (na usakinishe speech-dispatcher + espeak-ng) ili upate sauti.",
+"voiceNoVoiceShort": "Hakuna sauti",
+"voiceRobotic": "Sauti ya kiroboti ({0}): kwa sauti wazi na ya bure, tumia Google Chrome au Microsoft Edge (sauti asilia za Google/Microsoft), au sakinisha sauti ya Piper.",
+"voiceRoboticShort": "Sauti ya kiroboti",
+"optVoiceName": "Sauti iliyotafsiriwa",
+"optVoiceNameHelp": "Sauti za lugha lengwa pekee. Otomatiki huchagua iliyo wazi zaidi (Google, kisha sauti asilia; eSpeak mwisho).",
+"optVoiceAuto": "Otomatiki (sauti bora)",
+"optVoiceTest": "Jaribu sauti",
+"optVoiceUsed": "Sauti inayotumika: {0}",
+"optVoiceMissing": "haipatikani hapa"
 }

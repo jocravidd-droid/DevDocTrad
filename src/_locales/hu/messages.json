@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Beállítások megnyitása"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "A YouTube-feliratok most nem olvashatók: adj meg egy ingyenes Groq-kulcsot, hogy helyette a hangot hallgasd."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Nincs beszédhang ehhez: {0}. Indítsd a Chrome-ot a --enable-speech-dispatcher kapcsolóval (és telepítsd: speech-dispatcher + espeak-ng), hogy legyen hang."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Nincs hang"
+  },
+  "voiceRobotic": {
+    "message": "Robotikus hang ({0}): tiszta, ingyenes hanghoz használd a Google Chrome-ot vagy a Microsoft Edge-et (természetes Google/Microsoft hangok), vagy telepíts egy Piper-hangot."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotikus hang"
+  },
+  "optVoiceName": {
+    "message": "Lefordított hang"
+  },
+  "optVoiceNameHelp": {
+    "message": "Csak a célnyelv hangjai. Az Automatikus a legérthetőbbet választja (Google, aztán természetes hangok; az eSpeak utoljára)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatikus (legjobb hang)"
+  },
+  "optVoiceTest": {
+    "message": "Hang kipróbálása"
+  },
+  "optVoiceUsed": {
+    "message": "Használt hang: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "itt nem érhető el"
+  },
   "popupSensitive": {
     "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
   },

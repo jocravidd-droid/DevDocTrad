@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Phụ đề do YouTube dịch (miễn phí), khớp với video",
 "voiceYtScreen": "Không có bản chép lời YouTube: đang đọc phụ đề trên màn hình",
 "voiceNoCaptionsGroq": "Video này không có phụ đề: cần một khóa Groq miễn phí để nghe âm thanh.",
-"voiceOpenSettings": "Mở cài đặt"
+"voiceOpenSettings": "Mở cài đặt",
+"voiceYtUnreadableGroq": "Hiện không đọc được phụ đề YouTube: thêm khóa Groq miễn phí để nghe âm thanh thay thế.",
+"voiceNoTtsLinux": "Không có giọng đọc cho {0}: khởi động Chrome với --enable-speech-dispatcher (và cài speech-dispatcher + espeak-ng) để có giọng đọc.",
+"voiceNoVoiceShort": "Không có giọng",
+"voiceRobotic": "Giọng máy ({0}): để có giọng rõ ràng và miễn phí, hãy dùng Google Chrome hoặc Microsoft Edge (giọng tự nhiên của Google/Microsoft), hoặc cài một giọng Piper.",
+"voiceRoboticShort": "Giọng máy",
+"optVoiceName": "Giọng đã dịch",
+"optVoiceNameHelp": "Chỉ các giọng của ngôn ngữ đích. Tự động chọn giọng rõ nhất (Google, rồi giọng tự nhiên; eSpeak sau cùng).",
+"optVoiceAuto": "Tự động (giọng tốt nhất)",
+"optVoiceTest": "Thử giọng",
+"optVoiceUsed": "Giọng đang dùng: {0}",
+"optVoiceMissing": "không có ở đây"
 }

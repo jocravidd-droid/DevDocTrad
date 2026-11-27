@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTube가 번역한 자막(무료), 동영상과 동기화",
 "voiceYtScreen": "YouTube 스크립트를 사용할 수 없음: 화면의 자막을 읽습니다",
 "voiceNoCaptionsGroq": "이 동영상에는 자막이 없습니다: 소리를 들으려면 무료 Groq 키가 필요합니다.",
-"voiceOpenSettings": "설정 열기"
+"voiceOpenSettings": "설정 열기",
+"voiceYtUnreadableGroq": "지금은 YouTube 자막을 읽을 수 없습니다: 대신 소리를 들으려면 무료 Groq 키를 추가하세요.",
+"voiceNoTtsLinux": "{0} 음성이 없습니다: 음성을 사용하려면 --enable-speech-dispatcher 옵션으로 Chrome을 실행하세요(speech-dispatcher + espeak-ng 설치).",
+"voiceNoVoiceShort": "음성 없음",
+"voiceRobotic": "로봇 같은 음성({0}): 깨끗한 무료 음성을 원하면 Google Chrome 또는 Microsoft Edge(자연스러운 Google/Microsoft 음성)를 사용하거나 Piper 음성을 설치하세요.",
+"voiceRoboticShort": "로봇 음성",
+"optVoiceName": "번역 음성",
+"optVoiceNameHelp": "대상 언어의 음성만 표시됩니다. 자동은 가장 또렷한 음성을 고릅니다(Google, 그다음 자연스러운 음성, eSpeak는 마지막).",
+"optVoiceAuto": "자동(최적의 음성)",
+"optVoiceTest": "음성 테스트",
+"optVoiceUsed": "사용 중인 음성: {0}",
+"optVoiceMissing": "여기서 사용할 수 없음"
 }

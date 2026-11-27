@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Субтитры переведены YouTube (бесплатно), синхронизированы с видео",
 "voiceYtScreen": "Расшифровка YouTube недоступна: чтение субтитров на экране",
 "voiceNoCaptionsGroq": "У этого видео нет субтитров: чтобы слушать звук, нужен бесплатный ключ Groq.",
-"voiceOpenSettings": "Открыть настройки"
+"voiceOpenSettings": "Открыть настройки",
+"voiceYtUnreadableGroq": "Субтитры YouTube сейчас не читаются: добавьте бесплатный ключ Groq, чтобы слушать звук.",
+"voiceNoTtsLinux": "Нет голоса синтеза для языка {0}: запустите Chrome с --enable-speech-dispatcher (и установите speech-dispatcher + espeak-ng), чтобы появился голос.",
+"voiceNoVoiceShort": "Нет голоса",
+"voiceRobotic": "Роботизированный голос ({0}): для чёткого бесплатного голоса используйте Google Chrome или Microsoft Edge (естественные голоса Google/Microsoft) или установите голос Piper.",
+"voiceRoboticShort": "Роботизированный голос",
+"optVoiceName": "Переведённый голос",
+"optVoiceNameHelp": "Только голоса целевого языка. «Автоматически» выбирает самый чёткий (Google, затем естественные голоса; eSpeak в последнюю очередь).",
+"optVoiceAuto": "Автоматически (лучший голос)",
+"optVoiceTest": "Проверить голос",
+"optVoiceUsed": "Используемый голос: {0}",
+"optVoiceMissing": "здесь недоступен"
 }

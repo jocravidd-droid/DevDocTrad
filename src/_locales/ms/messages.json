@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Buka tetapan"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Sari kata YouTube tidak dapat dibaca sekarang: tambah kunci Groq percuma untuk mendengar bunyi sebagai ganti."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Tiada suara sintesis untuk {0}: mulakan Chrome dengan --enable-speech-dispatcher (dan pasang speech-dispatcher + espeak-ng) untuk mendapat suara."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Tiada suara"
+  },
+  "voiceRobotic": {
+    "message": "Suara robotik ({0}): untuk suara yang jelas dan percuma, gunakan Google Chrome atau Microsoft Edge (suara semula jadi Google/Microsoft), atau pasang suara Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Suara robotik"
+  },
+  "optVoiceName": {
+    "message": "Suara terjemahan"
+  },
+  "optVoiceNameHelp": {
+    "message": "Hanya suara dalam bahasa sasaran. Automatik memilih yang paling jelas (Google, kemudian suara semula jadi; eSpeak terakhir)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatik (suara terbaik)"
+  },
+  "optVoiceTest": {
+    "message": "Uji suara"
+  },
+  "optVoiceUsed": {
+    "message": "Suara digunakan: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "tiada di sini"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemah automatik. Tombol kekal berfungsi, Ollama digunakan dahulu jika sudah ditetapkan."
   },

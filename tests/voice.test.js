@@ -381,11 +381,13 @@ test('doublage : meilleure voix pour la langue cible (langue exacte, puis qualit
   const w = voiceDom().window;
   const pick = (voices, lang) => { const v = w.DDT_pickTtsVoice(voices, lang); return v && v.name; };
   assert.equal(pick(VOICES, 'fr'), 'Google français', 'fr-FR et « Google » avant fr-FR simple et fr-CA');
-  assert.equal(pick([{ name: 'Amélie Premium', lang: 'fr-CA' }, { name: 'Hortense', lang: 'fr-FR' }], 'fr'), 'Hortense',
-    'langue exacte avant la qualité');
+  assert.equal(pick([{ name: 'Amélie Premium', lang: 'fr-CA' }, { name: 'Hortense', lang: 'fr-FR' }], 'fr'), 'Amélie Premium',
+    'qualité (voix naturelle) avant la région (1.4.1)');
+  assert.equal(pick([{ name: 'Amélie', lang: 'fr-CA' }, { name: 'Hortense', lang: 'fr-FR' }], 'fr'), 'Hortense',
+    'même qualité : langue exacte d\'abord');
   assert.equal(pick([{ name: 'Amélie', lang: 'fr-CA' }, { name: 'Felix', lang: 'de-DE' }], 'fr'), 'Amélie', 'langue seule en dernier');
   assert.equal(pick(VOICES, 'en'), 'Samantha', 'en -> en-US');
-  assert.equal(pick([{ name: 'Luciana', lang: 'pt-BR' }, { name: 'Joana Enhanced', lang: 'pt-PT' }], 'pt-BR'), 'Luciana');
+  assert.equal(pick([{ name: 'Luciana', lang: 'pt-BR' }, { name: 'Joana', lang: 'pt-PT' }], 'pt-BR'), 'Luciana');
   assert.equal(pick([{ name: 'Nora', lang: 'nb-NO' }], 'no'), 'Nora', 'norvégien : voix « nb »');
   assert.equal(pick([{ name: 'Microsoft Xiaoxiao Online (Natural)', lang: 'zh-CN' }, { name: 'Ting-Ting', lang: 'zh-CN' }], 'zh-CN'),
     'Microsoft Xiaoxiao Online (Natural)');
@@ -393,11 +395,11 @@ test('doublage : meilleure voix pour la langue cible (langue exacte, puis qualit
   assert.equal(pick(VOICES, 'ja'), null, 'aucune voix japonaise');
 });
 
-test('doublage : vitesse adaptée à la durée du sous-titre et au retard, entre 0,9 et 1,7', () => {
+test('doublage : vitesse adaptée à la durée du sous-titre et au retard, entre 0,9 et 1,3', () => {
   const rate = voiceDom().window.DDT_dubRate;
   const text = 'Commence par installer le paquet avec npm.';   // ~2,5 s à vitesse 1
   assert.equal(rate('Oui.', 4, 0, 'fr'), 0.9, 'texte court, sous-titre long : jamais sous 0,9');
-  assert.equal(rate(text + ' ' + text + ' ' + text, 2, 0, 'fr'), 1.7, 'texte long, sous-titre court : jamais au-dessus de 1,7');
+  assert.equal(rate(text + ' ' + text + ' ' + text, 2, 0, 'fr'), 1.3, 'texte long, sous-titre court : jamais au-dessus de 1,3 (1.4.1)');
   const r = rate(text, 2.2, 0, 'fr');
   assert.ok(r > 1 && r < 1.4, 'un peu plus rapide pour tenir dans 2,2 s : ' + r);
   assert.ok(rate(text, 2.2, 0.6, 'fr') > r, 'retard de la phrase précédente : la suivante accélère');
@@ -649,7 +651,7 @@ test('background : chrome.tts appelé avec le texte, la langue, la vitesse et la
   assert.equal(tts.stops, 1);
 });
 
-test('background : garde-fous de « speak » (texte ≤ 1000 caractères, vitesse 0,5 à 3, langue vérifiée, autre onglet pas coupé)', async () => {
+test('background : garde-fous de « speak » (texte ≤ 1000 caractères, vitesse 0,5 à 1,5, langue vérifiée, autre onglet pas coupé)', async () => {
   const tts = fakeChromeTts();
   const { bg } = ttsBackground({ chromeTts: tts });
   const s = { tab: { id: 2 } };
@@ -661,7 +663,7 @@ test('background : garde-fous de « speak » (texte ≤ 1000 caractères, vitess
   bg.onMessage({ type: 'speak', text: 'c', lang: 'pt_BR', rate: 'abc', voiceName: 'v'.repeat(300) }, s);
   await wait(5);
   assert.deepEqual(tts.calls.map((c) => [c.opts.rate, c.opts.lang, c.opts.voiceName]),
-    [[3, 'fr-FR', undefined], [0.5, undefined, undefined], [1, 'pt-BR', undefined]]);
+    [[1.5, 'fr-FR', undefined], [0.5, undefined, undefined], [1, 'pt-BR', undefined]]);
   // un onglet sans phrase en cours ne coupe pas la voix d'un autre onglet
   assert.deepEqual(await bg.onMessage({ type: 'stopSpeaking' }, { tab: { id: 99 } }), { ok: true, stopped: 0 });
   assert.equal(tts.stops, 0);
@@ -881,7 +883,7 @@ test('voix seule : choix du popup appliqué à la voix en cours (sous-titres -> 
   old.voice.stop();
 });
 
-test('vitesse : multipliée par le réglage puis bornée (0,5 à 3), − / + dans la barre, enregistrée, appliquée à la phrase suivante', async () => {
+test('vitesse : multipliée par le réglage puis bornée (0,5 à 1,5), − / + dans la barre, enregistrée, appliquée à la phrase suivante', async () => {
   const c1 = { text: 'Install the package first', startTime: 0, endTime: 4 };
   const c2 = { text: 'Install the package first.', startTime: 4, endTime: 8 };
   const tts = fakeChromeTts();
@@ -921,17 +923,28 @@ test('vitesse : multipliée par le réglage puis bornée (0,5 à 3), − / + dan
   assert.equal(saved.length, n);
   assert.equal(voice.setRate(7).voiceRate, 2, 'valeur hors bornes ramenée à 2');
   voice.stop();
-  // vitesse finale bornée à 3 (calage 1,7 × 2) et à 0,5
+  // vitesse finale bornée à 1,5 (calage 1,3 × 2) et à 0,5
   const lim = dom.window.DDT_VOICE_LIMITS;
-  assert.deepEqual([lim.min, lim.max, lim.chars], [0.5, 3, 1000]);
-  const long = { text: 'This is a very long explanation that keeps going on and on about configuration files', startTime: 0, endTime: 1 };
+  assert.deepEqual([lim.min, lim.max, lim.chars], [0.5, 1.5, 1000]);
+  const long = { text: 'This is a long explanation about the configuration files', startTime: 0, endTime: 3 };
   const t2 = fakeChromeTts();
   const f = dubSetup([long], { voiceMode: 'dub', voiceRate: 2 }, { tts: bridgeTts(ttsBackground({ chromeTts: t2 }).bg) });
   f.voice.start();
   f.track.fire([long]);
   assert.ok(await until(() => t2.calls.length === 1));
-  assert.equal(t2.calls[0].opts.rate, 3);
+  assert.equal(t2.calls[0].opts.rate, 1.5);
   f.voice.stop();
+  // phrase qui ne tiendrait pas même à moitié : sautée, pas accélérée
+  const huge = { text: 'This is a very long explanation that keeps going on and on about configuration files', startTime: 0, endTime: 1 };
+  const t4 = fakeChromeTts();
+  const k = dubSetup([huge], { voiceMode: 'dub', voiceRate: 2 }, { tts: bridgeTts(ttsBackground({ chromeTts: t4 }).bg) });
+  k.voice.start();
+  assert.ok(await until(() => k.voice.status().dubVoice));
+  k.track.fire([huge]);
+  await wait(150);
+  assert.equal(t4.calls.length, 0, 'phrase sautée');
+  assert.ok(k.voice.status().diag.some((d) => d.src === 'skip'), 'noté dans le diagnostic');
+  k.voice.stop();
   const t3 = fakeChromeTts();
   const g = dubSetup([{ text: 'Oui', startTime: 0, endTime: 5 }], { voiceMode: 'dub', voiceRate: 0.5 }, { tts: bridgeTts(ttsBackground({ chromeTts: t3 }).bg) });
   g.voice.start();
@@ -1623,4 +1636,154 @@ test('son (Firefox) : le son renvoyé suit le volume de la vidéo, la sourdine e
   assert.ok(Math.abs(g.gain.value - 0.8) < 1e-6, 'son remonté à l\'arrêt du doublage');
   voice.stop();
   assert.equal(g.disconnected, true, 'gain débranché à l\'arrêt');
+});
+
+/* ---------------- 1.4.1 : voix intelligible (classement, vitesse, langue, eSpeak, choix manuel) ---------------- */
+const LINUX_CHROME = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/158.0.0.0 Safari/537.36';
+const LINUX_FIREFOX = 'Mozilla/5.0 (X11; Linux x86_64; rv:153.0) Gecko/20100101 Firefox/153.0';
+/* Google Chrome 158 officiel sous Linux (relevé chez le propriétaire) : 19 voix « Google … », toutes réseau,
+   la voix par défaut est « Google Deutsch » */
+const CHROME_GOOGLE = [
+  { voiceName: 'Google Deutsch', lang: 'de-DE', remote: true, default: true },
+  { voiceName: 'Google US English', lang: 'en-US', remote: true },
+  { voiceName: 'Google UK English Female', lang: 'en-GB', remote: true },
+  { voiceName: 'Google UK English Male', lang: 'en-GB', remote: true },
+  { voiceName: 'Google español', lang: 'es-ES', remote: true },
+  { voiceName: 'Google français', lang: 'fr-FR', remote: true },
+  { voiceName: 'Google italiano', lang: 'it-IT', remote: true }
+];
+
+test('voix : classement Google <langue>, puis naturelles, puis locales, eSpeak en dernier ; jamais une autre langue', () => {
+  const D = voiceDom().window.DDT;
+  const name = (v) => v && (v.name || v.voiceName);
+  const fr = [
+    { name: 'eSpeak French', lang: 'fr' },
+    { name: 'Microsoft Hortense - French (France)', lang: 'fr-FR' },
+    { name: 'Microsoft Denise Online (Natural) - French (France)', lang: 'fr-FR' },
+    { name: 'Google français', lang: 'fr-FR', localService: false },
+    { name: 'Google Deutsch', lang: 'de-DE', default: true }
+  ];
+  assert.equal(name(D.pickTtsVoice(fr, 'fr')), 'Google français');
+  assert.equal(name(D.pickTtsVoice(fr.filter((v) => !/Google f/.test(v.name)), 'fr')), 'Microsoft Denise Online (Natural) - French (France)');
+  assert.equal(name(D.pickTtsVoice(fr.filter((v) => !/Google f|Online/.test(v.name)), 'fr')), 'Microsoft Hortense - French (France)');
+  assert.equal(name(D.pickTtsVoice([fr[0], fr[4]], 'fr')), 'eSpeak French', 'eSpeak seulement en dernier recours');
+  assert.equal(D.pickTtsVoice([fr[4], { name: 'Google US English', lang: 'en-US' }], 'fr'), null, 'voix par défaut d\'une autre langue refusée');
+  assert.equal(D.pickTtsVoice([{ name: 'Sans langue', lang: '' }], 'fr'), null, 'voix sans langue refusée');
+  assert.equal(name(D.pickTtsVoice(CHROME_GOOGLE, 'fr')), 'Google français', 'Chrome officiel : jamais « Google Deutsch » (défaut) pour du français');
+  // tiers : eSpeak / mbrola / pico / speech-dispatcher (Firefox) = 1 ; Linux : voix locale inconnue = 1, Piper = 2
+  assert.equal(D.voiceTier({ name: 'French (France)', voiceURI: 'urn:moz-tts:speechd:French (France)?fr', lang: 'fr' }), 1);
+  assert.equal(D.voiceTier({ name: 'mbrola fr1', lang: 'fr' }), 1);
+  assert.equal(D.voiceTier({ name: 'french', lang: 'fr' }, { linux: true }), 1);
+  assert.equal(D.voiceTier({ name: 'french', lang: 'fr' }, { linux: false }), 2);
+  assert.equal(D.voiceTier({ name: 'Piper fr_FR-siwis', lang: 'fr' }, { linux: true }), 2);
+  assert.equal(D.voiceTier({ name: 'Amélie', lang: 'fr-CA', remote: true }), 3);
+  assert.equal(D.voiceTier({ name: 'Google français', lang: 'fr-FR' }), 4);
+  assert.equal(D.isLinuxUA(LINUX_CHROME), true);
+  assert.equal(D.isLinuxUA('Mozilla/5.0 (Linux; Android 14) Chrome/158'), false);
+  assert.equal(D.isLinuxUA('Mozilla/5.0 (X11; CrOS x86_64 15000.0.0) Chrome/158'), false);
+  // choix manuel : gardé s'il est de la langue, ignoré sinon
+  assert.equal(name(D.pickTtsVoice(fr, 'fr', { name: 'Microsoft Hortense - French (France)' })), 'Microsoft Hortense - French (France)');
+  assert.equal(name(D.pickTtsVoice(fr, 'fr', { name: 'Google Deutsch' })), 'Google français', 'choix d\'une autre langue ignoré');
+  assert.ok(/voix/.test(D.voiceSample('fr')) && /voice/.test(D.voiceSample('xx')) && D.voiceSample('pt-BR') && D.voiceSample('zh-TW') !== D.voiceSample('zh'));
+});
+
+test('background : chrome.tts de Google Chrome rend les voix Google (nom, langue, réseau) ; voix choisie = Google français', async () => {
+  const tts = fakeChromeTts(CHROME_GOOGLE);
+  const { bg } = ttsBackground({ chromeTts: tts });
+  const r = await bg.onMessage({ type: 'ttsVoices' }, { tab: { id: 1 } });
+  assert.equal(r.voices.length, CHROME_GOOGLE.length);
+  assert.ok(r.voices.every((v) => /^Google /.test(v.name) && v.remote === true));
+  const f = dubSetup([{ text: 'Open the terminal', startTime: 0, endTime: 3 }], { voiceMode: 'dub' },
+    { tts: bridgeTts(bg), userAgent: LINUX_CHROME }, { voices: [] });
+  f.voice.start();
+  assert.ok(await until(() => f.voice.status().dubVoice === 'Google français'), JSON.stringify(f.voice.status()));
+  assert.equal(f.voice.status().voiceTier, 4);
+  assert.equal(f.voice.status().voiceWarn, null, 'aucun avertissement');
+  f.track.fire([{ text: 'Open the terminal', startTime: 0, endTime: 3 }]);
+  assert.ok(await until(() => tts.calls.length === 1));
+  assert.equal(tts.calls[0].opts.voiceName, 'Google français');
+  assert.equal(tts.calls[0].opts.lang, 'fr-FR');
+  f.voice.stop();
+});
+
+test('vitesse : calage plafonné à 1,3, vitesse finale à 1,5 ; voix robotique : pas de calage, 1,15 au plus', async () => {
+  const w = voiceDom().window;
+  assert.ok(w.DDT_dubRate('x'.repeat(300), 0.5, 3, 'fr') <= 1.3);
+  assert.equal(w.DDT_VOICE_LIMITS.max, 1.5);
+  const cue = { text: 'Oui', startTime: 0, endTime: 6 };   // calage : 0,9 (texte court, sous-titre long)
+  for (const [rate, want] of [[1.5, 1.15], [1, 1], [0.8, 0.8]]) {
+    const tts = fakeChromeTts([{ voiceName: 'espeak-ng French', lang: 'fr' }]);
+    const f = dubSetup([cue], { voiceMode: 'dub', voiceRate: rate }, { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg), userAgent: LINUX_CHROME },
+      { voices: [] });
+    f.voice.start();
+    assert.ok(await until(() => f.voice.status().dubVoice));
+    f.track.fire([cue]);
+    assert.ok(await until(() => tts.calls.length === 1));
+    assert.equal(tts.calls[0].opts.rate, want, `eSpeak, réglage ${rate} : ${want} (sans calage)`);
+    f.voice.stop();
+  }
+  // background : jamais plus de 1,5, même demandé
+  const tts = fakeChromeTts();
+  const { bg } = ttsBackground({ chromeTts: tts });
+  bg.onMessage({ type: 'speak', text: 'a', lang: 'fr-FR', rate: 2.9 }, { tab: { id: 1 } });
+  await wait(5);
+  assert.equal(tts.calls[0].opts.rate, 1.5);
+});
+
+test('voix robotique seule (eSpeak, Firefox ou Chromium sous Linux) : avertissement persistant dans la barre, conseil Chrome/Edge/Piper', async () => {
+  const tts = fakeChromeTts([{ voiceName: 'English (America)', lang: 'en-US' }, { voiceName: 'French (France)', lang: 'fr-FR' }]);
+  const f = dubSetup([{ text: 'Open the terminal', startTime: 0, endTime: 3 }], { voiceMode: 'dub' },
+    { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg), userAgent: LINUX_FIREFOX }, { voices: [] });
+  f.voice.start();
+  assert.ok(await until(() => /^voiceRobotic/.test(f.voice.status().voiceWarn || '')), JSON.stringify(f.voice.status()));
+  const sr = overlay(f.dom).host.shadowRoot;
+  const warn = sr.querySelector('.warn');
+  assert.equal(warn.hidden, false);
+  assert.equal(warn.textContent, 'voiceRoboticShort');
+  assert.equal(warn.title, 'voiceRobotic: French (France)');
+  assert.equal(f.voice.status().speaking, true, 'la voix parle quand même');
+  // un autre message (source, traduction) ne l'efface pas
+  f.track.fire([{ text: 'Open the terminal', startTime: 0, endTime: 3 }]);
+  await wait(50);
+  assert.equal(warn.hidden, false);
+  assert.equal(warn.textContent, 'voiceRoboticShort');
+  f.voice.stop();
+});
+
+test('aucune voix de la langue : sous-titres seuls ; sous Linux (Chrome, 0 voix) aide --enable-speech-dispatcher ; gardé visible en doublage', async () => {
+  const none = fakeChromeTts([]);
+  const f = dubSetup([{ text: 'Open the terminal', startTime: 0, endTime: 3 }], { voiceMode: 'dub' },
+    { tts: bridgeTts(ttsBackground({ chromeTts: none }).bg), userAgent: LINUX_CHROME }, { voices: [] });
+  f.voice.start();
+  assert.ok(await until(() => /^voiceNoTtsLinux/.test(f.voice.status().noVoice || '')), JSON.stringify(f.voice.status()));
+  assert.equal(f.voice.status().speaking, false);
+  const sr = overlay(f.dom).host.shadowRoot;
+  assert.equal(sr.querySelector('.warn').hidden, false);
+  assert.equal(sr.querySelector('.warn').textContent, 'voiceNoVoiceShort');
+  // message suivant (source de la vidéo) : l'indicateur reste
+  f.track.fire([{ text: 'Open the terminal', startTime: 0, endTime: 3 }]);
+  await wait(50);
+  assert.equal(sr.querySelector('.warn').hidden, false);
+  assert.ok(/^voiceNoTtsLinux/.test(sr.querySelector('.warn').title));
+  f.voice.stop();
+  // voix d'autres langues seulement (dont la voix par défaut) : refusées, message habituel (pas l'aide Linux)
+  const other = fakeChromeTts(CHROME_GOOGLE.filter((v) => v.lang !== 'fr-FR'));
+  const g = dubSetup([], { voiceMode: 'voice' }, { tts: bridgeTts(ttsBackground({ chromeTts: other }).bg), userAgent: LINUX_CHROME }, { voices: [] });
+  g.voice.start();
+  assert.ok(await until(() => /^voiceNoTts:/.test(g.voice.status().noVoice || '')), JSON.stringify(g.voice.status()));
+  assert.equal(other.calls.length, 0, 'jamais une voix allemande ou anglaise pour du français');
+  g.voice.stop();
+});
+
+test('voix choisie à la main (réglage voiceName) : utilisée ; changée dans les réglages : prise tout de suite', async () => {
+  const tts = fakeChromeTts();
+  const f = dubSetup([{ text: 'Open the terminal', startTime: 0, endTime: 3 }], { voiceMode: 'dub', voiceName: 'Microsoft Hortense' },
+    { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg) }, { voices: [] });
+  f.voice.start();
+  assert.ok(await until(() => f.voice.status().dubVoice === 'Microsoft Hortense'), JSON.stringify(f.voice.status()));
+  await f.voice.setVoiceName('');
+  assert.ok(await until(() => f.voice.status().dubVoice === 'Google français'), 'automatique : la meilleure');
+  await f.voice.setVoiceName('Google US English');
+  assert.equal(f.voice.status().dubVoice, 'Google français', 'voix d\'une autre langue ignorée');
+  f.voice.stop();
 });

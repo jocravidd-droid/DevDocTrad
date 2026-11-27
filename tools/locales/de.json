@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Von YouTube übersetzte Untertitel (kostenlos), synchron zum Video",
 "voiceYtScreen": "YouTube-Transkript nicht verfügbar: Untertitel auf dem Bildschirm werden gelesen",
 "voiceNoCaptionsGroq": "Dieses Video hat keine Untertitel: Zum Anhören des Tons wird ein kostenloser Groq-Schlüssel benötigt.",
-"voiceOpenSettings": "Einstellungen öffnen"
+"voiceOpenSettings": "Einstellungen öffnen",
+"voiceYtUnreadableGroq": "YouTube-Untertitel sind gerade nicht lesbar: Füge einen kostenlosen Groq-Schlüssel hinzu, um stattdessen den Ton anzuhören.",
+"voiceNoTtsLinux": "Keine Sprachausgabe-Stimme für {0}: Starte Chrome mit --enable-speech-dispatcher (und installiere speech-dispatcher + espeak-ng), um eine Stimme zu erhalten.",
+"voiceNoVoiceShort": "Keine Stimme",
+"voiceRobotic": "Roboterstimme ({0}): Für eine klare, kostenlose Stimme nutze Google Chrome oder Microsoft Edge (natürliche Google/Microsoft-Stimmen) oder installiere eine Piper-Stimme.",
+"voiceRoboticShort": "Roboterstimme",
+"optVoiceName": "Übersetzte Stimme",
+"optVoiceNameHelp": "Nur Stimmen der Zielsprache. Automatisch wählt die deutlichste (Google, dann natürliche Stimmen; eSpeak zuletzt).",
+"optVoiceAuto": "Automatisch (beste Stimme)",
+"optVoiceTest": "Stimme testen",
+"optVoiceUsed": "Verwendete Stimme: {0}",
+"optVoiceMissing": "hier nicht verfügbar"
 }

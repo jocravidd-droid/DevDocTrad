@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Instellingen openen"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube-ondertitels zijn nu niet leesbaar: voeg een gratis Groq-sleutel toe om in plaats daarvan naar het geluid te luisteren."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Geen spraakstem voor {0}: start Chrome met --enable-speech-dispatcher (en installeer speech-dispatcher + espeak-ng) om een stem te krijgen."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Geen stem"
+  },
+  "voiceRobotic": {
+    "message": "Robotstem ({0}): gebruik voor een duidelijke, gratis stem Google Chrome of Microsoft Edge (natuurlijke Google/Microsoft-stemmen), of installeer een Piper-stem."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotstem"
+  },
+  "optVoiceName": {
+    "message": "Vertaalde stem"
+  },
+  "optVoiceNameHelp": {
+    "message": "Alleen stemmen in de doeltaal. Automatisch kiest de duidelijkste (Google, dan natuurlijke stemmen; eSpeak als laatste)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatisch (beste stem)"
+  },
+  "optVoiceTest": {
+    "message": "Stem testen"
+  },
+  "optVoiceUsed": {
+    "message": "Gebruikte stem: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "hier niet beschikbaar"
+  },
   "popupSensitive": {
     "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
   },

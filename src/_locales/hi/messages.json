@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "सेटिंग्स खोलें"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube उपशीर्षक अभी पढ़े नहीं जा सकते: इसके बजाय ध्वनि सुनने के लिए मुफ़्त Groq कुंजी जोड़ें।"
+  },
+  "voiceNoTtsLinux": {
+    "message": "{0} के लिए कोई वाक् आवाज़ नहीं: आवाज़ पाने के लिए Chrome को --enable-speech-dispatcher के साथ चलाएँ (और speech-dispatcher + espeak-ng इंस्टॉल करें)।"
+  },
+  "voiceNoVoiceShort": {
+    "message": "कोई आवाज़ नहीं"
+  },
+  "voiceRobotic": {
+    "message": "रोबोटिक आवाज़ ({0}): साफ़ और मुफ़्त आवाज़ के लिए Google Chrome या Microsoft Edge (स्वाभाविक Google/Microsoft आवाज़ें) इस्तेमाल करें, या Piper आवाज़ इंस्टॉल करें।"
+  },
+  "voiceRoboticShort": {
+    "message": "रोबोटिक आवाज़"
+  },
+  "optVoiceName": {
+    "message": "अनुवादित आवाज़"
+  },
+  "optVoiceNameHelp": {
+    "message": "केवल लक्ष्य भाषा की आवाज़ें। स्वचालित सबसे साफ़ आवाज़ चुनता है (Google, फिर स्वाभाविक आवाज़ें; eSpeak सबसे आख़िर में)।"
+  },
+  "optVoiceAuto": {
+    "message": "स्वचालित (सबसे अच्छी आवाज़)"
+  },
+  "optVoiceTest": {
+    "message": "आवाज़ जाँचें"
+  },
+  "optVoiceUsed": {
+    "message": "इस्तेमाल हो रही आवाज़: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "यहाँ उपलब्ध नहीं"
+  },
   "popupSensitive": {
     "message": "संवेदनशील पेज: कभी स्वचालित अनुवाद नहीं। बटन काम करता है, सेट होने पर Ollama पहले इस्तेमाल होता है।"
   },

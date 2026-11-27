@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "כתוביות שתורגמו על ידי YouTube (חינם), מסונכרנות עם הסרטון",
 "voiceYtScreen": "התמליל של YouTube אינו זמין: קריאת הכתוביות שעל המסך",
 "voiceNoCaptionsGroq": "לסרטון הזה אין כתוביות: נדרש מפתח Groq חינמי כדי להאזין לשמע.",
-"voiceOpenSettings": "פתח הגדרות"
+"voiceOpenSettings": "פתח הגדרות",
+"voiceYtUnreadableGroq": "אי אפשר לקרוא כרגע את הכתוביות של YouTube: הוסף מפתח Groq חינמי כדי להאזין לשמע במקום.",
+"voiceNoTtsLinux": "אין קול סינתזה עבור {0}: הפעל את Chrome עם --enable-speech-dispatcher (והתקן speech-dispatcher + espeak-ng) כדי לקבל קול.",
+"voiceNoVoiceShort": "אין קול",
+"voiceRobotic": "קול רובוטי ({0}): לקול ברור וחינמי השתמש ב-Google Chrome או ב-Microsoft Edge (קולות Google/Microsoft טבעיים), או התקן קול Piper.",
+"voiceRoboticShort": "קול רובוטי",
+"optVoiceName": "קול מתורגם",
+"optVoiceNameHelp": "רק קולות בשפת היעד. אוטומטי בוחר את הברור ביותר (Google, אחר כך קולות טבעיים; eSpeak אחרון).",
+"optVoiceAuto": "אוטומטי (הקול הטוב ביותר)",
+"optVoiceTest": "בדיקת הקול",
+"optVoiceUsed": "קול בשימוש: {0}",
+"optVoiceMissing": "לא זמין כאן"
 }

@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "開啟設定"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "目前無法讀取 YouTube 字幕：加入免費的 Groq 金鑰，改為收聽聲音。"
+  },
+  "voiceNoTtsLinux": {
+    "message": "沒有{0}的語音：使用 --enable-speech-dispatcher 啟動 Chrome（並安裝 speech-dispatcher + espeak-ng）即可取得語音。"
+  },
+  "voiceNoVoiceShort": {
+    "message": "沒有語音"
+  },
+  "voiceRobotic": {
+    "message": "機械音（{0}）：想要清晰且免費的語音，請使用 Google Chrome 或 Microsoft Edge（自然的 Google/Microsoft 語音），或安裝 Piper 語音。"
+  },
+  "voiceRoboticShort": {
+    "message": "機械音"
+  },
+  "optVoiceName": {
+    "message": "翻譯語音"
+  },
+  "optVoiceNameHelp": {
+    "message": "僅列出目標語言的語音。自動會選最清晰的（Google，其次是自然語音；eSpeak 最後）。"
+  },
+  "optVoiceAuto": {
+    "message": "自動（最佳語音）"
+  },
+  "optVoiceTest": {
+    "message": "試聽語音"
+  },
+  "optVoiceUsed": {
+    "message": "目前語音：{0}"
+  },
+  "optVoiceMissing": {
+    "message": "此處無法使用"
+  },
   "popupSensitive": {
     "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
   },

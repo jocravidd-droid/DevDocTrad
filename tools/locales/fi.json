@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTuben kääntämät tekstitykset (ilmainen), tahdistettu videoon",
 "voiceYtScreen": "YouTube-litterointi ei ole saatavilla: luetaan näytön tekstityksiä",
 "voiceNoCaptionsGroq": "Tässä videossa ei ole tekstityksiä: äänen kuunteluun tarvitaan ilmainen Groq-avain.",
-"voiceOpenSettings": "Avaa asetukset"
+"voiceOpenSettings": "Avaa asetukset",
+"voiceYtUnreadableGroq": "YouTube-tekstityksiä ei voi lukea juuri nyt: lisää ilmainen Groq-avain, niin ääni kuunnellaan sen sijaan.",
+"voiceNoTtsLinux": "Ei puhesynteesiääntä kielelle {0}: käynnistä Chrome valitsimella --enable-speech-dispatcher (ja asenna speech-dispatcher + espeak-ng), jotta saat äänen.",
+"voiceNoVoiceShort": "Ei ääntä",
+"voiceRobotic": "Robottimainen ääni ({0}): selkeään ja ilmaiseen ääneen käytä Google Chromea tai Microsoft Edgeä (luonnolliset Google/Microsoft-äänet) tai asenna Piper-ääni.",
+"voiceRoboticShort": "Robottimainen ääni",
+"optVoiceName": "Käännetty ääni",
+"optVoiceNameHelp": "Vain kohdekielen äänet. Automaattinen valitsee selkeimmän (Google, sitten luonnolliset äänet; eSpeak viimeisenä).",
+"optVoiceAuto": "Automaattinen (paras ääni)",
+"optVoiceTest": "Kokeile ääntä",
+"optVoiceUsed": "Käytössä oleva ääni: {0}",
+"optVoiceMissing": "ei saatavilla täällä"
 }

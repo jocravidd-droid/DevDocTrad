@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Einstellungen öffnen"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube-Untertitel sind gerade nicht lesbar: Füge einen kostenlosen Groq-Schlüssel hinzu, um stattdessen den Ton anzuhören."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Keine Sprachausgabe-Stimme für {0}: Starte Chrome mit --enable-speech-dispatcher (und installiere speech-dispatcher + espeak-ng), um eine Stimme zu erhalten."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Keine Stimme"
+  },
+  "voiceRobotic": {
+    "message": "Roboterstimme ({0}): Für eine klare, kostenlose Stimme nutze Google Chrome oder Microsoft Edge (natürliche Google/Microsoft-Stimmen) oder installiere eine Piper-Stimme."
+  },
+  "voiceRoboticShort": {
+    "message": "Roboterstimme"
+  },
+  "optVoiceName": {
+    "message": "Übersetzte Stimme"
+  },
+  "optVoiceNameHelp": {
+    "message": "Nur Stimmen der Zielsprache. Automatisch wählt die deutlichste (Google, dann natürliche Stimmen; eSpeak zuletzt)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatisch (beste Stimme)"
+  },
+  "optVoiceTest": {
+    "message": "Stimme testen"
+  },
+  "optVoiceUsed": {
+    "message": "Verwendete Stimme: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "hier nicht verfügbar"
+  },
   "popupSensitive": {
     "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
   },

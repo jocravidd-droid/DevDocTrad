@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Napisy przetłumaczone przez YouTube (za darmo), zsynchronizowane z filmem",
 "voiceYtScreen": "Transkrypcja z YouTube niedostępna: odczytywanie napisów z ekranu",
 "voiceNoCaptionsGroq": "Ten film nie ma napisów: do słuchania dźwięku potrzebny jest darmowy klucz Groq.",
-"voiceOpenSettings": "Otwórz ustawienia"
+"voiceOpenSettings": "Otwórz ustawienia",
+"voiceYtUnreadableGroq": "Napisów YouTube nie da się teraz odczytać: dodaj darmowy klucz Groq, aby zamiast tego słuchać dźwięku.",
+"voiceNoTtsLinux": "Brak głosu syntezy dla języka {0}: uruchom Chrome z --enable-speech-dispatcher (i zainstaluj speech-dispatcher + espeak-ng), aby mieć głos.",
+"voiceNoVoiceShort": "Brak głosu",
+"voiceRobotic": "Głos robotyczny ({0}): aby mieć wyraźny i darmowy głos, użyj Google Chrome lub Microsoft Edge (naturalne głosy Google/Microsoft) albo zainstaluj głos Piper.",
+"voiceRoboticShort": "Głos robotyczny",
+"optVoiceName": "Przetłumaczony głos",
+"optVoiceNameHelp": "Tylko głosy w języku docelowym. Automatycznie wybiera najwyraźniejszy (Google, potem głosy naturalne; eSpeak na końcu).",
+"optVoiceAuto": "Automatycznie (najlepszy głos)",
+"optVoiceTest": "Przetestuj głos",
+"optVoiceUsed": "Używany głos: {0}",
+"optVoiceMissing": "niedostępny tutaj"
 }

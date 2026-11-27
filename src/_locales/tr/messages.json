@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Ayarları aç"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube altyazıları şu anda okunamıyor: bunun yerine sesi dinlemek için ücretsiz bir Groq anahtarı ekle."
+  },
+  "voiceNoTtsLinux": {
+    "message": "{0} için konuşma sesi yok: ses için Chrome'u --enable-speech-dispatcher ile başlat (ve speech-dispatcher + espeak-ng kur)."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Ses yok"
+  },
+  "voiceRobotic": {
+    "message": "Robotik ses ({0}): net ve ücretsiz bir ses için Google Chrome veya Microsoft Edge kullan (doğal Google/Microsoft sesleri) ya da bir Piper sesi kur."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotik ses"
+  },
+  "optVoiceName": {
+    "message": "Çevrilmiş ses"
+  },
+  "optVoiceNameHelp": {
+    "message": "Yalnızca hedef dildeki sesler. Otomatik en net olanı seçer (Google, sonra doğal sesler; eSpeak en son)."
+  },
+  "optVoiceAuto": {
+    "message": "Otomatik (en iyi ses)"
+  },
+  "optVoiceTest": {
+    "message": "Sesi dene"
+  },
+  "optVoiceUsed": {
+    "message": "Kullanılan ses: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "burada kullanılamıyor"
+  },
   "popupSensitive": {
     "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
   },

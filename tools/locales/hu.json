@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "A YouTube által fordított feliratok (ingyenes), a videóhoz igazítva",
 "voiceYtScreen": "A YouTube-átirat nem érhető el: a képernyőn látható feliratok olvasása",
 "voiceNoCaptionsGroq": "Ennek a videónak nincs felirata: a hang meghallgatásához ingyenes Groq-kulcs kell.",
-"voiceOpenSettings": "Beállítások megnyitása"
+"voiceOpenSettings": "Beállítások megnyitása",
+"voiceYtUnreadableGroq": "A YouTube-feliratok most nem olvashatók: adj meg egy ingyenes Groq-kulcsot, hogy helyette a hangot hallgasd.",
+"voiceNoTtsLinux": "Nincs beszédhang ehhez: {0}. Indítsd a Chrome-ot a --enable-speech-dispatcher kapcsolóval (és telepítsd: speech-dispatcher + espeak-ng), hogy legyen hang.",
+"voiceNoVoiceShort": "Nincs hang",
+"voiceRobotic": "Robotikus hang ({0}): tiszta, ingyenes hanghoz használd a Google Chrome-ot vagy a Microsoft Edge-et (természetes Google/Microsoft hangok), vagy telepíts egy Piper-hangot.",
+"voiceRoboticShort": "Robotikus hang",
+"optVoiceName": "Lefordított hang",
+"optVoiceNameHelp": "Csak a célnyelv hangjai. Az Automatikus a legérthetőbbet választja (Google, aztán természetes hangok; az eSpeak utoljára).",
+"optVoiceAuto": "Automatikus (legjobb hang)",
+"optVoiceTest": "Hang kipróbálása",
+"optVoiceUsed": "Használt hang: {0}",
+"optVoiceMissing": "itt nem érhető el"
 }

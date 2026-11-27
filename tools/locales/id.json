@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Subtitel diterjemahkan oleh YouTube (gratis), selaras dengan video",
 "voiceYtScreen": "Transkrip YouTube tidak tersedia: membaca subtitel di layar",
 "voiceNoCaptionsGroq": "Video ini tidak memiliki subtitel: perlu kunci Groq gratis untuk mendengarkan suaranya.",
-"voiceOpenSettings": "Buka setelan"
+"voiceOpenSettings": "Buka setelan",
+"voiceYtUnreadableGroq": "Subtitel YouTube tidak bisa dibaca saat ini: tambahkan kunci Groq gratis untuk mendengarkan suaranya.",
+"voiceNoTtsLinux": "Tidak ada suara sintesis untuk {0}: jalankan Chrome dengan --enable-speech-dispatcher (dan pasang speech-dispatcher + espeak-ng) agar ada suara.",
+"voiceNoVoiceShort": "Tanpa suara",
+"voiceRobotic": "Suara robotik ({0}): untuk suara yang jelas dan gratis, gunakan Google Chrome atau Microsoft Edge (suara alami Google/Microsoft), atau pasang suara Piper.",
+"voiceRoboticShort": "Suara robotik",
+"optVoiceName": "Suara terjemahan",
+"optVoiceNameHelp": "Hanya suara dalam bahasa tujuan. Otomatis memilih yang paling jelas (Google, lalu suara alami; eSpeak terakhir).",
+"optVoiceAuto": "Otomatis (suara terbaik)",
+"optVoiceTest": "Uji suara",
+"optVoiceUsed": "Suara yang dipakai: {0}",
+"optVoiceMissing": "tidak tersedia di sini"
 }

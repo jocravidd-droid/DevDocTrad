@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTube が翻訳した字幕（無料）、動画に同期",
 "voiceYtScreen": "YouTube の文字起こしは利用できません：画面の字幕を読み取ります",
 "voiceNoCaptionsGroq": "この動画には字幕がありません：音声を聞き取るには無料の Groq キーが必要です。",
-"voiceOpenSettings": "設定を開く"
+"voiceOpenSettings": "設定を開く",
+"voiceYtUnreadableGroq": "今は YouTube の字幕を読めません：代わりに音声を聞くには無料の Groq キーを追加してください。",
+"voiceNoTtsLinux": "{0} の読み上げ音声がありません：音声を使うには Chrome を --enable-speech-dispatcher 付きで起動してください（speech-dispatcher + espeak-ng もインストール）。",
+"voiceNoVoiceShort": "音声なし",
+"voiceRobotic": "ロボットのような音声（{0}）：はっきりした無料の音声には Google Chrome か Microsoft Edge（自然な Google/Microsoft 音声）を使うか、Piper の音声をインストールしてください。",
+"voiceRoboticShort": "ロボット音声",
+"optVoiceName": "翻訳音声",
+"optVoiceNameHelp": "対象言語の音声のみ。自動では最も聞き取りやすいものを選びます（Google、次に自然な音声、eSpeak は最後）。",
+"optVoiceAuto": "自動（最適な音声）",
+"optVoiceTest": "音声をテスト",
+"optVoiceUsed": "使用中の音声：{0}",
+"optVoiceMissing": "ここでは使用不可"
 }

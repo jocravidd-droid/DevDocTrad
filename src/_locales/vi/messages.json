@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Mở cài đặt"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Hiện không đọc được phụ đề YouTube: thêm khóa Groq miễn phí để nghe âm thanh thay thế."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Không có giọng đọc cho {0}: khởi động Chrome với --enable-speech-dispatcher (và cài speech-dispatcher + espeak-ng) để có giọng đọc."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Không có giọng"
+  },
+  "voiceRobotic": {
+    "message": "Giọng máy ({0}): để có giọng rõ ràng và miễn phí, hãy dùng Google Chrome hoặc Microsoft Edge (giọng tự nhiên của Google/Microsoft), hoặc cài một giọng Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Giọng máy"
+  },
+  "optVoiceName": {
+    "message": "Giọng đã dịch"
+  },
+  "optVoiceNameHelp": {
+    "message": "Chỉ các giọng của ngôn ngữ đích. Tự động chọn giọng rõ nhất (Google, rồi giọng tự nhiên; eSpeak sau cùng)."
+  },
+  "optVoiceAuto": {
+    "message": "Tự động (giọng tốt nhất)"
+  },
+  "optVoiceTest": {
+    "message": "Thử giọng"
+  },
+  "optVoiceUsed": {
+    "message": "Giọng đang dùng: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "không có ở đây"
+  },
   "popupSensitive": {
     "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
   },

@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTube দ্বারা অনূদিত সাবটাইটেল (বিনামূল্যে), ভিডিওর সাথে মিলিয়ে",
 "voiceYtScreen": "YouTube ট্রান্সক্রিপ্ট পাওয়া যায়নি: স্ক্রিনের সাবটাইটেল পড়া হচ্ছে",
 "voiceNoCaptionsGroq": "এই ভিডিওতে কোনো সাবটাইটেল নেই: শব্দ শুনতে একটি বিনামূল্যের Groq কী দরকার।",
-"voiceOpenSettings": "সেটিংস খুলুন"
+"voiceOpenSettings": "সেটিংস খুলুন",
+"voiceYtUnreadableGroq": "YouTube সাবটাইটেল এখন পড়া যাচ্ছে না: বদলে শব্দ শুনতে একটি বিনামূল্যের Groq কী যোগ করুন।",
+"voiceNoTtsLinux": "{0}-এর জন্য কোনো কণ্ঠ নেই: কণ্ঠ পেতে Chrome --enable-speech-dispatcher দিয়ে চালু করুন (এবং speech-dispatcher + espeak-ng ইনস্টল করুন)।",
+"voiceNoVoiceShort": "কণ্ঠ নেই",
+"voiceRobotic": "যান্ত্রিক কণ্ঠ ({0}): পরিষ্কার ও বিনামূল্যের কণ্ঠের জন্য Google Chrome বা Microsoft Edge ব্যবহার করুন (স্বাভাবিক Google/Microsoft কণ্ঠ), অথবা একটি Piper কণ্ঠ ইনস্টল করুন।",
+"voiceRoboticShort": "যান্ত্রিক কণ্ঠ",
+"optVoiceName": "অনূদিত কণ্ঠ",
+"optVoiceNameHelp": "শুধু লক্ষ্য ভাষার কণ্ঠ। স্বয়ংক্রিয় সবচেয়ে পরিষ্কারটি বেছে নেয় (Google, তারপর স্বাভাবিক কণ্ঠ; eSpeak সবার শেষে)।",
+"optVoiceAuto": "স্বয়ংক্রিয় (সেরা কণ্ঠ)",
+"optVoiceTest": "কণ্ঠ পরীক্ষা করুন",
+"optVoiceUsed": "ব্যবহৃত কণ্ঠ: {0}",
+"optVoiceMissing": "এখানে নেই"
 }

@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Otwórz ustawienia"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Napisów YouTube nie da się teraz odczytać: dodaj darmowy klucz Groq, aby zamiast tego słuchać dźwięku."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Brak głosu syntezy dla języka {0}: uruchom Chrome z --enable-speech-dispatcher (i zainstaluj speech-dispatcher + espeak-ng), aby mieć głos."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Brak głosu"
+  },
+  "voiceRobotic": {
+    "message": "Głos robotyczny ({0}): aby mieć wyraźny i darmowy głos, użyj Google Chrome lub Microsoft Edge (naturalne głosy Google/Microsoft) albo zainstaluj głos Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Głos robotyczny"
+  },
+  "optVoiceName": {
+    "message": "Przetłumaczony głos"
+  },
+  "optVoiceNameHelp": {
+    "message": "Tylko głosy w języku docelowym. Automatycznie wybiera najwyraźniejszy (Google, potem głosy naturalne; eSpeak na końcu)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatycznie (najlepszy głos)"
+  },
+  "optVoiceTest": {
+    "message": "Przetestuj głos"
+  },
+  "optVoiceUsed": {
+    "message": "Używany głos: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "niedostępny tutaj"
+  },
   "popupSensitive": {
     "message": "Strona wrażliwa: nigdy nie jest tłumaczona automatycznie. Przycisk działa; jeśli Ollama jest skonfigurowana, jest używana jako pierwsza."
   },

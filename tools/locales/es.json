@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Subtítulos traducidos por YouTube (gratis), sincronizados con el vídeo",
 "voiceYtScreen": "Transcripción de YouTube no disponible: leyendo los subtítulos en pantalla",
 "voiceNoCaptionsGroq": "Este vídeo no tiene subtítulos: se necesita una clave gratuita de Groq para escuchar el sonido.",
-"voiceOpenSettings": "Abrir ajustes"
+"voiceOpenSettings": "Abrir ajustes",
+"voiceYtUnreadableGroq": "Los subtítulos de YouTube no se pueden leer ahora: añade una clave gratuita de Groq para escuchar el sonido en su lugar.",
+"voiceNoTtsLinux": "No hay voz de síntesis para {0}: inicia Chrome con --enable-speech-dispatcher (e instala speech-dispatcher + espeak-ng) para tener una voz.",
+"voiceNoVoiceShort": "Sin voz",
+"voiceRobotic": "Voz robótica ({0}): para una voz clara y gratuita, usa Google Chrome o Microsoft Edge (voces naturales de Google/Microsoft), o instala una voz Piper.",
+"voiceRoboticShort": "Voz robótica",
+"optVoiceName": "Voz traducida",
+"optVoiceNameHelp": "Solo voces del idioma de destino. Automático elige la más clara (Google, luego voces naturales; eSpeak al final).",
+"optVoiceAuto": "Automático (mejor voz)",
+"optVoiceTest": "Probar la voz",
+"optVoiceUsed": "Voz utilizada: {0}",
+"optVoiceMissing": "no disponible aquí"
 }

@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Fungua mipangilio"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Manukuu ya YouTube hayasomeki sasa: ongeza ufunguo wa bure wa Groq ili usikilize sauti badala yake."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Hakuna sauti ya usanisi kwa {0}: anzisha Chrome kwa --enable-speech-dispatcher (na usakinishe speech-dispatcher + espeak-ng) ili upate sauti."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Hakuna sauti"
+  },
+  "voiceRobotic": {
+    "message": "Sauti ya kiroboti ({0}): kwa sauti wazi na ya bure, tumia Google Chrome au Microsoft Edge (sauti asilia za Google/Microsoft), au sakinisha sauti ya Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Sauti ya kiroboti"
+  },
+  "optVoiceName": {
+    "message": "Sauti iliyotafsiriwa"
+  },
+  "optVoiceNameHelp": {
+    "message": "Sauti za lugha lengwa pekee. Otomatiki huchagua iliyo wazi zaidi (Google, kisha sauti asilia; eSpeak mwisho)."
+  },
+  "optVoiceAuto": {
+    "message": "Otomatiki (sauti bora)"
+  },
+  "optVoiceTest": {
+    "message": "Jaribu sauti"
+  },
+  "optVoiceUsed": {
+    "message": "Sauti inayotumika: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "haipatikani hapa"
+  },
   "popupSensitive": {
     "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
   },

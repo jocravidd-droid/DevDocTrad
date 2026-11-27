@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Titulky přeložené službou YouTube (zdarma), sladěné s videem",
 "voiceYtScreen": "Přepis z YouTube není k dispozici: čtou se titulky na obrazovce",
 "voiceNoCaptionsGroq": "Toto video nemá titulky: k poslechu zvuku je potřeba bezplatný klíč Groq.",
-"voiceOpenSettings": "Otevřít nastavení"
+"voiceOpenSettings": "Otevřít nastavení",
+"voiceYtUnreadableGroq": "Titulky YouTube teď nejdou přečíst: přidejte bezplatný klíč Groq a poslouchejte místo toho zvuk.",
+"voiceNoTtsLinux": "Žádný hlas syntézy pro {0}: spusťte Chrome s --enable-speech-dispatcher (a nainstalujte speech-dispatcher + espeak-ng), abyste měli hlas.",
+"voiceNoVoiceShort": "Žádný hlas",
+"voiceRobotic": "Robotický hlas ({0}): pro jasný a bezplatný hlas použijte Google Chrome nebo Microsoft Edge (přirozené hlasy Google/Microsoft), nebo nainstalujte hlas Piper.",
+"voiceRoboticShort": "Robotický hlas",
+"optVoiceName": "Přeložený hlas",
+"optVoiceNameHelp": "Jen hlasy cílového jazyka. Automaticky vybere nejsrozumitelnější (Google, pak přirozené hlasy; eSpeak nakonec).",
+"optVoiceAuto": "Automaticky (nejlepší hlas)",
+"optVoiceTest": "Vyzkoušet hlas",
+"optVoiceUsed": "Použitý hlas: {0}",
+"optVoiceMissing": "zde nedostupný"
 }

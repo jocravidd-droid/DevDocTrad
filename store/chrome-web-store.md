@@ -2,7 +2,7 @@
 
 Textes prêts à copier pour publier DevDocTrad sur le Chrome Web Store, en français et en anglais, puis la marche à suivre complète.
 
-État : l’extension n’est pas encore publiée. Le paquet à envoyer est `release/devdoctrad-chrome-1.4.0.zip`. L’inscription au Chrome Web Store coûte 5 dollars, une seule fois : c’est toi qui décides quand payer.
+État : l’extension n’est pas encore publiée. Le paquet à envoyer est `release/devdoctrad-chrome-1.4.1.zip`. L’inscription au Chrome Web Store coûte 5 dollars, une seule fois : c’est toi qui décides quand payer.
 
 Astuce : sur GitHub, chaque bloc de texte a un bouton de copie en haut à droite. Copie le bloc entier et colle-le tel quel dans le champ indiqué.
 
@@ -432,7 +432,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 2. Tape `npm install` puis appuie sur Entrée. Attends la fin de l’installation.
 3. Tape `npm test` puis appuie sur Entrée. Tous les tests doivent passer (aucune ligne « fail » à la fin). Si un test échoue, ne publie pas : corrige d’abord.
 4. Tape `python3 build.py` puis appuie sur Entrée. Le script reconstruit les paquets et affiche une ligne « sha256 » par paquet.
-5. Ouvre le dossier `release/` et vérifie que le fichier `devdoctrad-chrome-1.4.0.zip` est présent. C’est le seul fichier que tu enverras au Chrome Web Store.
+5. Ouvre le dossier `release/` et vérifie que le fichier `devdoctrad-chrome-1.4.1.zip` est présent. C’est le seul fichier que tu enverras au Chrome Web Store.
 6. Crée la petite image promotionnelle de 440 x 280 pixels (PNG ou JPEG), par exemple à partir du logo du dossier `design/logo/`. Enregistre-la dans `store/promo-440x280.png`. Elle est obligatoire pour publier.
 7. Ouvre dans ton navigateur l’adresse `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md`. La politique de confidentialité doit s’afficher. Si la page est introuvable, envoie d’abord `PRIVACY.md` sur la branche `main` du dépôt public.
 
@@ -450,7 +450,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 ### C. Envoyer le paquet
 
 16. Dans la colonne de gauche, clique sur « Éléments » (Items), puis sur le bouton « Nouvel élément » (New item).
-17. Clique sur « Parcourir » (Browse files) et choisis `release/devdoctrad-chrome-1.4.0.zip`. N’envoie pas le dossier décompressé : seulement le zip.
+17. Clique sur « Parcourir » (Browse files) et choisis `release/devdoctrad-chrome-1.4.1.zip`. N’envoie pas le dossier décompressé : seulement le zip.
 18. Attends la fin de l’envoi. La page de l’élément s’ouvre, avec plusieurs onglets à gauche : « Paquet » (Package), « Fiche Play Store » ou « Fiche de la boutique » (Store listing), « Pratiques de confidentialité » (Privacy), « Distribution », et parfois « Instructions de test » (Test instructions).
 
 ### D. Remplir la fiche (onglet Store listing)
@@ -525,7 +525,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 2. Type `npm install` and press Enter. Wait until it finishes.
 3. Type `npm test` and press Enter. All tests must pass (no "fail" line at the end). If a test fails, do not publish: fix it first.
 4. Type `python3 build.py` and press Enter. The script rebuilds the packages and prints one "sha256" line per package.
-5. Open the `release/` folder and check that `devdoctrad-chrome-1.4.0.zip` is there. It is the only file you will upload to the Chrome Web Store.
+5. Open the `release/` folder and check that `devdoctrad-chrome-1.4.1.zip` is there. It is the only file you will upload to the Chrome Web Store.
 6. Create the small promo tile, 440 x 280 pixels (PNG or JPEG), for example from the logo in `design/logo/`. Save it as `store/promo-440x280.png`. It is required to publish.
 7. Open `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` in your browser. The privacy policy must be displayed. If the page is not found, first push `PRIVACY.md` to the `main` branch of the public repository.
 
@@ -543,7 +543,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 ### C. Upload the package
 
 16. In the left column, click "Items", then the "New item" button.
-17. Click "Browse files" and choose `release/devdoctrad-chrome-1.4.0.zip`. Do not upload the unzipped folder: only the zip.
+17. Click "Browse files" and choose `release/devdoctrad-chrome-1.4.1.zip`. Do not upload the unzipped folder: only the zip.
 18. Wait for the upload to finish. The item page opens with several tabs on the left: "Package", "Store listing", "Privacy", "Distribution", and sometimes "Test instructions".
 
 ### D. Fill in the listing ("Store listing" tab)

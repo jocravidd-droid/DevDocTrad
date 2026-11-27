@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "คำบรรยายที่ YouTube แปล (ฟรี) ตรงกับวิดีโอ",
 "voiceYtScreen": "ไม่มีข้อความถอดเสียงของ YouTube: กำลังอ่านคำบรรยายบนหน้าจอ",
 "voiceNoCaptionsGroq": "วิดีโอนี้ไม่มีคำบรรยาย: ต้องใช้คีย์ Groq ฟรีเพื่อฟังเสียง",
-"voiceOpenSettings": "เปิดการตั้งค่า"
+"voiceOpenSettings": "เปิดการตั้งค่า",
+"voiceYtUnreadableGroq": "ตอนนี้อ่านคำบรรยาย YouTube ไม่ได้: เพิ่มคีย์ Groq ฟรีเพื่อฟังเสียงแทน",
+"voiceNoTtsLinux": "ไม่มีเสียงสังเคราะห์สำหรับ {0}: เปิด Chrome ด้วย --enable-speech-dispatcher (และติดตั้ง speech-dispatcher + espeak-ng) เพื่อให้มีเสียง",
+"voiceNoVoiceShort": "ไม่มีเสียง",
+"voiceRobotic": "เสียงหุ่นยนต์ ({0}): หากต้องการเสียงที่ชัดและฟรี ให้ใช้ Google Chrome หรือ Microsoft Edge (เสียงธรรมชาติของ Google/Microsoft) หรือติดตั้งเสียง Piper",
+"voiceRoboticShort": "เสียงหุ่นยนต์",
+"optVoiceName": "เสียงที่แปลแล้ว",
+"optVoiceNameHelp": "เฉพาะเสียงของภาษาเป้าหมาย อัตโนมัติจะเลือกเสียงที่ชัดที่สุด (Google แล้วเสียงธรรมชาติ eSpeak ท้ายสุด)",
+"optVoiceAuto": "อัตโนมัติ (เสียงที่ดีที่สุด)",
+"optVoiceTest": "ทดสอบเสียง",
+"optVoiceUsed": "เสียงที่ใช้: {0}",
+"optVoiceMissing": "ไม่มีที่นี่"
 }

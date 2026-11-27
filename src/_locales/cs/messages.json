@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Otevřít nastavení"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Titulky YouTube teď nejdou přečíst: přidejte bezplatný klíč Groq a poslouchejte místo toho zvuk."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Žádný hlas syntézy pro {0}: spusťte Chrome s --enable-speech-dispatcher (a nainstalujte speech-dispatcher + espeak-ng), abyste měli hlas."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Žádný hlas"
+  },
+  "voiceRobotic": {
+    "message": "Robotický hlas ({0}): pro jasný a bezplatný hlas použijte Google Chrome nebo Microsoft Edge (přirozené hlasy Google/Microsoft), nebo nainstalujte hlas Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotický hlas"
+  },
+  "optVoiceName": {
+    "message": "Přeložený hlas"
+  },
+  "optVoiceNameHelp": {
+    "message": "Jen hlasy cílového jazyka. Automaticky vybere nejsrozumitelnější (Google, pak přirozené hlasy; eSpeak nakonec)."
+  },
+  "optVoiceAuto": {
+    "message": "Automaticky (nejlepší hlas)"
+  },
+  "optVoiceTest": {
+    "message": "Vyzkoušet hlas"
+  },
+  "optVoiceUsed": {
+    "message": "Použitý hlas: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "zde nedostupný"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy se nepřekládá automaticky. Tlačítko funguje, Ollama se použije jako první, pokud je nastavena."
   },

@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Abrir definições"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Não é possível ler as legendas do YouTube agora: adicione uma chave gratuita do Groq para ouvir o som em vez disso."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Nenhuma voz de síntese para {0}: inicie o Chrome com --enable-speech-dispatcher (e instale speech-dispatcher + espeak-ng) para ter uma voz."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Sem voz"
+  },
+  "voiceRobotic": {
+    "message": "Voz robótica ({0}): para uma voz clara e gratuita, utilize o Google Chrome ou o Microsoft Edge (vozes naturais Google/Microsoft) ou instale uma voz Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Voz robótica"
+  },
+  "optVoiceName": {
+    "message": "Voz traduzida"
+  },
+  "optVoiceNameHelp": {
+    "message": "Apenas vozes do idioma de destino. Automático escolhe a mais clara (Google, depois vozes naturais; eSpeak em último)."
+  },
+  "optVoiceAuto": {
+    "message": "Automático (melhor voz)"
+  },
+  "optVoiceTest": {
+    "message": "Testar a voz"
+  },
+  "optVoiceUsed": {
+    "message": "Voz utilizada: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "indisponível aqui"
+  },
   "popupSensitive": {
     "message": "Página sensível: nunca traduzida automaticamente. O botão funciona; se estiver configurado, o Ollama é usado primeiro."
   },

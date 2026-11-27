@@ -22,5 +22,7 @@
   "Welcome to this short tutorial.": "Bienvenue dans ce court tutoriel.",
   "First, install the package with npm.": "Commence par installer le paquet avec npm.",
   "Then open the configuration file.": "Ouvre ensuite le fichier de configuration.",
-  "Hello from the audio track.": "Bonjour depuis la piste audio."
+  "Hello from the audio track.": "Bonjour depuis la piste audio.",
+  "Only the transcript panel works here.": "Seul le panneau de transcription marche ici.",
+  "The player gets nothing.": "Le lecteur ne reçoit rien."
 }

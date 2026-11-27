@@ -57,14 +57,22 @@ function playerResponse(id, o) {
   };
 }
 
-/* Page YouTube simulée : lecteur, entrées de performance, /api/timedtext qui exige « pot », vidéo pilotée */
+/* json3 -> srv3 (XML) : même contenu, autre format (le lecteur ne demande pas toujours json3) */
+function srv3(events) {
+  const esc = (x) => x.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return '<?xml version="1.0" encoding="utf-8" ?><timedtext format="3"><body>' + events.filter((e) => e.segs && e.segs.some((g) => g.utf8.trim()))
+    .map((e) => `<p t="${e.tStartMs}" d="${e.dDurationMs}">${esc(e.segs.map((g) => g.utf8).join(''))}</p>`).join('') + '</body></timedtext>';
+}
+/* Page YouTube simulée, comme le vrai (1.4.1) : le lecteur demande /api/timedtext lui-même (fetch ou XHR,
+   au clic sur CC ou via setOption), AUCUNE entrée de performance (sauf o.perf), adresse sans jeton vide,
+   CC parfois déjà actif au chargement (o.ccOn), get_transcript innertube (o.innertube). */
 function ytSetup(o = {}) {
   const dom = H.makeDom(YT_HTML, { url: 'https://www.youtube.com/watch?v=' + (o.id || 'vid1') });
   dom.window.eval(H.read('voice.js'));
   const w = dom.window;
   const d = w.document;
-  const state = { id: o.id || 'vid1', entries: [], fetches: [], lag: 0 };
-  if (o.ccOn) state.entries.push({ name: `https://www.youtube.com/api/timedtext?v=${state.id}&lang=en&kind=asr&fmt=srv3&pot=TOKEN1&c=WEB` });
+  const state = { id: o.id || 'vid1', entries: [], fetches: [], player: [], posts: [], lag: 0, track: null };
+  if (o.perf) state.entries.push({ name: `https://www.youtube.com/api/timedtext?v=${state.id}&lang=en&kind=asr&fmt=srv3&pot=TOKEN1&c=WEB` });
   const player = d.getElementById('movie_player');
   player.getPlayerResponse = () => {
     // navigation interne : l'ancien lecteur répond encore un moment
@@ -74,25 +82,79 @@ function ytSetup(o = {}) {
   Object.defineProperty(w.performance, 'getEntriesByType', { configurable: true,
     value: (type) => (type === 'resource' ? state.entries.slice() : []) });
   const btn = d.querySelector('.ytp-subtitles-button');
+  if (o.ccOn) btn.setAttribute('aria-pressed', 'true');
   state.ccClicks = 0;
+  let cached = !!o.ccOn && !!o.cacheCc;      // piste déjà en mémoire du lecteur : CC off/on ne redemande rien
+  // requête du lecteur : passe par window.fetch / XMLHttpRequest DE LA PAGE (vus par les crochets de ytMain)
+  function playerRequest(lang, tlang) {
+    if (o.neverRequest) return;
+    const url = `https://www.youtube.com/api/timedtext?v=${state.id}&lang=${lang}&kind=asr&fmt=${o.fmt || 'json3'}` +
+      (tlang ? '&tlang=' + tlang : '') + '&xorb=2&pot=TOKEN2&c=WEB&cver=2.0';
+    state.player.push(url);
+    if (o.xhr) { const x = new w.XMLHttpRequest(); x.open('GET', url); x.send(); } else w.fetch(url).catch(() => {});
+  }
   btn.addEventListener('click', () => {
     state.ccClicks++;
     const on = btn.getAttribute('aria-pressed') !== 'true';
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-    // le lecteur demande lui-même les sous-titres, avec son jeton
-    if (on && !o.neverPot) state.entries.push({ name: `https://www.youtube.com/api/timedtext?v=${state.id}&lang=en&kind=asr&fmt=json3&pot=TOKEN2&c=WEB&cver=2.0` });
+    if (on && !cached) playerRequest((state.track && state.track.lang) || 'en', state.track && state.track.tlang);
+    if (on && o.cacheCc) cached = true;
   });
-  w.fetch = (url) => {
-    const u = new w.URL(url);
-    state.fetches.push(u.href);
+  if (o.api !== false) {
+    player.setOption = (mod, opt, v) => {
+      if (mod !== 'captions' || opt !== 'track') return;
+      state.setOptions = (state.setOptions || []).concat([JSON.parse(JSON.stringify(v))]);
+      const next = v && v.languageCode ? { lang: v.languageCode, tlang: v.translationLanguage && v.translationLanguage.languageCode } : null;
+      const same = JSON.stringify(next) === JSON.stringify(state.track);
+      state.track = next;
+      if (next && (!same || next.tlang) && !(o.cacheCc && !next.tlang)) playerRequest(next.lang, next.tlang);
+    };
+    player.getOption = (mod, opt) => (mod === 'captions' && opt === 'track' && state.track
+      ? { languageCode: state.track.lang, kind: 'asr', translationLanguage: state.track.tlang ? { languageCode: state.track.tlang } : undefined } : {});
+    player.loadModule = () => {};
+  }
+  const body = (u) => {
     const v = u.searchParams.get('v');
-    let body = '';
-    if (u.searchParams.get('pot') && !o.emptyAlways) {
-      const tl = u.searchParams.get('tlang');
-      body = JSON.stringify({ wireMagic: 'pb3', events: (tl === 'fr' ? FR : EN)[v] || [] });
-    }
-    return Promise.resolve({ ok: true, status: 200, text: () => Promise.resolve(body) });
+    if (!u.searchParams.get('pot') || o.emptyAlways) return '';
+    const tl = u.searchParams.get('tlang');
+    const events = (tl === 'fr' ? FR : EN)[v] || [];
+    return u.searchParams.get('fmt') === 'srv3' ? srv3(events) : JSON.stringify({ wireMagic: 'pb3', events });
   };
+  w.fetch = (url, init) => {
+    const u = new w.URL(url, 'https://www.youtube.com/');
+    if (u.pathname === '/youtubei/v1/get_transcript') {
+      state.posts.push({ url: u.href, init });
+      if (!o.innertube) return Promise.resolve({ ok: false, status: 400, text: () => Promise.resolve('{}') });
+      const segs = (EN[state.id] || []).filter((e) => e.segs.some((g) => g.utf8.trim())).map((e) => ({ transcriptSegmentRenderer: {
+        startMs: String(e.tStartMs), endMs: String(e.tStartMs + e.dDurationMs), snippet: { runs: [{ text: e.segs.map((g) => g.utf8).join('') }] } } }));
+      const json = { actions: [{ updateEngagementPanelAction: { content: { transcriptRenderer: { content: { transcriptSearchPanelRenderer: {
+        body: { transcriptSegmentListRenderer: { initialSegments: segs.concat([{ transcriptSectionHeaderRenderer: { snippet: { simpleText: 'Intro' } } }]) } } } } } } } }] };
+      return Promise.resolve({ ok: true, status: 200, text: () => Promise.resolve(JSON.stringify(json)) });
+    }
+    state.fetches.push(u.href);
+    const b = body(u);
+    return Promise.resolve({ ok: true, status: 200, text: () => Promise.resolve(b), clone() { return { text: () => Promise.resolve(b) }; } });
+  };
+  // XMLHttpRequest de la page (minimal) : le vrai lecteur passe par là
+  w.XMLHttpRequest = function () { this.listeners = {}; this.status = 0; this.responseType = ''; this.responseText = ''; };
+  w.XMLHttpRequest.prototype.open = function (m, url) { this.url = url; };
+  w.XMLHttpRequest.prototype.addEventListener = function (k, f) { (this.listeners[k] = this.listeners[k] || []).push(f); };
+  w.XMLHttpRequest.prototype.send = function () {
+    const u = new w.URL(this.url);
+    state.fetches.push(u.href);
+    setTimeout(() => {
+      this.status = 200;
+      this.responseText = body(u);
+      (this.listeners.loadend || []).forEach((f) => f());
+    }, 5);
+  };
+  if (o.ytcfg !== false) {
+    w.ytcfg = { data_: { INNERTUBE_API_KEY: 'AIzaFAKE', INNERTUBE_CONTEXT_CLIENT_NAME: 1, INNERTUBE_CLIENT_VERSION: '2.20261127.01.00',
+      INNERTUBE_CONTEXT: { client: { clientName: 'WEB', clientVersion: '2.20261127.01.00', hl: 'en', visitorData: 'VIS' } } },
+    get(k) { return this.data_[k]; } };
+    w.ytInitialData = { currentVideoEndpoint: { watchEndpoint: { videoId: state.id } }, engagementPanels: [{ engagementPanelSectionListRenderer: {
+      content: { continuationItemRenderer: { continuationEndpoint: { getTranscriptEndpoint: { params: 'PAGEPARAMS' } } } } } }] };
+  }
   // background réel : ytPlayer -> scripting.executeScript (world MAIN) -> ytMain exécutée dans la page
   const { bg, api } = H.makeBackground({ local: { settings: {} } });
   const injections = [];
@@ -107,7 +169,7 @@ function ytSetup(o = {}) {
   };
   const sender = { tab: { id: 9 }, frameId: 0, url: 'https://www.youtube.com/watch?v=' + state.id };
   const ytPlayer = (req) => {
-    const m = { type: 'ytPlayer', op: req.op, url: req.url || '' };
+    const m = { type: 'ytPlayer', op: req.op, url: req.url || '', arg: req.arg == null ? '' : req.arg };
     assert.equal(globalThis.DDT_isTrustedSender(m, sender, { runtime: { getURL: () => 'chrome-extension://x/' } }), true);
     return bg.onMessage(m, sender);
   };
@@ -240,7 +302,7 @@ test('adresses : jeton « pot » du lecteur ajouté à la piste choisie, puis ad
 
 /* ---------------- Monde de la page (ytMain) et background ---------------- */
 test('page (monde MAIN) : pistes, langues de traduction, langue du son et adresses timedtext lues ; fetch limité à /api/timedtext du site', async () => {
-  const { w, state } = ytSetup({ ccOn: true });
+  const { w, state } = ytSetup({ perf: true });
   const fn = w.eval('(' + ytMain.toString() + ')');
   const info = fn('info', '');
   assert.equal(info.ok, true);
@@ -299,7 +361,9 @@ test('transcription : sous-titres activés le temps d\'obtenir le jeton, json3 l
   assert.ok(injections.every((o) => o.world === 'MAIN'));
   assert.equal(state.ccClicks, 2, 'sous-titres activés puis remis comme avant');
   assert.equal(btn.getAttribute('aria-pressed'), 'false');
-  assert.ok(state.fetches.some((u) => /pot=TOKEN2/.test(u) && /fmt=json3/.test(u) && /signature=SIG/.test(u)), state.fetches.join('\n'));
+  assert.ok(state.player.some((u) => /pot=TOKEN2/.test(u)), 'demande du lecteur provoquée : ' + state.player.join('\n'));
+  assert.deepEqual(state.fetches, state.player, 'corps capturé utilisé tel quel : aucune demande rejouée');
+  assert.ok(voice.status().diag.some((x) => x.src === 'captured' && /cues \(en\)/.test(x.result)), JSON.stringify(voice.status().diag));
   assert.ok(/^voiceYtTranscript/.test(band(d).msg), band(d).msg);
   assert.ok(d.querySelector('style[data-tr-ui="voice-style"]'), 'sous-titres de YouTube masqués');
   assert.ok(await until(() => calls.length >= 1));
@@ -342,12 +406,12 @@ test('transcription : pause = voix coupée, lecture = phrase redite ; saut = phr
   assert.ok(normal >= 0.9 && normal <= 1.7);
   tts.endAll();
   // vitesse calée sur le temps qui reste, puis vidéo à 2× : deux fois moins de temps, voix plus rapide
-  ctl.seek(6.2);
+  ctl.seek(5);
   assert.ok(await until(() => tts.calls.length === 4));
   const at1 = tts.calls[3].rate;
   tts.endAll();
   ctl.rate = 2;
-  ctl.seek(6.2);
+  ctl.seek(5);
   assert.ok(await until(() => tts.calls.length === 5));
   assert.ok(tts.calls[4].rate > at1, `plus rapide à 2× : ${tts.calls[4].rate} > ${at1}`);
   // entre deux phrases : bande vide, rien de dit
@@ -364,8 +428,10 @@ test('transcription : sous-titres déjà traduits par YouTube (tlang) : aucune d
   const { d, state, voice, ctl, tts, calls } = ytSetup({ ccOn: true, tlangs: ['de', 'fr'], settings: { mode: 'bilingual' } });
   voice.start();
   assert.ok(await until(() => voice.status().mode === 'transcript'));
-  assert.ok(state.fetches.some((u) => /tlang=fr/.test(u) && /pot=TOKEN1/.test(u)), 'traduction demandée à YouTube');
-  assert.equal(state.ccClicks, 0, 'jeton déjà vu : sous-titres pas touchés');
+  assert.ok(state.fetches.some((u) => /tlang=fr/.test(u) && /pot=TOKEN2/.test(u)), 'traduction demandée à YouTube');
+  assert.equal(state.ccClicks, 2, 'CC déjà actif au chargement : coupé puis remis (nouvelle demande du lecteur)');
+  assert.equal(d.querySelector('.ytp-subtitles-button').getAttribute('aria-pressed'), 'true', 'laissé actif, comme avant');
+  assert.equal(voice.status().diag.filter((x) => x.src === 'cc')[0].result, 'was on: off then on');
   assert.equal(band(d).msg, 'voiceYtByYouTube');
   ctl.time = 1.2;
   assert.ok(await until(() => band(d).tr === 'Ouvre le terminal.'));
@@ -493,4 +559,144 @@ test('sans deps.ytPlayer (ancienne page ou test) : ancien mode, comme avant', as
   assert.equal(voice.status().mode, 'youtube');
   assert.equal(band(d).msg, 'voiceSourceTrack');
   voice.stop();
+});
+
+/* ---------------- 1.4.1 : capture réelle (crochets XHR / fetch), CC déjà actif, get_transcript ---------------- */
+test('page : crochets XHR et fetch posés une seule fois, seules les réponses /api/timedtext gardées, réponse du lecteur intacte', async () => {
+  const { w, state } = ytSetup();
+  const fn = w.eval('(' + ytMain.toString() + ')');
+  const xp = w.XMLHttpRequest.prototype;
+  const i1 = fn('info', '');
+  assert.deepEqual(plain(i1.hooks), ['xhr', 'fetch']);
+  const open1 = xp.open;
+  const fetch1 = w.fetch;
+  fn('info', '');
+  assert.equal(xp.open, open1, 'XHR pas réenveloppé');
+  assert.equal(w.fetch, fetch1, 'fetch pas réenveloppé');
+  // XHR du lecteur : corps gardé
+  const x = new w.XMLHttpRequest();
+  x.open('GET', 'https://www.youtube.com/api/timedtext?v=vid1&lang=en&fmt=json3&pot=P');
+  x.send();
+  // fetch du lecteur : la réponse rendue est l'originale
+  const r = await w.fetch('/api/timedtext?v=vid1&lang=en&fmt=srv3&pot=P2');
+  assert.ok(/<timedtext/.test(await r.text()), 'le lecteur reçoit sa réponse');
+  await w.fetch('/youtubei/v1/player');   // autre adresse : jamais regardée
+  const y = new w.XMLHttpRequest();
+  y.open('GET', 'https://www.youtube.com/youtubei/v1/next');
+  y.send();
+  await wait(30);
+  const c = fn('captured', 'vid1');
+  assert.equal(c.items.length, 2);
+  assert.ok(c.items.some((it) => /fmt=srv3/.test(it.url) && /<p t=/.test(it.text)), 'corps XML capturé');
+  assert.ok(c.items.some((it) => /fmt=json3/.test(it.url) && JSON.parse(it.text).events.length), 'corps json3 capturé (XHR)');
+  assert.equal(fn('captured', 'autre').items.length, 0, 'autre vidéo : rien');
+  // nos propres demandes passent par le fetch d'origine : jamais capturées
+  await fn('fetch', '/api/timedtext?v=vid1&lang=en&pot=Z');
+  assert.equal(fn('captured', 'vid1').items.length, 2);
+  assert.ok(state.fetches.length >= 3);
+});
+
+test('transcription : lecteur en XHR, format srv3 (XML), CC déjà actif au chargement : coupé puis remis, corps capturé lu', async () => {
+  const { d, state, voice, ctl, btn } = ytSetup({ xhr: true, fmt: 'srv3', ccOn: true });
+  voice.start();
+  assert.ok(await until(() => voice.status().mode === 'transcript'), JSON.stringify(voice.status().diag));
+  assert.equal(state.ccClicks, 2, 'off puis on');
+  assert.equal(btn.getAttribute('aria-pressed'), 'true', 'laissé actif comme avant');
+  assert.deepEqual(state.fetches, state.player, 'aucune demande rejouée : le corps XML reçu par le lecteur suffit');
+  ctl.time = 1.1;
+  assert.ok(await until(() => band(d).tr === 'OPEN THE TERMINAL.'));
+  voice.stop();
+});
+
+test('transcription : CC actif et piste en cache (off/on ne redemande rien) : setOption de la piste puis avec tlang, adresse du lecteur rejouée', async () => {
+  const { d, state, voice, ctl } = ytSetup({ ccOn: true, cacheCc: true, tlangs: ['de', 'fr'], settings: { mode: 'bilingual' } });
+  voice.start();
+  assert.ok(await until(() => voice.status().mode === 'transcript'), JSON.stringify(voice.status().diag));
+  assert.ok((state.setOptions || []).some((o) => o.languageCode === 'en' && o.translationLanguage && o.translationLanguage.languageCode === 'fr'),
+    JSON.stringify(state.setOptions));
+  assert.ok(state.fetches.some((u) => state.player.indexOf(u) === -1 && /pot=TOKEN2/.test(u) && !/tlang=/.test(u)), 'original rejoué avec le jeton du lecteur');
+  assert.ok(voice.status().diag.some((x) => x.src === 'tlang' && x.result === 'captured body'), 'traduction de YouTube prise dans le corps capturé');
+  ctl.time = 1.2;
+  assert.ok(await until(() => band(d).tr === 'Ouvre le terminal.'));
+  assert.equal(band(d).orig, 'Open the terminal.');
+  voice.stop();
+});
+
+test('transcription : seule get_transcript répond (lecteur muet) : clé, en-têtes du client et params de la page, segments lus', async () => {
+  const { d, state, voice, ctl } = ytSetup({ neverRequest: true, innertube: true });
+  voice.start();
+  assert.ok(await until(() => voice.status().mode === 'transcript', 6000), JSON.stringify(voice.status().diag));
+  const p = state.posts[0];
+  assert.ok(/[?&]key=AIzaFAKE/.test(p.url) && /prettyPrint=false/.test(p.url), p.url);
+  assert.equal(p.init.method, 'POST');
+  assert.equal(p.init.credentials, 'include');
+  assert.equal(p.init.headers['X-Youtube-Client-Name'], '1');
+  assert.equal(p.init.headers['X-Youtube-Client-Version'], '2.20261127.01.00');
+  assert.equal(p.init.headers['X-Goog-Visitor-Id'], 'VIS');
+  const body = JSON.parse(p.init.body);
+  assert.equal(body.params, 'PAGEPARAMS', 'params de getTranscriptEndpoint (engagementPanels)');
+  assert.equal(body.context.client.clientName, 'WEB');
+  assert.ok(voice.status().diag.some((x) => x.src === 'get_transcript' && /segments/.test(x.result)));
+  ctl.time = 1.2;
+  assert.ok(await until(() => band(d).tr === 'OPEN THE TERMINAL.'));
+  voice.stop();
+});
+
+test('page : get_transcript défensif (401 connecté -> essai anonyme, params construits, structure inconnue ignorée)', async () => {
+  const { w } = ytSetup({ ytcfg: false });
+  const calls = [];
+  w.fetch = (url, init) => {
+    calls.push({ url, cred: init && init.credentials, params: init && JSON.parse(init.body).params });
+    if (init.credentials === 'include') return Promise.resolve({ ok: false, status: 401, text: () => Promise.resolve('') });
+    return Promise.resolve({ ok: true, status: 200, text: () => Promise.resolve(JSON.stringify({ a: [1, null, 'x', { b: { transcriptSegmentRenderer: {
+      startMs: '1500', endMs: '3000', snippet: { simpleText: 'hello there' } } } }, { transcriptSegmentRenderer: { startMs: 'nope', snippet: {} } }] })) });
+  };
+  const fn = w.eval('(' + ytMain.toString() + ')');
+  const r = await fn('transcript', 'vid1abcdef');
+  assert.equal(r.ok, true);
+  assert.deepEqual(plain(r.segments), [{ start: 1.5, end: 3, text: 'hello there' }]);
+  assert.deepEqual(calls.map((c) => c.cred), ['include', 'omit']);
+  assert.equal(w.atob(calls[0].params), '\n\u000avid1abcdef', 'params construits (champ 1 = id de la vidéo)');
+  assert.deepEqual(plain(r.tried), ['built:401', 'built/anon:200']);
+});
+
+test('pistes présentes mais illisibles : jamais « vidéo sans sous-titres », message distinct (clé Groq pour écouter le son)', async () => {
+  function Rec() { this.state = 'inactive'; }
+  Rec.isTypeSupported = () => true;
+  Rec.prototype.start = function () { this.state = 'recording'; };
+  Rec.prototype.stop = function () { this.state = 'inactive'; this.ondataavailable({ data: new this.W.Blob(['x'], { type: 'audio/webm' }) }); this.onstop(); };
+  const s = ytSetup({ neverRequest: true, settings: { voiceMode: 'subs' }, deps: { chunkMs: 30, MediaRecorder: Rec } });
+  Rec.prototype.W = s.w;
+  const track = { kind: 'audio', readyState: 'live', id: 'a1' };
+  s.video.captureStream = () => ({ getAudioTracks: () => [track], getTracks: () => [track] });
+  s.w.MediaStream = function (tracks) { this.tracks = tracks; };
+  s.voice.start();
+  assert.ok(await until(() => s.voice.status().mode === 'audio', 6000), JSON.stringify(s.voice.status().diag));
+  assert.ok(await until(() => band(s.d).msg === 'voiceYtUnreadableGroq'), band(s.d).msg);
+  const diag = s.voice.status().diag;
+  ['player', 'captured', 'cc', 'replay (bare)', 'get_transcript', 'source', 'groq'].forEach((k) => assert.ok(diag.some((x) => x.src === k), 'diagnostic : ' + k));
+  s.voice.stop();
+});
+
+test('entrées de performance : simple bonus, rejouées si rien n\'est capturé', async () => {
+  const { voice, state } = ytSetup({ neverRequest: true, perf: true, api: false });
+  voice.start();
+  assert.ok(await until(() => voice.status().mode === 'transcript', 6000), JSON.stringify(voice.status().diag));
+  assert.ok(state.fetches.some((u) => /pot=TOKEN1/.test(u) && /fmt=json3/.test(u)), state.fetches.join('\n'));
+  voice.stop();
+});
+
+test('background : ytPlayer track/captured/transcript : seulement des codes de langue et un id de vidéo', async () => {
+  const { bg, api } = H.makeBackground({ local: { settings: {} } });
+  const runs = [];
+  api.scripting = { executeScript: (o) => { runs.push(o); return Promise.resolve([{ result: { ok: true } }]); } };
+  const yt = { tab: { id: 4 }, frameId: 0, url: 'https://www.youtube.com/watch?v=x' };
+  await bg.onMessage({ type: 'ytPlayer', op: 'track', arg: { lang: 'en', kind: 'asr', tlang: 'fr"); alert(1', extra: 'x' } }, yt);
+  assert.deepEqual(runs[0].args, ['track', { lang: 'en', kind: 'asr' }]);
+  await bg.onMessage({ type: 'ytPlayer', op: 'captured', arg: '../x' }, yt);
+  assert.deepEqual(runs[1].args, ['captured', '']);
+  assert.equal((await bg.onMessage({ type: 'ytPlayer', op: 'transcript', arg: '' }, yt)).error, 'bad_arg');
+  await bg.onMessage({ type: 'ytPlayer', op: 'transcript', arg: 'QTR4S_uP5Mc' }, yt);
+  assert.deepEqual(runs[2].args, ['transcript', 'QTR4S_uP5Mc']);
+  assert.equal(runs.length, 3);
 });

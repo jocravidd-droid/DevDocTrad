@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Άνοιγμα ρυθμίσεων"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Οι υπότιτλοι του YouTube δεν διαβάζονται τώρα: πρόσθεσε ένα δωρεάν κλειδί Groq για να ακούς τον ήχο αντί γι' αυτό."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Καμία φωνή σύνθεσης για {0}: άνοιξε το Chrome με --enable-speech-dispatcher (και εγκατάστησε speech-dispatcher + espeak-ng) για να έχεις φωνή."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Χωρίς φωνή"
+  },
+  "voiceRobotic": {
+    "message": "Ρομποτική φωνή ({0}): για καθαρή δωρεάν φωνή χρησιμοποίησε Google Chrome ή Microsoft Edge (φυσικές φωνές Google/Microsoft) ή εγκατάστησε μια φωνή Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Ρομποτική φωνή"
+  },
+  "optVoiceName": {
+    "message": "Μεταφρασμένη φωνή"
+  },
+  "optVoiceNameHelp": {
+    "message": "Μόνο φωνές της γλώσσας προορισμού. Το Αυτόματο διαλέγει την πιο καθαρή (Google, μετά φυσικές φωνές· eSpeak τελευταία)."
+  },
+  "optVoiceAuto": {
+    "message": "Αυτόματο (καλύτερη φωνή)"
+  },
+  "optVoiceTest": {
+    "message": "Δοκιμή φωνής"
+  },
+  "optVoiceUsed": {
+    "message": "Φωνή σε χρήση: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "μη διαθέσιμη εδώ"
+  },
   "popupSensitive": {
     "message": "Ευαίσθητη σελίδα: δεν μεταφράζεται ποτέ αυτόματα. Το κουμπί λειτουργεί, το Ollama χρησιμοποιείται πρώτο αν έχει ρυθμιστεί."
   },

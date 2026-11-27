@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "Legendas traduzidas pelo YouTube (grátis), sincronizadas com o vídeo",
 "voiceYtScreen": "Transcrição do YouTube indisponível: lendo as legendas da tela",
 "voiceNoCaptionsGroq": "Este vídeo não tem legendas: é preciso uma chave gratuita do Groq para ouvir o som.",
-"voiceOpenSettings": "Abrir configurações"
+"voiceOpenSettings": "Abrir configurações",
+"voiceYtUnreadableGroq": "Não dá para ler as legendas do YouTube agora: adicione uma chave gratuita do Groq para ouvir o áudio no lugar.",
+"voiceNoTtsLinux": "Nenhuma voz de síntese para {0}: abra o Chrome com --enable-speech-dispatcher (e instale speech-dispatcher + espeak-ng) para ter uma voz.",
+"voiceNoVoiceShort": "Sem voz",
+"voiceRobotic": "Voz robótica ({0}): para uma voz clara e gratuita, use o Google Chrome ou o Microsoft Edge (vozes naturais Google/Microsoft) ou instale uma voz Piper.",
+"voiceRoboticShort": "Voz robótica",
+"optVoiceName": "Voz traduzida",
+"optVoiceNameHelp": "Somente vozes do idioma de destino. Automático escolhe a mais clara (Google, depois vozes naturais; eSpeak por último).",
+"optVoiceAuto": "Automático (melhor voz)",
+"optVoiceTest": "Testar a voz",
+"optVoiceUsed": "Voz usada: {0}",
+"optVoiceMissing": "indisponível aqui"
 }

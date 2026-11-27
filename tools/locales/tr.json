@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTube tarafından çevrilen altyazılar (ücretsiz), videoyla eşzamanlı",
 "voiceYtScreen": "YouTube dökümü kullanılamıyor: ekrandaki altyazılar okunuyor",
 "voiceNoCaptionsGroq": "Bu videoda altyazı yok: sesi dinlemek için ücretsiz bir Groq anahtarı gerekir.",
-"voiceOpenSettings": "Ayarları aç"
+"voiceOpenSettings": "Ayarları aç",
+"voiceYtUnreadableGroq": "YouTube altyazıları şu anda okunamıyor: bunun yerine sesi dinlemek için ücretsiz bir Groq anahtarı ekle.",
+"voiceNoTtsLinux": "{0} için konuşma sesi yok: ses için Chrome'u --enable-speech-dispatcher ile başlat (ve speech-dispatcher + espeak-ng kur).",
+"voiceNoVoiceShort": "Ses yok",
+"voiceRobotic": "Robotik ses ({0}): net ve ücretsiz bir ses için Google Chrome veya Microsoft Edge kullan (doğal Google/Microsoft sesleri) ya da bir Piper sesi kur.",
+"voiceRoboticShort": "Robotik ses",
+"optVoiceName": "Çevrilmiş ses",
+"optVoiceNameHelp": "Yalnızca hedef dildeki sesler. Otomatik en net olanı seçer (Google, sonra doğal sesler; eSpeak en son).",
+"optVoiceAuto": "Otomatik (en iyi ses)",
+"optVoiceTest": "Sesi dene",
+"optVoiceUsed": "Kullanılan ses: {0}",
+"optVoiceMissing": "burada kullanılamıyor"
 }

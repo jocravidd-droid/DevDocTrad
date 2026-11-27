@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "打开设置"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "目前无法读取 YouTube 字幕：添加免费的 Groq 密钥，改为收听声音。"
+  },
+  "voiceNoTtsLinux": {
+    "message": "没有{0}的语音：使用 --enable-speech-dispatcher 启动 Chrome（并安装 speech-dispatcher + espeak-ng）即可获得语音。"
+  },
+  "voiceNoVoiceShort": {
+    "message": "没有语音"
+  },
+  "voiceRobotic": {
+    "message": "机械音（{0}）：想要清晰且免费的语音，请使用 Google Chrome 或 Microsoft Edge（自然的 Google/Microsoft 语音），或安装 Piper 语音。"
+  },
+  "voiceRoboticShort": {
+    "message": "机械音"
+  },
+  "optVoiceName": {
+    "message": "翻译语音"
+  },
+  "optVoiceNameHelp": {
+    "message": "仅列出目标语言的语音。自动会选最清晰的（Google，其次是自然语音；eSpeak 最后）。"
+  },
+  "optVoiceAuto": {
+    "message": "自动（最佳语音）"
+  },
+  "optVoiceTest": {
+    "message": "试听语音"
+  },
+  "optVoiceUsed": {
+    "message": "当前语音：{0}"
+  },
+  "optVoiceMissing": {
+    "message": "此处不可用"
+  },
   "popupSensitive": {
     "message": "敏感页面：从不自动翻译。按钮仍然可用，如已配置 Ollama 则优先使用。"
   },

@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "YouTube द्वारा अनुवादित उपशीर्षक (मुफ़्त), वीडियो के साथ मिलाए गए",
 "voiceYtScreen": "YouTube ट्रांसक्रिप्ट उपलब्ध नहीं: स्क्रीन पर दिख रहे उपशीर्षक पढ़े जा रहे हैं",
 "voiceNoCaptionsGroq": "इस वीडियो में उपशीर्षक नहीं हैं: आवाज़ सुनने के लिए मुफ़्त Groq कुंजी चाहिए।",
-"voiceOpenSettings": "सेटिंग्स खोलें"
+"voiceOpenSettings": "सेटिंग्स खोलें",
+"voiceYtUnreadableGroq": "YouTube उपशीर्षक अभी पढ़े नहीं जा सकते: इसके बजाय ध्वनि सुनने के लिए मुफ़्त Groq कुंजी जोड़ें।",
+"voiceNoTtsLinux": "{0} के लिए कोई वाक् आवाज़ नहीं: आवाज़ पाने के लिए Chrome को --enable-speech-dispatcher के साथ चलाएँ (और speech-dispatcher + espeak-ng इंस्टॉल करें)।",
+"voiceNoVoiceShort": "कोई आवाज़ नहीं",
+"voiceRobotic": "रोबोटिक आवाज़ ({0}): साफ़ और मुफ़्त आवाज़ के लिए Google Chrome या Microsoft Edge (स्वाभाविक Google/Microsoft आवाज़ें) इस्तेमाल करें, या Piper आवाज़ इंस्टॉल करें।",
+"voiceRoboticShort": "रोबोटिक आवाज़",
+"optVoiceName": "अनुवादित आवाज़",
+"optVoiceNameHelp": "केवल लक्ष्य भाषा की आवाज़ें। स्वचालित सबसे साफ़ आवाज़ चुनता है (Google, फिर स्वाभाविक आवाज़ें; eSpeak सबसे आख़िर में)।",
+"optVoiceAuto": "स्वचालित (सबसे अच्छी आवाज़)",
+"optVoiceTest": "आवाज़ जाँचें",
+"optVoiceUsed": "इस्तेमाल हो रही आवाज़: {0}",
+"optVoiceMissing": "यहाँ उपलब्ध नहीं"
 }

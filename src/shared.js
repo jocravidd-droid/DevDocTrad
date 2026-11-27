@@ -81,7 +81,8 @@
     autoSites: [],              // noms d'hôte
     theme: 'system',            // 'system' | 'light' | 'dark'
     voiceMode: 'subs',          // voix des vidéos : 'subs' (sous-titres) | 'dub' (sous-titres + voix traduite) | 'voice' (voix seule)
-    voiceRate: 1                // vitesse de la voix traduite : 0,5 à 2 (multiplie le calage sur la durée du sous-titre)
+    voiceRate: 1,               // vitesse de la voix traduite : 0,5 à 2 (multiplie le calage sur la durée du sous-titre)
+    voiceName: ''               // voix choisie à la main dans les réglages ('' : automatique, la meilleure pour la langue)
   };
 
   /* ---------- Voix des vidéos : mode et vitesse ---------- */
@@ -101,6 +102,99 @@
     if (x === null || x === undefined || x === '' || !isFinite(n)) return 1;
     return Math.round(Math.min(VOICE_RATE_MAX, Math.max(VOICE_RATE_MIN, n)) * 10) / 10;
   }
+  /* ---------- Voix de synthèse : langue et qualité (voice.js et réglages) ----------
+   * Jamais une voix d'une autre langue que la cible (une voix anglaise qui lit du français est
+   * incompréhensible) : sans voix de la langue, sous-titres seuls. Ordre de qualité :
+   *   4. « Google <langue> » (Chrome : voix réseau naturelles) ;
+   *   3. voix réseau ou naturelles (Microsoft … Online (Natural), Neural, Premium, Enhanced, remote) ;
+   *   2. voix locales correctes (Apple, Microsoft de bureau, Piper, RHVoice…) ;
+   *   1. voix robotiques : eSpeak / espeak-ng, mbrola, pico, festival, flite, et sous Linux toute voix
+   *      locale venue de speech-dispatcher (espeak-ng presque toujours). */
+  var LANG_ALIAS = { no: ['no', 'nb', 'nn'], he: ['he', 'iw'], id: ['id', 'in'], fil: ['fil', 'tl'] };
+  var DEFAULT_REGION = { en: 'US', ja: 'JP', ko: 'KR', zh: 'CN', sv: 'SE', da: 'DK', el: 'GR', cs: 'CZ', uk: 'UA',
+    hi: 'IN', bn: 'IN', ta: 'IN', te: 'IN', mr: 'IN', vi: 'VN', he: 'IL', fa: 'IR', ar: 'SA', ms: 'MY', sw: 'KE',
+    ur: 'PK', no: 'NO', nb: 'NO', ca: 'ES', et: 'EE', sl: 'SI', sr: 'RS', fil: 'PH' };
+  var ROBOTIC_RE = /e-?speak|mbrola|\bpico\b|festival|\bflite\b|speech-?dispatcher|speechd/i;
+  var NATURAL_RE = /natural|neural|online|premium|enhanced|wavenet/i;
+  var GOOD_LOCAL_RE = /piper|rhvoice|apple|siri|microsoft/i;
+  function normLang(code) { return String(code || '').replace(/_/g, '-').toLowerCase(); }
+  function primaryLang(code) { return normLang(code).split('-')[0]; }
+  function sameLanguage(voiceLang, target) {
+    var p = primaryLang(voiceLang);
+    var tp = primaryLang(target);
+    if (!p || !tp) return false;
+    return p === tp || (LANG_ALIAS[tp] || []).indexOf(p) !== -1;
+  }
+  /* Voix « exacte » : même code complet, ou région par défaut de la langue (fr -> fr-FR, en -> en-US) */
+  function exactLanguage(voiceLang, target) {
+    var v = normLang(voiceLang);
+    var tg = normLang(target);
+    if (v === tg) return true;
+    if (tg.indexOf('-') !== -1 || !sameLanguage(v, tg)) return false;
+    var region = (DEFAULT_REGION[tg] || tg).toLowerCase();
+    return v.split('-')[1] === region;
+  }
+  /* Linux de bureau (Chrome, Chromium, Firefox : « X11; Linux x86_64 ») ; ni Android ni ChromeOS */
+  function isLinuxUA(ua) {
+    var u = String(ua || '');
+    return /\bX11\b|Linux (?:x86|i[3-6]86|aarch|arm)/.test(u) && !/Android|CrOS/.test(u);
+  }
+  function voiceTier(v, opts) {
+    if (!v) return 0;
+    var name = String(v.name || v.voiceName || '');
+    var all = name + ' ' + String(v.voiceURI || '');
+    if (ROBOTIC_RE.test(all)) return 1;
+    if (/^google\b/i.test(name)) return 4;
+    if (NATURAL_RE.test(name) || v.remote === true || v.localService === false) return 3;
+    if (GOOD_LOCAL_RE.test(all)) return 2;
+    if (opts && opts.linux) return 1;           // voix locale sous Linux : speech-dispatcher, espeak-ng le plus souvent
+    return 2;
+  }
+  function isRoboticVoice(v, opts) { return voiceTier(v, opts) === 1; }
+  /* Voix de la langue cible seulement ; opts.name : voix choisie à la main (gardée si elle est de la langue) ;
+     sinon qualité, puis région exacte, puis voix par défaut (jamais la voix par défaut d'une autre langue). */
+  function voicesFor(voices, target) {
+    return Array.prototype.filter.call(voices || [], function (v) { return v && (v.name || v.voiceName) && sameLanguage(v.lang, target); });
+  }
+  function pickTtsVoice(voices, target, opts) {
+    opts = opts || {};
+    var list = voicesFor(voices, target);
+    if (opts.name) {
+      var m = list.filter(function (v) { return (v.name || v.voiceName) === opts.name; })[0];
+      if (m) return m;
+    }
+    var best = null;
+    var bestScore = -1;
+    list.forEach(function (v) {
+      var score = voiceTier(v, opts) * 1000 + (exactLanguage(v.lang, target) ? 100 : 0) + (v.default ? 1 : 0);
+      if (score > bestScore) { best = v; bestScore = score; }
+    });
+    return best;
+  }
+
+  /* Phrase de test de la voix (réglages, « Tester la voix »), dans la langue cible */
+  var VOICE_SAMPLE = {
+    fr: 'Bonjour, voici la voix qui lira les vidéos traduites.', en: 'Hello, this is the voice that will read translated videos.',
+    es: 'Hola, esta es la voz que leerá los vídeos traducidos.', de: 'Hallo, das ist die Stimme, die übersetzte Videos vorliest.',
+    it: 'Ciao, questa è la voce che leggerà i video tradotti.', pt: 'Olá, esta é a voz que vai ler os vídeos traduzidos.',
+    'pt-BR': 'Olá, esta é a voz que vai ler os vídeos traduzidos.', nl: "Hallo, dit is de stem die vertaalde video's voorleest.",
+    pl: 'Cześć, to jest głos, który będzie czytał przetłumaczone filmy.', ru: 'Здравствуйте, этим голосом будут озвучены переведённые видео.',
+    uk: 'Привіт, цим голосом будуть озвучені перекладені відео.', cs: 'Dobrý den, tímto hlasem budou čtena přeložená videa.',
+    sk: 'Dobrý deň, týmto hlasom sa budú čítať preložené videá.', ro: 'Bună, aceasta este vocea care va citi videoclipurile traduse.',
+    hu: 'Szia, ez a hang olvassa fel a lefordított videókat.', bg: 'Здравейте, с този глас ще се четат преведените видеа.',
+    el: 'Γεια σας, αυτή είναι η φωνή που θα διαβάζει τα μεταφρασμένα βίντεο.', sv: 'Hej, det här är rösten som läser upp översatta videor.',
+    da: 'Hej, det er stemmen, der læser oversatte videoer op.', no: 'Hei, dette er stemmen som leser oversatte videoer.',
+    fi: 'Hei, tämä ääni lukee käännetyt videot.', tr: 'Merhaba, çevrilmiş videoları bu ses okuyacak.',
+    ar: 'مرحبًا، هذا هو الصوت الذي سيقرأ مقاطع الفيديو المترجمة.', he: 'שלום, זה הקול שיקרא את הסרטונים המתורגמים.',
+    fa: 'سلام، این صدایی است که ویدیوهای ترجمه‌شده را می‌خواند.', hi: 'नमस्ते, यह वह आवाज़ है जो अनुवादित वीडियो पढ़ेगी।',
+    bn: 'নমস্কার, এই কণ্ঠটি অনূদিত ভিডিও পড়বে।', ur: 'السلام علیکم، یہ وہ آواز ہے جو ترجمہ شدہ ویڈیوز پڑھے گی۔',
+    id: 'Halo, ini suara yang akan membacakan video terjemahan.', ms: 'Helo, inilah suara yang akan membaca video terjemahan.',
+    vi: 'Xin chào, đây là giọng đọc các video đã dịch.', th: 'สวัสดี นี่คือเสียงที่จะอ่านวิดีโอที่แปลแล้ว',
+    zh: '你好，这是朗读翻译视频的声音。', 'zh-TW': '你好，這是朗讀翻譯影片的聲音。', ja: 'こんにちは。翻訳された動画を読み上げる声です。',
+    ko: '안녕하세요, 번역된 동영상을 읽어 줄 목소리입니다.', sw: 'Habari, hii ndiyo sauti itakayosoma video zilizotafsiriwa.'
+  };
+  function voiceSample(code) { return VOICE_SAMPLE[code] || VOICE_SAMPLE[primaryLang(code)] || VOICE_SAMPLE.en; }
+
   /* « 1,2× » en français, « 1.2× » en anglais (langue de l'interface du navigateur) */
   function formatVoiceRate(x, uiLang) {
     var n = clampVoiceRate(x);
@@ -644,6 +738,15 @@
     VOICE_RATE_MIN: VOICE_RATE_MIN,
     VOICE_RATE_MAX: VOICE_RATE_MAX,
     voiceModeOf: voiceModeOf,
+    LANG_ALIAS: LANG_ALIAS,
+    sameLanguage: sameLanguage,
+    exactLanguage: exactLanguage,
+    voiceTier: voiceTier,
+    isRoboticVoice: isRoboticVoice,
+    voicesFor: voicesFor,
+    pickTtsVoice: pickTtsVoice,
+    voiceSample: voiceSample,
+    isLinuxUA: isLinuxUA,
     clampVoiceRate: clampVoiceRate,
     formatVoiceRate: formatVoiceRate,
     escapeText: escapeText,

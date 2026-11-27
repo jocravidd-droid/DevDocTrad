@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "เปิดการตั้งค่า"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "ตอนนี้อ่านคำบรรยาย YouTube ไม่ได้: เพิ่มคีย์ Groq ฟรีเพื่อฟังเสียงแทน"
+  },
+  "voiceNoTtsLinux": {
+    "message": "ไม่มีเสียงสังเคราะห์สำหรับ {0}: เปิด Chrome ด้วย --enable-speech-dispatcher (และติดตั้ง speech-dispatcher + espeak-ng) เพื่อให้มีเสียง"
+  },
+  "voiceNoVoiceShort": {
+    "message": "ไม่มีเสียง"
+  },
+  "voiceRobotic": {
+    "message": "เสียงหุ่นยนต์ ({0}): หากต้องการเสียงที่ชัดและฟรี ให้ใช้ Google Chrome หรือ Microsoft Edge (เสียงธรรมชาติของ Google/Microsoft) หรือติดตั้งเสียง Piper"
+  },
+  "voiceRoboticShort": {
+    "message": "เสียงหุ่นยนต์"
+  },
+  "optVoiceName": {
+    "message": "เสียงที่แปลแล้ว"
+  },
+  "optVoiceNameHelp": {
+    "message": "เฉพาะเสียงของภาษาเป้าหมาย อัตโนมัติจะเลือกเสียงที่ชัดที่สุด (Google แล้วเสียงธรรมชาติ eSpeak ท้ายสุด)"
+  },
+  "optVoiceAuto": {
+    "message": "อัตโนมัติ (เสียงที่ดีที่สุด)"
+  },
+  "optVoiceTest": {
+    "message": "ทดสอบเสียง"
+  },
+  "optVoiceUsed": {
+    "message": "เสียงที่ใช้: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "ไม่มีที่นี่"
+  },
   "popupSensitive": {
     "message": "หน้าที่ละเอียดอ่อน: ไม่แปลอัตโนมัติเลย ปุ่มยังใช้ได้ และจะใช้ Ollama ก่อนหากตั้งค่าไว้"
   },

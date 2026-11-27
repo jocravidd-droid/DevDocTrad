@@ -28,7 +28,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 ### Chrome, Edge ou Brave
 
-1. Télécharge le fichier `devdoctrad-chrome-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-chrome-1.4.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.4.0.zip).
+1. Télécharge le fichier `devdoctrad-chrome-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-chrome-1.4.1.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.4.1.zip).
 2. Décompresse ce fichier zip dans un dossier que tu garderas (par exemple `Documents/DevDocTrad`). Ne supprime pas ce dossier ensuite : le navigateur charge l'extension depuis lui.
 3. Ouvre la page des extensions en tapant dans la barre d'adresse :
    - Chrome : `chrome://extensions`
@@ -45,7 +45,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 **Ou à la main**, avec le zip (module temporaire, utile pour tester une version précise) :
 
-1. Télécharge le fichier `devdoctrad-firefox-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-firefox-1.4.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.4.0.zip).
+1. Télécharge le fichier `devdoctrad-firefox-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-firefox-1.4.1.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.4.1.zip).
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
@@ -216,7 +216,7 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 
 ### Install (Chrome, Edge, Brave)
 
-1. Download `devdoctrad-chrome-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-chrome-1.4.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.4.0.zip). Unzip it into a folder you will keep.
+1. Download `devdoctrad-chrome-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-chrome-1.4.1.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.4.1.zip). Unzip it into a folder you will keep.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
@@ -227,7 +227,7 @@ Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/de
 
 Or by hand, as a temporary add-on:
 
-1. Download `devdoctrad-firefox-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-firefox-1.4.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.4.0.zip).
+1. Download `devdoctrad-firefox-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-firefox-1.4.1.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.4.1.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and select the zip file. (Temporary: it is removed when Firefox closes.)
 

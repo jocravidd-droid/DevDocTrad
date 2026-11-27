@@ -67,11 +67,17 @@ setTimeout(() => {
 }, 200);
 </script>`;
 
-/* Faux YouTube (1.4), servi par Playwright à l'adresse https://www.youtube.com (rien ne sort sur le réseau) :
-   même structure que le vrai pour ce qui compte ici : #movie_player avec getPlayerResponse(), bouton des
-   sous-titres qui fait demander au « lecteur » /api/timedtext avec son jeton pot (entrée de performance),
-   /api/timedtext qui répond vide sans jeton (comme YouTube désormais), une vraie <video> qui joue, navigation
-   interne (pushState + yt-navigate-finish). */
+/* Faux YouTube RÉALISTE (1.4.1), servi par Playwright à l'adresse https://www.youtube.com (rien ne sort sur le
+   réseau). Ce que fait le vrai YouTube, et qui cassait la 1.4.0 (le faux de la 1.4.0 créait lui-même une entrée
+   de performance et masquait le bug) :
+   - le lecteur demande /api/timedtext lui-même, en XMLHttpRequest, avec son jeton « pot » ;
+   - AUCUNE entrée de performance pour ces requêtes (tampon Resource Timing à 0, vidé sans cesse) ;
+   - sous-titres DÉJÀ actifs au chargement (vidéo 1) : la demande part avant l'arrivée de l'extension ;
+   - /api/timedtext sans jeton répond vide ; seule une demande avec jeton a des données ;
+   - player.setOption('captions', 'track', { languageCode, translationLanguage }) refait une demande ;
+   - vidéo 3 : /api/timedtext toujours vide, seule /youtubei/v1/get_transcript répond (avec la clé, le nom et la
+     version du client de ytcfg, sinon 400) ;
+   - navigation interne (pushState + yt-navigate-finish), une vraie <video> qui joue. */
 const YT_SENTENCES = [[0, 3.5, 'Welcome to this short tutorial.'], [3.5, 7, 'First, install the package with npm.'],
   [7, 10, 'Then open the configuration file.']];
 function asrJson3(sentences) {
@@ -83,21 +89,50 @@ function asrJson3(sentences) {
       segs: words.map((w, i) => (i ? { utf8: ' ' + w, tOffsetMs: i * step } : { utf8: w })) };
   }) });
 }
+const YT3_SENTENCES = [[0.5, 4.5, 'Only the transcript panel works here.'], [5, 9, 'The player gets nothing.']];
 const YT_TEXT = {
   e2eVid1: { en: asrJson3(YT_SENTENCES) },
   e2eVid2: {
     en: asrJson3([[0.5, 4, 'This is the second video.'], [5, 9, 'It is translated by the player itself.']]),
     fr: JSON.stringify({ events: [{ tStartMs: 500, dDurationMs: 3500, segs: [{ utf8: 'Voici la deuxième vidéo.' }] },
       { tStartMs: 5000, dDurationMs: 4000, segs: [{ utf8: 'Elle est traduite par le lecteur lui-même.' }] }] })
-  }
+  },
+  e2eVid3: {}
 };
-const YT_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Fake YouTube</title>
+const YT_CFG = { INNERTUBE_API_KEY: 'AIzaE2E_FAKE_KEY', INNERTUBE_CONTEXT_CLIENT_NAME: 1, INNERTUBE_CLIENT_VERSION: '2.20261127.00.00',
+  INNERTUBE_CONTEXT: { client: { clientName: 'WEB', clientVersion: '2.20261127.00.00', hl: 'en', gl: 'FR', visitorData: 'E2EVISITOR' } } };
+/* /youtubei/v1/get_transcript : 400 sans la clé, le nom et la version du client (comme le vrai en requête naïve) */
+function fakeTranscript(route, req, u, posts) {
+  const h = req.headers();
+  let body = {};
+  try { body = JSON.parse(req.postData() || '{}'); } catch (e) { body = {}; }
+  const ok = u.searchParams.get('key') === YT_CFG.INNERTUBE_API_KEY && h['x-youtube-client-name'] === '1' &&
+    h['x-youtube-client-version'] === YT_CFG.INNERTUBE_CLIENT_VERSION && !!body.context && !!body.context.client;
+  posts.push({ url: u.href, name: h['x-youtube-client-name'], version: h['x-youtube-client-version'], params: body.params, ok });
+  if (!ok) return route.fulfill({ status: 400, contentType: 'application/json', body: '{"error":{"code":400,"status":"FAILED_PRECONDITION"}}' });
+  const sents = body.params === 'E2EPARAMS_e2eVid3' ? YT3_SENTENCES : [];
+  const segs = sents.map(([a, b, text]) => ({ transcriptSegmentRenderer: { startMs: String(a * 1000), endMs: String(b * 1000),
+    snippet: { runs: [{ text }] }, startTimeText: { simpleText: '0:0' + Math.floor(a) } } }));
+  return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ actions: [{ updateEngagementPanelAction: {
+    content: { transcriptRenderer: { content: { transcriptSearchPanelRenderer: { body: { transcriptSegmentListRenderer: {
+      initialSegments: segs } } } } } } } }] }) });
+}
+const YT_PAGE = (id) => `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Fake YouTube</title>
 <style>body{margin:0;background:#0f0f0f;color:#eee;font:14px system-ui}#movie_player{position:relative;width:960px;margin:24px auto}
 video{width:100%;display:block}.ytp-subtitles-button{position:absolute;right:8px;bottom:8px}</style></head><body>
 <div id="movie_player" class="html5-video-player"><video src="/e2e/clip.webm" playsinline></video>
 <button class="ytp-subtitles-button" aria-pressed="false">CC</button><div class="ytp-caption-window-container"></div></div>
 <script>
 (() => {
+  // comme le vrai YouTube : aucune entrée Resource Timing pour /api/timedtext
+  try { performance.setResourceTimingBufferSize(0); } catch (e) {}
+  const clearRT = () => { try { performance.clearResourceTimings(); } catch (e) {} };
+  clearRT();
+  setInterval(clearRT, 20);
+  window.ytcfg = { data_: ${JSON.stringify(YT_CFG)}, get(k) { return this.data_[k]; } };
+  const initial = (vid) => ({ currentVideoEndpoint: { watchEndpoint: { videoId: vid } }, engagementPanels: [{ engagementPanelSectionListRenderer: {
+    content: { continuationItemRenderer: { continuationEndpoint: { getTranscriptEndpoint: { params: 'E2EPARAMS_' + vid } } } } } }] });
+  window.ytInitialData = initial(${JSON.stringify(id || '')});
   const resp = (id, tlangs) => ({
     videoDetails: { videoId: id, title: 'Fake ' + id },
     captions: { playerCaptionsTracklistRenderer: {
@@ -107,22 +142,46 @@ video{width:100%;display:block}.ytp-subtitles-button{position:absolute;right:8px
     streamingData: { adaptiveFormats: [{ itag: 251, audioTrack: { id: 'en.4', displayName: 'English', audioIsDefault: true } }] }
   });
   // vidéo 1 : YouTube ne propose pas le français (traduction par le fournisseur) ; vidéo 2 : il le propose
-  const RESP = { e2eVid1: resp('e2eVid1', ['de', 'es']), e2eVid2: resp('e2eVid2', ['de', 'fr']) };
+  const RESP = { e2eVid1: resp('e2eVid1', ['de', 'es']), e2eVid2: resp('e2eVid2', ['de', 'fr']), e2eVid3: resp('e2eVid3', ['de']) };
   let cur = new URLSearchParams(location.search).get('v');
+  let track = null;
+  window.__ytPlayerReqs = [];
   const player = document.getElementById('movie_player');
-  player.getPlayerResponse = () => RESP[cur];
   const btn = document.querySelector('.ytp-subtitles-button');
+  player.getPlayerResponse = () => RESP[cur];
+  // le lecteur : XMLHttpRequest avec son jeton
+  const request = () => {
+    const t = track || { lang: 'en' };
+    const url = '/api/timedtext?v=' + cur + '&caps=asr&opi=1&xoaf=5&hl=en&lang=' + t.lang + '&kind=asr' +
+      (t.tlang ? '&tlang=' + t.tlang : '') + '&fmt=json3&xorb=2&xobt=3&xovt=3&pot=E2E_POT_' + cur + '&c=WEB&cver=2.20261127';
+    window.__ytPlayerReqs.push(url);
+    const x = new XMLHttpRequest();
+    x.open('GET', url);
+    x.send();
+  };
+  player.setOption = (mod, opt, v) => {
+    if (mod !== 'captions' || opt !== 'track') return;
+    track = v && v.languageCode ? { lang: v.languageCode, tlang: v.translationLanguage && v.translationLanguage.languageCode } : null;
+    if (track) { btn.setAttribute('aria-pressed', 'true'); request(); }
+  };
+  player.getOption = (mod, opt) => (mod === 'captions' && opt === 'track' && track ? { languageCode: track.lang, kind: 'asr' } : {});
+  player.loadModule = () => {};
   btn.addEventListener('click', () => {
     const on = btn.getAttribute('aria-pressed') !== 'true';
     btn.setAttribute('aria-pressed', String(on));
     window.__ccClicks = (window.__ccClicks || 0) + 1;
-    if (on) fetch('/api/timedtext?v=' + cur + '&caps=asr&lang=en&kind=asr&fmt=json3&xorb=2&pot=E2E_POT_' + cur + '&c=WEB&cver=2.20261127');
+    if (on) request();
   });
+  // vidéo 1 : sous-titres déjà actifs au chargement (préférence de l'utilisateur) : demande partie avant l'extension
+  if (cur === 'e2eVid1') { btn.setAttribute('aria-pressed', 'true'); request(); }
   window.__ddtGo = (id) => {
     history.pushState({}, '', '/watch?v=' + id);
     cur = id;
+    window.ytInitialData = initial(id);
     const v = document.querySelector('video');
     v.currentTime = 0;
+    // sous-titres actifs : le lecteur demande tout de suite ceux de la nouvelle vidéo
+    if (btn.getAttribute('aria-pressed') === 'true') request();
     document.dispatchEvent(new Event('yt-navigate-finish'));
   };
 })();
@@ -326,7 +385,7 @@ async function waitOverlay(page, test, timeout = 15000) {
     check('doublage : page -> background -> chrome.tts.speak avec le sous-titre traduit', !!first && /Bienvenue|Commence|Ouvre/.test(first.text), JSON.stringify(first));
     check('doublage : langue fr-FR, meilleure voix française (même ordre de préférence), file d\'attente',
       !!first && first.lang === 'fr-FR' && first.voiceName === 'Faux Google français' && first.enqueue === true, JSON.stringify(first));
-    check('doublage : vitesse = calage (0,9 à 1,7) × réglage 1,5', !!first && first.rate >= 1.35 && first.rate <= 2.55, first && String(first.rate));
+    check('doublage : vitesse = calage (0,9 à 1,3) × réglage 1,5, plafonnée à 1,5', !!first && first.rate >= 1.35 && first.rate <= 1.5, first && String(first.rate));
     let minVol = 1;
     for (let i = 0; i < 20 && minVol >= 0.2; i++) { minVol = Math.min(minVol, await vol()); await page.waitForTimeout(100); }
     check('doublage : son d\'origine baissé (~15 %) pendant la voix', minVol < 0.2, String(minVol));
@@ -389,11 +448,12 @@ async function waitOverlay(page, test, timeout = 15000) {
     // 1 ter. YouTube (1.4) : transcription entière lue dans le lecteur (monde de la page), jeton « pot »
     // repris de la demande du lecteur, traduite d'avance, dite à l'heure de chaque phrase (chrome.tts espionné)
     const ytReqs = [];
+    const ytPosts = [];
     const clip = fs.readFileSync(path.join(VDIR, 'clip.webm'));
     await ctx.route('https://www.youtube.com/**', (route) => {
       const req = route.request();
       const u = new URL(req.url());
-      if (u.pathname === '/watch') return route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: YT_PAGE });
+      if (u.pathname === '/watch') return route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: YT_PAGE(u.searchParams.get('v')) });
       if (u.pathname === '/api/timedtext') {
         ytReqs.push(u.href);
         const texts = YT_TEXT[u.searchParams.get('v')] || {};
@@ -401,6 +461,7 @@ async function waitOverlay(page, test, timeout = 15000) {
         const body = u.searchParams.get('pot') ? (texts[u.searchParams.get('tlang') || 'en'] || '') : '';
         return route.fulfill({ status: 200, contentType: 'application/json; charset=UTF-8', body });
       }
+      if (u.pathname === '/youtubei/v1/get_transcript') return fakeTranscript(route, req, u, ytPosts);
       if (u.pathname === '/e2e/clip.webm') {
         const m = /bytes=(\d*)-(\d*)/.exec(req.headers().range || '');
         if (!m) return route.fulfill({ status: 200, contentType: 'video/webm', headers: { 'Accept-Ranges': 'bytes' }, body: clip });
@@ -422,10 +483,17 @@ async function waitOverlay(page, test, timeout = 15000) {
     let ys = await ytStatus();
     for (let i = 0; i < 60 && ys.mode !== 'transcript'; i++) { await page.waitForTimeout(150); ys = await ytStatus(); }
     check('YouTube : mode transcription (lecteur lu dans le monde de la page)', ys.mode === 'transcript', JSON.stringify(ys));
-    const potReq = ytReqs.find((x) => /pot=E2E_POT_e2eVid1/.test(x) && /fmt=json3/.test(x) && /signature=E2ESIG/.test(x));
-    check('YouTube : jeton pot repris de la demande du lecteur (entrée de performance), json3 de la piste choisie', !!potReq, ytReqs.join(' | '));
+    const realism = await page.evaluate(() => ({
+      perf: performance.getEntriesByType('resource').filter((e) => /\/api\/timedtext/.test(e.name)).length,
+      player: window.__ytPlayerReqs.length }));
+    check('YouTube factice réaliste : aucune entrée de performance timedtext, demandes du lecteur en XHR', realism.perf === 0 && realism.player >= 2,
+      JSON.stringify(realism));
+    const captured = (ys.diag || []).filter((d) => d.src === 'captured').map((d) => d.result);
+    check('YouTube : corps de la réponse reçue par le lecteur capturé (crochet XHR) et lu', captured.some((r) => /cues \(en\)/.test(r)),
+      JSON.stringify(ys.diag));
+    check('YouTube : aucune adresse nue demandée (corps capturé suffisant)', !ytReqs.some((x) => !/pot=/.test(x)), ytReqs.join(' | '));
     const cc = await page.evaluate(() => ({ clicks: window.__ccClicks || 0, pressed: document.querySelector('.ytp-subtitles-button').getAttribute('aria-pressed') }));
-    check('YouTube : sous-titres activés le temps d\'obtenir le jeton, puis remis comme avant', cc.clicks === 2 && cc.pressed === 'false', JSON.stringify(cc));
+    check('YouTube : CC déjà actif au chargement -> coupé puis remis (nouvelle demande), laissé actif comme avant', cc.clicks === 2 && cc.pressed === 'true', JSON.stringify(cc));
     o = await overlay(page);
     check('YouTube : message dans la bande (transcription récupérée)', !!o && /YouTube/.test(o.msg), o && o.msg);
     await page.evaluate(() => document.querySelector('video').play()).catch(() => {});
@@ -464,6 +532,25 @@ async function waitOverlay(page, test, timeout = 15000) {
     o = await waitOverlay(page, (x) => x.tr === 'Voici la deuxième vidéo.', 5000);
     check('YouTube : original de la même fenêtre en bilingue', !!o && o.orig === 'This is the second video.', JSON.stringify(o));
     // capture de contrôle, toujours hors du dépôt
+    // vidéo 3 : rien par /api/timedtext, seule la transcription get_transcript (clé et en-têtes du client) répond
+    await sw.evaluate(() => self.__ttsEnd());
+    const n3 = (await ttsLog()).calls.length;
+    await page.evaluate(() => window.__ddtGo('e2eVid3'));
+    ys = await ytStatus();
+    for (let i = 0; i < 80 && !(ys.mode === 'transcript' && (ys.diag || []).some((d) => d.src === 'video' && d.result === 'e2eVid3')); i++) {
+      await page.waitForTimeout(150);
+      ys = await ytStatus();
+    }
+    const post = ytPosts.find((p) => p.params === 'E2EPARAMS_e2eVid3');
+    check('YouTube : vidéo 3, seule get_transcript marche -> transcription (clé, X-Youtube-Client-Name/Version, params de la page)',
+      ys.mode === 'transcript' && !!post && post.ok && post.name === '1' && post.version === YT_CFG.INNERTUBE_CLIENT_VERSION && /key=AIzaE2E_FAKE_KEY/.test(post.url),
+      JSON.stringify({ mode: ys.mode, posts: ytPosts, diag: (ys.diag || []).slice(-12) }));
+    await page.evaluate(() => { const v = document.querySelector('video'); v.currentTime = 0.6; return v.play(); }).catch(() => {});
+    tl = await waitCalls(n3 + 1);
+    const y4 = tl.calls[tl.calls.length - 1];
+    check('YouTube : vidéo 3, phrase de get_transcript traduite et dite', tl.calls.length > n3 && y4.text === 'Seul le panneau de transcription marche ici.',
+      JSON.stringify(tl.calls.slice(n3)));
+    await page.evaluate(() => document.querySelector('video').pause());
     const ytShot = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-yt-')), 'voix-youtube.png');
     await page.screenshot({ path: ytShot });
     console.log('     capture YouTube factice : ' + ytShot);

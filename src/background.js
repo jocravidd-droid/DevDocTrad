@@ -1196,7 +1196,7 @@
      * remonte alors le son d'origine. Garde-fous : texte de 1000 caractères au plus, vitesse 0,5 à 3. */
     var TTS_MAX_CHARS = 1000;
     var TTS_RATE_MIN = 0.5;
-    var TTS_RATE_MAX = 3;
+    var TTS_RATE_MAX = 1.5;      // au-delà, incompréhensible (surtout eSpeak)
     var TTS_LANG_RE = /^[a-z]{2,3}(?:[-_][a-z0-9]{1,8}){0,3}$/i;
     var later = deps.setTimeout || function (fn, ms) { return setTimeout(fn, ms); };
     var cancelLater = deps.clearTimeout || function (id) { clearTimeout(id); };
@@ -1220,8 +1220,9 @@
           if (done) return;
           done = true;
           var voices = Array.prototype.slice.call(list || []).map(function (v) {
-            return { name: String((engine === 'tts' ? v.voiceName : v.name) || ''), lang: String(v.lang || ''),
-              remote: !!(v.remote || v.localService === false), default: !!v.default };
+            return { name: String((engine === 'tts' ? v.voiceName : v.name) || '').slice(0, 200), lang: String(v.lang || '').slice(0, 40),
+              remote: !!(v.remote || v.localService === false), default: !!v.default,
+              voiceURI: String(v.voiceURI || v.extensionId || '').slice(0, 200) };
           }).filter(function (v) { return v.name; });
           resolve({ ok: true, engine: engine, voices: voices });
         }
@@ -1332,8 +1333,13 @@
     /* YouTube (voix des vidéos) : la fonction fixe ytMain lancée dans le monde de la page de l'onglet qui
        la demande (scripting.executeScript, world MAIN, Chrome 102+ et Firefox 128+), avec la permission
        déjà donnée pour lancer la voix (activeTab ou site autorisé). Aucune nouvelle permission. Seulement
-       pour un onglet YouTube ; « fetch » seulement vers /api/timedtext du même site (vérifié aussi dans la page). */
+       pour un onglet YouTube ; « fetch » seulement vers /api/timedtext du même site (vérifié aussi dans la page),
+       « transcript » seulement vers /youtubei/v1/get_transcript du même site, « track » ne reçoit que des codes
+       de langue, « captured » ne rend que ce que le lecteur a déjà reçu. */
     var YT_HOST_RE = /(^|\.)youtube(-nocookie)?\.com$/i;
+    var YT_OPS = ['info', 'fetch', 'captured', 'track', 'transcript'];
+    var YT_ID_RE = /^[\w-]{1,64}$/;
+    var YT_CODE_RE = /^[A-Za-z0-9_-]{1,24}$/;
     function ytPlayer(msg, sender) {
       var tab = sender && sender.tab;
       if (!tab || typeof tab.id !== 'number') return Promise.resolve({ ok: false, error: 'no_tab' });
@@ -1341,14 +1347,25 @@
       try { host = new URL(String(sender.url || tab.url || '')).hostname; } catch (e) { host = ''; }
       if (!YT_HOST_RE.test(host)) return Promise.resolve({ ok: false, error: 'not_youtube' });
       var op = msg && msg.op;
-      if (op !== 'info' && op !== 'fetch') return Promise.resolve({ ok: false, error: 'bad_op' });
-      var url = op === 'fetch' && typeof msg.url === 'string' ? msg.url : '';
-      if (op === 'fetch' && (!url || url.length > 8192)) return Promise.resolve({ ok: false, error: 'bad_url' });
+      if (YT_OPS.indexOf(op) === -1) return Promise.resolve({ ok: false, error: 'bad_op' });
+      var arg = '';
+      if (op === 'fetch') {
+        arg = typeof msg.url === 'string' ? msg.url : '';
+        if (!arg || arg.length > 8192) return Promise.resolve({ ok: false, error: 'bad_url' });
+      } else if (op === 'captured' || op === 'transcript') {
+        arg = typeof msg.arg === 'string' && YT_ID_RE.test(msg.arg) ? msg.arg : '';
+        if (op === 'transcript' && !arg) return Promise.resolve({ ok: false, error: 'bad_arg' });
+      } else if (op === 'track') {
+        // seulement des codes de langue : rien d'autre n'atteint le lecteur
+        var a = msg.arg && typeof msg.arg === 'object' ? msg.arg : {};
+        arg = {};
+        ['lang', 'kind', 'tlang'].forEach(function (k) { if (typeof a[k] === 'string' && YT_CODE_RE.test(a[k])) arg[k] = a[k]; });
+      }
       if (!api.scripting || !api.scripting.executeScript) return Promise.resolve({ ok: false, error: 'no_scripting' });
       var target = { tabId: tab.id };
       if (typeof sender.frameId === 'number') target.frameIds = [sender.frameId];
       return Promise.resolve().then(function () {
-        return api.scripting.executeScript({ target: target, world: 'MAIN', func: ytMain, args: [op, url] });
+        return api.scripting.executeScript({ target: target, world: 'MAIN', func: ytMain, args: [op, arg] });
       }).then(function (res) {
         var r = res && res[0] && res[0].result;
         return r && typeof r === 'object' ? r : { ok: false, error: 'empty' };
@@ -1423,43 +1440,159 @@
   root.DDT_createBackground = createBackground;
 
   /* Lancée DANS LA PAGE YouTube (monde MAIN) par ytPlayer : doit se suffire à elle-même (sérialisée par
-   * scripting.executeScript, sans accès à ce fichier). Lit seulement ; ne change rien au lecteur.
-   *   info  : pistes de sous-titres (adresse, langue, automatique ou non), langues de traduction de
-   *           YouTube, langue du son, et adresses /api/timedtext déjà demandées par le lecteur (entrées de
-   *           performance, gardées aussi par un PerformanceObserver : le tampon de 250 entrées se remplit vite) ;
-   *   fetch : un fichier de sous-titres, seulement /api/timedtext du même site (cookies de la page, comme
-   *           le lecteur), texte rendu tel quel (8 Mo au plus). */
+   * scripting.executeScript, sans accès à ce fichier). Opérations :
+   *   info       : pistes de sous-titres (adresse, langue, automatique ou non), langues de traduction de
+   *                YouTube, langue du son, adresses /api/timedtext vues. Pose aussi (une seule fois) les
+   *                crochets de capture : XMLHttpRequest.prototype.open/send et window.fetch sont enveloppés
+   *                pour garder l'adresse ET le corps des réponses /api/timedtext que reçoit le lecteur (sur le
+   *                vrai YouTube, aucune entrée de performance n'existe pour ces requêtes ; le corps reçu par le
+   *                lecteur est la copie sûre : jeton « pot » compris, la réponse est déjà là). Les autres
+   *                requêtes ne sont pas regardées ; les appels d'origine partent et répondent tels quels ;
+   *   captured   : corps capturés pour une vidéo (les plus récents d'abord, 8 Mo au plus) ;
+   *   track      : choisit la piste du lecteur (player.setOption('captions', 'track', …)), rend l'ancienne ;
+   *   fetch      : un fichier de sous-titres, seulement /api/timedtext du même site (cookies de la page) ;
+   *   transcript : transcription de YouTube (POST /youtubei/v1/get_transcript du même site, clé et en-têtes
+   *                du client lus dans ytcfg), segments { start, end, text }.
+   * Tout ce qui revient est du texte non sûr, relu par voice.js. */
   function ytMain(op, arg) {
     var cut = function (x, n) { return typeof x === 'string' ? x.slice(0, n) : ''; };
+    var TT = '/api/timedtext';
+    var MAX_BODY = 8000000;
+    var abs = function (u) { try { return new URL(String(u), location.href); } catch (e) { return null; } };
+    var isTimed = function (u) {
+      var x = typeof u === 'string' && u.indexOf(TT) !== -1 ? abs(u) : null;
+      return !!x && x.origin === location.origin && x.pathname === TT;
+    };
+    var KEY = '__ddtTimedText2';
+    var H = window[KEY];
     try {
-      if (op === 'fetch') {
-        var u = new URL(String(arg), location.href);
-        if (u.origin !== location.origin || u.pathname !== '/api/timedtext') return { ok: false, error: 'bad_url' };
-        return fetch(u.href, { credentials: 'include' }).then(function (r) {
-          return r.text().then(function (t) { return { ok: r.ok, status: r.status, text: cut(t, 8000000) }; });
-        }).catch(function (e) { return { ok: false, error: 'network', message: cut(String(e && e.message || e), 200) }; });
-      }
-      if (op !== 'info') return { ok: false, error: 'bad_op' };
-      var KEY = '__ddtTimedText';
-      var seen = window[KEY];
-      var isTimed = function (n) { return typeof n === 'string' && n.indexOf('/api/timedtext?') !== -1; };
-      var keep = function (n) {
-        if (!isTimed(n) || seen.indexOf(n) !== -1) return;
-        seen.push(n);
-        if (seen.length > 40) seen.shift();
-      };
-      if (!Array.isArray(seen)) {
-        seen = [];
-        try { Object.defineProperty(window, KEY, { value: seen, configurable: true }); } catch (e) { /* rien */ }
+      if (!H || typeof H !== 'object' || !Array.isArray(H.bodies)) {
+        H = { seen: [], bodies: [], fetch: typeof window.fetch === 'function' ? window.fetch : null, hooks: [] };
+        try { Object.defineProperty(window, KEY, { value: H, configurable: true }); } catch (e) { window[KEY] = H; }
+        H.see = function (href) {
+          if (H.seen.indexOf(href) !== -1) return;
+          H.seen.push(href);
+          if (H.seen.length > 40) H.seen.shift();
+        };
+        H.keep = function (href, text) {
+          H.see(href);
+          H.bodies.push({ url: href, text: cut(String(text || ''), MAX_BODY), at: Date.now() });
+          var total = 0;
+          for (var i = H.bodies.length - 1; i >= 0; i--) {
+            total += H.bodies[i].text.length;
+            if (i < H.bodies.length - 12 || total > 2 * MAX_BODY) { H.bodies.splice(0, i + 1); break; }
+          }
+        };
+        // XMLHttpRequest : le lecteur de YouTube demande ses sous-titres ainsi
+        var XP = window.XMLHttpRequest && window.XMLHttpRequest.prototype;
+        if (XP && typeof XP.open === 'function' && typeof XP.send === 'function' && typeof WeakMap === 'function') {
+          var urls = new WeakMap();
+          var oOpen = XP.open;
+          var oSend = XP.send;
+          XP.open = function (method, url) {
+            try { if (isTimed(String(url))) urls.set(this, abs(url).href); else urls.delete(this); } catch (e) { /* rien */ }
+            return oOpen.apply(this, arguments);
+          };
+          XP.send = function () {
+            var href = null;
+            try { href = urls.get(this) || null; } catch (e) { href = null; }
+            if (href) {
+              var x = this;
+              try {
+                x.addEventListener('loadend', function () {
+                  try {
+                    if (x.status < 200 || x.status >= 300) return;
+                    var rt = x.responseType;
+                    var text = '';
+                    if (!rt || rt === 'text') text = x.responseText;
+                    else if (rt === 'json') text = JSON.stringify(x.response);
+                    else if (rt === 'arraybuffer' && typeof TextDecoder === 'function') text = new TextDecoder().decode(x.response);
+                    H.keep(href, text);
+                  } catch (e) { /* rien */ }
+                });
+              } catch (e) { /* rien */ }
+            }
+            return oSend.apply(this, arguments);
+          };
+          H.hooks.push('xhr');
+        }
+        // fetch : autre chemin possible ; la réponse est clonée, l'appelant reçoit l'originale
+        if (H.fetch) {
+          var oFetch = H.fetch;
+          window.fetch = function (input) {
+            var p0 = oFetch.apply(this || window, arguments);
+            try {
+              var u0 = typeof input === 'string' ? input : (input && typeof input.url === 'string' ? input.url : (input && input.href) || '');
+              if (isTimed(String(u0))) {
+                var href = abs(u0).href;
+                Promise.resolve(p0).then(function (r0) {
+                  if (r0 && r0.ok && typeof r0.clone === 'function') return r0.clone().text().then(function (t0) { H.keep(href, t0); });
+                }).catch(function () { /* rien */ });
+              }
+            } catch (e) { /* rien */ }
+            return p0;
+          };
+          H.hooks.push('fetch');
+        }
+        // entrées de performance : simple bonus (inexistantes pour ces requêtes sur le vrai YouTube)
         try {
           if (typeof PerformanceObserver === 'function') {
-            new PerformanceObserver(function (list) { list.getEntries().forEach(function (e) { keep(e.name); }); })
-              .observe({ type: 'resource', buffered: true });
+            new PerformanceObserver(function (list) {
+              list.getEntries().forEach(function (e) { if (isTimed(e.name)) H.see(abs(e.name).href); });
+            }).observe({ type: 'resource', buffered: true });
           }
         } catch (e) { /* rien */ }
       }
-      try { performance.getEntriesByType('resource').forEach(function (e) { keep(e.name); }); } catch (e) { /* rien */ }
+      try { performance.getEntriesByType('resource').forEach(function (e) { if (isTimed(e.name)) H.see(abs(e.name).href); }); } catch (e) { /* rien */ }
+      // nos propres demandes passent par le fetch d'origine : jamais prises pour celles du lecteur
+      var origFetch = H.fetch || window.fetch;
+      var vOf = function (href) { var x = abs(href); return x ? x.searchParams.get('v') || '' : ''; };
+
+      if (op === 'fetch') {
+        var u = abs(arg);
+        if (!u || u.origin !== location.origin || u.pathname !== TT) return { ok: false, error: 'bad_url' };
+        return Promise.resolve(origFetch.call(window, u.href, { credentials: 'include' })).then(function (r1) {
+          return r1.text().then(function (t1) { return { ok: r1.ok, status: r1.status, text: cut(t1, MAX_BODY) }; });
+        }).catch(function (e) { return { ok: false, error: 'network', message: cut(String(e && e.message || e), 200) }; });
+      }
+      if (op === 'captured') {
+        var vid = cut(arg, 64);
+        var items = [];
+        var size = 0;
+        for (var b = H.bodies.length - 1; b >= 0; b--) {
+          var it = H.bodies[b];
+          var iv = vOf(it.url);
+          if (vid && iv && iv !== vid) continue;
+          if (size + it.text.length > MAX_BODY && items.length) break;
+          size += it.text.length;
+          items.push({ url: cut(it.url, 8192), text: it.text, at: it.at });
+        }
+        return { ok: true, items: items, hooks: H.hooks.slice() };
+      }
       var p = document.getElementById('movie_player');
+      if (op === 'track') {
+        if (!p || typeof p.setOption !== 'function') return { ok: false, error: 'no_api' };
+        var prev = null;
+        try {
+          var g = typeof p.getOption === 'function' ? p.getOption('captions', 'track') : null;
+          if (g && typeof g === 'object' && g.languageCode) {
+            prev = { lang: cut(g.languageCode, 24), kind: cut(g.kind, 10),
+              tlang: cut(g.translationLanguage && g.translationLanguage.languageCode, 24) };
+          }
+        } catch (e) { prev = null; }
+        var a = arg && typeof arg === 'object' ? arg : {};
+        var opt = {};
+        if (a.lang) {
+          opt.languageCode = cut(a.lang, 24);
+          if (a.kind) opt.kind = cut(a.kind, 10);
+          if (a.tlang) opt.translationLanguage = { languageCode: cut(a.tlang, 24) };
+        }
+        try { if (typeof p.loadModule === 'function') p.loadModule('captions'); } catch (e) { /* rien */ }
+        try { p.setOption('captions', 'track', opt); } catch (e) { return { ok: false, error: 'set', prev: prev }; }
+        return { ok: true, prev: prev };
+      }
+      if (op === 'transcript') return ytTranscript(cut(arg, 64), origFetch);
+      if (op !== 'info') return { ok: false, error: 'bad_op' };
       var r = null;
       try { r = p && typeof p.getPlayerResponse === 'function' ? p.getPlayerResponse() : null; } catch (e) { r = null; }
       if (!r && !(p && typeof p.getPlayerResponse === 'function')) r = window.ytInitialPlayerResponse || null;
@@ -1472,8 +1605,8 @@
       var audio = '';
       var formats = (r && r.streamingData && r.streamingData.adaptiveFormats) || [];
       for (var i = 0; i < formats.length && i < 200; i++) {
-        var a = formats[i] && formats[i].audioTrack;
-        if (a && a.audioIsDefault && typeof a.id === 'string') { audio = a.id.split('.')[0]; break; }
+        var au = formats[i] && formats[i].audioTrack;
+        if (au && au.audioIsDefault && typeof au.id === 'string') { audio = au.id.split('.')[0]; break; }
       }
       return {
         ok: true, player: !!p,
@@ -1486,10 +1619,109 @@
           return cut(l && l.languageCode, 20);
         }),
         audioLang: cut(audio, 20),
-        timed: seen.slice(-40).map(function (n) { return cut(n, 8192); })
+        timed: H.seen.slice(-40).map(function (n) { return cut(n, 8192); }),
+        captured: H.bodies.length,
+        hooks: H.hooks.slice(),
+        api: !!(p && typeof p.setOption === 'function')
       };
     } catch (e) {
       return { ok: false, error: 'error', message: cut(String(e && e.message || e), 200) };
+    }
+
+    /* Transcription de YouTube (panneau « Transcription ») : même requête que la page, depuis la page. */
+    function ytTranscript(vid, doFetch) {
+      var cfg = function (k) {
+        try { if (window.ytcfg && typeof window.ytcfg.get === 'function') { var v = window.ytcfg.get(k); if (v != null) return v; } } catch (e) { /* rien */ }
+        try { var d = window.ytcfg && window.ytcfg.data_; return d ? d[k] : undefined; } catch (e) { return undefined; }
+      };
+      var context = cfg('INNERTUBE_CONTEXT');
+      var client = context && typeof context === 'object' && context.client ? context.client : {};
+      var version = cfg('INNERTUBE_CLIENT_VERSION') || client.clientVersion || '';
+      var name = cfg('INNERTUBE_CONTEXT_CLIENT_NAME') || 1;
+      var apiKey = cfg('INNERTUBE_API_KEY');
+      if (!context || typeof context !== 'object') {
+        context = { client: { clientName: 'WEB', clientVersion: version || '2.20250101.00.00', hl: document.documentElement.lang || 'en' } };
+      }
+      // params : ceux de la page (getTranscriptEndpoint), sinon construits (protobuf : champ 1 = id de la vidéo)
+      var found = [];
+      var count = 0;
+      var walk = function (o, depth) {
+        if (!o || typeof o !== 'object' || depth > 40 || ++count > 300000 || found.length > 3) return;
+        if (o.getTranscriptEndpoint && typeof o.getTranscriptEndpoint.params === 'string') found.push(o.getTranscriptEndpoint.params);
+        var ks = Object.keys(o);
+        for (var i = 0; i < ks.length; i++) { var v = o[ks[i]]; if (v && typeof v === 'object') walk(v, depth + 1); }
+      };
+      var roots = [];
+      try {
+        var flexy = document.querySelector('ytd-watch-flexy');
+        var fid = flexy && (flexy.getAttribute('video-id') || '');
+        if (flexy && (!fid || fid === vid)) roots.push(flexy.data, flexy.__data && flexy.__data.data);
+      } catch (e) { /* rien */ }
+      try {
+        var init = window.ytInitialData;
+        var we = init && init.currentVideoEndpoint && init.currentVideoEndpoint.watchEndpoint;
+        if (init && (!we || !we.videoId || !vid || we.videoId === vid)) roots.push(init);
+      } catch (e) { /* rien */ }
+      roots.forEach(function (o) { try { walk(o, 0); } catch (e) { /* rien */ } });
+      var params = found.filter(function (x, i) { return x && found.indexOf(x) === i; });
+      var fromPage = params.length;
+      if (/^[\w-]{6,20}$/.test(vid)) {
+        try { params.push(btoa('\n' + String.fromCharCode(vid.length) + vid)); } catch (e) { /* rien */ }
+      }
+      if (!params.length) return Promise.resolve({ ok: false, error: 'no_params', tried: [] });
+      var url = '/youtubei/v1/get_transcript?prettyPrint=false' + (apiKey ? '&key=' + encodeURIComponent(String(apiKey)) : '');
+      var headers = { 'Content-Type': 'application/json', 'X-Youtube-Client-Name': String(name),
+        'X-Youtube-Client-Version': String(version || client.clientVersion || '') };
+      if (typeof client.visitorData === 'string') headers['X-Goog-Visitor-Id'] = client.visitorData;
+      var tried = [];
+      var runs = function (s) {
+        if (!s) return '';
+        if (typeof s.simpleText === 'string') return s.simpleText;
+        return Array.isArray(s.runs) ? s.runs.map(function (x) { return (x && typeof x.text === 'string') ? x.text : ''; }).join('') : '';
+      };
+      var parse = function (j) {
+        var segs = [];
+        var n = 0;
+        var go = function (o, depth) {
+          if (!o || typeof o !== 'object' || depth > 60 || ++n > 500000 || segs.length >= 20000) return;
+          var s = o.transcriptSegmentRenderer;
+          if (s && typeof s === 'object') {
+            var st = Number(s.startMs);
+            var en = Number(s.endMs);
+            var tx = runs(s.snippet);
+            if (isFinite(st) && tx) segs.push({ start: st / 1000, end: (isFinite(en) && en > st ? en : st) / 1000, text: cut(tx, 2000) });
+            return;
+          }
+          var ks = Object.keys(o);
+          for (var i = 0; i < ks.length; i++) { var v = o[ks[i]]; if (v && typeof v === 'object') go(v, depth + 1); }
+        };
+        go(j, 0);
+        segs.sort(function (a2, b2) { return a2.start - b2.start; });
+        return segs;
+      };
+      var attempt = function (i, cred) {
+        if (i >= params.length) return Promise.resolve({ ok: false, error: 'empty', tried: tried });
+        var tag = (i < fromPage ? 'page' : 'built') + (cred === 'omit' ? '/anon' : '');
+        return Promise.resolve(doFetch.call(window, url, { method: 'POST', credentials: cred, headers: headers,
+          body: JSON.stringify({ context: context, params: params[i] }) })).then(function (res) {
+          tried.push(tag + ':' + res.status);
+          // connecté mais refusé sans l'en-tête d'autorisation de la page : nouvel essai anonyme
+          if ((res.status === 401 || res.status === 403) && cred !== 'omit') return attempt(i, 'omit');
+          if (!res.ok) return attempt(i + 1, 'include');
+          return res.text().then(function (t) {
+            var j = null;
+            try { j = JSON.parse(t); } catch (e) { j = null; }
+            var segs = j ? parse(j) : [];
+            if (segs.length) return { ok: true, status: res.status, segments: segs, tried: tried };
+            tried[tried.length - 1] += '/empty';
+            return attempt(i + 1, 'include');
+          });
+        }, function (e) {
+          tried.push(tag + ':network ' + cut(String(e && e.message || e), 60));
+          return attempt(i + 1, 'include');
+        });
+      };
+      return attempt(0, 'include');
     }
   }
   root.DDT_ytMain = ytMain;

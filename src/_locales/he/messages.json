@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "פתח הגדרות"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "אי אפשר לקרוא כרגע את הכתוביות של YouTube: הוסף מפתח Groq חינמי כדי להאזין לשמע במקום."
+  },
+  "voiceNoTtsLinux": {
+    "message": "אין קול סינתזה עבור {0}: הפעל את Chrome עם --enable-speech-dispatcher (והתקן speech-dispatcher + espeak-ng) כדי לקבל קול."
+  },
+  "voiceNoVoiceShort": {
+    "message": "אין קול"
+  },
+  "voiceRobotic": {
+    "message": "קול רובוטי ({0}): לקול ברור וחינמי השתמש ב-Google Chrome או ב-Microsoft Edge (קולות Google/Microsoft טבעיים), או התקן קול Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "קול רובוטי"
+  },
+  "optVoiceName": {
+    "message": "קול מתורגם"
+  },
+  "optVoiceNameHelp": {
+    "message": "רק קולות בשפת היעד. אוטומטי בוחר את הברור ביותר (Google, אחר כך קולות טבעיים; eSpeak אחרון)."
+  },
+  "optVoiceAuto": {
+    "message": "אוטומטי (הקול הטוב ביותר)"
+  },
+  "optVoiceTest": {
+    "message": "בדיקת הקול"
+  },
+  "optVoiceUsed": {
+    "message": "קול בשימוש: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "לא זמין כאן"
+  },
   "popupSensitive": {
     "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
   },

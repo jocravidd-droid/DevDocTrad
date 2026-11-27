@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Åpne innstillinger"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube-tekstingen kan ikke leses akkurat nå: legg til en gratis Groq-nøkkel for å lytte til lyden i stedet."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Ingen talesyntesestemme for {0}: start Chrome med --enable-speech-dispatcher (og installer speech-dispatcher + espeak-ng) for å få en stemme."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Ingen stemme"
+  },
+  "voiceRobotic": {
+    "message": "Robotstemme ({0}): for en klar, gratis stemme, bruk Google Chrome eller Microsoft Edge (naturlige Google/Microsoft-stemmer), eller installer en Piper-stemme."
+  },
+  "voiceRoboticShort": {
+    "message": "Robotstemme"
+  },
+  "optVoiceName": {
+    "message": "Oversatt stemme"
+  },
+  "optVoiceNameHelp": {
+    "message": "Bare stemmer på målspråket. Automatisk velger den tydeligste (Google, så naturlige stemmer; eSpeak sist)."
+  },
+  "optVoiceAuto": {
+    "message": "Automatisk (beste stemme)"
+  },
+  "optVoiceTest": {
+    "message": "Test stemmen"
+  },
+  "optVoiceUsed": {
+    "message": "Stemme som brukes: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "ikke tilgjengelig her"
+  },
   "popupSensitive": {
     "message": "Sensitiv side: oversettes aldri automatisk. Knappen virker, Ollama brukes først hvis det er satt opp."
   },

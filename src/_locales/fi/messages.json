@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Avaa asetukset"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "YouTube-tekstityksiä ei voi lukea juuri nyt: lisää ilmainen Groq-avain, niin ääni kuunnellaan sen sijaan."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Ei puhesynteesiääntä kielelle {0}: käynnistä Chrome valitsimella --enable-speech-dispatcher (ja asenna speech-dispatcher + espeak-ng), jotta saat äänen."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Ei ääntä"
+  },
+  "voiceRobotic": {
+    "message": "Robottimainen ääni ({0}): selkeään ja ilmaiseen ääneen käytä Google Chromea tai Microsoft Edgeä (luonnolliset Google/Microsoft-äänet) tai asenna Piper-ääni."
+  },
+  "voiceRoboticShort": {
+    "message": "Robottimainen ääni"
+  },
+  "optVoiceName": {
+    "message": "Käännetty ääni"
+  },
+  "optVoiceNameHelp": {
+    "message": "Vain kohdekielen äänet. Automaattinen valitsee selkeimmän (Google, sitten luonnolliset äänet; eSpeak viimeisenä)."
+  },
+  "optVoiceAuto": {
+    "message": "Automaattinen (paras ääni)"
+  },
+  "optVoiceTest": {
+    "message": "Kokeile ääntä"
+  },
+  "optVoiceUsed": {
+    "message": "Käytössä oleva ääni: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "ei saatavilla täällä"
+  },
   "popupSensitive": {
     "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
   },

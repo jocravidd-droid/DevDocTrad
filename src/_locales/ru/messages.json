@@ -251,6 +251,39 @@
   "voiceOpenSettings": {
     "message": "Открыть настройки"
   },
+  "voiceYtUnreadableGroq": {
+    "message": "Субтитры YouTube сейчас не читаются: добавьте бесплатный ключ Groq, чтобы слушать звук."
+  },
+  "voiceNoTtsLinux": {
+    "message": "Нет голоса синтеза для языка {0}: запустите Chrome с --enable-speech-dispatcher (и установите speech-dispatcher + espeak-ng), чтобы появился голос."
+  },
+  "voiceNoVoiceShort": {
+    "message": "Нет голоса"
+  },
+  "voiceRobotic": {
+    "message": "Роботизированный голос ({0}): для чёткого бесплатного голоса используйте Google Chrome или Microsoft Edge (естественные голоса Google/Microsoft) или установите голос Piper."
+  },
+  "voiceRoboticShort": {
+    "message": "Роботизированный голос"
+  },
+  "optVoiceName": {
+    "message": "Переведённый голос"
+  },
+  "optVoiceNameHelp": {
+    "message": "Только голоса целевого языка. «Автоматически» выбирает самый чёткий (Google, затем естественные голоса; eSpeak в последнюю очередь)."
+  },
+  "optVoiceAuto": {
+    "message": "Автоматически (лучший голос)"
+  },
+  "optVoiceTest": {
+    "message": "Проверить голос"
+  },
+  "optVoiceUsed": {
+    "message": "Используемый голос: {0}"
+  },
+  "optVoiceMissing": {
+    "message": "здесь недоступен"
+  },
   "popupSensitive": {
     "message": "Конфиденциальная страница: автоматический перевод отключён. Кнопка работает, Ollama используется первой, если настроена."
   },

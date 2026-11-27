@@ -243,5 +243,16 @@
 "voiceYtByYouTube": "由 YouTube 翻译的字幕（免费），与视频同步",
 "voiceYtScreen": "无法获取 YouTube 转录：改为读取屏幕上的字幕",
 "voiceNoCaptionsGroq": "此视频没有字幕：需要免费的 Groq 密钥才能听取声音。",
-"voiceOpenSettings": "打开设置"
+"voiceOpenSettings": "打开设置",
+"voiceYtUnreadableGroq": "目前无法读取 YouTube 字幕：添加免费的 Groq 密钥，改为收听声音。",
+"voiceNoTtsLinux": "没有{0}的语音：使用 --enable-speech-dispatcher 启动 Chrome（并安装 speech-dispatcher + espeak-ng）即可获得语音。",
+"voiceNoVoiceShort": "没有语音",
+"voiceRobotic": "机械音（{0}）：想要清晰且免费的语音，请使用 Google Chrome 或 Microsoft Edge（自然的 Google/Microsoft 语音），或安装 Piper 语音。",
+"voiceRoboticShort": "机械音",
+"optVoiceName": "翻译语音",
+"optVoiceNameHelp": "仅列出目标语言的语音。自动会选最清晰的（Google，其次是自然语音；eSpeak 最后）。",
+"optVoiceAuto": "自动（最佳语音）",
+"optVoiceTest": "试听语音",
+"optVoiceUsed": "当前语音：{0}",
+"optVoiceMissing": "此处不可用"
 }
