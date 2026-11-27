@@ -42,11 +42,11 @@
     if (text !== undefined && text !== null) e.textContent = text;
     return e;
   }
-  function iconEl(name) { var s = el('span'); s.innerHTML = UI.icon(name); return s; }
+  function iconEl(name) { return UI.setOnly(el('span'), UI.icon(name)); }
   function setChip(c, kind, iconName, text) {
     c.className = c.className.replace(/\b(ok|warn|err|info)\b/g, '').replace(/\s+/g, ' ').trim();
     if (kind) c.classList.add(kind);
-    c.innerHTML = UI.icon(iconName);
+    UI.setOnly(c, UI.icon(iconName));
     c.appendChild(document.createTextNode(text));
   }
   function makeChip(kind, iconName, text) { var c = el('span', 'chip'); setChip(c, kind, iconName, text); return c; }
@@ -148,7 +148,7 @@
     });
     document.querySelectorAll('.sec').forEach(function (s) { s.hidden = s.id !== 'sec-' + sec; });
     var def = SECTIONS[sec];
-    $('phIcon').innerHTML = UI.icon(def.icon);
+    UI.setOnly($('phIcon'), UI.icon(def.icon));
     $('phTitle').textContent = t(def.title);
     $('phDesc').textContent = t(def.desc);
     document.title = t(def.title) + ' · DevDocTrad';
@@ -214,7 +214,7 @@
     var p = card.querySelector('.paid-state');
     var ok = paidReady(k);
     p.className = 'paid-state ' + (ok ? 'ok' : 'warn');
-    p.innerHTML = UI.icon(ok ? 'check' : 'alert');
+    UI.setOnly(p, UI.icon(ok ? 'check' : 'alert'));
     var msg = ok ? t('optPaidOk') : t('errPaidUnset');
     p.appendChild(document.createTextNode(msg.charAt(0).toUpperCase() + msg.slice(1)));
   }
@@ -320,7 +320,7 @@
     var res = card.querySelector('.kc-result');
     res.hidden = false;
     res.className = 'kc-result ' + (kind || '');
-    res.innerHTML = kind === 'busy' ? '<span class="spinner" aria-hidden="true"></span>' : UI.icon(kind === 'ok' ? 'check' : 'error');
+    UI.setOnly(res, kind === 'busy' ? UI.spinner() : UI.icon(kind === 'ok' ? 'check' : 'error'));
     res.appendChild(el('span', null, text));
   }
 
@@ -612,7 +612,7 @@
       tr.addEventListener('change', function () { g.translation = tr.value.trim(); saveGlossary(); });
       sel.addEventListener('change', function () { g.type = sel.value; tr.disabled = sel.value !== 'always'; saveGlossary(); if (!tr.disabled) tr.focus(); });
       var del = el('button', 'btn small icon ghost danger');
-      del.innerHTML = UI.icon('trash');
+      UI.setOnly(del, UI.icon('trash'));
       del.setAttribute('aria-label', t('optDelete') + (g.term ? ' : ' + g.term : ''));
       del.title = t('optDelete');
       del.addEventListener('click', function () { glossary.splice(i, 1); saveGlossary(); renderGlossary(); });
@@ -673,7 +673,7 @@
       if (!list || !list.length) {
         var empty = el('div', 'empty inline');
         var ic = el('span', 'empty-icon');
-        ic.innerHTML = UI.icon('globe');
+        UI.setOnly(ic, UI.icon('globe'));
         empty.appendChild(ic);
         empty.appendChild(el('h3', null, t('optAutoEmptyTitle')));
         empty.appendChild(el('p', 'help', t('optAutoEmptyLong')));
@@ -689,7 +689,7 @@
         var ctl = el('div', 'ctl');
         ctl.appendChild(s.granted ? makeChip('ok', 'check', t('optAutoGranted')) : makeChip('warn', 'alert', t('optAutoRevoked')));
         var del = el('button', 'btn small danger');
-        del.innerHTML = UI.icon('trash');
+        UI.setOnly(del, UI.icon('trash'));
         del.appendChild(el('span', null, t('optDelete')));
         del.setAttribute('aria-label', t('optDelete') + ' : ' + s.host);
         del.addEventListener('click', function () {

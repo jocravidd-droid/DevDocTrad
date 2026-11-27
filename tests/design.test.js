@@ -54,13 +54,50 @@ test('badge : ses couleurs sont celles des tokens (clair et sombre)', () => {
 
 test('icônes : chaque data-icon utilisé existe dans ui.js', () => {
   const ui = read('ui.js');
-  const known = new Set([...ui.matchAll(/^\s{4}(\w+):\s*'/gm)].map((m) => m[1]));
+  // les icônes sont des données : nom: [['balise', { attributs }], ...]
+  const known = new Set([...ui.matchAll(/^\s{4}(\w+):\s*\[\['/gm)].map((m) => m[1]));
+  assert.ok(known.size > 20, 'table des icônes introuvable dans ui.js');
   const used = new Set();
   for (const f of fs.readdirSync(SRC).filter((x) => /\.(html|js)$/.test(x))) {
     for (const m of read(f).matchAll(/data-icon="(\w+)"/g)) used.add(m[1]);
+    for (const m of read(f).matchAll(/setAttribute\('data-icon', '(\w+)'\)/g)) used.add(m[1]);
     for (const m of read(f).matchAll(/(?:UI|DDT_UI)\.icon\('(\w+)'/g)) used.add(m[1]);
   }
   for (const n of used) assert.ok(known.has(n), 'icône inconnue : ' + n);
+});
+
+test('icônes du badge : chaque svg(...) / setIcon(...) de content.js existe', () => {
+  const c = read('content.js');
+  const bi = c.slice(c.indexOf('var BI = {'), c.indexOf('};', c.indexOf('var BI = {')));
+  const known = new Set([...bi.matchAll(/^\s{6}(\w+):\s*\[\['/gm)].map((m) => m[1]));
+  assert.ok(known.size >= 5, 'table BI introuvable');
+  const used = new Set();
+  for (const m of c.matchAll(/\bsvg\('(\w+)'/g)) used.add(m[1]);
+  for (const m of c.matchAll(/setIcon\(\w+, .*?\? '(\w+)' : '(\w+)'\)/g)) { used.add(m[1]); used.add(m[2]); }
+  assert.ok(used.has('original') && used.has('max'), 'appels setIcon non repérés');
+  for (const n of used) assert.ok(known.has(n), 'icône du badge inconnue : ' + n);
+});
+
+test('aucune chaîne HTML analysée dans popup, réglages, ui et badge (validateur de Mozilla)', () => {
+  for (const f of ['popup.js', 'options.js', 'ui.js', 'content.js']) {
+    const s = read(f).replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, '');
+    assert.ok(!/\.(innerHTML|outerHTML)\s*=|insertAdjacentHTML|document\.write/.test(s), f + ' analyse du HTML');
+  }
+});
+
+test('icônes construites par createElementNS, identiques au tracé d\'origine', () => {
+  const { JSDOM } = require('jsdom');
+  const dom = new JSDOM('<!doctype html><html><body><span data-icon="gear"></span></body></html>', { runScripts: 'outside-only' });
+  dom.window.DDT = { t: (k) => k };
+  dom.window.eval(read('ui.js'));
+  const UI = dom.window.DDT_UI;
+  const s = UI.icon('stop', 'ti');
+  assert.equal(s.namespaceURI, 'http://www.w3.org/2000/svg');
+  assert.equal(s.outerHTML, '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="ti"><rect x="6" y="6" width="12" height="12" rx="2.5"></rect></svg>');
+  UI.fillIcons(dom.window.document);
+  UI.fillIcons(dom.window.document);
+  assert.equal(dom.window.document.querySelectorAll('[data-icon] > svg').length, 1, 'fillIcons idempotent');
+  assert.equal(UI.spinner('ti').outerHTML, '<span class="spinner ti" aria-hidden="true"></span>');
 });
 
 test('textes : chaque clé utilisée existe en français et en anglais', () => {

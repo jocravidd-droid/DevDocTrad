@@ -14,6 +14,9 @@ Ce que fait le script :
 6. affiche l'empreinte SHA-256 de chaque zip, pour vérifier que la version livrée est celle testée ;
 7. copie les deux zips dans release/ (devdoctrad-<navigateur>-<version>.zip) avec SHA256SUMS.txt.
 
+Pour les tests : `python3 build.py --dist DOSSIER` construit dans DOSSIER (vidé d'abord)
+sans toucher à dist/ ni à release/.
+
 Aucune dépendance : Python 3.8 ou plus récent suffit.
 """
 import hashlib
@@ -57,16 +60,28 @@ def build(target):
                 info.external_attr = 0o644 << 16
                 z.writestr(info, p.read_bytes())
     digest = hashlib.sha256(zpath.read_bytes()).hexdigest()
-    print(f"{zpath.relative_to(ROOT)}  {zpath.stat().st_size // 1024} Ko  sha256 {digest}")
+    try:
+        shown = zpath.relative_to(ROOT)
+    except ValueError:
+        shown = zpath
+    print(f"{shown}  {zpath.stat().st_size // 1024} Ko  sha256 {digest}")
     return digest
 
 
 def main():
+    global DIST
+    only_dist = "--dist" in sys.argv
+    if only_dist:
+        DIST = Path(sys.argv[sys.argv.index("--dist") + 1]).resolve()
     if DIST.exists():
         shutil.rmtree(DIST)
-    DIST.mkdir()
+    DIST.mkdir(parents=True)
     version = json.loads((ROOT / "manifests" / "base.json").read_text(encoding="utf-8"))["version"]
     print(f"DevDocTrad {version}")
+    if only_dist:
+        for t in TARGETS:
+            build(t)
+        return
     release = ROOT / "release"
     release.mkdir(exist_ok=True)
     for old in release.glob("devdoctrad-*.zip"):
