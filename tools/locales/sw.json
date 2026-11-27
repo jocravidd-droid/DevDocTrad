@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Sauti ya video (udubishaji na sauti pekee). 1× = kasi ya kawaida; sauti huongeza kasi kidogo ili kwenda sambamba na manukuu.",
 "voiceSlower": "Sauti polepole zaidi",
 "voiceFaster": "Sauti haraka zaidi",
-"voiceRateValue": "Kasi ya sauti: {0}"
+"voiceRateValue": "Kasi ya sauti: {0}",
+"voiceYtLoading": "Inapata manukuu ya YouTube…",
+"voiceYtTranscript": "Manukuu ya YouTube ({0}) yamepakiwa yote, yametafsiriwa mapema",
+"voiceYtByYouTube": "Manukuu yaliyotafsiriwa na YouTube (bure), yanayolingana na video",
+"voiceYtScreen": "Nakala ya YouTube haipatikani: inasoma manukuu yaliyo kwenye skrini",
+"voiceNoCaptionsGroq": "Video hii haina manukuu: ufunguo wa bure wa Groq unahitajika kusikiliza sauti.",
+"voiceOpenSettings": "Fungua mipangilio"
 }

@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "سرعة الصوت: {0}"
   },
+  "voiceYtLoading": {
+    "message": "جارٍ جلب ترجمات YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "تم تحميل ترجمات YouTube ({0}) كاملة وترجمتها مسبقًا"
+  },
+  "voiceYtByYouTube": {
+    "message": "ترجمات مترجمة بواسطة YouTube (مجانًا)، متزامنة مع الفيديو"
+  },
+  "voiceYtScreen": {
+    "message": "نص YouTube غير متاح: قراءة الترجمات المعروضة على الشاشة"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "هذا الفيديو بلا ترجمات: يلزم مفتاح Groq مجاني للاستماع إلى الصوت."
+  },
+  "voiceOpenSettings": {
+    "message": "فتح الإعدادات"
+  },
   "popupSensitive": {
     "message": "صفحة حساسة: لا تُترجم تلقائيًا أبدًا. الزر يعمل، ويُستخدم Ollama أولًا إن كان مُعدًّا."
   },

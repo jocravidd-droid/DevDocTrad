@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Rychlost hlasu: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Načítání titulků z YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Titulky z YouTube ({0}) načteny celé, přeloženy předem"
+  },
+  "voiceYtByYouTube": {
+    "message": "Titulky přeložené službou YouTube (zdarma), sladěné s videem"
+  },
+  "voiceYtScreen": {
+    "message": "Přepis z YouTube není k dispozici: čtou se titulky na obrazovce"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Toto video nemá titulky: k poslechu zvuku je potřeba bezplatný klíč Groq."
+  },
+  "voiceOpenSettings": {
+    "message": "Otevřít nastavení"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy se nepřekládá automaticky. Tlačítko funguje, Ollama se použije jako první, pokud je nastavena."
   },

@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Voz dos vídeos (dublagem e só voz). 1× = velocidade normal; a voz acelera um pouco para acompanhar as legendas.",
 "voiceSlower": "Voz mais lenta",
 "voiceFaster": "Voz mais rápida",
-"voiceRateValue": "Velocidade da voz: {0}"
+"voiceRateValue": "Velocidade da voz: {0}",
+"voiceYtLoading": "Obtendo as legendas do YouTube…",
+"voiceYtTranscript": "Legendas do YouTube ({0}) carregadas por inteiro, traduzidas com antecedência",
+"voiceYtByYouTube": "Legendas traduzidas pelo YouTube (grátis), sincronizadas com o vídeo",
+"voiceYtScreen": "Transcrição do YouTube indisponível: lendo as legendas da tela",
+"voiceNoCaptionsGroq": "Este vídeo não tem legendas: é preciso uma chave gratuita do Groq para ouvir o som.",
+"voiceOpenSettings": "Abrir configurações"
 }

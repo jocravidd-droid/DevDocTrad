@@ -2,9 +2,11 @@
  * DevDocTrad - voice.js
  * Traduit la voix des vidéos, gratuitement, en sous-titres affichés sur la vidéo.
  *
- * Trois sources, dans cet ordre :
+ * Sources, dans cet ordre :
  *   1. les sous-titres de la vidéo (<track>, pistes texte HTML5) : traduits à l'avance, sans aucun coût audio ;
- *   2. les sous-titres de YouTube (activés automatiquement s'ils existent) ;
+ *   2. YouTube : la transcription entière (fichier de sous-titres du lecteur, jeton « pot » compris),
+ *      traduite d'avance (par YouTube lui-même si la langue est proposée) et dite à l'heure de chaque phrase ;
+ *      repli : le texte des sous-titres affiché à l'écran ;
  *   3. sinon, le son de la vidéo : morceaux de quelques secondes transcrits par Groq Whisper
  *      (palier gratuit, avec la clé Groq de l'utilisateur), puis traduits comme le reste.
  * Trois modes (popup) : sous-titres ; sous-titres + voix traduite (doublage) ; voix traduite seule.
@@ -30,6 +32,11 @@
   var YT_WAIT_MS = 6000;         // délai pour voir apparaître des sous-titres YouTube
   var YT_STABLE_MS = 700;        // texte YouTube stable depuis ce délai : on le traduit
   var YT_MAX_WAIT_MS = 2500;     // texte qui défile sans arrêt : traduit quand même après ce délai
+  var YT_POLL_MS = 300;          // transcription : nouvel essai (lecteur pas prêt, adresse avec jeton attendue)
+  var YT_POT_WAIT_MS = 5000;     // attente de la demande de sous-titres du lecteur (jeton « pot »)
+  var YT_INFO_WAIT_MS = 4000;    // attente du lecteur de la nouvelle vidéo (navigation interne)
+  var AHEAD_SEC = 150;           // transcription : phrases traduites d'avance (2 min 30 devant la lecture)
+  var TICK_MS = 150;             // transcription : phrase en cours relue sur video.currentTime
   var BATCH = 40;                // sous-titres traduits par demande
   var WATCH_MS = 1000;           // surveillance : vidéo retirée ou remplacée, vidéo YouTube suivante
   var OWN_LABEL = 'DevDocTrad';  // piste texte ajoutée pour le plein écran natif (jamais prise comme source)
@@ -112,7 +119,179 @@
 
   function cueText(s) {
     return String(s || '').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/\s+/g, ' ').trim();
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#39;/g, "'").replace(/&quot;/g, '"')
+      .replace(/\s+/g, ' ').trim();
+  }
+
+  /* ---------------- YouTube : transcription entière (outils sans état, testés à part) ----------------
+   * Les sous-titres de YouTube (fichier « timedtext ») sont lus d'avance, en entier, horodatés :
+   * format json3 (events[].tStartMs / dDurationMs / segs[].utf8 / tOffsetMs ; un « seg » par mot pour les
+   * sous-titres automatiques) ou XML (srv1 <text start dur>, srv3 <p t d>). Tout ce qui vient de la page
+   * est traité comme du texte non sûr : jamais interprété, seulement affiché avec textContent. */
+  var CJK_RE = /[぀-ヿ㐀-鿿豈-﫿가-힯]/;
+  var SENT_END_RE = /[.!?。！？…‼⁇]["'»”’)\]]*\s*$/;
+  var SENT_MAX_SEC = 12;         // phrase fusionnée : 12 s au plus
+  var SENT_SOFT_SEC = 6;         // au-delà, coupée à la première petite pause (sous-titres sans ponctuation)
+  var SENT_PAUSE_SEC = 1;        // silence qui termine une phrase
+  var WORD_MAX_SEC = 0.8;        // durée prise pour un mot des sous-titres automatiques (avant le suivant)
+
+  /* Fichier timedtext -> morceaux { start, end, text, first } triés (secondes). first : début d'une ligne
+     (une espace la sépare de la précédente ; dans une ligne, les mots gardent leurs propres espaces). */
+  function parseTimedText(raw, DOMParserCtor) {
+    var s = String(raw || '').replace(/^﻿/, '').trim();
+    var out = [];
+    if (!s) return out;
+    if (s.charAt(0) === '{') {
+      var j = null;
+      try { j = JSON.parse(s); } catch (e) { return out; }
+      var events = j && Array.isArray(j.events) ? j.events : [];
+      events.forEach(function (ev) {
+        if (!ev || !Array.isArray(ev.segs)) return;
+        var st = Number(ev.tStartMs) || 0;
+        var du = Math.max(0, Number(ev.dDurationMs) || 0);
+        var toks = [];
+        ev.segs.forEach(function (g) {
+          var tx = g && typeof g.utf8 === 'string' ? g.utf8.replace(/\n/g, ' ') : '';
+          if (!tx.trim()) return;
+          toks.push({ t: (st + Math.max(0, Number(g.tOffsetMs) || 0)) / 1000, text: tx });
+        });
+        var word = toks.length > 1;
+        toks.forEach(function (k, i) {
+          var end = i + 1 < toks.length ? toks[i + 1].t : (st + du) / 1000;
+          if (word) end = Math.min(end, k.t + WORD_MAX_SEC + 0.05 * k.text.trim().length);
+          out.push({ start: k.t, end: Math.max(end, k.t), text: k.text, first: i === 0, word: word });
+        });
+      });
+    } else if (s.charAt(0) === '<' && DOMParserCtor) {
+      var xml = null;
+      try { xml = new DOMParserCtor().parseFromString(s, 'text/xml'); } catch (e) { return out; }
+      if (!xml || xml.getElementsByTagName('parsererror').length) return out;
+      var add = function (start, dur, text) {
+        var tx = cueText(text);
+        if (!tx || !isFinite(start)) return;
+        out.push({ start: start, end: start + Math.max(0, dur || 0), text: tx, first: true, word: false });
+      };
+      var texts = xml.getElementsByTagName('text');
+      for (var i = 0; i < texts.length; i++) {
+        add(parseFloat(texts[i].getAttribute('start')), parseFloat(texts[i].getAttribute('dur')), texts[i].textContent);
+      }
+      var ps = xml.getElementsByTagName('p');
+      for (var k2 = 0; k2 < ps.length; k2++) {
+        add(parseFloat(ps[k2].getAttribute('t')) / 1000, parseFloat(ps[k2].getAttribute('d')) / 1000, ps[k2].textContent);
+      }
+    }
+    out.sort(function (a, b) { return a.start - b.start; });
+    // un morceau s'arrête au plus tard quand le suivant commence (les lignes de YouTube se chevauchent)
+    for (var n = 0; n + 1 < out.length; n++) {
+      if (out[n + 1].start > out[n].start && out[n].end > out[n + 1].start) out[n].end = out[n + 1].start;
+    }
+    return out;
+  }
+  function joinText(a, b, newLine) {
+    if (!a) return b;
+    if (!newLine) return a + b;
+    var last = a.replace(/\s+$/, '').slice(-1);
+    var next = b.replace(/^\s+/, '').charAt(0);
+    return CJK_RE.test(last) && CJK_RE.test(next) ? a.replace(/\s+$/, '') + b.replace(/^\s+/, '') : a + ' ' + b;
+  }
+  /* Morceaux -> phrases { start, end, text } : coupées à la ponctuation de fin, à un silence, à 12 s au
+     plus (et dès 6 s à la première petite pause, pour les sous-titres automatiques sans ponctuation).
+     La fin d'une phrase est prolongée jusqu'à la suivante (1 s au plus) : plus de temps pour la voix. */
+  function mergeSentences(cues, maxSec) {
+    maxSec = maxSec || SENT_MAX_SEC;
+    var out = [];
+    var cur = null;
+    function flush() {
+      if (!cur) return;
+      var text = cueText(cur.text);
+      if (text) out.push({ start: cur.start, end: cur.end, text: text });
+      cur = null;
+    }
+    (cues || []).forEach(function (c) {
+      if (!c || !c.text) return;
+      if (cur) {
+        var gap = c.start - cur.end;
+        if (gap > SENT_PAUSE_SEC || c.end - cur.start > maxSec || (cur.end - cur.start >= SENT_SOFT_SEC && gap >= 0.3)) flush();
+      }
+      if (!cur) cur = { start: c.start, end: c.end, text: '' };
+      cur.text = joinText(cur.text, c.text, c.first !== false);
+      cur.end = Math.max(cur.end, c.end);
+      if (SENT_END_RE.test(c.text) && cur.end - cur.start >= 0.6) flush();
+    });
+    flush();
+    for (var i = 0; i + 1 < out.length; i++) {
+      out[i].end = Math.max(out[i].end, Math.min(out[i + 1].start, out[i].end + 1));
+    }
+    return out;
+  }
+  /* Texte d'origine de chaque phrase traduite : les morceaux d'origine qui commencent pendant cette phrase */
+  function originalsFor(sentences, cues) {
+    var parts = sentences.map(function () { return ''; });
+    var i = 0;
+    (cues || []).forEach(function (c) {
+      while (i + 1 < sentences.length && c.start >= sentences[i + 1].start - 0.05) i++;
+      if (sentences.length) parts[i] = joinText(parts[i], c.text, c.first !== false);
+    });
+    return parts.map(cueText);
+  }
+  /* Piste choisie : celle de la langue parlée, écrite à la main avant l'automatique (« asr ») ;
+     une piste écrite à la main déjà dans la langue cible passe avant tout (traduction humaine). */
+  function pickCaptionTrack(tracks, spokenLang, target) {
+    var list = (tracks || []).filter(function (k) { return k && k.lang && k.url; });
+    var asr = list.filter(function (k) { return k.kind === 'asr'; });
+    var manual = list.filter(function (k) { return k.kind !== 'asr'; });
+    var spoken = spokenLang || (asr[0] && asr[0].lang) || '';
+    var find = function (arr, lang) { return arr.filter(function (k) { return sameLanguage(k.lang, lang); })[0] || null; };
+    return find(manual, target) || (spoken && (find(manual, spoken) || find(asr, spoken))) ||
+      manual.filter(function (k) { return !sameLanguage(k.lang, target); })[0] || manual[0] || asr[0] || null;
+  }
+  /* Code de langue de YouTube (translationLanguages) pour la langue cible : zh-CN -> zh-Hans, he -> iw... */
+  function ytLanguage(codes, target) {
+    var tg = normLang(target);
+    var want = [{ 'zh-cn': 'zh-hans', 'zh-tw': 'zh-hant' }[tg] || tg, tg, primary(tg)].concat(LANG_ALIAS[primary(tg)] || []);
+    for (var i = 0; i < want.length; i++) {
+      for (var j = 0; j < (codes || []).length; j++) if (normLang(codes[j]) === want[i]) return codes[j];
+    }
+    return '';
+  }
+  /* Adresses timedtext à essayer, dans l'ordre :
+     1. l'adresse de la piste (baseUrl) complétée par les paramètres de celle demandée par le lecteur
+        lui-même (jeton « pot » exigé désormais par YouTube : sans lui, la réponse est souvent vide) ;
+     2. l'adresse demandée par le lecteur (sa piste à lui, jeton compris) ;
+     3. la baseUrl nue. Toujours au format json3, jamais traduite (tlang ajouté plus tard). */
+  function captionUrls(track, observed, base) {
+    var out = [];
+    var push = function (u) {
+      if (!u) return;
+      u.searchParams.set('fmt', 'json3');
+      u.searchParams.delete('tlang');
+      if (out.indexOf(u.href) === -1) out.push(u.href);
+    };
+    var parse = function (s) { try { return new URL(s, base); } catch (e) { return null; } };
+    var obs = parse(observed);
+    if (obs && !/\/api\/timedtext$/.test(obs.pathname)) obs = null;
+    var bu = track && parse(track.url);
+    if (bu && obs) {
+      var merged = parse(bu.href);
+      obs.searchParams.forEach(function (v, k) { if (!merged.searchParams.has(k) && k !== 'tlang' && k !== 'fmt') merged.searchParams.set(k, v); });
+      push(merged);
+    }
+    if (obs) push(obs);
+    if (bu) push(bu);
+    return out;
+  }
+  /* Adresses timedtext vues par le lecteur (entrées de performance) pour cette vidéo, jeton « pot » d'abord */
+  function observedUrls(list, videoId, base) {
+    var out = [];
+    (Array.isArray(list) ? list : []).forEach(function (s) {
+      var u;
+      try { u = new URL(String(s), base); } catch (e) { return; }
+      if (!/\/api\/timedtext$/.test(u.pathname)) return;
+      if (videoId && u.searchParams.get('v') && u.searchParams.get('v') !== videoId) return;
+      out.push(u.href);
+    });
+    var pot = out.filter(function (s) { return /[?&]pot=/.test(s); });
+    return pot.reverse().concat(out.filter(function (s) { return pot.indexOf(s) === -1; }).reverse());
   }
 
   function createVoice(doc, win, deps) {
@@ -124,6 +303,11 @@
     var chunkMs = deps.chunkMs || CHUNK_MS;
     var ytWaitMs = deps.ytWaitMs || YT_WAIT_MS;
     var watchMs = deps.watchMs || WATCH_MS;
+    var ytPollMs = deps.ytPollMs || YT_POLL_MS;
+    var ytPotWaitMs = deps.ytPotWaitMs || YT_POT_WAIT_MS;
+    var ytInfoWaitMs = deps.ytInfoWaitMs || YT_INFO_WAIT_MS;
+    var openAction = null;       // bouton de la barre : ouvrir la vidéo dans un onglet, ou les réglages
+    var noCaptions = false;      // YouTube sans aucun sous-titre : message propre si la clé Groq manque
 
     var active = false;
     var mode = null;             // 'track' | 'youtube' | 'audio'
@@ -387,11 +571,7 @@
       open.type = 'button';
       open.hidden = true;
       open.textContent = t('voiceOpenTab');
-      open.addEventListener('click', function () {
-        var url = open.getAttribute('data-url');
-        if (url) { try { win.open(url, '_blank', 'noopener'); } catch (e) { /* rien */ } }
-        stop();
-      });
+      open.addEventListener('click', function () { if (openAction) openAction(); });
       var speak = iconButton('speak', ICON_SPEAK, t('voiceSpeak'));
       speak.setAttribute('aria-pressed', 'false');
       speak.addEventListener('click', function () { setSpeaking(!speaking); });
@@ -478,14 +658,31 @@
     }
     /* Après « Arrêter », aucun message (erreur, transcription en retard) ne recrée la bande,
        ses écouteurs ni son intervalle. */
-    function setMessage(m) {
+    function setMessage(m, action) {
       if (!active) return;
       message = m || '';
       ensureBox();
       box.querySelector('.msg').textContent = message;
       box.querySelector('.msg').title = message;
+      box.querySelector('.msg').classList.toggle('long', !!action);
+      setAction(action || null);
       box.classList.add('on');
       position();
+    }
+    /* Bouton de la barre à côté du message (ouvrir la vidéo dans un onglet, ouvrir les réglages) */
+    function setAction(action) {
+      if (!box) return;
+      var open = box.querySelector('.open');
+      openAction = action ? action.run : null;
+      open.hidden = !action;
+      if (action) open.textContent = action.label;
+    }
+    /* Clé Groq manquante : bouton qui ouvre les réglages (message au background) */
+    function settingsAction() {
+      if (!deps.openOptions) return null;
+      return { label: t('voiceOpenSettings'), run: function () {
+        try { Promise.resolve(deps.openOptions()).catch(function () { /* rien */ }); } catch (e) { /* rien */ }
+      } };
     }
 
     /* ---------------- Doublage : voix de synthèse (locale ou du navigateur, gratuite) ----------------
@@ -950,23 +1147,238 @@
       });
     }
 
-    /* ---------------- 2. Sous-titres YouTube ---------------- */
+    /* ---------------- 2. YouTube : transcription entière, programmée sur video.currentTime ----------------
+     * 1. un petit script lancé dans le monde de la page par le background (deps.ytPlayer) lit
+     *    movie_player.getPlayerResponse() : pistes de sous-titres, langues de traduction de YouTube, langue
+     *    du son, et les adresses /api/timedtext déjà demandées par le lecteur (entrées de performance) ;
+     * 2. sans adresse avec jeton « pot » : les sous-titres sont activés (masqués) pour que le lecteur la
+     *    demande, puis remis comme avant ;
+     * 3. le fichier json3 est relu en entier, fusionné en phrases, traduit d'avance : par YouTube (tlang,
+     *    gratuit) si la langue cible est proposée, sinon par le fournisseur choisi (translateMany, mémoire) ;
+     * 4. chaque phrase est affichée et dite à son heure (video.currentTime), vitesse calée sur sa durée.
+     * Replis, dans l'ordre : lecture du texte affiché par YouTube (startYouTubeScreen), puis le son. */
+    function later(ms) { return new Promise(function (r) { win.setTimeout(r, ms); }); }
+    function ytCall(req) {
+      return Promise.resolve().then(function () { return deps.ytPlayer(req); })
+        .then(function (r) { return r && typeof r === 'object' ? r : null; }, function () { return null; });
+    }
+    function str(x, n) { return typeof x === 'string' ? x.slice(0, n || 200) : ''; }
+    function ccButton() { return doc.querySelector('.ytp-subtitles-button'); }
+    function hideYtCaptions() {
+      var style = doc.createElement('style');
+      style.setAttribute('data-tr-ui', 'voice-style');
+      style.textContent = '.ytp-caption-window-container{opacity:0!important}';
+      (doc.head || doc.documentElement).appendChild(style);
+      return function () { if (style.parentNode) style.parentNode.removeChild(style); };
+    }
+    /* Lecteur de la vidéo en cours (après une navigation interne, l'ancien répond encore un moment) */
+    function ytInfo(id, isOff) {
+      var until = Date.now() + ytInfoWaitMs;
+      function once() {
+        return ytCall({ op: 'info' }).then(function (r) {
+          if (isOff() || !r || r.ok === false) return null;
+          var vid = str(r.videoId, 64);
+          // lecteur absent, pas encore prêt (aucune réponse) ou encore sur l'ancienne vidéo : on attend,
+          // puis repli (jamais « pas de sous-titres » sans avoir lu la réponse de la bonne vidéo)
+          if (r.player !== false && vid && (!id || vid === id)) return r;
+          if (Date.now() >= until) return null;
+          return later(ytPollMs).then(once);
+        });
+      }
+      return once();
+    }
+    function cleanTracks(list) {
+      return (Array.isArray(list) ? list : []).slice(0, 100).map(function (k) {
+        return k && { url: str(k.url, 4096), lang: str(k.lang, 20), kind: str(k.kind, 10), translatable: k.translatable === true };
+      }).filter(function (k) { return k && k.url && k.lang; });
+    }
+    /* Adresse avec jeton : déjà vue, sinon sous-titres activés (masqués) le temps que le lecteur la demande */
+    function observedTimed(info, id, isOff, setUndo) {
+      var base = win.location.href;
+      var seen = observedUrls(info.timed, id, base);
+      if (seen.length && /[?&]pot=/.test(seen[0])) return Promise.resolve(seen);
+      var btn = ccButton();
+      if (!btn || btn.getAttribute('aria-pressed') !== 'false') return Promise.resolve(seen);
+      var show = hideYtCaptions();
+      btn.click();
+      setUndo(function () {
+        show();
+        if (btn.getAttribute('aria-pressed') === 'true') btn.click();
+      });
+      var until = Date.now() + ytPotWaitMs;
+      function poll() {
+        return later(ytPollMs).then(function () {
+          if (isOff()) return seen;
+          return ytCall({ op: 'info' }).then(function (r) {
+            var now = r && r.ok !== false ? observedUrls(r.timed, id, base) : [];
+            if (now.length && (/[?&]pot=/.test(now[0]) || Date.now() >= until)) return now;
+            if (Date.now() >= until || isOff()) return now.length ? now : seen;
+            return poll();
+          });
+        });
+      }
+      return poll();
+    }
+    function fetchCues(url) {
+      return ytCall({ op: 'fetch', url: url }).then(function (r) {
+        if (!r || r.ok === false || typeof r.text !== 'string') return [];
+        return parseTimedText(r.text, win.DOMParser);
+      });
+    }
+    function firstCues(urls, isOff) {
+      var i = 0;
+      function next() {
+        if (i >= urls.length || isOff()) return Promise.resolve(null);
+        var url = urls[i++];
+        return fetchCues(url).then(function (cues) { return cues.length ? { cues: cues, url: url } : next(); });
+      }
+      return next();
+    }
+    function urlLang(u, fallback) {
+      try { return new URL(u).searchParams.get('lang') || fallback; } catch (e) { return fallback; }
+    }
+    /* Transcription : { sentences, lang, byYouTube, same } ; { noCaptions } ; null (échec : repli) */
+    function loadTranscript(id, isOff, setUndo) {
+      var target = targetLang();
+      return ytInfo(id, isOff).then(function (info) {
+        if (!info) return null;
+        var tracks = cleanTracks(info.tracks);
+        if (!tracks.length) return { noCaptions: true };
+        var track = pickCaptionTrack(tracks, str(info.audioLang, 20), target);
+        return observedTimed(info, id, isOff, setUndo).then(function (seen) {
+          if (isOff()) return null;
+          return firstCues(captionUrls(track, seen[0], win.location.href), isOff).then(function (got) {
+            if (!got || isOff()) return null;
+            var lang = urlLang(got.url, track.lang);
+            var sentences = mergeSentences(got.cues);
+            var res = { sentences: sentences, lang: lang, byYouTube: false, same: sameLanguage(lang, target) };
+            if (res.same || !sentences.length) return res;
+            var tl = track.translatable && deps.ytTranslate !== false ? ytLanguage((info.tlangs || []).map(function (c) { return str(c, 20); }), target) : '';
+            if (!tl) return res;
+            var tu = new URL(got.url);
+            tu.searchParams.set('tlang', tl);
+            // traduction de YouTube : ses phrases et ses temps à elle ; texte d'origine pris dans la même fenêtre
+            return fetchCues(tu.href).then(function (trCues) {
+              var trs = mergeSentences(trCues);
+              if (!trs.length || isOff()) return res;
+              var orig = originalsFor(trs, got.cues);
+              res.sentences = trs.map(function (s, i) { return { start: s.start, end: s.end, text: orig[i] || s.text, tr: s.text }; });
+              res.byYouTube = true;
+              return res;
+            });
+          });
+        });
+      });
+    }
+    function startYouTube() {
+      if (!deps.ytPlayer) { startYouTubeScreen(); return; }
+      mode = 'youtube';
+      var off = false;
+      var undo = null;
+      var isOff = function () { return off || !active; };
+      var undoCc = function () { var u = undo; undo = null; if (u) u(); };
+      srcCleanups.push(function () { off = true; undoCc(); });
+      setMessage(t('voiceYtLoading'));
+      loadTranscript(ytCurrent, isOff, function (u) { undo = u; }).then(function (res) {
+        if (isOff()) return;
+        undoCc();
+        if (res && res.sentences && res.sentences.length) { runTranscript(res, function () { return off; }); return; }
+        if (res && res.noCaptions) { noCaptions = true; startAudio(); return; }
+        startYouTubeScreen(t('voiceYtScreen'));
+      }, function () {
+        if (isOff()) return;
+        undoCc();
+        startYouTubeScreen(t('voiceYtScreen'));
+      });
+    }
+    /* Phrases connues d'avance : la bonne est relue sur video.currentTime (timeupdate + minuteur), dite à
+       son début ; pause, saut, vitesse de la vidéo et publicités suivis. */
+    function runTranscript(res, isOff) {
+      mode = 'transcript';
+      var sents = res.sentences;
+      var store = memo;
+      var given = 0;
+      sents.forEach(function (s) {
+        var tr = res.same ? s.text : s.tr;
+        if (tr && !(s.text in store)) { store[s.text] = tr; given++; }
+      });
+      if (res.byYouTube) stats.translated += given;
+      var unhide = hideYtCaptions();     // sous-titres de YouTube éventuellement affichés : la bande les remplace
+      setMessage(res.byYouTube ? t('voiceYtByYouTube') : t('voiceYtTranscript', [DDT.languageName(res.lang)]));
+      var cur = -1;
+      var aheadFrom = -1;
+      function at(tm) {
+        var lo = 0;
+        var hi = sents.length - 1;
+        var ans = -1;
+        while (lo <= hi) {
+          var mid = (lo + hi) >> 1;
+          if (sents[mid].start <= tm + 0.05) { ans = mid; lo = mid + 1; } else hi = mid - 1;
+        }
+        return ans >= 0 && tm < sents[ans].end ? ans : -1;
+      }
+      /* Traduction d'avance par le fournisseur : la phrase en cours et celles des 2 min 30 suivantes */
+      function ahead(tm) {
+        var todo = [];
+        for (var i = 0; i < sents.length; i++) {
+          if (sents[i].end < tm - 1) continue;
+          if (sents[i].start > tm + AHEAD_SEC) break;
+          if (!(sents[i].text in store)) todo.push(sents[i].text);
+        }
+        if (todo.length) translateMany(todo);
+      }
+      function adShowing() {
+        var p = doc.getElementById('movie_player');
+        return !!p && !!p.classList && p.classList.contains('ad-showing');
+      }
+      function tick() {
+        if (!active || isOff() || !video) return;
+        if (adShowing()) {                         // publicité : son temps n'est pas celui de la vidéo
+          if (cur !== -1) { cur = -1; clearLines(); cancelSpeech(); lastShown = ''; }
+          return;
+        }
+        var tm = Number(video.currentTime) || 0;
+        var i = at(tm);
+        if (i === cur) return;
+        cur = i;
+        var block = Math.floor(tm / 30);
+        if (block !== aheadFrom) { aheadFrom = block; ahead(tm); }
+        if (i < 0) { clearLines(); return; }
+        var s = sents[i];
+        var timing = { end: s.end };
+        if (s.text in store) { show(s.text, store[s.text], timing); return; }
+        show(s.text, '');
+        translateOne(s.text).then(function (tr) { if (active && !isOff() && cur === i) show(s.text, tr || '', timing); });
+      }
+      var timer = win.setInterval(tick, TICK_MS);
+      var v = video;
+      v.addEventListener('timeupdate', tick);
+      // pause puis lecture, ou saut : la phrase du nouvel endroit est redite (le reste de son temps)
+      resumeHook = function () { cur = -2; aheadFrom = -1; lastShown = ''; tick(); };
+      ahead(Number(v.currentTime) || 0);
+      tick();
+      srcCleanups.push(function () {
+        win.clearInterval(timer);
+        v.removeEventListener('timeupdate', tick);
+        resumeHook = defaultResume;
+        unhide();
+      });
+    }
+
+    /* ---------------- 2 bis. Repli YouTube : texte des sous-titres affiché à l'écran ---------------- */
     function ytText() {
       var segs = doc.querySelectorAll('.ytp-caption-window-container .ytp-caption-segment');
       var parts = [];
       for (var i = 0; i < segs.length; i++) parts.push(segs[i].textContent);
       return parts.join(' ').replace(/\s+/g, ' ').trim();
     }
-    function startYouTube() {
+    function startYouTubeScreen(msg) {
       mode = 'youtube';
-      var btn = doc.querySelector('.ytp-subtitles-button');
+      var btn = ccButton();
       var turnedOn = false;
       if (btn && btn.getAttribute('aria-pressed') === 'false') { btn.click(); turnedOn = true; }
-      var style = doc.createElement('style');
-      style.setAttribute('data-tr-ui', 'voice-style');
-      style.textContent = '.ytp-caption-window-container{opacity:0!important}';
-      (doc.head || doc.documentElement).appendChild(style);
-      setMessage(t('voiceSourceTrack'));
+      var unhide = hideYtCaptions();
+      setMessage(msg || t('voiceSourceTrack'));
       var seen = false;
       var last = '';
       var changedAt = 0;
@@ -1004,7 +1416,7 @@
       function stopYouTube() {
         win.clearInterval(tick);
         win.clearTimeout(fallback);
-        if (style.parentNode) style.parentNode.removeChild(style);
+        unhide();
         if (turnedOn && btn && btn.getAttribute('aria-pressed') === 'true') btn.click();
         turnedOn = false;
       }
@@ -1231,7 +1643,7 @@
       }).then(function (r) {
         if (!active) return;
         if (!r || !r.ok) {
-          if (r && r.error === 'no_groq') setMessage(t('voiceNeedGroq'));
+          if (r && r.error === 'no_groq') setMessage(t(noCaptions ? 'voiceNoCaptionsGroq' : 'voiceNeedGroq'), settingsAction());
           else if (r && r.error === 'rate_limited') setMessage(t('voiceRate'));
           else if (r && r.error === 'empty') return;
           else setMessage((r && r.message) || t('badgeError', [(r && r.error) || '?']));
@@ -1247,6 +1659,7 @@
 
     /* ---------------- Choix de la source, suivi de la vidéo ---------------- */
     function startSource() {
+      noCaptions = false;
       var tracks = textTracks(video);
       if (tracks.length) startTrack(tracks);
       else if (isYouTube()) startYouTube();
@@ -1340,9 +1753,11 @@
           m.textContent = message;
           m.title = message;
           m.classList.add('long');
-          var open = box.querySelector('.open');
-          open.hidden = false;
-          open.setAttribute('data-url', url);
+          setAction({ label: t('voiceOpenTab'), run: function () {
+            try { win.open(url, '_blank', 'noopener'); } catch (e) { /* rien */ }
+            stop();
+          } });
+          box.querySelector('.open').setAttribute('data-url', url);
           box.querySelector('.speak').hidden = true;
           box.querySelector('.rates').hidden = true;
           box.classList.add('on');
@@ -1376,6 +1791,7 @@
       resumeHook = null;
       frameAnchor = null;
       frameMode = false;
+      openAction = null;
       stopSource();
       var list = cleanups;
       cleanups = [];
@@ -1408,6 +1824,8 @@
   root.DDT_pickTtsVoice = pickTtsVoice;
   root.DDT_dubRate = dubRate;
   root.DDT_VOICE_LIMITS = { min: FINAL_RATE_MIN, max: FINAL_RATE_MAX, chars: TTS_MAX_CHARS };
+  root.DDT_ytTools = { parseTimedText: parseTimedText, mergeSentences: mergeSentences, originalsFor: originalsFor,
+    pickCaptionTrack: pickCaptionTrack, ytLanguage: ytLanguage, captionUrls: captionUrls, observedUrls: observedUrls };
 
   /* ---------------- Mise en route dans l'extension ---------------- */
   var api = DDT && DDT.api;
@@ -1464,7 +1882,15 @@
     });
   }
 
-  var voice = createVoice(document, window, { transport: transport, transcribe: transcribe, tts: tts, saveRate: saveRate });
+  /* YouTube : lecture du lecteur et des sous-titres dans le monde de la page, faite par le background
+     (scripting.executeScript, world MAIN, fonction fixe) ; la réponse est relue ici comme du texte non sûr. */
+  function ytPlayer(req) {
+    return api.runtime.sendMessage({ type: 'ytPlayer', op: req.op, url: req.url || '' }).catch(function () { return null; });
+  }
+  function openOptions() { return api.runtime.sendMessage({ type: 'openOptions' }); }
+
+  var voice = createVoice(document, window, { transport: transport, transcribe: transcribe, tts: tts, saveRate: saveRate,
+    ytPlayer: ytPlayer, openOptions: openOptions });
   root.__DDT_VOICE = voice;
 
   // vitesse changée dans les réglages (ou dans un autre onglet) : appliquée tout de suite

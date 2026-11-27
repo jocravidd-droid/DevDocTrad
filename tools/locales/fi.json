@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Videoiden ääni (jälkiäänitys ja vain ääni). 1× = normaali nopeus; ääni nopeutuu hieman pysyäkseen tekstityksen tahdissa.",
 "voiceSlower": "Hitaampi ääni",
 "voiceFaster": "Nopeampi ääni",
-"voiceRateValue": "Äänen nopeus: {0}"
+"voiceRateValue": "Äänen nopeus: {0}",
+"voiceYtLoading": "Haetaan YouTube-tekstityksiä…",
+"voiceYtTranscript": "YouTube-tekstitykset ({0}) ladattu kokonaan, käännetty etukäteen",
+"voiceYtByYouTube": "YouTuben kääntämät tekstitykset (ilmainen), tahdistettu videoon",
+"voiceYtScreen": "YouTube-litterointi ei ole saatavilla: luetaan näytön tekstityksiä",
+"voiceNoCaptionsGroq": "Tässä videossa ei ole tekstityksiä: äänen kuunteluun tarvitaan ilmainen Groq-avain.",
+"voiceOpenSettings": "Avaa asetukset"
 }

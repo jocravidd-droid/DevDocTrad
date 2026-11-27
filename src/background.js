@@ -1329,6 +1329,38 @@
       return Promise.resolve({ ok: true, stopped: mine.length });
     }
 
+    /* YouTube (voix des vidéos) : la fonction fixe ytMain lancée dans le monde de la page de l'onglet qui
+       la demande (scripting.executeScript, world MAIN, Chrome 102+ et Firefox 128+), avec la permission
+       déjà donnée pour lancer la voix (activeTab ou site autorisé). Aucune nouvelle permission. Seulement
+       pour un onglet YouTube ; « fetch » seulement vers /api/timedtext du même site (vérifié aussi dans la page). */
+    var YT_HOST_RE = /(^|\.)youtube(-nocookie)?\.com$/i;
+    function ytPlayer(msg, sender) {
+      var tab = sender && sender.tab;
+      if (!tab || typeof tab.id !== 'number') return Promise.resolve({ ok: false, error: 'no_tab' });
+      var host = '';
+      try { host = new URL(String(sender.url || tab.url || '')).hostname; } catch (e) { host = ''; }
+      if (!YT_HOST_RE.test(host)) return Promise.resolve({ ok: false, error: 'not_youtube' });
+      var op = msg && msg.op;
+      if (op !== 'info' && op !== 'fetch') return Promise.resolve({ ok: false, error: 'bad_op' });
+      var url = op === 'fetch' && typeof msg.url === 'string' ? msg.url : '';
+      if (op === 'fetch' && (!url || url.length > 8192)) return Promise.resolve({ ok: false, error: 'bad_url' });
+      if (!api.scripting || !api.scripting.executeScript) return Promise.resolve({ ok: false, error: 'no_scripting' });
+      var target = { tabId: tab.id };
+      if (typeof sender.frameId === 'number') target.frameIds = [sender.frameId];
+      return Promise.resolve().then(function () {
+        return api.scripting.executeScript({ target: target, world: 'MAIN', func: ytMain, args: [op, url] });
+      }).then(function (res) {
+        var r = res && res[0] && res[0].result;
+        return r && typeof r === 'object' ? r : { ok: false, error: 'empty' };
+      }, function (e) {
+        return { ok: false, error: 'inject', message: DDT.sanitize(e && e.message).slice(0, 160) };
+      });
+    }
+    function openOptions() {
+      if (!api.runtime || !api.runtime.openOptionsPage) return Promise.resolve({ ok: false });
+      return Promise.resolve(api.runtime.openOptionsPage()).then(function () { return { ok: true }; }, function () { return { ok: false }; });
+    }
+
     /* Commandes envoyées au script « voix » d'un onglet ; il est injecté à la première demande. */
     function voiceCommand(tabId, cmd, keyId, on, mode) {
       function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null, on: !!on, mode: mode }); }
@@ -1363,6 +1395,8 @@
         case 'speak': return speak(msg, sender);
         case 'stopSpeaking': return stopSpeaking(msg, sender);
         case 'ttsVoices': return ttsVoices();
+        case 'ytPlayer': return ytPlayer(msg, sender);
+        case 'openOptions': return openOptions();
         default: return null;   // message pour un autre destinataire : ne pas répondre à sa place
       }
     }
@@ -1381,17 +1415,90 @@
       syncAutoScripts: syncAutoScripts, autoCheck: autoCheck, tabCommand: tabCommand, flushCache: flushCache,
       buildChain: buildChain, publicState: publicState, clearCache: clearCache, cacheInfo: cacheInfo,
       addAutoSite: addAutoSite, removeAutoSite: removeAutoSite, transcribe: transcribe, voiceCommand: voiceCommand,
-      speak: speak, stopSpeaking: stopSpeaking, ttsVoices: ttsVoices,
+      speak: speak, stopSpeaking: stopSpeaking, ttsVoices: ttsVoices, ytPlayer: ytPlayer,
       _ProviderError: ProviderError
     };
   }
 
   root.DDT_createBackground = createBackground;
 
+  /* Lancée DANS LA PAGE YouTube (monde MAIN) par ytPlayer : doit se suffire à elle-même (sérialisée par
+   * scripting.executeScript, sans accès à ce fichier). Lit seulement ; ne change rien au lecteur.
+   *   info  : pistes de sous-titres (adresse, langue, automatique ou non), langues de traduction de
+   *           YouTube, langue du son, et adresses /api/timedtext déjà demandées par le lecteur (entrées de
+   *           performance, gardées aussi par un PerformanceObserver : le tampon de 250 entrées se remplit vite) ;
+   *   fetch : un fichier de sous-titres, seulement /api/timedtext du même site (cookies de la page, comme
+   *           le lecteur), texte rendu tel quel (8 Mo au plus). */
+  function ytMain(op, arg) {
+    var cut = function (x, n) { return typeof x === 'string' ? x.slice(0, n) : ''; };
+    try {
+      if (op === 'fetch') {
+        var u = new URL(String(arg), location.href);
+        if (u.origin !== location.origin || u.pathname !== '/api/timedtext') return { ok: false, error: 'bad_url' };
+        return fetch(u.href, { credentials: 'include' }).then(function (r) {
+          return r.text().then(function (t) { return { ok: r.ok, status: r.status, text: cut(t, 8000000) }; });
+        }).catch(function (e) { return { ok: false, error: 'network', message: cut(String(e && e.message || e), 200) }; });
+      }
+      if (op !== 'info') return { ok: false, error: 'bad_op' };
+      var KEY = '__ddtTimedText';
+      var seen = window[KEY];
+      var isTimed = function (n) { return typeof n === 'string' && n.indexOf('/api/timedtext?') !== -1; };
+      var keep = function (n) {
+        if (!isTimed(n) || seen.indexOf(n) !== -1) return;
+        seen.push(n);
+        if (seen.length > 40) seen.shift();
+      };
+      if (!Array.isArray(seen)) {
+        seen = [];
+        try { Object.defineProperty(window, KEY, { value: seen, configurable: true }); } catch (e) { /* rien */ }
+        try {
+          if (typeof PerformanceObserver === 'function') {
+            new PerformanceObserver(function (list) { list.getEntries().forEach(function (e) { keep(e.name); }); })
+              .observe({ type: 'resource', buffered: true });
+          }
+        } catch (e) { /* rien */ }
+      }
+      try { performance.getEntriesByType('resource').forEach(function (e) { keep(e.name); }); } catch (e) { /* rien */ }
+      var p = document.getElementById('movie_player');
+      var r = null;
+      try { r = p && typeof p.getPlayerResponse === 'function' ? p.getPlayerResponse() : null; } catch (e) { r = null; }
+      if (!r && !(p && typeof p.getPlayerResponse === 'function')) r = window.ytInitialPlayerResponse || null;
+      var tl = (r && r.captions && r.captions.playerCaptionsTracklistRenderer) || {};
+      var label = function (n) {
+        if (!n) return '';
+        if (typeof n.simpleText === 'string') return n.simpleText;
+        return Array.isArray(n.runs) ? n.runs.map(function (x) { return (x && x.text) || ''; }).join('') : '';
+      };
+      var audio = '';
+      var formats = (r && r.streamingData && r.streamingData.adaptiveFormats) || [];
+      for (var i = 0; i < formats.length && i < 200; i++) {
+        var a = formats[i] && formats[i].audioTrack;
+        if (a && a.audioIsDefault && typeof a.id === 'string') { audio = a.id.split('.')[0]; break; }
+      }
+      return {
+        ok: true, player: !!p,
+        videoId: cut(r && r.videoDetails && r.videoDetails.videoId, 64),
+        tracks: (Array.isArray(tl.captionTracks) ? tl.captionTracks : []).slice(0, 100).map(function (k) {
+          return { url: cut(k && k.baseUrl, 4096), lang: cut(k && k.languageCode, 20), kind: cut(k && k.kind, 10),
+            name: cut(label(k && k.name), 100), translatable: !!(k && k.isTranslatable) };
+        }),
+        tlangs: (Array.isArray(tl.translationLanguages) ? tl.translationLanguages : []).slice(0, 300).map(function (l) {
+          return cut(l && l.languageCode, 20);
+        }),
+        audioLang: cut(audio, 20),
+        timed: seen.slice(-40).map(function (n) { return cut(n, 8192); })
+      };
+    } catch (e) {
+      return { ok: false, error: 'error', message: cut(String(e && e.message || e), 200) };
+    }
+  }
+  root.DDT_ytMain = ytMain;
+
   /* Messages acceptés depuis un script de contenu (page web) : seulement ceux dont il a besoin.
    * Tout le reste (clés, réglages, cache, onglets) ne vient que des pages de l'extension
    * (popup, réglages), reconnues à leur adresse. */
-  var CONTENT_SCRIPT_TYPES = { autoCheck: true, transcribe: true, speak: true, stopSpeaking: true, ttsVoices: true };
+  var CONTENT_SCRIPT_TYPES = { autoCheck: true, transcribe: true, speak: true, stopSpeaking: true, ttsVoices: true,
+    ytPlayer: true, openOptions: true };
   function isTrustedSender(msg, sender, api) {
     if (!msg || !msg.type) return false;
     if (CONTENT_SCRIPT_TYPES[msg.type]) return true;

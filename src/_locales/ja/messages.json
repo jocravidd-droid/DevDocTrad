@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "音声の速さ：{0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube の字幕を取得中…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube の字幕（{0}）をすべて読み込み、先に翻訳しました"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTube が翻訳した字幕（無料）、動画に同期"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube の文字起こしは利用できません：画面の字幕を読み取ります"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "この動画には字幕がありません：音声を聞き取るには無料の Groq キーが必要です。"
+  },
+  "voiceOpenSettings": {
+    "message": "設定を開く"
+  },
   "popupSensitive": {
     "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
   },

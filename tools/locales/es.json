@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Voz de los vídeos (doblaje y solo voz). 1× = velocidad normal; la voz acelera un poco para seguir los subtítulos.",
 "voiceSlower": "Voz más lenta",
 "voiceFaster": "Voz más rápida",
-"voiceRateValue": "Velocidad de la voz: {0}"
+"voiceRateValue": "Velocidad de la voz: {0}",
+"voiceYtLoading": "Obteniendo los subtítulos de YouTube…",
+"voiceYtTranscript": "Subtítulos de YouTube ({0}) cargados completos, traducidos por adelantado",
+"voiceYtByYouTube": "Subtítulos traducidos por YouTube (gratis), sincronizados con el vídeo",
+"voiceYtScreen": "Transcripción de YouTube no disponible: leyendo los subtítulos en pantalla",
+"voiceNoCaptionsGroq": "Este vídeo no tiene subtítulos: se necesita una clave gratuita de Groq para escuchar el sonido.",
+"voiceOpenSettings": "Abrir ajustes"
 }

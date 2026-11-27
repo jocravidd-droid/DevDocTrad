@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "语速：{0}"
   },
+  "voiceYtLoading": {
+    "message": "正在获取 YouTube 字幕…"
+  },
+  "voiceYtTranscript": {
+    "message": "已完整载入 YouTube 字幕（{0}），提前翻译"
+  },
+  "voiceYtByYouTube": {
+    "message": "由 YouTube 翻译的字幕（免费），与视频同步"
+  },
+  "voiceYtScreen": {
+    "message": "无法获取 YouTube 转录：改为读取屏幕上的字幕"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "此视频没有字幕：需要免费的 Groq 密钥才能听取声音。"
+  },
+  "voiceOpenSettings": {
+    "message": "打开设置"
+  },
   "popupSensitive": {
     "message": "敏感页面：从不自动翻译。按钮仍然可用，如已配置 Ollama 则优先使用。"
   },

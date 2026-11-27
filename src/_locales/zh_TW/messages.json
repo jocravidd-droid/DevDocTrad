@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "語速：{0}"
   },
+  "voiceYtLoading": {
+    "message": "正在取得 YouTube 字幕…"
+  },
+  "voiceYtTranscript": {
+    "message": "已完整載入 YouTube 字幕（{0}），預先翻譯"
+  },
+  "voiceYtByYouTube": {
+    "message": "由 YouTube 翻譯的字幕（免費），與影片同步"
+  },
+  "voiceYtScreen": {
+    "message": "無法取得 YouTube 逐字稿：改為讀取畫面上的字幕"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "這部影片沒有字幕：需要免費的 Groq 金鑰才能聆聽聲音。"
+  },
+  "voiceOpenSettings": {
+    "message": "開啟設定"
+  },
   "popupSensitive": {
     "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
   },

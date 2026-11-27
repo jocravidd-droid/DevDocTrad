@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Скорость голоса: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Получение субтитров YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Субтитры YouTube ({0}) загружены целиком и переведены заранее"
+  },
+  "voiceYtByYouTube": {
+    "message": "Субтитры переведены YouTube (бесплатно), синхронизированы с видео"
+  },
+  "voiceYtScreen": {
+    "message": "Расшифровка YouTube недоступна: чтение субтитров на экране"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "У этого видео нет субтитров: чтобы слушать звук, нужен бесплатный ключ Groq."
+  },
+  "voiceOpenSettings": {
+    "message": "Открыть настройки"
+  },
   "popupSensitive": {
     "message": "Конфиденциальная страница: автоматический перевод отключён. Кнопка работает, Ollama используется первой, если настроена."
   },

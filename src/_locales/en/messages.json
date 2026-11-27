@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Voice speed: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Getting the YouTube subtitles…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube subtitles ({0}) loaded in full, translated ahead"
+  },
+  "voiceYtByYouTube": {
+    "message": "Subtitles translated by YouTube (free), synced to the video"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube transcript unavailable: reading the subtitles on screen"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "This video has no subtitles: a free Groq key is needed to listen to the sound."
+  },
+  "voiceOpenSettings": {
+    "message": "Open settings"
+  },
   "popupSensitive": {
     "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."
   },

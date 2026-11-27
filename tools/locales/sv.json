@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Rösten i videor (dubbning och endast röst). 1× = normal hastighet; rösten ökar lite för att hinna med undertexterna.",
 "voiceSlower": "Långsammare röst",
 "voiceFaster": "Snabbare röst",
-"voiceRateValue": "Rösthastighet: {0}"
+"voiceRateValue": "Rösthastighet: {0}",
+"voiceYtLoading": "Hämtar YouTube-undertexter…",
+"voiceYtTranscript": "YouTube-undertexter ({0}) hämtade helt, översatta i förväg",
+"voiceYtByYouTube": "Undertexter översatta av YouTube (gratis), synkade med videon",
+"voiceYtScreen": "YouTube-transkription inte tillgänglig: läser undertexterna på skärmen",
+"voiceNoCaptionsGroq": "Den här videon har inga undertexter: en gratis Groq-nyckel behövs för att lyssna på ljudet.",
+"voiceOpenSettings": "Öppna inställningar"
 }

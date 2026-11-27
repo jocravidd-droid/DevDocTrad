@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Velocidad de la voz: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Obteniendo los subtítulos de YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Subtítulos de YouTube ({0}) cargados completos, traducidos por adelantado"
+  },
+  "voiceYtByYouTube": {
+    "message": "Subtítulos traducidos por YouTube (gratis), sincronizados con el vídeo"
+  },
+  "voiceYtScreen": {
+    "message": "Transcripción de YouTube no disponible: leyendo los subtítulos en pantalla"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Este vídeo no tiene subtítulos: se necesita una clave gratuita de Groq para escuchar el sonido."
+  },
+  "voiceOpenSettings": {
+    "message": "Abrir ajustes"
+  },
   "popupSensitive": {
     "message": "Página sensible: nunca se traduce automáticamente. El botón funciona y, si está configurado, Ollama se usa primero."
   },

@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "কণ্ঠের গতি: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube সাবটাইটেল আনা হচ্ছে…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube সাবটাইটেল ({0}) পুরোটা লোড হয়েছে, আগে থেকেই অনুবাদ করা হয়েছে"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTube দ্বারা অনূদিত সাবটাইটেল (বিনামূল্যে), ভিডিওর সাথে মিলিয়ে"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube ট্রান্সক্রিপ্ট পাওয়া যায়নি: স্ক্রিনের সাবটাইটেল পড়া হচ্ছে"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "এই ভিডিওতে কোনো সাবটাইটেল নেই: শব্দ শুনতে একটি বিনামূল্যের Groq কী দরকার।"
+  },
+  "voiceOpenSettings": {
+    "message": "সেটিংস খুলুন"
+  },
   "popupSensitive": {
     "message": "সংবেদনশীল পেজ: কখনও স্বয়ংক্রিয় অনুবাদ হয় না। বোতাম কাজ করে, সেট থাকলে Ollama আগে ব্যবহৃত হয়।"
   },

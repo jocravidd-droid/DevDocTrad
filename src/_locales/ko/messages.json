@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "음성 속도: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube 자막을 가져오는 중…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube 자막({0})을 모두 불러와 미리 번역했습니다"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTube가 번역한 자막(무료), 동영상과 동기화"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube 스크립트를 사용할 수 없음: 화면의 자막을 읽습니다"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "이 동영상에는 자막이 없습니다: 소리를 들으려면 무료 Groq 키가 필요합니다."
+  },
+  "voiceOpenSettings": {
+    "message": "설정 열기"
+  },
   "popupSensitive": {
     "message": "민감한 페이지: 자동으로 번역하지 않습니다. 버튼은 작동하며, 설정되어 있으면 Ollama를 먼저 사용합니다."
   },

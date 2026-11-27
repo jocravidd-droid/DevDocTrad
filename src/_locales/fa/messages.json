@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "سرعت صدا: {0}"
   },
+  "voiceYtLoading": {
+    "message": "در حال دریافت زیرنویس‌های YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "زیرنویس‌های YouTube ({0}) کامل بارگیری و از پیش ترجمه شد"
+  },
+  "voiceYtByYouTube": {
+    "message": "زیرنویس‌های ترجمه‌شده توسط YouTube (رایگان)، هماهنگ با ویدیو"
+  },
+  "voiceYtScreen": {
+    "message": "رونوشت YouTube در دسترس نیست: خواندن زیرنویس‌های روی صفحه"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "این ویدیو زیرنویس ندارد: برای شنیدن صدا یک کلید رایگان Groq لازم است."
+  },
+  "voiceOpenSettings": {
+    "message": "باز کردن تنظیمات"
+  },
   "popupSensitive": {
     "message": "صفحهٔ حساس: هرگز به‌طور خودکار ترجمه نمی‌شود. دکمه کار می‌کند و اگر Ollama تنظیم شده باشد، اول از آن استفاده می‌شود."
   },

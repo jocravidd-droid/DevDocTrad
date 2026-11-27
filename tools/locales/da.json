@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Stemmen i videoer (dubbing og kun stemme). 1× = normal hastighed; stemmen sætter lidt farten op for at følge underteksterne.",
 "voiceSlower": "Langsommere stemme",
 "voiceFaster": "Hurtigere stemme",
-"voiceRateValue": "Stemmens hastighed: {0}"
+"voiceRateValue": "Stemmens hastighed: {0}",
+"voiceYtLoading": "Henter YouTube-undertekster…",
+"voiceYtTranscript": "YouTube-undertekster ({0}) hentet helt, oversat på forhånd",
+"voiceYtByYouTube": "Undertekster oversat af YouTube (gratis), synkroniseret med videoen",
+"voiceYtScreen": "YouTube-transskription ikke tilgængelig: læser underteksterne på skærmen",
+"voiceNoCaptionsGroq": "Denne video har ingen undertekster: en gratis Groq-nøgle er nødvendig for at lytte til lyden.",
+"voiceOpenSettings": "Åbn indstillinger"
 }

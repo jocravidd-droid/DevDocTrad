@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "صدای ویدیوها (دوبله و فقط صدا). ‎1×‎ = سرعت عادی؛ صدا کمی تندتر می‌شود تا با زیرنویس همراه بماند.",
 "voiceSlower": "صدای کندتر",
 "voiceFaster": "صدای تندتر",
-"voiceRateValue": "سرعت صدا: {0}"
+"voiceRateValue": "سرعت صدا: {0}",
+"voiceYtLoading": "در حال دریافت زیرنویس‌های YouTube…",
+"voiceYtTranscript": "زیرنویس‌های YouTube ({0}) کامل بارگیری و از پیش ترجمه شد",
+"voiceYtByYouTube": "زیرنویس‌های ترجمه‌شده توسط YouTube (رایگان)، هماهنگ با ویدیو",
+"voiceYtScreen": "رونوشت YouTube در دسترس نیست: خواندن زیرنویس‌های روی صفحه",
+"voiceNoCaptionsGroq": "این ویدیو زیرنویس ندارد: برای شنیدن صدا یک کلید رایگان Groq لازم است.",
+"voiceOpenSettings": "باز کردن تنظیمات"
 }

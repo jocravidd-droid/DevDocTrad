@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Äänen nopeus: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Haetaan YouTube-tekstityksiä…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-tekstitykset ({0}) ladattu kokonaan, käännetty etukäteen"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTuben kääntämät tekstitykset (ilmainen), tahdistettu videoon"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube-litterointi ei ole saatavilla: luetaan näytön tekstityksiä"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Tässä videossa ei ole tekstityksiä: äänen kuunteluun tarvitaan ilmainen Groq-avain."
+  },
+  "voiceOpenSettings": {
+    "message": "Avaa asetukset"
+  },
   "popupSensitive": {
     "message": "Arkaluonteinen sivu: ei koskaan käännetä automaattisesti. Painike toimii, Ollamaa käytetään ensin, jos se on määritetty."
   },

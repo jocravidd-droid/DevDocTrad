@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Vocea din videoclipuri (dublaj și doar voce). 1× = viteză normală; vocea accelerează puțin ca să țină pasul cu subtitrările.",
 "voiceSlower": "Voce mai lentă",
 "voiceFaster": "Voce mai rapidă",
-"voiceRateValue": "Viteza vocii: {0}"
+"voiceRateValue": "Viteza vocii: {0}",
+"voiceYtLoading": "Se obțin subtitrările YouTube…",
+"voiceYtTranscript": "Subtitrările YouTube ({0}) încărcate integral, traduse în avans",
+"voiceYtByYouTube": "Subtitrări traduse de YouTube (gratuit), sincronizate cu videoclipul",
+"voiceYtScreen": "Transcrierea YouTube nu este disponibilă: se citesc subtitrările de pe ecran",
+"voiceNoCaptionsGroq": "Acest videoclip nu are subtitrări: este nevoie de o cheie Groq gratuită pentru a asculta sunetul.",
+"voiceOpenSettings": "Deschide setările"
 }

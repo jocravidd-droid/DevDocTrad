@@ -5,6 +5,26 @@ An update with fixes and improvements is prepared every 15 days (on the 1st and 
 
 Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Versions : [SemVer](https://semver.org/lang/fr/).
 
+## [1.4.0] - 2026-11-27
+
+### Corrigé / Fixed
+- **YouTube : la voix traduite « ne marchait pas »** (fragments coupés, retard, voix hachée, ou rien du tout). Cause : la 1.3 lisait le texte des sous-titres affiché à l'écran toutes les 200 ms ; les sous-titres automatiques défilent mot à mot, chaque morceau était traduit et dit séparément, en retard, et si YouTube changeait ses classes ou n'affichait rien, il ne se passait rien. / YouTube voice translation was choppy, late or silent: 1.3 read the on-screen captions, which scroll word by word.
+
+### Ajouté / Added
+- **YouTube : transcription entière, traduite d'avance, calée sur la vidéo.** Quand la voix des vidéos est lancée sur YouTube :
+  - le background lance une petite fonction fixe du paquet dans la page (`scripting.executeScript`, `world: 'MAIN'`, aucune nouvelle permission : celle donnée pour lancer la voix suffit) qui lit `movie_player.getPlayerResponse()` : pistes de sous-titres (langue, automatique ou non, traduisible), langues de traduction de YouTube, langue du son ;
+  - YouTube exige désormais un jeton `pot` sur `/api/timedtext` : l'adresse demandée par le lecteur lui-même est relue dans les entrées de performance (`performance.getEntriesByType('resource')` + `PerformanceObserver`) ; si le lecteur n'a encore rien demandé, les sous-titres sont activés (masqués) le temps qu'il le fasse, puis remis comme avant ; essais dans l'ordre : piste choisie + jeton, adresse du lecteur, adresse nue ; aucune `webRequest` ;
+  - piste choisie : écrite à la main dans la langue cible (traduction humaine), sinon écrite à la main dans la langue parlée, sinon automatique ; fichier `json3` (ou XML) relu en entier, mots horodatés regroupés en phrases (ponctuation, silences, 12 s au plus) ;
+  - traduction d'avance : **par YouTube lui-même** (`tlang`, gratuit) quand il propose la langue cible, sinon par le fournisseur choisi, par lots, 2 min 30 devant la lecture, avec la mémoire habituelle ;
+  - chaque phrase est affichée et dite à son heure (`video.currentTime`, `timeupdate` + minuteur), vitesse calée sur le temps qui reste (calage × vitesse choisie, vitesse de lecture de la vidéo comprise) ; pause, saut, vitesse, publicités (`ad-showing`) et vidéo suivante (navigation interne) suivis ; son d'origine baissé pendant la voix comme avant.
+  - Replis, dans l'ordre : lecture du texte affiché à l'écran (ancien mode, message « Transcription YouTube indisponible ») ; vidéo sans aucun sous-titre : écoute du son (Groq Whisper) ; sans clé Groq : « Pas de sous-titres sur cette vidéo : il faut une clé Groq gratuite pour écouter le son » avec un bouton **Ouvrir les réglages**.
+  - Idées reprises de l'extension AutoDub (API publiques de YouTube), réimplémentées sans aucun code copié ; tout reste gratuit (voix du navigateur, traduction par YouTube ou par ta clé gratuite).
+  - YouTube: the whole subtitle track is read from the player (`getPlayerResponse`, `pot` token taken from the player's own request seen in performance entries), merged into sentences, translated ahead (by YouTube's free `tlang` when your language is offered, otherwise by your provider), then shown and spoken at each sentence's time on `video.currentTime` (pause, seek, speed, ads, next video). Fallbacks: on-screen captions, then audio via Groq Whisper (with an "Open settings" button when the Groq key is missing). Ideas from AutoDub, reimplemented, no code copied.
+- 6 nouveaux textes d'interface dans les 36 langues ; nouveaux messages `ytPlayer` et `openOptions` acceptés depuis le script de la voix (`isTrustedSender`), `ytPlayer` limité aux onglets YouTube et à `/api/timedtext` du même site ; 18 nouveaux tests (`tests/voice-youtube.test.js` : faux lecteur, fausses entrées de performance, json3, phrases, programmation, saut, pause, vitesse, `tlang` contre fournisseur, publicités, vidéo suivante, replis) ; `tools/e2e_voice.js` : faux YouTube servi localement dans un vrai Chromium (vraie injection dans le monde de la page, jeton `pot`, voix via `chrome.tts` espionné).
+
+### Confidentialité / Privacy
+- `PRIVACY.md` : sur YouTube, les sous-titres (et leur traduction par YouTube) sont demandés à YouTube depuis l'onglet de la vidéo, comme le fait son lecteur ; aucune donnée nouvelle ne part ailleurs. Aucune nouvelle permission. / YouTube subtitles are requested from YouTube itself; no new permission, no new data flow.
+
 ## [1.3.0] - 2026-11-27
 
 ### Corrigé / Fixed

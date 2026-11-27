@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Videoların sesi (dublaj ve yalnızca ses). 1× = normal hız; ses altyazılara yetişmek için biraz hızlanır.",
 "voiceSlower": "Daha yavaş ses",
 "voiceFaster": "Daha hızlı ses",
-"voiceRateValue": "Ses hızı: {0}"
+"voiceRateValue": "Ses hızı: {0}",
+"voiceYtLoading": "YouTube altyazıları alınıyor…",
+"voiceYtTranscript": "YouTube altyazıları ({0}) tamamen yüklendi, önceden çevrildi",
+"voiceYtByYouTube": "YouTube tarafından çevrilen altyazılar (ücretsiz), videoyla eşzamanlı",
+"voiceYtScreen": "YouTube dökümü kullanılamıyor: ekrandaki altyazılar okunuyor",
+"voiceNoCaptionsGroq": "Bu videoda altyazı yok: sesi dinlemek için ücretsiz bir Groq anahtarı gerekir.",
+"voiceOpenSettings": "Ayarları aç"
 }

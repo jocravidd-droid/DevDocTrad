@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Stimme in Videos (Synchronisation und nur Stimme). 1× = normale Geschwindigkeit; die Stimme wird etwas schneller, um mit den Untertiteln Schritt zu halten.",
 "voiceSlower": "Langsamere Stimme",
 "voiceFaster": "Schnellere Stimme",
-"voiceRateValue": "Sprechgeschwindigkeit: {0}"
+"voiceRateValue": "Sprechgeschwindigkeit: {0}",
+"voiceYtLoading": "YouTube-Untertitel werden geladen…",
+"voiceYtTranscript": "YouTube-Untertitel ({0}) vollständig geladen, im Voraus übersetzt",
+"voiceYtByYouTube": "Von YouTube übersetzte Untertitel (kostenlos), synchron zum Video",
+"voiceYtScreen": "YouTube-Transkript nicht verfügbar: Untertitel auf dem Bildschirm werden gelesen",
+"voiceNoCaptionsGroq": "Dieses Video hat keine Untertitel: Zum Anhören des Tons wird ein kostenloser Groq-Schlüssel benötigt.",
+"voiceOpenSettings": "Einstellungen öffnen"
 }

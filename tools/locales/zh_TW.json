@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "影片語音（配音和僅語音）。1× = 正常語速；為跟上字幕，語音會稍微加快。",
 "voiceSlower": "放慢語速",
 "voiceFaster": "加快語速",
-"voiceRateValue": "語速：{0}"
+"voiceRateValue": "語速：{0}",
+"voiceYtLoading": "正在取得 YouTube 字幕…",
+"voiceYtTranscript": "已完整載入 YouTube 字幕（{0}），預先翻譯",
+"voiceYtByYouTube": "由 YouTube 翻譯的字幕（免費），與影片同步",
+"voiceYtScreen": "無法取得 YouTube 逐字稿：改為讀取畫面上的字幕",
+"voiceNoCaptionsGroq": "這部影片沒有字幕：需要免費的 Groq 金鑰才能聆聽聲音。",
+"voiceOpenSettings": "開啟設定"
 }

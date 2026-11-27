@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "เสียงในวิดีโอ (พากย์และเสียงอย่างเดียว) 1× = ความเร็วปกติ เสียงจะเร็วขึ้นเล็กน้อยเพื่อให้ทันคำบรรยาย",
 "voiceSlower": "เสียงช้าลง",
 "voiceFaster": "เสียงเร็วขึ้น",
-"voiceRateValue": "ความเร็วเสียง: {0}"
+"voiceRateValue": "ความเร็วเสียง: {0}",
+"voiceYtLoading": "กำลังดึงคำบรรยาย YouTube…",
+"voiceYtTranscript": "โหลดคำบรรยาย YouTube ({0}) ครบแล้ว แปลไว้ล่วงหน้า",
+"voiceYtByYouTube": "คำบรรยายที่ YouTube แปล (ฟรี) ตรงกับวิดีโอ",
+"voiceYtScreen": "ไม่มีข้อความถอดเสียงของ YouTube: กำลังอ่านคำบรรยายบนหน้าจอ",
+"voiceNoCaptionsGroq": "วิดีโอนี้ไม่มีคำบรรยาย: ต้องใช้คีย์ Groq ฟรีเพื่อฟังเสียง",
+"voiceOpenSettings": "เปิดการตั้งค่า"
 }

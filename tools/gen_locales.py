@@ -126,6 +126,13 @@ M = {
     "voiceSlower": ("Voix plus lente", "Slower voice"),
     "voiceFaster": ("Voix plus rapide", "Faster voice"),
     "voiceRateValue": ("Vitesse de la voix : {0}", "Voice speed: {0}"),
+    # YouTube : transcription entière (v1.4)
+    "voiceYtLoading": ("Récupération des sous-titres YouTube…", "Getting the YouTube subtitles…"),
+    "voiceYtTranscript": ("Sous-titres YouTube ({0}) récupérés en entier, traduits d'avance", "YouTube subtitles ({0}) loaded in full, translated ahead"),
+    "voiceYtByYouTube": ("Sous-titres traduits par YouTube (gratuit), calés sur la vidéo", "Subtitles translated by YouTube (free), synced to the video"),
+    "voiceYtScreen": ("Transcription YouTube indisponible : lecture des sous-titres affichés", "YouTube transcript unavailable: reading the subtitles on screen"),
+    "voiceNoCaptionsGroq": ("Pas de sous-titres sur cette vidéo : il faut une clé Groq gratuite pour écouter le son.", "This video has no subtitles: a free Groq key is needed to listen to the sound."),
+    "voiceOpenSettings": ("Ouvrir les réglages", "Open settings"),
     "popupSensitive": ("Page sensible : jamais de traduction automatique ici. Le bouton fonctionne, Ollama est utilisé en premier s'il est réglé.",
                        "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."),
     "popupKeys": ("État des clés", "Key status"),

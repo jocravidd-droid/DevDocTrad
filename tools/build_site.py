@@ -429,6 +429,7 @@ Key facts:
 - Keeps links, bold text and code elements in place; one click (or Alt+Shift+T) back to the exact original; optional bilingual mode.
 - Video voice translation (Alt+Shift+V): translates existing subtitles (HTML5 tracks, YouTube captions) live; for videos without subtitles, transcribes the audio with Groq Whisper on the free tier using the user's own Groq key; can read the translation aloud with the browser's built-in speech synthesis.
 - Video dubbing (new in 1.2), on any website: choose "Subtitles + translated voice (dubbing)" and the translated subtitles are spoken by the browser's built-in speech synthesis (best voice for the target language), timed to the video, with the original sound lowered while the voice speaks. Free, no voice service called by the extension.
+- YouTube (new in 1.4): the whole subtitle track is read from the YouTube player, grouped into sentences and translated ahead (by YouTube itself when it offers the target language, otherwise by the user's provider), then shown and spoken sentence by sentence in sync with the video (pause, seek, speed, ads, next video).
 - Works with the user's own free API keys: Google Gemini, Groq, Mistral, OpenRouter (:free models), or a local model with Ollama. Never falls back to a paid key; paid keys require a daily cap.
 - Privacy: no analytics, no tracking, keys stored locally; page text goes only to the chosen provider (or stays local with Ollama).
 - Interface in 36 languages, following the browser (Arabic, Hebrew and Persian right to left). Website in 37 languages.

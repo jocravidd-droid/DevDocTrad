@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Hlas ve videích (dabing a jen hlas). 1× = normální rychlost; hlas trochu zrychlí, aby stíhal titulky.",
 "voiceSlower": "Pomalejší hlas",
 "voiceFaster": "Rychlejší hlas",
-"voiceRateValue": "Rychlost hlasu: {0}"
+"voiceRateValue": "Rychlost hlasu: {0}",
+"voiceYtLoading": "Načítání titulků z YouTube…",
+"voiceYtTranscript": "Titulky z YouTube ({0}) načteny celé, přeloženy předem",
+"voiceYtByYouTube": "Titulky přeložené službou YouTube (zdarma), sladěné s videem",
+"voiceYtScreen": "Přepis z YouTube není k dispozici: čtou se titulky na obrazovce",
+"voiceNoCaptionsGroq": "Toto video nemá titulky: k poslechu zvuku je potřeba bezplatný klíč Groq.",
+"voiceOpenSettings": "Otevřít nastavení"
 }

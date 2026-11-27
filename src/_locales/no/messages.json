@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Stemmehastighet: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Henter YouTube-undertekster…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-undertekster ({0}) lastet helt, oversatt på forhånd"
+  },
+  "voiceYtByYouTube": {
+    "message": "Undertekster oversatt av YouTube (gratis), synkronisert med videoen"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube-transkripsjon ikke tilgjengelig: leser undertekstene på skjermen"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Denne videoen har ingen undertekster: en gratis Groq-nøkkel trengs for å lytte til lyden."
+  },
+  "voiceOpenSettings": {
+    "message": "Åpne innstillinger"
+  },
   "popupSensitive": {
     "message": "Sensitiv side: oversettes aldri automatisk. Knappen virker, Ollama brukes først hvis det er satt opp."
   },

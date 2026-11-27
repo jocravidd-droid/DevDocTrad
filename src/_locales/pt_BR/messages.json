@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Velocidade da voz: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Obtendo as legendas do YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Legendas do YouTube ({0}) carregadas por inteiro, traduzidas com antecedência"
+  },
+  "voiceYtByYouTube": {
+    "message": "Legendas traduzidas pelo YouTube (grátis), sincronizadas com o vídeo"
+  },
+  "voiceYtScreen": {
+    "message": "Transcrição do YouTube indisponível: lendo as legendas da tela"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Este vídeo não tem legendas: é preciso uma chave gratuita do Groq para ouvir o som."
+  },
+  "voiceOpenSettings": {
+    "message": "Abrir configurações"
+  },
   "popupSensitive": {
     "message": "Página sensível: nunca traduzida automaticamente. O botão funciona; se configurado, o Ollama é usado primeiro."
   },

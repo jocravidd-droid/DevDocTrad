@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Rösthastighet: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Hämtar YouTube-undertexter…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-undertexter ({0}) hämtade helt, översatta i förväg"
+  },
+  "voiceYtByYouTube": {
+    "message": "Undertexter översatta av YouTube (gratis), synkade med videon"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube-transkription inte tillgänglig: läser undertexterna på skärmen"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Den här videon har inga undertexter: en gratis Groq-nyckel behövs för att lyssna på ljudet."
+  },
+  "voiceOpenSettings": {
+    "message": "Öppna inställningar"
+  },
   "popupSensitive": {
     "message": "Känslig sida: översätts aldrig automatiskt. Knappen fungerar, Ollama används först om den är konfigurerad."
   },

@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Suara video (alih suara dan suara sahaja). 1× = kelajuan biasa; suara dipercepat sedikit untuk mengikut sari kata.",
 "voiceSlower": "Suara lebih perlahan",
 "voiceFaster": "Suara lebih laju",
-"voiceRateValue": "Kelajuan suara: {0}"
+"voiceRateValue": "Kelajuan suara: {0}",
+"voiceYtLoading": "Mendapatkan sari kata YouTube…",
+"voiceYtTranscript": "Sari kata YouTube ({0}) dimuat sepenuhnya, diterjemah lebih awal",
+"voiceYtByYouTube": "Sari kata diterjemah oleh YouTube (percuma), selari dengan video",
+"voiceYtScreen": "Transkrip YouTube tidak tersedia: membaca sari kata pada skrin",
+"voiceNoCaptionsGroq": "Video ini tiada sari kata: kunci Groq percuma diperlukan untuk mendengar bunyinya.",
+"voiceOpenSettings": "Buka tetapan"
 }

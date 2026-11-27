@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Stem in video's (nasynchronisatie en alleen stem). 1× = normale snelheid; de stem versnelt iets om de ondertitels bij te houden.",
 "voiceSlower": "Langzamere stem",
 "voiceFaster": "Snellere stem",
-"voiceRateValue": "Spreeksnelheid: {0}"
+"voiceRateValue": "Spreeksnelheid: {0}",
+"voiceYtLoading": "YouTube-ondertitels ophalen…",
+"voiceYtTranscript": "YouTube-ondertitels ({0}) volledig geladen, vooraf vertaald",
+"voiceYtByYouTube": "Ondertitels vertaald door YouTube (gratis), gelijk met de video",
+"voiceYtScreen": "YouTube-transcript niet beschikbaar: de ondertitels op het scherm worden gelezen",
+"voiceNoCaptionsGroq": "Deze video heeft geen ondertitels: een gratis Groq-sleutel is nodig om naar het geluid te luisteren.",
+"voiceOpenSettings": "Instellingen openen"
 }

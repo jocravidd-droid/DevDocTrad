@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Viteza vocii: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Se obțin subtitrările YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Subtitrările YouTube ({0}) încărcate integral, traduse în avans"
+  },
+  "voiceYtByYouTube": {
+    "message": "Subtitrări traduse de YouTube (gratuit), sincronizate cu videoclipul"
+  },
+  "voiceYtScreen": {
+    "message": "Transcrierea YouTube nu este disponibilă: se citesc subtitrările de pe ecran"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Acest videoclip nu are subtitrări: este nevoie de o cheie Groq gratuită pentru a asculta sunetul."
+  },
+  "voiceOpenSettings": {
+    "message": "Deschide setările"
+  },
   "popupSensitive": {
     "message": "Pagină sensibilă: nu se traduce niciodată automat. Butonul funcționează, Ollama este folosit primul dacă este configurat."
   },

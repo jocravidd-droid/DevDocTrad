@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Ses hızı: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube altyazıları alınıyor…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube altyazıları ({0}) tamamen yüklendi, önceden çevrildi"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTube tarafından çevrilen altyazılar (ücretsiz), videoyla eşzamanlı"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube dökümü kullanılamıyor: ekrandaki altyazılar okunuyor"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Bu videoda altyazı yok: sesi dinlemek için ücretsiz bir Groq anahtarı gerekir."
+  },
+  "voiceOpenSettings": {
+    "message": "Ayarları aç"
+  },
   "popupSensitive": {
     "message": "Hassas sayfa: asla otomatik çevrilmez. Düğme çalışır; ayarlıysa önce Ollama kullanılır."
   },

@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Tốc độ giọng: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Đang lấy phụ đề YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Đã tải toàn bộ phụ đề YouTube ({0}), dịch trước"
+  },
+  "voiceYtByYouTube": {
+    "message": "Phụ đề do YouTube dịch (miễn phí), khớp với video"
+  },
+  "voiceYtScreen": {
+    "message": "Không có bản chép lời YouTube: đang đọc phụ đề trên màn hình"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Video này không có phụ đề: cần một khóa Groq miễn phí để nghe âm thanh."
+  },
+  "voiceOpenSettings": {
+    "message": "Mở cài đặt"
+  },
   "popupSensitive": {
     "message": "Trang nhạy cảm: không bao giờ tự động dịch. Nút vẫn hoạt động, Ollama được dùng trước nếu đã thiết lập."
   },

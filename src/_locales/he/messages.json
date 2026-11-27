@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "מהירות הקול: {0}"
   },
+  "voiceYtLoading": {
+    "message": "מקבל את הכתוביות של YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "הכתוביות של YouTube ({0}) נטענו במלואן ותורגמו מראש"
+  },
+  "voiceYtByYouTube": {
+    "message": "כתוביות שתורגמו על ידי YouTube (חינם), מסונכרנות עם הסרטון"
+  },
+  "voiceYtScreen": {
+    "message": "התמליל של YouTube אינו זמין: קריאת הכתוביות שעל המסך"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "לסרטון הזה אין כתוביות: נדרש מפתח Groq חינמי כדי להאזין לשמע."
+  },
+  "voiceOpenSettings": {
+    "message": "פתח הגדרות"
+  },
   "popupSensitive": {
     "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
   },

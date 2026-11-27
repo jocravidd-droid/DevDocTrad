@@ -43,7 +43,9 @@ function prepareExtension() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-ext-'));
   fs.cpSync(DIST, tmp, { recursive: true });
   const mf = JSON.parse(fs.readFileSync(path.join(tmp, 'manifest.json'), 'utf8'));
-  mf.host_permissions.push('http://localhost:11434/*', 'http://127.0.0.1:11434/*', '*://localhost/*');
+  // youtube.com : permission que donne activeTab quand la voix est lancée depuis le popup ou le raccourci
+  // (ici, la voix est lancée depuis le service worker, qui n'a pas ce geste)
+  mf.host_permissions.push('http://localhost:11434/*', 'http://127.0.0.1:11434/*', '*://localhost/*', 'https://www.youtube.com/*');
   fs.writeFileSync(path.join(tmp, 'manifest.json'), JSON.stringify(mf, null, 2));
   return tmp;
 }
@@ -64,6 +66,67 @@ setTimeout(() => {
   speechSynthesis.speak(u);
 }, 200);
 </script>`;
+
+/* Faux YouTube (1.4), servi par Playwright à l'adresse https://www.youtube.com (rien ne sort sur le réseau) :
+   même structure que le vrai pour ce qui compte ici : #movie_player avec getPlayerResponse(), bouton des
+   sous-titres qui fait demander au « lecteur » /api/timedtext avec son jeton pot (entrée de performance),
+   /api/timedtext qui répond vide sans jeton (comme YouTube désormais), une vraie <video> qui joue, navigation
+   interne (pushState + yt-navigate-finish). */
+const YT_SENTENCES = [[0, 3.5, 'Welcome to this short tutorial.'], [3.5, 7, 'First, install the package with npm.'],
+  [7, 10, 'Then open the configuration file.']];
+function asrJson3(sentences) {
+  // sous-titres automatiques : un « seg » par mot, avec son décalage
+  return JSON.stringify({ wireMagic: 'pb3', events: sentences.map(([a, b, text]) => {
+    const words = text.split(' ');
+    const step = Math.floor(((b - a) * 1000 - 400) / words.length);
+    return { tStartMs: Math.round(a * 1000), dDurationMs: Math.round((b - a) * 1000), wWinId: 1,
+      segs: words.map((w, i) => (i ? { utf8: ' ' + w, tOffsetMs: i * step } : { utf8: w })) };
+  }) });
+}
+const YT_TEXT = {
+  e2eVid1: { en: asrJson3(YT_SENTENCES) },
+  e2eVid2: {
+    en: asrJson3([[0.5, 4, 'This is the second video.'], [5, 9, 'It is translated by the player itself.']]),
+    fr: JSON.stringify({ events: [{ tStartMs: 500, dDurationMs: 3500, segs: [{ utf8: 'Voici la deuxième vidéo.' }] },
+      { tStartMs: 5000, dDurationMs: 4000, segs: [{ utf8: 'Elle est traduite par le lecteur lui-même.' }] }] })
+  }
+};
+const YT_PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Fake YouTube</title>
+<style>body{margin:0;background:#0f0f0f;color:#eee;font:14px system-ui}#movie_player{position:relative;width:960px;margin:24px auto}
+video{width:100%;display:block}.ytp-subtitles-button{position:absolute;right:8px;bottom:8px}</style></head><body>
+<div id="movie_player" class="html5-video-player"><video src="/e2e/clip.webm" playsinline></video>
+<button class="ytp-subtitles-button" aria-pressed="false">CC</button><div class="ytp-caption-window-container"></div></div>
+<script>
+(() => {
+  const resp = (id, tlangs) => ({
+    videoDetails: { videoId: id, title: 'Fake ' + id },
+    captions: { playerCaptionsTracklistRenderer: {
+      captionTracks: [{ baseUrl: 'https://www.youtube.com/api/timedtext?v=' + id + '&caps=asr&lang=en&kind=asr&signature=E2ESIG',
+        languageCode: 'en', kind: 'asr', isTranslatable: true, vssId: 'a.en', name: { simpleText: 'English (auto-generated)' } }],
+      translationLanguages: tlangs.map((c) => ({ languageCode: c, languageName: { simpleText: c } })) } },
+    streamingData: { adaptiveFormats: [{ itag: 251, audioTrack: { id: 'en.4', displayName: 'English', audioIsDefault: true } }] }
+  });
+  // vidéo 1 : YouTube ne propose pas le français (traduction par le fournisseur) ; vidéo 2 : il le propose
+  const RESP = { e2eVid1: resp('e2eVid1', ['de', 'es']), e2eVid2: resp('e2eVid2', ['de', 'fr']) };
+  let cur = new URLSearchParams(location.search).get('v');
+  const player = document.getElementById('movie_player');
+  player.getPlayerResponse = () => RESP[cur];
+  const btn = document.querySelector('.ytp-subtitles-button');
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(on));
+    window.__ccClicks = (window.__ccClicks || 0) + 1;
+    if (on) fetch('/api/timedtext?v=' + cur + '&caps=asr&lang=en&kind=asr&fmt=json3&xorb=2&pot=E2E_POT_' + cur + '&c=WEB&cver=2.20261127');
+  });
+  window.__ddtGo = (id) => {
+    history.pushState({}, '', '/watch?v=' + id);
+    cur = id;
+    const v = document.querySelector('video');
+    v.currentTime = 0;
+    document.dispatchEvent(new Event('yt-navigate-finish'));
+  };
+})();
+</script></body></html>`;
 
 function serve() {
   return new Promise((r) => {
@@ -321,6 +384,93 @@ async function waitOverlay(page, test, timeout = 15000) {
     band = await bandState();
     check('vitesse : changée dans les réglages, appliquée tout de suite à la bande', band && band.rate === '1,7×', band && band.rate);
     await sw.evaluate((id) => self.__DDT_BG.voiceCommand(id, 'stop', null), tabId);
+    await setSettings({ voiceMode: 'subs', voiceRate: 1, mode: 'bilingual' });
+
+    // 1 ter. YouTube (1.4) : transcription entière lue dans le lecteur (monde de la page), jeton « pot »
+    // repris de la demande du lecteur, traduite d'avance, dite à l'heure de chaque phrase (chrome.tts espionné)
+    const ytReqs = [];
+    const clip = fs.readFileSync(path.join(VDIR, 'clip.webm'));
+    await ctx.route('https://www.youtube.com/**', (route) => {
+      const req = route.request();
+      const u = new URL(req.url());
+      if (u.pathname === '/watch') return route.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: YT_PAGE });
+      if (u.pathname === '/api/timedtext') {
+        ytReqs.push(u.href);
+        const texts = YT_TEXT[u.searchParams.get('v')] || {};
+        // comme YouTube désormais : sans jeton, réponse vide
+        const body = u.searchParams.get('pot') ? (texts[u.searchParams.get('tlang') || 'en'] || '') : '';
+        return route.fulfill({ status: 200, contentType: 'application/json; charset=UTF-8', body });
+      }
+      if (u.pathname === '/e2e/clip.webm') {
+        const m = /bytes=(\d*)-(\d*)/.exec(req.headers().range || '');
+        if (!m) return route.fulfill({ status: 200, contentType: 'video/webm', headers: { 'Accept-Ranges': 'bytes' }, body: clip });
+        const a = m[1] ? +m[1] : 0;
+        const b = m[2] ? Math.min(+m[2], clip.length - 1) : clip.length - 1;
+        return route.fulfill({ status: 206, contentType: 'video/webm', body: clip.subarray(a, b + 1),
+          headers: { 'Accept-Ranges': 'bytes', 'Content-Range': `bytes ${a}-${b}/${clip.length}` } });
+      }
+      return route.fulfill({ status: 404, body: '' });
+    });
+    await setSettings({ voiceMode: 'dub', voiceRate: 1, mode: 'bilingual' });
+    await page.goto('https://www.youtube.com/watch?v=e2eVid1');
+    await page.waitForFunction(() => { const v = document.querySelector('video'); return v && v.readyState >= 2; }, null, { timeout: 15000 });
+    await page.evaluate(() => { const v = document.querySelector('video'); v.pause(); v.currentTime = 0; v.volume = 1; });
+    const ytBefore = (await ttsLog()).calls.length;
+    const st5 = await sw.evaluate((id) => self.__DDT_BG.voiceCommand(id, 'start', null), tabId);
+    check('YouTube : voix démarrée', st5 && st5.active, JSON.stringify(st5));
+    const ytStatus = () => sw.evaluate((id) => self.__DDT_BG.voiceCommand(id, 'status', null), tabId);
+    let ys = await ytStatus();
+    for (let i = 0; i < 60 && ys.mode !== 'transcript'; i++) { await page.waitForTimeout(150); ys = await ytStatus(); }
+    check('YouTube : mode transcription (lecteur lu dans le monde de la page)', ys.mode === 'transcript', JSON.stringify(ys));
+    const potReq = ytReqs.find((x) => /pot=E2E_POT_e2eVid1/.test(x) && /fmt=json3/.test(x) && /signature=E2ESIG/.test(x));
+    check('YouTube : jeton pot repris de la demande du lecteur (entrée de performance), json3 de la piste choisie', !!potReq, ytReqs.join(' | '));
+    const cc = await page.evaluate(() => ({ clicks: window.__ccClicks || 0, pressed: document.querySelector('.ytp-subtitles-button').getAttribute('aria-pressed') }));
+    check('YouTube : sous-titres activés le temps d\'obtenir le jeton, puis remis comme avant', cc.clicks === 2 && cc.pressed === 'false', JSON.stringify(cc));
+    o = await overlay(page);
+    check('YouTube : message dans la bande (transcription récupérée)', !!o && /YouTube/.test(o.msg), o && o.msg);
+    await page.evaluate(() => document.querySelector('video').play()).catch(() => {});
+    tl = await waitCalls(ytBefore + 1);
+    const y1 = tl.calls[ytBefore];
+    check('YouTube : 1re phrase traduite d\'avance (fournisseur) et dite au début de la vidéo', !!y1 && y1.text === 'Bienvenue dans ce court tutoriel.' && y1.lang === 'fr-FR',
+      JSON.stringify(y1));
+    o = await waitOverlay(page, (x) => x.tr === 'Bienvenue dans ce court tutoriel.', 5000);
+    check('YouTube : bande bilingue synchronisée', !!o && o.tr === 'Bienvenue dans ce court tutoriel.' && o.orig === 'Welcome to this short tutorial.', JSON.stringify(o));
+    await sw.evaluate(() => self.__ttsEnd());
+    const ny = (await ttsLog()).calls.length;
+    await page.evaluate(() => { document.querySelector('video').currentTime = 7.2; });
+    tl = await waitCalls(ny + 1);
+    const y2 = tl.calls[tl.calls.length - 1];
+    check('YouTube : saut -> phrase du nouvel endroit (sur video.currentTime)', tl.calls.length > ny && y2.text === 'Ouvre ensuite le fichier de configuration.', JSON.stringify(y2));
+    const stopsBefore = tl.stops;
+    await page.evaluate(() => document.querySelector('video').pause());
+    await page.waitForTimeout(400);
+    tl = await ttsLog();
+    check('YouTube : pause pendant la voix -> chrome.tts.stop', tl.stops > stopsBefore, String(tl.stops));
+    // vidéo suivante (navigation interne) : YouTube propose le français, sa traduction est prise telle quelle
+    await sw.evaluate(() => self.__ttsEnd());
+    const nv = (await ttsLog()).calls.length;
+    await page.evaluate(() => window.__ddtGo('e2eVid2'));
+    ys = await ytStatus();
+    for (let i = 0; i < 60 && !(ys.mode === 'transcript' && ytReqs.some((x) => /v=e2eVid2/.test(x) && /tlang=fr/.test(x))); i++) {
+      await page.waitForTimeout(150);
+      ys = await ytStatus();
+    }
+    check('YouTube : vidéo suivante, traduction demandée à YouTube (tlang=fr, gratuit)', ys.mode === 'transcript' &&
+      ytReqs.some((x) => /v=e2eVid2/.test(x) && /tlang=fr/.test(x) && /pot=E2E_POT_e2eVid2/.test(x)), JSON.stringify(ys));
+    await page.evaluate(() => { const v = document.querySelector('video'); v.currentTime = 0.4; return v.play(); }).catch(() => {});
+    tl = await waitCalls(nv + 1);
+    const y3 = tl.calls[nv];
+    check('YouTube : phrase traduite par YouTube dite (aucune ancienne phrase de la vidéo 1)', !!y3 && y3.text === 'Voici la deuxième vidéo.', JSON.stringify(tl.calls.slice(nv)));
+    o = await waitOverlay(page, (x) => x.tr === 'Voici la deuxième vidéo.', 5000);
+    check('YouTube : original de la même fenêtre en bilingue', !!o && o.orig === 'This is the second video.', JSON.stringify(o));
+    // capture de contrôle, toujours hors du dépôt
+    const ytShot = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ddt-yt-')), 'voix-youtube.png');
+    await page.screenshot({ path: ytShot });
+    console.log('     capture YouTube factice : ' + ytShot);
+    await sw.evaluate(() => self.__ttsEnd());
+    const stop5 = await sw.evaluate((id) => self.__DDT_BG.voiceCommand(id, 'stop', null), tabId);
+    const after5 = await page.evaluate(() => ({ style: !!document.querySelector('style[data-tr-ui="voice-style"]'), vol: document.querySelector('video').volume }));
+    check('YouTube : arrêt propre (sous-titres de YouTube rendus, volume d\'origine)', stop5 && !stop5.active && !after5.style && after5.vol === 1, JSON.stringify(after5));
     await setSettings({ voiceMode: 'subs', voiceRate: 1, mode: 'bilingual' });
 
     // 2. Vidéo sans sous-titres : son enregistré -> transcription Groq (simulée) -> traduction

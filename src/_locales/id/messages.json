@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Kecepatan suara: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Mengambil subtitel YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Subtitel YouTube ({0}) dimuat penuh, diterjemahkan lebih dulu"
+  },
+  "voiceYtByYouTube": {
+    "message": "Subtitel diterjemahkan oleh YouTube (gratis), selaras dengan video"
+  },
+  "voiceYtScreen": {
+    "message": "Transkrip YouTube tidak tersedia: membaca subtitel di layar"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Video ini tidak memiliki subtitel: perlu kunci Groq gratis untuk mendengarkan suaranya."
+  },
+  "voiceOpenSettings": {
+    "message": "Buka setelan"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemahkan otomatis. Tombol tetap berfungsi, Ollama dipakai lebih dulu jika sudah diatur."
   },

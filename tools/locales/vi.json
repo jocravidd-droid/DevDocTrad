@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Giọng trong video (lồng tiếng và chỉ giọng). 1× = tốc độ bình thường; giọng nhanh hơn một chút để theo kịp phụ đề.",
 "voiceSlower": "Giọng chậm hơn",
 "voiceFaster": "Giọng nhanh hơn",
-"voiceRateValue": "Tốc độ giọng: {0}"
+"voiceRateValue": "Tốc độ giọng: {0}",
+"voiceYtLoading": "Đang lấy phụ đề YouTube…",
+"voiceYtTranscript": "Đã tải toàn bộ phụ đề YouTube ({0}), dịch trước",
+"voiceYtByYouTube": "Phụ đề do YouTube dịch (miễn phí), khớp với video",
+"voiceYtScreen": "Không có bản chép lời YouTube: đang đọc phụ đề trên màn hình",
+"voiceNoCaptionsGroq": "Video này không có phụ đề: cần một khóa Groq miễn phí để nghe âm thanh.",
+"voiceOpenSettings": "Mở cài đặt"
 }

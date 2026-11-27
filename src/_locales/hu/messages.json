@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Hang sebessége: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube-feliratok lekérése…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-feliratok ({0}) teljesen betöltve, előre lefordítva"
+  },
+  "voiceYtByYouTube": {
+    "message": "A YouTube által fordított feliratok (ingyenes), a videóhoz igazítva"
+  },
+  "voiceYtScreen": {
+    "message": "A YouTube-átirat nem érhető el: a képernyőn látható feliratok olvasása"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Ennek a videónak nincs felirata: a hang meghallgatásához ingyenes Groq-kulcs kell."
+  },
+  "voiceOpenSettings": {
+    "message": "Beállítások megnyitása"
+  },
   "popupSensitive": {
     "message": "Érzékeny oldal: soha nem fordítódik automatikusan. A gomb működik, beállítás esetén először az Ollama kerül használatra."
   },

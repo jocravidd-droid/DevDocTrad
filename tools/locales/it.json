@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Voce dei video (doppiaggio e solo voce). 1× = velocità normale; la voce accelera un po' per seguire i sottotitoli.",
 "voiceSlower": "Voce più lenta",
 "voiceFaster": "Voce più veloce",
-"voiceRateValue": "Velocità della voce: {0}"
+"voiceRateValue": "Velocità della voce: {0}",
+"voiceYtLoading": "Recupero dei sottotitoli di YouTube…",
+"voiceYtTranscript": "Sottotitoli di YouTube ({0}) caricati per intero, tradotti in anticipo",
+"voiceYtByYouTube": "Sottotitoli tradotti da YouTube (gratis), sincronizzati con il video",
+"voiceYtScreen": "Trascrizione di YouTube non disponibile: lettura dei sottotitoli sullo schermo",
+"voiceNoCaptionsGroq": "Questo video non ha sottotitoli: serve una chiave Groq gratuita per ascoltare l'audio.",
+"voiceOpenSettings": "Apri le impostazioni"
 }

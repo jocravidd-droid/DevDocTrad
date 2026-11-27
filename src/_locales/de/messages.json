@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Sprechgeschwindigkeit: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube-Untertitel werden geladen…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-Untertitel ({0}) vollständig geladen, im Voraus übersetzt"
+  },
+  "voiceYtByYouTube": {
+    "message": "Von YouTube übersetzte Untertitel (kostenlos), synchron zum Video"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube-Transkript nicht verfügbar: Untertitel auf dem Bildschirm werden gelesen"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Dieses Video hat keine Untertitel: Zum Anhören des Tons wird ein kostenloser Groq-Schlüssel benötigt."
+  },
+  "voiceOpenSettings": {
+    "message": "Einstellungen öffnen"
+  },
   "popupSensitive": {
     "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
   },

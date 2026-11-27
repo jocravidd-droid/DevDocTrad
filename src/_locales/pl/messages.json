@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Szybkość głosu: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Pobieranie napisów z YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Napisy z YouTube ({0}) wczytane w całości, przetłumaczone z wyprzedzeniem"
+  },
+  "voiceYtByYouTube": {
+    "message": "Napisy przetłumaczone przez YouTube (za darmo), zsynchronizowane z filmem"
+  },
+  "voiceYtScreen": {
+    "message": "Transkrypcja z YouTube niedostępna: odczytywanie napisów z ekranu"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Ten film nie ma napisów: do słuchania dźwięku potrzebny jest darmowy klucz Groq."
+  },
+  "voiceOpenSettings": {
+    "message": "Otwórz ustawienia"
+  },
   "popupSensitive": {
     "message": "Strona wrażliwa: nigdy nie jest tłumaczona automatycznie. Przycisk działa; jeśli Ollama jest skonfigurowana, jest używana jako pierwsza."
   },

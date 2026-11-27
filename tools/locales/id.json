@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Suara video (sulih suara dan hanya suara). 1× = kecepatan normal; suara sedikit dipercepat agar mengikuti subtitle.",
 "voiceSlower": "Suara lebih lambat",
 "voiceFaster": "Suara lebih cepat",
-"voiceRateValue": "Kecepatan suara: {0}"
+"voiceRateValue": "Kecepatan suara: {0}",
+"voiceYtLoading": "Mengambil subtitel YouTube…",
+"voiceYtTranscript": "Subtitel YouTube ({0}) dimuat penuh, diterjemahkan lebih dulu",
+"voiceYtByYouTube": "Subtitel diterjemahkan oleh YouTube (gratis), selaras dengan video",
+"voiceYtScreen": "Transkrip YouTube tidak tersedia: membaca subtitel di layar",
+"voiceNoCaptionsGroq": "Video ini tidak memiliki subtitel: perlu kunci Groq gratis untuk mendengarkan suaranya.",
+"voiceOpenSettings": "Buka setelan"
 }

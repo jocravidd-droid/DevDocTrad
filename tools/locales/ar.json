@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "صوت الفيديوهات (الدبلجة والصوت فقط). ‎1×‎ = السرعة العادية؛ يتسارع الصوت قليلًا ليواكب الترجمة النصية.",
 "voiceSlower": "صوت أبطأ",
 "voiceFaster": "صوت أسرع",
-"voiceRateValue": "سرعة الصوت: {0}"
+"voiceRateValue": "سرعة الصوت: {0}",
+"voiceYtLoading": "جارٍ جلب ترجمات YouTube…",
+"voiceYtTranscript": "تم تحميل ترجمات YouTube ({0}) كاملة وترجمتها مسبقًا",
+"voiceYtByYouTube": "ترجمات مترجمة بواسطة YouTube (مجانًا)، متزامنة مع الفيديو",
+"voiceYtScreen": "نص YouTube غير متاح: قراءة الترجمات المعروضة على الشاشة",
+"voiceNoCaptionsGroq": "هذا الفيديو بلا ترجمات: يلزم مفتاح Groq مجاني للاستماع إلى الصوت.",
+"voiceOpenSettings": "فتح الإعدادات"
 }

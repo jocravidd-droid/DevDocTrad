@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "動画の音声（吹き替えと音声のみ）。1× = 通常の速さ。字幕に追いつくため、音声は少し速くなります。",
 "voiceSlower": "遅くする",
 "voiceFaster": "速くする",
-"voiceRateValue": "音声の速さ：{0}"
+"voiceRateValue": "音声の速さ：{0}",
+"voiceYtLoading": "YouTube の字幕を取得中…",
+"voiceYtTranscript": "YouTube の字幕（{0}）をすべて読み込み、先に翻訳しました",
+"voiceYtByYouTube": "YouTube が翻訳した字幕（無料）、動画に同期",
+"voiceYtScreen": "YouTube の文字起こしは利用できません：画面の字幕を読み取ります",
+"voiceNoCaptionsGroq": "この動画には字幕がありません：音声を聞き取るには無料の Groq キーが必要です。",
+"voiceOpenSettings": "設定を開く"
 }

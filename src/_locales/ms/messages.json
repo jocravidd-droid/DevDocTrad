@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Kelajuan suara: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Mendapatkan sari kata YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Sari kata YouTube ({0}) dimuat sepenuhnya, diterjemah lebih awal"
+  },
+  "voiceYtByYouTube": {
+    "message": "Sari kata diterjemah oleh YouTube (percuma), selari dengan video"
+  },
+  "voiceYtScreen": {
+    "message": "Transkrip YouTube tidak tersedia: membaca sari kata pada skrin"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Video ini tiada sari kata: kunci Groq percuma diperlukan untuk mendengar bunyinya."
+  },
+  "voiceOpenSettings": {
+    "message": "Buka tetapan"
+  },
   "popupSensitive": {
     "message": "Halaman sensitif: tidak pernah diterjemah automatik. Tombol kekal berfungsi, Ollama digunakan dahulu jika sudah ditetapkan."
   },

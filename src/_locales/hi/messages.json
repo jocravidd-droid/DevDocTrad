@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "आवाज़ की गति: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube उपशीर्षक लाए जा रहे हैं…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube उपशीर्षक ({0}) पूरे लोड हुए, पहले से अनुवादित"
+  },
+  "voiceYtByYouTube": {
+    "message": "YouTube द्वारा अनुवादित उपशीर्षक (मुफ़्त), वीडियो के साथ मिलाए गए"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube ट्रांसक्रिप्ट उपलब्ध नहीं: स्क्रीन पर दिख रहे उपशीर्षक पढ़े जा रहे हैं"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "इस वीडियो में उपशीर्षक नहीं हैं: आवाज़ सुनने के लिए मुफ़्त Groq कुंजी चाहिए।"
+  },
+  "voiceOpenSettings": {
+    "message": "सेटिंग्स खोलें"
+  },
   "popupSensitive": {
     "message": "संवेदनशील पेज: कभी स्वचालित अनुवाद नहीं। बटन काम करता है, सेट होने पर Ollama पहले इस्तेमाल होता है।"
   },

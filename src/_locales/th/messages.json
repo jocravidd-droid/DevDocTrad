@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "ความเร็วเสียง: {0}"
   },
+  "voiceYtLoading": {
+    "message": "กำลังดึงคำบรรยาย YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "โหลดคำบรรยาย YouTube ({0}) ครบแล้ว แปลไว้ล่วงหน้า"
+  },
+  "voiceYtByYouTube": {
+    "message": "คำบรรยายที่ YouTube แปล (ฟรี) ตรงกับวิดีโอ"
+  },
+  "voiceYtScreen": {
+    "message": "ไม่มีข้อความถอดเสียงของ YouTube: กำลังอ่านคำบรรยายบนหน้าจอ"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "วิดีโอนี้ไม่มีคำบรรยาย: ต้องใช้คีย์ Groq ฟรีเพื่อฟังเสียง"
+  },
+  "voiceOpenSettings": {
+    "message": "เปิดการตั้งค่า"
+  },
   "popupSensitive": {
     "message": "หน้าที่ละเอียดอ่อน: ไม่แปลอัตโนมัติเลย ปุ่มยังใช้ได้ และจะใช้ Ollama ก่อนหากตั้งค่าไว้"
   },

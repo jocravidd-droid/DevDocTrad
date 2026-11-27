@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "Videók hangja (szinkron és csak hang). 1× = normál sebesség; a hang kicsit gyorsít, hogy lépést tartson a feliratokkal.",
 "voiceSlower": "Lassabb hang",
 "voiceFaster": "Gyorsabb hang",
-"voiceRateValue": "Hang sebessége: {0}"
+"voiceRateValue": "Hang sebessége: {0}",
+"voiceYtLoading": "YouTube-feliratok lekérése…",
+"voiceYtTranscript": "YouTube-feliratok ({0}) teljesen betöltve, előre lefordítva",
+"voiceYtByYouTube": "A YouTube által fordított feliratok (ingyenes), a videóhoz igazítva",
+"voiceYtScreen": "A YouTube-átirat nem érhető el: a képernyőn látható feliratok olvasása",
+"voiceNoCaptionsGroq": "Ennek a videónak nincs felirata: a hang meghallgatásához ingyenes Groq-kulcs kell.",
+"voiceOpenSettings": "Beállítások megnyitása"
 }

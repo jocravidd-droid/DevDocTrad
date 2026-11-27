@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Kasi ya sauti: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Inapata manukuu ya YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Manukuu ya YouTube ({0}) yamepakiwa yote, yametafsiriwa mapema"
+  },
+  "voiceYtByYouTube": {
+    "message": "Manukuu yaliyotafsiriwa na YouTube (bure), yanayolingana na video"
+  },
+  "voiceYtScreen": {
+    "message": "Nakala ya YouTube haipatikani: inasoma manukuu yaliyo kwenye skrini"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Video hii haina manukuu: ufunguo wa bure wa Groq unahitajika kusikiliza sauti."
+  },
+  "voiceOpenSettings": {
+    "message": "Fungua mipangilio"
+  },
   "popupSensitive": {
     "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
   },

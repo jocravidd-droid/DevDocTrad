@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Spreeksnelheid: {0}"
   },
+  "voiceYtLoading": {
+    "message": "YouTube-ondertitels ophalen…"
+  },
+  "voiceYtTranscript": {
+    "message": "YouTube-ondertitels ({0}) volledig geladen, vooraf vertaald"
+  },
+  "voiceYtByYouTube": {
+    "message": "Ondertitels vertaald door YouTube (gratis), gelijk met de video"
+  },
+  "voiceYtScreen": {
+    "message": "YouTube-transcript niet beschikbaar: de ondertitels op het scherm worden gelezen"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Deze video heeft geen ondertitels: een gratis Groq-sleutel is nodig om naar het geluid te luisteren."
+  },
+  "voiceOpenSettings": {
+    "message": "Instellingen openen"
+  },
   "popupSensitive": {
     "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
   },

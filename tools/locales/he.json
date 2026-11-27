@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "קול בסרטונים (דיבוב וקול בלבד). ‎1×‎ = מהירות רגילה; הקול מאיץ מעט כדי לעמוד בקצב הכתוביות.",
 "voiceSlower": "קול איטי יותר",
 "voiceFaster": "קול מהיר יותר",
-"voiceRateValue": "מהירות הקול: {0}"
+"voiceRateValue": "מהירות הקול: {0}",
+"voiceYtLoading": "מקבל את הכתוביות של YouTube…",
+"voiceYtTranscript": "הכתוביות של YouTube ({0}) נטענו במלואן ותורגמו מראש",
+"voiceYtByYouTube": "כתוביות שתורגמו על ידי YouTube (חינם), מסונכרנות עם הסרטון",
+"voiceYtScreen": "התמליל של YouTube אינו זמין: קריאת הכתוביות שעל המסך",
+"voiceNoCaptionsGroq": "לסרטון הזה אין כתוביות: נדרש מפתח Groq חינמי כדי להאזין לשמע.",
+"voiceOpenSettings": "פתח הגדרות"
 }

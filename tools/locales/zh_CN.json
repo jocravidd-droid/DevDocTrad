@@ -237,5 +237,11 @@
 "optVoiceRateHelp": "视频语音（配音和仅语音）。1× = 正常语速；为跟上字幕，语音会稍微加快。",
 "voiceSlower": "放慢语速",
 "voiceFaster": "加快语速",
-"voiceRateValue": "语速：{0}"
+"voiceRateValue": "语速：{0}",
+"voiceYtLoading": "正在获取 YouTube 字幕…",
+"voiceYtTranscript": "已完整载入 YouTube 字幕（{0}），提前翻译",
+"voiceYtByYouTube": "由 YouTube 翻译的字幕（免费），与视频同步",
+"voiceYtScreen": "无法获取 YouTube 转录：改为读取屏幕上的字幕",
+"voiceNoCaptionsGroq": "此视频没有字幕：需要免费的 Groq 密钥才能听取声音。",
+"voiceOpenSettings": "打开设置"
 }

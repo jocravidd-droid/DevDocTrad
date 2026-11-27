@@ -233,6 +233,24 @@
   "voiceRateValue": {
     "message": "Швидкість голосу: {0}"
   },
+  "voiceYtLoading": {
+    "message": "Отримання субтитрів YouTube…"
+  },
+  "voiceYtTranscript": {
+    "message": "Субтитри YouTube ({0}) завантажено повністю, перекладено заздалегідь"
+  },
+  "voiceYtByYouTube": {
+    "message": "Субтитри перекладено YouTube (безкоштовно), синхронізовано з відео"
+  },
+  "voiceYtScreen": {
+    "message": "Розшифровка YouTube недоступна: читання субтитрів на екрані"
+  },
+  "voiceNoCaptionsGroq": {
+    "message": "Це відео не має субтитрів: щоб слухати звук, потрібен безкоштовний ключ Groq."
+  },
+  "voiceOpenSettings": {
+    "message": "Відкрити налаштування"
+  },
   "popupSensitive": {
     "message": "Конфіденційна сторінка: автоматичний переклад вимкнено. Кнопка працює, Ollama використовується першою, якщо налаштована."
   },
