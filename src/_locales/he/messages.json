@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "פתיחת הסרטון בכרטיסייה"
   },
+  "popupVoiceOnly": {
+    "message": "קול מתורגם בלבד (בלי כתוביות)"
+  },
+  "optVoiceRate": {
+    "message": "מהירות הקול המתורגם"
+  },
+  "optVoiceRateHelp": {
+    "message": "קול בסרטונים (דיבוב וקול בלבד). ‎1×‎ = מהירות רגילה; הקול מאיץ מעט כדי לעמוד בקצב הכתוביות."
+  },
+  "voiceSlower": {
+    "message": "קול איטי יותר"
+  },
+  "voiceFaster": {
+    "message": "קול מהיר יותר"
+  },
+  "voiceRateValue": {
+    "message": "מהירות הקול: {0}"
+  },
   "popupSensitive": {
     "message": "דף רגיש: לעולם לא יתורגם אוטומטית. הכפתור עובד, ו-Ollama משמש ראשון אם הוגדר."
   },

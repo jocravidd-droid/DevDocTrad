@@ -231,5 +231,11 @@
 "voiceNoTts": "此裝置上沒有{0}的合成語音：僅顯示字幕。",
 "voiceDubClick": "請點選頁面以允許播放翻譯語音。",
 "voiceInFrame": "此影片位於內嵌播放器（{0}）中：請在分頁中開啟以進行翻譯。",
-"voiceOpenTab": "在分頁中開啟影片"
+"voiceOpenTab": "在分頁中開啟影片",
+"popupVoiceOnly": "僅翻譯語音（無字幕）",
+"optVoiceRate": "翻譯語音的語速",
+"optVoiceRateHelp": "影片語音（配音和僅語音）。1× = 正常語速；為跟上字幕，語音會稍微加快。",
+"voiceSlower": "放慢語速",
+"voiceFaster": "加快語速",
+"voiceRateValue": "語速：{0}"
 }

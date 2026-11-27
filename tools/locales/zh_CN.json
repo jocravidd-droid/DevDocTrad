@@ -231,5 +231,11 @@
 "voiceNoTts": "此设备上没有{0}的合成语音：仅显示字幕。",
 "voiceDubClick": "请点击页面以允许播放翻译语音。",
 "voiceInFrame": "此视频位于嵌入式播放器（{0}）中：请在标签页中打开以进行翻译。",
-"voiceOpenTab": "在标签页中打开视频"
+"voiceOpenTab": "在标签页中打开视频",
+"popupVoiceOnly": "仅翻译语音（无字幕）",
+"optVoiceRate": "翻译语音的语速",
+"optVoiceRateHelp": "视频语音（配音和仅语音）。1× = 正常语速；为跟上字幕，语音会稍微加快。",
+"voiceSlower": "放慢语速",
+"voiceFaster": "加快语速",
+"voiceRateValue": "语速：{0}"
 }

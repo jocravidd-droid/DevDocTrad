@@ -4,9 +4,9 @@ Textes prêts à copier pour publier DevDocTrad sur addons.mozilla.org, en fran�
 
 État : **l’extension est déjà publiée** sur Firefox (version 1.0.0) : https://addons.mozilla.org/fr/firefox/addon/devdoctrad/
 
-**Pour mettre la fiche à jour et envoyer la 1.2.0, utilise le kit [`store/amo/`](amo/README.md)** : 8 captures en 1280 x 800 (`store/amo/en/` et `store/amo/fr/`), tous les textes en anglais et en français (`store/amo/fiche.md`) et un guide clic par clic sur la page d’édition (`store/amo/README.md`). Les textes du kit remplacent ceux de ce fichier (nom avec mots-clés, voix des vidéos, catégories, tags, captures).
+**Pour mettre la fiche à jour et envoyer la 1.3.0, utilise le kit [`store/amo/`](amo/README.md)** : 8 captures en 1280 x 800 (`store/amo/en/` et `store/amo/fr/`), tous les textes en anglais et en français (`store/amo/fiche.md`) et un guide clic par clic sur la page d’édition (`store/amo/README.md`). Les textes du kit remplacent ceux de ce fichier (nom avec mots-clés, voix des vidéos, catégories, tags, captures).
 
-Le reste de ce fichier décrit la première publication ; il reste utile pour les explications (collecte de données, code source, `web-ext lint`). Le paquet actuel est `release/devdoctrad-firefox-1.2.0.zip`.
+Le reste de ce fichier décrit la première publication ; il reste utile pour les explications (collecte de données, code source, `web-ext lint`). Le paquet actuel est `release/devdoctrad-firefox-1.3.0.zip`.
 
 Astuce : sur GitHub, chaque bloc de texte a un bouton de copie en haut à droite. Copie le bloc entier et colle-le tel quel dans le champ indiqué.
 
@@ -294,7 +294,7 @@ Chaque étape se fait dans l’ordre. Les libellés d’AMO peuvent changer lég
 1. Ouvre un terminal dans le dossier du dépôt (le dossier qui contient `build.py`).
 2. Tape `npm install` puis appuie sur Entrée. Attends la fin de l’installation.
 3. Tape `npm test` puis appuie sur Entrée. Tous les tests doivent passer (aucune ligne « fail » à la fin). Si un test échoue, ne publie pas : corrige d’abord.
-4. Tape `python3 build.py` puis appuie sur Entrée. Le script reconstruit `dist/firefox` et le fichier `release/devdoctrad-firefox-1.2.0.zip`.
+4. Tape `python3 build.py` puis appuie sur Entrée. Le script reconstruit `dist/firefox` et le fichier `release/devdoctrad-firefox-1.3.0.zip`.
 5. Tape `npx web-ext lint --source-dir dist/firefox` puis appuie sur Entrée. Si le terminal demande l’autorisation d’installer `web-ext`, tape `y` puis Entrée.
 6. Lis le résumé à la fin : il doit indiquer `errors 0`. S’il y a des erreurs, corrige-les, puis recommence à partir de l’étape 3.
 7. Ouvre `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` dans ton navigateur. La politique de confidentialité doit s’afficher. Si la page est introuvable, envoie d’abord `PRIVACY.md` sur la branche `main` du dépôt public.
@@ -312,7 +312,7 @@ Chaque étape se fait dans l’ordre. Les libellés d’AMO peuvent changer lég
 
 14. Dans le Developer Hub, clique sur « Soumettre un nouveau module » (Submit a New Add-on).
 15. À la question « Où voulez-vous distribuer cette version ? », choisis « Sur ce site » (On this site). C’est ce qui crée une fiche publique sur AMO.
-16. Clique sur « Sélectionner un fichier » (Select a file) et choisis `release/devdoctrad-firefox-1.2.0.zip`.
+16. Clique sur « Sélectionner un fichier » (Select a file) et choisis `release/devdoctrad-firefox-1.3.0.zip`.
 17. Attends la validation automatique. Elle doit indiquer qu’il n’y a aucune erreur. Lis les avertissements éventuels (ce sont les mêmes que ceux de `web-ext lint`).
 18. Dans « Compatibilité » (Compatible with), coche « Firefox » et décoche « Firefox pour Android » : l’extension n’est pas faite pour le mobile.
 19. Clique sur « Continuer » (Continue).
@@ -368,7 +368,7 @@ Do the steps in order. AMO labels may change slightly over time: look for the cl
 1. Open a terminal in the repository folder (the folder that contains `build.py`).
 2. Type `npm install` and press Enter. Wait until it finishes.
 3. Type `npm test` and press Enter. All tests must pass (no "fail" line at the end). If a test fails, do not publish: fix it first.
-4. Type `python3 build.py` and press Enter. The script rebuilds `dist/firefox` and `release/devdoctrad-firefox-1.2.0.zip`.
+4. Type `python3 build.py` and press Enter. The script rebuilds `dist/firefox` and `release/devdoctrad-firefox-1.3.0.zip`.
 5. Type `npx web-ext lint --source-dir dist/firefox` and press Enter. If the terminal asks to install `web-ext`, type `y` and press Enter.
 6. Read the summary at the end: it must say `errors 0`. If there are errors, fix them, then start again from step 3.
 7. Open `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` in your browser. The privacy policy must be displayed. If the page is not found, first push `PRIVACY.md` to the `main` branch of the public repository.
@@ -386,7 +386,7 @@ Do the steps in order. AMO labels may change slightly over time: look for the cl
 
 14. In the Developer Hub, click "Submit a New Add-on".
 15. When asked where to distribute this version, choose "On this site". This creates a public listing on AMO.
-16. Click "Select a file" and choose `release/devdoctrad-firefox-1.2.0.zip`.
+16. Click "Select a file" and choose `release/devdoctrad-firefox-1.3.0.zip`.
 17. Wait for the automatic validation. It must report no errors. Read any warnings (they are the same as those from `web-ext lint`).
 18. Under "Compatible with", tick "Firefox" and untick "Firefox for Android": the extension is not made for mobile.
 19. Click "Continue".

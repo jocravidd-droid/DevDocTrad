@@ -207,13 +207,31 @@
     "message": "No speech voice for {0} on this device: subtitles only."
   },
   "voiceDubClick": {
-    "message": "Click the page to allow the translated voice."
+    "message": "Click once in the page to allow the translated voice."
   },
   "voiceInFrame": {
     "message": "This video is in an embedded player ({0}): open it in a tab to translate it."
   },
   "voiceOpenTab": {
     "message": "Open the video in a tab"
+  },
+  "popupVoiceOnly": {
+    "message": "Translated voice only (no subtitles)"
+  },
+  "optVoiceRate": {
+    "message": "Translated voice speed"
+  },
+  "optVoiceRateHelp": {
+    "message": "Video voice (dubbing and voice only). 1× = normal speed; the voice still speeds up slightly to keep up with the subtitles."
+  },
+  "voiceSlower": {
+    "message": "Slower voice"
+  },
+  "voiceFaster": {
+    "message": "Faster voice"
+  },
+  "voiceRateValue": {
+    "message": "Voice speed: {0}"
   },
   "popupSensitive": {
     "message": "Sensitive page: never translated automatically. The button works, Ollama is used first if configured."

@@ -231,5 +231,11 @@
 "voiceNoTts": "Bu cihazda {0} için sentetik ses yok: yalnızca altyazılar.",
 "voiceDubClick": "Çevrilmiş sese izin vermek için sayfaya tıklayın.",
 "voiceInFrame": "Bu video gömülü bir oynatıcıda ({0}): çevirmek için bir sekmede açın.",
-"voiceOpenTab": "Videoyu bir sekmede aç"
+"voiceOpenTab": "Videoyu bir sekmede aç",
+"popupVoiceOnly": "Yalnızca çevrilmiş ses (altyazısız)",
+"optVoiceRate": "Çevrilmiş sesin hızı",
+"optVoiceRateHelp": "Videoların sesi (dublaj ve yalnızca ses). 1× = normal hız; ses altyazılara yetişmek için biraz hızlanır.",
+"voiceSlower": "Daha yavaş ses",
+"voiceFaster": "Daha hızlı ses",
+"voiceRateValue": "Ses hızı: {0}"
 }

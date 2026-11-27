@@ -2,7 +2,7 @@
 
 L'inscription développeur Microsoft Edge est **gratuite** (pas de frais, contrairement aux 5 $ du Chrome Web Store). La boutique Edge accepte exactement le même paquet que Chrome.
 
-Paquet à envoyer : `release/devdoctrad-chrome-1.2.0.zip` (le zip Chrome, tel quel).
+Paquet à envoyer : `release/devdoctrad-chrome-1.3.0.zip` (le zip Chrome, tel quel).
 
 ## 1. Créer le compte (une seule fois, 10 minutes)
 
@@ -13,7 +13,7 @@ Paquet à envoyer : `release/devdoctrad-chrome-1.2.0.zip` (le zip Chrome, tel qu
 ## 2. Créer la fiche (20 minutes)
 
 1. Dans le tableau de bord Edge, clique sur **Créer une extension** (Create new extension).
-2. **Package** : glisse `release/devdoctrad-chrome-1.2.0.zip`. Attends la fin de la vérification automatique.
+2. **Package** : glisse `release/devdoctrad-chrome-1.3.0.zip`. Attends la fin de la vérification automatique.
 3. **Availability** : visibilité **Public**, marchés : **tous**.
 4. **Properties** :
    - Catégorie : **Developer tools** ;

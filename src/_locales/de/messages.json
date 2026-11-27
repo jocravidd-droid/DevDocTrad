@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Video in einem Tab öffnen"
   },
+  "popupVoiceOnly": {
+    "message": "Nur übersetzte Stimme (ohne Untertitel)"
+  },
+  "optVoiceRate": {
+    "message": "Geschwindigkeit der übersetzten Stimme"
+  },
+  "optVoiceRateHelp": {
+    "message": "Stimme in Videos (Synchronisation und nur Stimme). 1× = normale Geschwindigkeit; die Stimme wird etwas schneller, um mit den Untertiteln Schritt zu halten."
+  },
+  "voiceSlower": {
+    "message": "Langsamere Stimme"
+  },
+  "voiceFaster": {
+    "message": "Schnellere Stimme"
+  },
+  "voiceRateValue": {
+    "message": "Sprechgeschwindigkeit: {0}"
+  },
   "popupSensitive": {
     "message": "Sensible Seite: wird nie automatisch übersetzt. Die Schaltfläche funktioniert, Ollama wird zuerst verwendet, falls eingerichtet."
   },

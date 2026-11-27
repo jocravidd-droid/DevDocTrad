@@ -2,7 +2,7 @@
 
 Textes prêts à copier pour publier DevDocTrad sur le Chrome Web Store, en français et en anglais, puis la marche à suivre complète.
 
-État : l’extension n’est pas encore publiée. Le paquet à envoyer est `release/devdoctrad-chrome-1.2.0.zip`. L’inscription au Chrome Web Store coûte 5 dollars, une seule fois : c’est toi qui décides quand payer.
+État : l’extension n’est pas encore publiée. Le paquet à envoyer est `release/devdoctrad-chrome-1.3.0.zip`. L’inscription au Chrome Web Store coûte 5 dollars, une seule fois : c’est toi qui décides quand payer.
 
 Astuce : sur GitHub, chaque bloc de texte a un bouton de copie en haut à droite. Copie le bloc entier et colle-le tel quel dans le champ indiqué.
 
@@ -286,6 +286,22 @@ Français (référence) :
 Déclare deux raccourcis clavier : Alt+Maj+T, pour traduire la page actuelle ou revenir à l’original, et Alt+Maj+V, pour activer ou couper la traduction de la voix des vidéos (sous-titres traduits, doublage facultatif). L’utilisateur peut les changer ou les supprimer dans chrome://extensions/shortcuts.
 ```
 
+### 6.7 tts
+
+Ajoutée en 1.3. Pas d’avertissement à l’installation.
+
+English (to paste):
+
+```text
+Used only for the optional translated voice on videos ("Subtitles + translated voice" or "Translated voice only", chosen by the user in the popup): the extension's background script reads the translated subtitle aloud with chrome.tts, in the target language and at the speed chosen by the user, while the video's original sound is lowered. chrome.tts is needed because Chrome blocks speechSynthesis in a web page that has not been clicked, so the voice stayed silent. Only the translated sentence is passed to the browser's speech engine; nothing is sent to the developer or to any other service.
+```
+
+Français (référence) :
+
+```text
+Sert uniquement à la voix traduite facultative des vidéos (« Sous-titres + voix traduite » ou « Voix traduite seule », choisis par l’utilisateur dans le popup) : le script d’arrière-plan lit à voix haute le sous-titre traduit avec chrome.tts, dans la langue cible et à la vitesse choisie par l’utilisateur, pendant que le son d’origine de la vidéo est baissé. chrome.tts est nécessaire car Chrome bloque speechSynthesis dans une page web qui n’a reçu aucun clic : la voix restait muette. Seule la phrase traduite est passée au moteur de synthèse vocale du navigateur ; rien n’est envoyé au développeur ni à un autre service.
+```
+
 ## 7. Code distant
 
 Question : « Utilisez-vous du code distant ? » (Are you using remote code?)
@@ -416,7 +432,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 2. Tape `npm install` puis appuie sur Entrée. Attends la fin de l’installation.
 3. Tape `npm test` puis appuie sur Entrée. Tous les tests doivent passer (aucune ligne « fail » à la fin). Si un test échoue, ne publie pas : corrige d’abord.
 4. Tape `python3 build.py` puis appuie sur Entrée. Le script reconstruit les paquets et affiche une ligne « sha256 » par paquet.
-5. Ouvre le dossier `release/` et vérifie que le fichier `devdoctrad-chrome-1.2.0.zip` est présent. C’est le seul fichier que tu enverras au Chrome Web Store.
+5. Ouvre le dossier `release/` et vérifie que le fichier `devdoctrad-chrome-1.3.0.zip` est présent. C’est le seul fichier que tu enverras au Chrome Web Store.
 6. Crée la petite image promotionnelle de 440 x 280 pixels (PNG ou JPEG), par exemple à partir du logo du dossier `design/logo/`. Enregistre-la dans `store/promo-440x280.png`. Elle est obligatoire pour publier.
 7. Ouvre dans ton navigateur l’adresse `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md`. La politique de confidentialité doit s’afficher. Si la page est introuvable, envoie d’abord `PRIVACY.md` sur la branche `main` du dépôt public.
 
@@ -434,7 +450,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 ### C. Envoyer le paquet
 
 16. Dans la colonne de gauche, clique sur « Éléments » (Items), puis sur le bouton « Nouvel élément » (New item).
-17. Clique sur « Parcourir » (Browse files) et choisis `release/devdoctrad-chrome-1.2.0.zip`. N’envoie pas le dossier décompressé : seulement le zip.
+17. Clique sur « Parcourir » (Browse files) et choisis `release/devdoctrad-chrome-1.3.0.zip`. N’envoie pas le dossier décompressé : seulement le zip.
 18. Attends la fin de l’envoi. La page de l’élément s’ouvre, avec plusieurs onglets à gauche : « Paquet » (Package), « Fiche Play Store » ou « Fiche de la boutique » (Store listing), « Pratiques de confidentialité » (Privacy), « Distribution », et parfois « Instructions de test » (Test instructions).
 
 ### D. Remplir la fiche (onglet Store listing)
@@ -464,6 +480,7 @@ Chaque étape se fait dans l’ordre. Les libellés du tableau de bord peuvent c
 38. Dans le champ de justification de `scripting`, colle le bloc anglais de la section « 6.4 scripting ».
 39. Dans le champ de justification des autorisations d’hôtes (Host permission justification), colle le bloc anglais de la section « 6.5 Autorisations d’hôtes ».
 40. Si un champ de justification pour `commands` apparaît, colle le bloc anglais de la section « 6.6 commands ». S’il n’apparaît pas, ne fais rien.
+40 bis. Dans le champ de justification de `tts`, colle le bloc anglais de la section « 6.7 tts ».
 41. À la question « Utilisez-vous du code distant ? » (Are you using remote code?), choisis « Non » (No). Si un champ de justification apparaît, colle le bloc anglais de la section « 7. Code distant ».
 42. Dans « Utilisation des données » (Data usage), coche uniquement « Contenu du site Web » (Website content). Laisse toutes les autres cases décochées (ou coche aussi « Informations d’authentification » si tu as choisi d’être plus transparent, comme expliqué dans la section 8.1).
 43. Coche les trois engagements listés dans la section « 8.2 Engagements à cocher ».
@@ -508,7 +525,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 2. Type `npm install` and press Enter. Wait until it finishes.
 3. Type `npm test` and press Enter. All tests must pass (no "fail" line at the end). If a test fails, do not publish: fix it first.
 4. Type `python3 build.py` and press Enter. The script rebuilds the packages and prints one "sha256" line per package.
-5. Open the `release/` folder and check that `devdoctrad-chrome-1.2.0.zip` is there. It is the only file you will upload to the Chrome Web Store.
+5. Open the `release/` folder and check that `devdoctrad-chrome-1.3.0.zip` is there. It is the only file you will upload to the Chrome Web Store.
 6. Create the small promo tile, 440 x 280 pixels (PNG or JPEG), for example from the logo in `design/logo/`. Save it as `store/promo-440x280.png`. It is required to publish.
 7. Open `https://github.com/jocravidd-droid/DevDocTrad/blob/main/PRIVACY.md` in your browser. The privacy policy must be displayed. If the page is not found, first push `PRIVACY.md` to the `main` branch of the public repository.
 
@@ -526,7 +543,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 ### C. Upload the package
 
 16. In the left column, click "Items", then the "New item" button.
-17. Click "Browse files" and choose `release/devdoctrad-chrome-1.2.0.zip`. Do not upload the unzipped folder: only the zip.
+17. Click "Browse files" and choose `release/devdoctrad-chrome-1.3.0.zip`. Do not upload the unzipped folder: only the zip.
 18. Wait for the upload to finish. The item page opens with several tabs on the left: "Package", "Store listing", "Privacy", "Distribution", and sometimes "Test instructions".
 
 ### D. Fill in the listing ("Store listing" tab)
@@ -556,6 +573,7 @@ Do the steps in order. Dashboard labels may change slightly over time: look for 
 38. In the justification field for `scripting`, paste the English block from section "6.4 scripting".
 39. In "Host permission justification", paste the English block from section "6.5 Autorisations d’hôtes (host permissions)".
 40. If a justification field for `commands` appears, paste the English block from section "6.6 commands". If it does not appear, do nothing.
+40 bis. In the justification field for `tts`, paste the English block from section "6.7 tts".
 41. For "Are you using remote code?", choose "No". If a justification field appears, paste the English block from section "7. Code distant".
 42. Under "Data usage", tick only "Website content". Leave every other box unticked (or also tick "Authentication information" if you chose to be more transparent, as explained in section 8.1).
 43. Tick the three certifications listed in section "8.2 Engagements à cocher": not sold or transferred outside approved use cases; not used for purposes unrelated to the single purpose; not used for creditworthiness or lending.

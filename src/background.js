@@ -1185,9 +1185,153 @@
       });
     }
 
+    /* ---------------- Voix traduite (doublage) : synthèse vocale de l'extension ----------------
+     * Cause de « la voix ne marche pas » (1.2) : Chrome refuse speechSynthesis.speak() dans une page qui
+     * n'a reçu aucun clic (erreur « not-allowed », silence total) ; le clic dans le popup ne compte pas
+     * pour la page. La voix est donc produite ici, par l'extension, qui n'a pas besoin de ce clic :
+     *   - Chrome, Edge, Brave : chrome.tts (permission « tts », sans avertissement à l'installation) ;
+     *   - Firefox : pas de browser.tts ; speechSynthesis de la page de fond (Gecko n'exige aucun clic :
+     *     SpeechSynthesis::Speak ne bloque que si le système a coupé le son de l'onglet).
+     * La réponse au message « speak » arrive à la fin de la phrase (fin, interruption ou erreur) : la page
+     * remonte alors le son d'origine. Garde-fous : texte de 1000 caractères au plus, vitesse 0,5 à 3. */
+    var TTS_MAX_CHARS = 1000;
+    var TTS_RATE_MIN = 0.5;
+    var TTS_RATE_MAX = 3;
+    var TTS_LANG_RE = /^[a-z]{2,3}(?:[-_][a-z0-9]{1,8}){0,3}$/i;
+    var later = deps.setTimeout || function (fn, ms) { return setTimeout(fn, ms); };
+    var cancelLater = deps.clearTimeout || function (id) { clearTimeout(id); };
+    var ttsSeq = 0;
+    var ttsLive = {};            // phrases en cours : id -> { tabId, finish, u }
+    function synthWin() {
+      var w = deps.win || root;
+      return w && w.speechSynthesis && typeof w.SpeechSynthesisUtterance === 'function' ? w : null;
+    }
+    // relu à chaque appel (jamais gardé en mémoire) : chrome.tts peut être remplacé par un espion en test
+    function ttsEngine() {
+      if (api.tts && typeof api.tts.speak === 'function') return 'tts';
+      return synthWin() ? 'synth' : null;
+    }
+    function ttsVoices() {
+      var engine = ttsEngine();
+      if (!engine) return Promise.resolve({ ok: false, error: 'no_tts' });
+      return new Promise(function (resolve) {
+        var done = false;
+        function finish(list) {
+          if (done) return;
+          done = true;
+          var voices = Array.prototype.slice.call(list || []).map(function (v) {
+            return { name: String((engine === 'tts' ? v.voiceName : v.name) || ''), lang: String(v.lang || ''),
+              remote: !!(v.remote || v.localService === false), default: !!v.default };
+          }).filter(function (v) { return v.name; });
+          resolve({ ok: true, engine: engine, voices: voices });
+        }
+        if (engine === 'tts') {
+          try {
+            var p = api.tts.getVoices(finish);
+            if (p && typeof p.then === 'function') p.then(finish, function () { finish([]); });
+          } catch (e) { finish([]); }
+          later(function () { finish([]); }, 3000);
+          return;
+        }
+        // Firefox : liste parfois vide au premier appel, remplie à « voiceschanged »
+        var s = synthWin().speechSynthesis;
+        var first = [];
+        try { first = s.getVoices() || []; } catch (e) { first = []; }
+        if (first.length) { finish(first); return; }
+        var onChange = function () {
+          try { if (s.removeEventListener) s.removeEventListener('voiceschanged', onChange); } catch (e) { /* rien */ }
+          var l = [];
+          try { l = s.getVoices() || []; } catch (e) { l = []; }
+          finish(l);
+        };
+        try { if (s.addEventListener) s.addEventListener('voiceschanged', onChange); } catch (e) { /* rien */ }
+        later(onChange, deps.voicesWaitMs || 1500);
+      });
+    }
+    function speak(msg, sender) {
+      var text = typeof (msg && msg.text) === 'string' ? msg.text.trim() : '';
+      if (!text) return Promise.resolve({ ok: false, error: 'empty' });
+      if (text.length > TTS_MAX_CHARS) return Promise.resolve({ ok: false, error: 'too_long' });
+      var engine = ttsEngine();
+      if (!engine) return Promise.resolve({ ok: false, error: 'no_tts' });
+      var rate = Number(msg.rate);
+      if (!isFinite(rate)) rate = 1;
+      rate = Math.round(Math.min(TTS_RATE_MAX, Math.max(TTS_RATE_MIN, rate)) * 100) / 100;
+      var lang = typeof msg.lang === 'string' && TTS_LANG_RE.test(msg.lang) ? msg.lang.replace(/_/g, '-') : '';
+      var voiceName = typeof msg.voiceName === 'string' && msg.voiceName.length <= 200 ? msg.voiceName : '';
+      var tabId = sender && sender.tab ? sender.tab.id : null;
+      var id = ++ttsSeq;
+      return new Promise(function (resolve) {
+        var settled = false;
+        var guard = null;
+        function finish(type, error) {
+          if (settled) return;
+          settled = true;
+          if (guard) cancelLater(guard);
+          delete ttsLive[id];
+          var out = { ok: type === 'end', type: type };
+          if (error) out.error = String(error).slice(0, 160);
+          resolve(out);
+        }
+        ttsLive[id] = { tabId: tabId, finish: finish };
+        // jamais de réponse en attente sans fin (événement perdu) : bien au-delà de la durée de la phrase
+        guard = later(function () { finish('timeout'); }, Math.min(120000, 8000 + text.length * 250 / rate));
+        if (engine === 'tts') {
+          var opts = { rate: rate, enqueue: true, onEvent: function (ev) {
+            var type = ev && ev.type;
+            if (type === 'end') finish('end');
+            else if (type === 'interrupted' || type === 'cancelled') finish('interrupted');
+            else if (type === 'error') finish('error', ev.errorMessage || 'error');
+          } };
+          if (lang) opts.lang = lang;
+          if (voiceName) opts.voiceName = voiceName;
+          try {
+            var r = api.tts.speak(text, opts, function () {
+              var le = api.runtime && api.runtime.lastError;
+              if (le) finish('error', le.message || 'error');
+            });
+            if (r && typeof r.catch === 'function') r.catch(function (e) { finish('error', e && e.message || e); });
+          } catch (e) { finish('error', e && e.message || e); }
+          return;
+        }
+        var w = synthWin();
+        try {
+          var u = new w.SpeechSynthesisUtterance(text);
+          if (lang) u.lang = lang;
+          u.rate = rate;
+          if (voiceName) {
+            var v = Array.prototype.filter.call(w.speechSynthesis.getVoices() || [], function (x) { return x.name === voiceName; })[0];
+            if (v) u.voice = v;
+          }
+          u.onend = function () { finish('end'); };
+          u.onerror = function (ev) {
+            var er = ev && ev.error;
+            if (er === 'interrupted' || er === 'canceled') finish('interrupted'); else finish('error', er || 'error');
+          };
+          ttsLive[id].u = u;   // énoncé gardé en mémoire jusqu'à sa fin (événements perdus sinon)
+          w.speechSynthesis.speak(u);
+        } catch (e) { finish('error', e && e.message || e); }
+      });
+    }
+    /* Voix coupée (pause, saut, arrêt). Seulement si cet onglet parle : sinon la voix d'un autre onglet
+       serait coupée pour rien. */
+    function stopSpeaking(msg, sender) {
+      var tabId = sender && sender.tab ? sender.tab.id : null;
+      var mine = Object.keys(ttsLive).filter(function (id) { return tabId === null || ttsLive[id].tabId === tabId; });
+      if (!mine.length) return Promise.resolve({ ok: true, stopped: 0 });
+      var engine = ttsEngine();
+      try {
+        if (engine === 'tts') api.tts.stop();
+        else if (engine === 'synth') synthWin().speechSynthesis.cancel();
+      } catch (e) { /* rien */ }
+      // le moteur coupe aussi les phrases des autres onglets : elles finissent « interrompues »
+      Object.keys(ttsLive).forEach(function (id) { if (ttsLive[id]) ttsLive[id].finish('interrupted'); });
+      return Promise.resolve({ ok: true, stopped: mine.length });
+    }
+
     /* Commandes envoyées au script « voix » d'un onglet ; il est injecté à la première demande. */
-    function voiceCommand(tabId, cmd, keyId, on) {
-      function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null, on: !!on }); }
+    function voiceCommand(tabId, cmd, keyId, on, mode) {
+      function send() { return api.tabs.sendMessage(tabId, { to: 'voice', cmd: cmd, keyId: keyId || null, on: !!on, mode: mode }); }
       return send().then(function (r) {
         if (r === undefined && cmd !== 'status') throw new Error('no receiver');
         return r || { active: false };
@@ -1198,7 +1342,7 @@
       });
     }
 
-    function onMessage(msg) {
+    function onMessage(msg, sender) {
       if (!msg || !msg.type) return null;
       switch (msg.type) {
         case 'getState': return publicState();
@@ -1215,7 +1359,10 @@
         case 'resetKey': return resetKeyState(msg.keyId).then(function () { return { ok: true }; });
         case 'syncAuto': return syncAutoScripts().then(function () { return { ok: true }; });
         case 'transcribe': return transcribe(msg);
-        case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId, msg.on);
+        case 'voiceCommand': return voiceCommand(msg.tabId, msg.cmd, msg.keyId, msg.on, msg.mode);
+        case 'speak': return speak(msg, sender);
+        case 'stopSpeaking': return stopSpeaking(msg, sender);
+        case 'ttsVoices': return ttsVoices();
         default: return null;   // message pour un autre destinataire : ne pas répondre à sa place
       }
     }
@@ -1234,6 +1381,7 @@
       syncAutoScripts: syncAutoScripts, autoCheck: autoCheck, tabCommand: tabCommand, flushCache: flushCache,
       buildChain: buildChain, publicState: publicState, clearCache: clearCache, cacheInfo: cacheInfo,
       addAutoSite: addAutoSite, removeAutoSite: removeAutoSite, transcribe: transcribe, voiceCommand: voiceCommand,
+      speak: speak, stopSpeaking: stopSpeaking, ttsVoices: ttsVoices,
       _ProviderError: ProviderError
     };
   }
@@ -1243,7 +1391,7 @@
   /* Messages acceptés depuis un script de contenu (page web) : seulement ceux dont il a besoin.
    * Tout le reste (clés, réglages, cache, onglets) ne vient que des pages de l'extension
    * (popup, réglages), reconnues à leur adresse. */
-  var CONTENT_SCRIPT_TYPES = { autoCheck: true, transcribe: true };
+  var CONTENT_SCRIPT_TYPES = { autoCheck: true, transcribe: true, speak: true, stopSpeaking: true, ttsVoices: true };
   function isTrustedSender(msg, sender, api) {
     if (!msg || !msg.type) return false;
     if (CONTENT_SCRIPT_TYPES[msg.type]) return true;
@@ -1253,6 +1401,22 @@
     return !!base && !!url && url.indexOf(base) === 0;
   }
   root.DDT_isTrustedSender = isTrustedSender;
+
+  /* Réglages enregistrés par une version précédente : rend les réglages à écrire, ou null si rien ne change. */
+  function migrateSettings(settings) {
+    var next = Object.assign({}, settings);
+    var changed = false;
+    // Mise à jour : les parenthèses (terme anglais) deviennent une option désactivée par défaut.
+    if (next.termsStyle !== 3) { next.explainTerms = false; next.termsStyle = 3; changed = true; }
+    // 1.3 : l'ancien booléen « voiceDub » devient voiceMode ('subs' | 'dub' | 'voice')
+    if (DDT.VOICE_MODES.indexOf(next.voiceMode) === -1 || 'voiceDub' in next) {
+      next.voiceMode = DDT.voiceModeOf(next);
+      delete next.voiceDub;
+      changed = true;
+    }
+    return changed ? next : null;
+  }
+  root.DDT_migrateSettings = migrateSettings;
 
   /* ---------------- Branchement sur le navigateur ---------------- */
   var api = DDT.api;
@@ -1276,7 +1440,7 @@
   api.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (!msg || !msg.type || msg.to === 'content') return;
     if (!isTrustedSender(msg, sender, api)) return;   // ne pas répondre : un autre destinataire peut le faire
-    var p = bg.onMessage(msg);
+    var p = bg.onMessage(msg, sender);
     if (!p) return;
     p.then(sendResponse, function (e) { sendResponse({ ok: false, message: DDT.sanitize(e && e.message) }); });
     return true;
@@ -1309,10 +1473,8 @@
   api.runtime.onInstalled.addListener(function () {
     api.storage.local.get('settings').then(function (r) {
       if (!r.settings) return api.storage.local.set({ settings: Object.assign({}, DDT.DEFAULT_SETTINGS, { termsStyle: 3 }) });
-      // Mise à jour : les parenthèses (terme anglais) deviennent une option désactivée par défaut.
-      if (r.settings.termsStyle !== 3) {
-        return api.storage.local.set({ settings: Object.assign({}, r.settings, { explainTerms: false, termsStyle: 3 }) });
-      }
+      var next = migrateSettings(r.settings);
+      if (next) return api.storage.local.set({ settings: next });
     }).then(bg.syncAutoScripts);
   });
   if (api.runtime.onStartup) api.runtime.onStartup.addListener(bg.syncAutoScripts);

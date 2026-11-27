@@ -238,7 +238,7 @@ test('cache : éviction des plus anciennes entrées au-delà de la taille maxima
 });
 
 /* ---------- 6. Expéditeurs des messages ---------- */
-test('messages : un script de contenu n\'a droit qu\'à autoCheck et transcribe', () => {
+test('messages : un script de contenu n\'a droit qu\'à autoCheck, transcribe et la voix (speak, stopSpeaking, ttsVoices)', () => {
   H.loadBackground();
   const ok = globalThis.DDT_isTrustedSender;
   const api = { runtime: { getURL: (p) => 'chrome-extension://abc/' + p } };
@@ -246,6 +246,7 @@ test('messages : un script de contenu n\'a droit qu\'à autoCheck et transcribe'
   const popup = { url: 'chrome-extension://abc/popup.html' };
   assert.equal(ok({ type: 'autoCheck' }, page, api), true);
   assert.equal(ok({ type: 'transcribe' }, page, api), true);
+  for (const type of ['speak', 'stopSpeaking', 'ttsVoices']) assert.equal(ok({ type }, page, api), true, type);
   for (const type of ['testKey', 'listModels', 'getState', 'clearCache', 'resetKey', 'addAutoSite', 'tabCommand', 'voiceCommand', 'syncAuto']) {
     assert.equal(ok({ type }, page, api), false, type + ' refusé depuis une page');
     assert.equal(ok({ type }, popup, api), true, type + ' accepté depuis le popup');

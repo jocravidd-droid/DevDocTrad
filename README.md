@@ -28,7 +28,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 ### Chrome, Edge ou Brave
 
-1. Télécharge le fichier `devdoctrad-chrome-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-chrome-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.2.0.zip).
+1. Télécharge le fichier `devdoctrad-chrome-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-chrome-1.3.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.3.0.zip).
 2. Décompresse ce fichier zip dans un dossier que tu garderas (par exemple `Documents/DevDocTrad`). Ne supprime pas ce dossier ensuite : le navigateur charge l'extension depuis lui.
 3. Ouvre la page des extensions en tapant dans la barre d'adresse :
    - Chrome : `chrome://extensions`
@@ -45,7 +45,7 @@ Sous Firefox, l'extension est publiée sur [addons.mozilla.org](https://addons.m
 
 **Ou à la main**, avec le zip (module temporaire, utile pour tester une version précise) :
 
-1. Télécharge le fichier `devdoctrad-firefox-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-firefox-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.2.0.zip).
+1. Télécharge le fichier `devdoctrad-firefox-<version>.zip` sur la [page de la dernière version](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) (rubrique « Assets »). Lien direct vers la version actuelle : [devdoctrad-firefox-1.3.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.3.0.zip).
 2. Tape `about:debugging#/runtime/this-firefox` dans la barre d'adresse.
 3. Clique sur **Charger un module complémentaire temporaire…**
 4. Choisis le fichier zip téléchargé à l'étape 1.
@@ -123,7 +123,8 @@ Ollama est utilisé en secours quand toutes les clés gratuites sont en pause, e
 
 - **Traduire une page** : clique sur l'icône DevDocTrad, puis sur **Traduire cette page**. Ou utilise le raccourci **Alt+Maj+T**.
 - **Traduire la voix d'une vidéo** : sur une page avec une vidéo (ou un son, comme un podcast), active **Traduire la voix des vidéos** dans le popup, ou appuie sur **Alt+Maj+V**. Les sous-titres traduits s'affichent sur la vidéo ; la croix arrête tout. Pour une vidéo sans sous-titres, il faut une clé **Groq** gratuite (la transcription Whisper est incluse dans le palier gratuit de Groq). Plusieurs vidéos sur la page : celle qui joue est prise, sinon la plus grande visible. Les lecteurs en composants web (shadow DOM) sont pris en charge.
-- **Doublage (voix traduite)** : sous l'interrupteur, choisis **Sous-titres + voix traduite (doublage)** au lieu de **Sous-titres**. La traduction est dite par la meilleure voix de synthèse de ton navigateur pour la langue choisie (gratuit, aucun service payant), au début de chaque sous-titre et un peu plus vite si la phrase est longue ; le son d'origine descend à environ 15 % pendant que la voix parle. Pause de la vidéo = pause de la voix ; un saut dans la vidéo fait repartir la voix au bon sous-titre. Le bouton haut-parleur de la bande active ou coupe le doublage à tout moment. Si ton système n'a aucune voix pour la langue choisie, un message le dit et seuls les sous-titres restent. La qualité de la voix dépend du système et du navigateur (Edge et Chrome proposent souvent des voix « Online » ou « Google » plus naturelles ; sous Linux, il faut parfois installer des voix).
+- **Voix traduite (doublage)** : sous l'interrupteur, trois choix : **Sous-titres**, **Sous-titres + voix traduite** (doublage), ou **Voix traduite seule (sans sous-titres)** : la bande ne montre alors plus de texte, seulement sa petite barre (message, haut-parleur, vitesse, fermer). La traduction est dite par la meilleure voix de synthèse disponible pour la langue choisie (gratuit, aucun service payant), au début de chaque sous-titre et un peu plus vite si la phrase est longue ; le son d'origine descend à environ 15 % pendant que la voix parle. C'est l'extension elle-même qui parle (Chrome, Edge, Brave : `chrome.tts` ; Firefox : synthèse vocale de sa page de fond) : aucun clic dans la page n'est nécessaire. Pause de la vidéo = pause de la voix ; un saut dans la vidéo fait repartir la voix au bon sous-titre. Le bouton haut-parleur de la bande active ou coupe la voix à tout moment (en « voix seule », couper la voix fait revenir les sous-titres). Si ton système n'a aucune voix pour la langue choisie, un message le dit et les sous-titres restent. La qualité de la voix dépend du système et du navigateur (Edge et Chrome proposent souvent des voix « Online » ou « Google » plus naturelles ; sous Linux, il faut parfois installer des voix).
+- **Vitesse de la voix** : boutons **−** et **+** dans la barre de la bande (la valeur s'affiche, par exemple « 1,2× »), appliqués dès la phrase suivante, ou curseur **Vitesse de la voix traduite** dans Réglages > **Traduction** (0,5× à 2×, par pas de 0,1). Le réglage multiplie le calage automatique sur la durée des sous-titres.
 - **Vidéo intégrée d'un autre site** (YouTube, Vimeo, Dailymotion, Wistia, Loom… dans un cadre) : la bande propose **Ouvrir la vidéo dans un onglet** ; la traduction marche dans ce nouvel onglet. Les vidéos protégées (DRM, comme Netflix) ne donnent pas accès à leur son.
 - **Revenir à l'original** : bouton **Voir l'original** dans le petit badge en bas à droite de la page, dans le popup, ou de nouveau **Alt+Maj+T**.
 - **Traduire automatiquement un site** : sur un site que tu lis souvent, ouvre le popup et active **Traduire automatiquement ce site**. Le navigateur te demande la permission pour ce site uniquement.
@@ -213,7 +214,7 @@ Voir [PRIVACY.md](PRIVACY.md). En bref : le texte des pages que tu traduis part 
 
 ### Install (Chrome, Edge, Brave)
 
-1. Download `devdoctrad-chrome-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-chrome-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.2.0.zip). Unzip it into a folder you will keep.
+1. Download `devdoctrad-chrome-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-chrome-1.3.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-chrome-1.3.0.zip). Unzip it into a folder you will keep.
 2. Open `chrome://extensions` (or `edge://extensions`, `brave://extensions`).
 3. Turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
@@ -224,7 +225,7 @@ Install it from [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/de
 
 Or by hand, as a temporary add-on:
 
-1. Download `devdoctrad-firefox-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-firefox-1.2.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.2.0.zip).
+1. Download `devdoctrad-firefox-<version>.zip` from the [latest release page](https://github.com/jocravidd-droid/DevDocTrad/releases/latest) ("Assets"), or directly: [devdoctrad-firefox-1.3.0.zip](https://github.com/jocravidd-droid/DevDocTrad/raw/main/release/devdoctrad-firefox-1.3.0.zip).
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on…** and select the zip file. (Temporary: it is removed when Firefox closes.)
 
@@ -236,7 +237,9 @@ Open the settings (gear icon in the popup), **Keys** tab, choose a provider, cli
 
 Click the toolbar icon, then **Translate this page**, or press **Alt+Shift+T**. Press it again to go back to the original. For a video (or an audio player such as a podcast), turn on **Translate the voice in videos** in the popup or press **Alt+Shift+V**. With several videos, the one playing is used, otherwise the largest visible one; players built with web components (shadow DOM) work too.
 
-**Dubbing**: under the switch, choose **Subtitles + translated voice (dubbing)** instead of **Subtitles**. The translation is spoken by the best speech voice your browser has for the target language (free, no paid service), at the start of each subtitle and slightly faster when the sentence is long; the original sound drops to about 15% while the voice speaks. Pausing the video pauses the voice, and seeking restarts it at the right subtitle. The speaker button on the subtitle bar turns dubbing on or off at any time. If your system has no voice for the target language, a message says so and only subtitles are shown. Voice quality depends on your system and browser (Edge and Chrome often offer more natural "Online" or "Google" voices; on Linux you may need to install voices).
+**Translated voice (dubbing)**: under the switch, three choices: **Subtitles**, **Subtitles + translated voice** (dubbing), or **Translated voice only (no subtitles)**: the bar then shows no text, only its small control strip (message, speaker, speed, close). The translation is spoken by the best speech voice available for the target language (free, no paid service), at the start of each subtitle and slightly faster when the sentence is long; the original sound drops to about 15% while the voice speaks. The extension itself speaks (Chrome, Edge, Brave: `chrome.tts`; Firefox: speech synthesis of its background page), so no click in the page is needed. Pausing the video pauses the voice, and seeking restarts it at the right subtitle. The speaker button turns the voice on or off at any time (in "voice only", turning it off brings the subtitles back). If your system has no voice for the target language, a message says so and the subtitles stay. Voice quality depends on your system and browser (Edge and Chrome often offer more natural "Online" or "Google" voices; on Linux you may need to install voices).
+
+**Voice speed**: **−** and **+** buttons on the bar (the value is shown, e.g. "1.2×"), applied from the next sentence, or the **Translated voice speed** slider in Settings > **Translation** (0.5× to 2×, in steps of 0.1). It multiplies the automatic fit to the subtitle duration.
 
 **Video embedded from another site** (YouTube, Vimeo, Dailymotion, Wistia, Loom… in a frame): the bar offers **Open the video in a tab**, where translation works. Protected videos (DRM, e.g. Netflix) do not give access to their sound.
 

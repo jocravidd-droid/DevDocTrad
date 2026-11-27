@@ -301,24 +301,25 @@
     });
   });
 
-  /* Sous-titres seuls ou doublage (voix de synthèse du navigateur) : réglage enregistré,
-     appliqué tout de suite si la voix de la vidéo est déjà traduite dans l'onglet */
+  /* Sous-titres, sous-titres + voix traduite, ou voix traduite seule : réglage enregistré (voiceMode),
+     appliqué tout de suite si la voix de la vidéo est déjà traduite dans l'onglet.
+     Ancien réglage booléen voiceDub (1.2) repris par DDT.voiceModeOf. */
   api.storage.local.get('settings').then(function (r) {
-    var s = Object.assign({}, DDT.DEFAULT_SETTINGS, (r && r.settings) || {});
-    $('voiceDubSel').value = s.voiceDub ? 'dub' : 'subs';
-    dubTitle();
+    $('voiceModeSel').value = DDT.voiceModeOf((r && r.settings) || {});
+    modeTitle();
   });
-  function dubTitle() { var sel = $('voiceDubSel'); var o = sel.selectedOptions && sel.selectedOptions[0]; if (o) sel.title = o.textContent; }
-  $('voiceDubSel').addEventListener('change', function (e) {
-    dubTitle();
-    var on = e.target.value === 'dub';
+  function modeTitle() { var sel = $('voiceModeSel'); var o = sel.selectedOptions && sel.selectedOptions[0]; if (o) sel.title = o.textContent; }
+  $('voiceModeSel').addEventListener('change', function (e) {
+    modeTitle();
+    var mode = DDT.VOICE_MODES.indexOf(e.target.value) !== -1 ? e.target.value : 'subs';
     api.storage.local.get('settings').then(function (r) {
-      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {}, { voiceDub: on });
+      var s = Object.assign({}, DDT.DEFAULT_SETTINGS, r.settings || {}, { voiceMode: mode });
+      delete s.voiceDub;
       return api.storage.local.set({ settings: s });
     }).then(function () {
       if (tab && supported && $('voiceSwitch').checked) {
-        return send({ type: 'voiceCommand', tabId: tab.id, cmd: 'dub', on: on }).then(function (r) {
-          if (on && r && r.active && !r.speaking && r.message) UI.toast('warning', r.message);
+        return send({ type: 'voiceCommand', tabId: tab.id, cmd: 'dub', on: mode !== 'subs', mode: mode }).then(function (r) {
+          if (mode !== 'subs' && r && r.active && !r.speaking && r.message) UI.toast('warning', r.message);
         });
       }
     }).catch(function () { /* rien */ });

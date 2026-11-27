@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "在分頁中開啟影片"
   },
+  "popupVoiceOnly": {
+    "message": "僅翻譯語音（無字幕）"
+  },
+  "optVoiceRate": {
+    "message": "翻譯語音的語速"
+  },
+  "optVoiceRateHelp": {
+    "message": "影片語音（配音和僅語音）。1× = 正常語速；為跟上字幕，語音會稍微加快。"
+  },
+  "voiceSlower": {
+    "message": "放慢語速"
+  },
+  "voiceFaster": {
+    "message": "加快語速"
+  },
+  "voiceRateValue": {
+    "message": "語速：{0}"
+  },
   "popupSensitive": {
     "message": "敏感頁面：一律不自動翻譯。按鈕仍可使用，若已設定 Ollama 則優先使用。"
   },

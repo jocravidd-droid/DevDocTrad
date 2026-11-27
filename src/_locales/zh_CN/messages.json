@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "在标签页中打开视频"
   },
+  "popupVoiceOnly": {
+    "message": "仅翻译语音（无字幕）"
+  },
+  "optVoiceRate": {
+    "message": "翻译语音的语速"
+  },
+  "optVoiceRateHelp": {
+    "message": "视频语音（配音和仅语音）。1× = 正常语速；为跟上字幕，语音会稍微加快。"
+  },
+  "voiceSlower": {
+    "message": "放慢语速"
+  },
+  "voiceFaster": {
+    "message": "加快语速"
+  },
+  "voiceRateValue": {
+    "message": "语速：{0}"
+  },
   "popupSensitive": {
     "message": "敏感页面：从不自动翻译。按钮仍然可用，如已配置 Ollama 则优先使用。"
   },

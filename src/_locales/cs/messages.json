@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Otevřít video v kartě"
   },
+  "popupVoiceOnly": {
+    "message": "Jen přeložený hlas (bez titulků)"
+  },
+  "optVoiceRate": {
+    "message": "Rychlost přeloženého hlasu"
+  },
+  "optVoiceRateHelp": {
+    "message": "Hlas ve videích (dabing a jen hlas). 1× = normální rychlost; hlas trochu zrychlí, aby stíhal titulky."
+  },
+  "voiceSlower": {
+    "message": "Pomalejší hlas"
+  },
+  "voiceFaster": {
+    "message": "Rychlejší hlas"
+  },
+  "voiceRateValue": {
+    "message": "Rychlost hlasu: {0}"
+  },
   "popupSensitive": {
     "message": "Citlivá stránka: nikdy se nepřekládá automaticky. Tlačítko funguje, Ollama se použije jako první, pokud je nastavena."
   },

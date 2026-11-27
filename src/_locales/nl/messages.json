@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Video openen in een tabblad"
   },
+  "popupVoiceOnly": {
+    "message": "Alleen vertaalde stem (zonder ondertiteling)"
+  },
+  "optVoiceRate": {
+    "message": "Snelheid van de vertaalde stem"
+  },
+  "optVoiceRateHelp": {
+    "message": "Stem in video's (nasynchronisatie en alleen stem). 1× = normale snelheid; de stem versnelt iets om de ondertitels bij te houden."
+  },
+  "voiceSlower": {
+    "message": "Langzamere stem"
+  },
+  "voiceFaster": {
+    "message": "Snellere stem"
+  },
+  "voiceRateValue": {
+    "message": "Spreeksnelheid: {0}"
+  },
   "popupSensitive": {
     "message": "Gevoelige pagina: nooit automatisch vertaald. De knop werkt; als Ollama is ingesteld, wordt het eerst gebruikt."
   },

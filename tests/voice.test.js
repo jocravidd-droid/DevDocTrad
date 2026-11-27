@@ -570,6 +570,412 @@ test('doublage : voix refusée par le navigateur (aucun clic sur la page), messa
   voice.stop();
 });
 
+/* ---------------- 1.3 : la voix vient de l'extension (chrome.tts / page de fond Firefox) ----------------
+ * Cause réelle de « le mode vocal ne marche pas » : Chrome refuse speechSynthesis.speak() dans une page
+ * sans clic (« not-allowed »). La voix passe donc par le background. */
+const TTS_VOICES = [
+  { voiceName: 'Thomas', lang: 'fr-CA' },
+  { voiceName: 'Google français', lang: 'fr-FR', remote: true },
+  { voiceName: 'Microsoft Hortense', lang: 'fr-FR' },
+  { voiceName: 'Google US English', lang: 'en-US', remote: true }
+];
+/* Faux chrome.tts : appels gardés, événements pilotés par le test (end), stop() -> « interrupted » */
+function fakeChromeTts(voices = TTS_VOICES) {
+  const t = {
+    calls: [], stops: 0, voices,
+    getVoices(cb) { cb(this.voices); },
+    speak(text, opts, cb) { this.calls.push({ text, opts }); if (cb) cb(); },
+    stop() {
+      this.stops++;
+      this.calls.filter((c) => !c.done).forEach((c) => { c.done = true; c.opts.onEvent({ type: 'interrupted' }); });
+    },
+    end(i) { const c = this.calls[i]; c.done = true; c.opts.onEvent({ type: 'end' }); }
+  };
+  return t;
+}
+/* Background réel (src/background.js) avec un faux chrome.tts ou une fausse page de fond Firefox */
+function ttsBackground({ chromeTts, win } = {}) {
+  const create = H.loadBackground();
+  const api = H.fakeApi({ settings: {} });
+  if (chromeTts) api.tts = chromeTts;
+  const bg = create({ api, fetch: () => Promise.reject(new Error('pas de réseau')), win: win || {}, voicesWaitMs: 50 });
+  return { bg, api };
+}
+/* deps.tts de voice.js branché sur le vrai background, comme runtime.sendMessage dans l'extension */
+function bridgeTts(bg, tabId = 7) {
+  const sender = { tab: { id: tabId }, url: 'https://video.example/watch' };
+  const sent = [];
+  const call = (m) => {
+    sent.push(m);
+    assert.equal(globalThis.DDT_isTrustedSender(m, sender, { runtime: { getURL: () => 'chrome-extension://x/' } }), true,
+      m.type + ' accepté depuis le script de contenu');
+    return bg.onMessage(m, sender);
+  };
+  return {
+    sent,
+    voices: () => call({ type: 'ttsVoices' }),
+    speak: (o) => call({ type: 'speak', text: o.text, lang: o.lang, rate: o.rate, voiceName: o.voiceName }),
+    stop: () => call({ type: 'stopSpeaking' })
+  };
+}
+
+test('background : chrome.tts appelé avec le texte, la langue, la vitesse et la voix ; réponse à la fin de la phrase', async () => {
+  const tts = fakeChromeTts();
+  const { bg } = ttsBackground({ chromeTts: tts });
+  const v = await bg.onMessage({ type: 'ttsVoices' }, { tab: { id: 1 } });
+  assert.equal(v.ok, true);
+  assert.equal(v.engine, 'tts');
+  assert.deepEqual(v.voices.map((x) => x.name), ['Thomas', 'Google français', 'Microsoft Hortense', 'Google US English']);
+  let done = null;
+  const p = bg.onMessage({ type: 'speak', text: 'Ouvre le terminal', lang: 'fr-FR', rate: 1.25, voiceName: 'Google français' }, { tab: { id: 1 } })
+    .then((r) => { done = r; });
+  await wait(5);
+  assert.equal(tts.calls.length, 1);
+  const c = tts.calls[0];
+  assert.equal(c.text, 'Ouvre le terminal');
+  assert.equal(c.opts.lang, 'fr-FR');
+  assert.equal(c.opts.rate, 1.25);
+  assert.equal(c.opts.voiceName, 'Google français');
+  assert.equal(c.opts.enqueue, true, 'file d\'attente : la phrase suivante ne coupe pas la précédente');
+  assert.equal(done, null, 'pas de réponse avant la fin de la phrase');
+  tts.end(0);
+  await p;
+  assert.deepEqual(done, { ok: true, type: 'end' });
+  // interruption : réponse « interrupted »
+  const p2 = bg.onMessage({ type: 'speak', text: 'Deuxième phrase', lang: 'fr-FR', rate: 1 }, { tab: { id: 1 } });
+  await wait(5);
+  assert.deepEqual(await bg.onMessage({ type: 'stopSpeaking' }, { tab: { id: 1 } }), { ok: true, stopped: 1 });
+  assert.deepEqual(await p2, { ok: false, type: 'interrupted' });
+  assert.equal(tts.stops, 1);
+});
+
+test('background : garde-fous de « speak » (texte ≤ 1000 caractères, vitesse 0,5 à 3, langue vérifiée, autre onglet pas coupé)', async () => {
+  const tts = fakeChromeTts();
+  const { bg } = ttsBackground({ chromeTts: tts });
+  const s = { tab: { id: 2 } };
+  assert.deepEqual(await bg.onMessage({ type: 'speak', text: 'x'.repeat(1001), lang: 'fr' }, s), { ok: false, error: 'too_long' });
+  assert.deepEqual(await bg.onMessage({ type: 'speak', text: '   ', lang: 'fr' }, s), { ok: false, error: 'empty' });
+  assert.equal(tts.calls.length, 0, 'rien envoyé à la synthèse');
+  bg.onMessage({ type: 'speak', text: 'a', lang: 'fr-FR', rate: 99 }, s);
+  bg.onMessage({ type: 'speak', text: 'b', lang: '<script>', rate: 0.01 }, s);
+  bg.onMessage({ type: 'speak', text: 'c', lang: 'pt_BR', rate: 'abc', voiceName: 'v'.repeat(300) }, s);
+  await wait(5);
+  assert.deepEqual(tts.calls.map((c) => [c.opts.rate, c.opts.lang, c.opts.voiceName]),
+    [[3, 'fr-FR', undefined], [0.5, undefined, undefined], [1, 'pt-BR', undefined]]);
+  // un onglet sans phrase en cours ne coupe pas la voix d'un autre onglet
+  assert.deepEqual(await bg.onMessage({ type: 'stopSpeaking' }, { tab: { id: 99 } }), { ok: true, stopped: 0 });
+  assert.equal(tts.stops, 0);
+  // erreur du moteur rendue telle quelle
+  const p = bg.onMessage({ type: 'speak', text: 'd', lang: 'fr' }, s);
+  await wait(5);
+  tts.calls[3].opts.onEvent({ type: 'error', errorMessage: 'Voice not found' });
+  assert.deepEqual(await p, { ok: false, type: 'error', error: 'Voice not found' });
+  // aucun moteur (ni chrome.tts ni speechSynthesis de fond)
+  const none = ttsBackground({});
+  assert.deepEqual(await none.bg.onMessage({ type: 'ttsVoices' }), { ok: false, error: 'no_tts' });
+  assert.deepEqual(await none.bg.onMessage({ type: 'speak', text: 'x', lang: 'fr' }), { ok: false, error: 'no_tts' });
+});
+
+test('background : speak / stopSpeaking / ttsVoices acceptés depuis une page, rien d\'autre de nouveau', () => {
+  H.loadBackground();
+  const ok = globalThis.DDT_isTrustedSender;
+  const api = { runtime: { getURL: (p) => 'chrome-extension://abc/' + p } };
+  const page = { url: 'https://evil.example/page', tab: { id: 3 } };
+  for (const type of ['speak', 'stopSpeaking', 'ttsVoices']) assert.equal(ok({ type }, page, api), true, type);
+  assert.equal(ok({ type: 'voiceCommand' }, page, api), false);
+});
+
+/* Fausse page de fond Firefox : speechSynthesis sans exigence de clic */
+function fakeBgWindow(voices = [{ name: 'Hortense', lang: 'fr-FR' }, { name: 'Google français', lang: 'fr-FR' }], late) {
+  const listeners = {};
+  const synth = {
+    spoken: [], cancels: 0, list: late ? [] : voices,
+    getVoices() { return this.list; },
+    addEventListener(n, f) { (listeners[n] = listeners[n] || []).push(f); },
+    removeEventListener(n, f) { listeners[n] = (listeners[n] || []).filter((x) => x !== f); },
+    loadLate() { this.list = voices; (listeners.voiceschanged || []).forEach((f) => f()); },
+    speak(u) { this.spoken.push(u); },
+    cancel() { this.cancels++; this.spoken.filter((u) => !u.done).forEach((u) => { u.done = true; u.onerror && u.onerror({ error: 'interrupted' }); }); },
+    finish(i) { const u = this.spoken[i]; u.done = true; u.onend && u.onend({}); }
+  };
+  return { speechSynthesis: synth, SpeechSynthesisUtterance: function (text) { this.text = text; } };
+}
+
+test('background (Firefox) : pas de browser.tts, speechSynthesis de la page de fond avec langue, vitesse et voix', async () => {
+  const win = fakeBgWindow(undefined, true);
+  const { bg } = ttsBackground({ win });
+  const vp = bg.onMessage({ type: 'ttsVoices' });
+  await wait(5);
+  win.speechSynthesis.loadLate();                // liste remplie plus tard (voiceschanged)
+  const v = await vp;
+  assert.equal(v.engine, 'synth');
+  assert.deepEqual(v.voices.map((x) => x.name), ['Hortense', 'Google français']);
+  const p = bg.onMessage({ type: 'speak', text: 'Lance les tests', lang: 'fr-FR', rate: 1.4, voiceName: 'Google français' }, { tab: { id: 4 } });
+  await wait(5);
+  const u = win.speechSynthesis.spoken[0];
+  assert.equal(u.text, 'Lance les tests');
+  assert.equal(u.lang, 'fr-FR');
+  assert.equal(u.rate, 1.4);
+  assert.equal(u.voice.name, 'Google français');
+  win.speechSynthesis.finish(0);
+  assert.deepEqual(await p, { ok: true, type: 'end' });
+  const p2 = bg.onMessage({ type: 'speak', text: 'Encore', lang: 'fr' }, { tab: { id: 4 } });
+  await wait(5);
+  await bg.onMessage({ type: 'stopSpeaking' }, { tab: { id: 4 } });
+  assert.equal(win.speechSynthesis.cancels, 1);
+  assert.deepEqual(await p2, { ok: false, type: 'interrupted' });
+});
+
+test('page -> background -> chrome.tts : la voix de l\'extension est utilisée, pas speechSynthesis de la page', async () => {
+  const cue = { text: 'Open the terminal', startTime: 0, endTime: 2 };
+  const tts = fakeChromeTts();
+  const { bg } = ttsBackground({ chromeTts: tts });
+  const bridge = bridgeTts(bg);
+  const { sp, video, track, voice, ctl } = dubSetup([cue], { voiceMode: 'dub' }, { tts: bridge });
+  voice.start();
+  ctl.time = 0.05;
+  track.fire([cue]);
+  assert.ok(await until(() => tts.calls.length === 1), 'phrase envoyée à chrome.tts');
+  const c = tts.calls[0];
+  assert.equal(c.text, 'OPEN THE TERMINAL');
+  assert.equal(c.opts.lang, 'fr-FR');
+  assert.equal(c.opts.voiceName, 'Google français', 'même ordre de préférence : langue exacte puis « Google »');
+  assert.ok(c.opts.rate >= 0.9 && c.opts.rate <= 1.7, 'vitesse calée sur le sous-titre : ' + c.opts.rate);
+  assert.equal(sp.spoken.length, 0, 'speechSynthesis de la page jamais utilisée (Chrome la refuse sans clic)');
+  assert.equal(voice.status().ttsEngine, 'tts');
+  assert.equal(voice.status().dubVoice, 'Google français');
+  assert.ok(Math.abs(video.volume - 0.8 * 0.15) < 1e-9, 'son d\'origine baissé pendant la voix');
+  tts.end(0);                                     // événement « end » de chrome.tts
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000), 'son d\'origine remonté à la fin de la phrase');
+  // pause de la vidéo : stopSpeaking envoyé, la phrase finit « interrupted »
+  track.fire([{ text: 'Then run npm test', startTime: 0, endTime: 2 }]);
+  assert.ok(await until(() => tts.calls.length === 2));
+  ctl.pause();
+  assert.ok(await until(() => tts.stops === 1), 'pause : chrome.tts.stop');
+  assert.ok(bridge.sent.some((m) => m.type === 'stopSpeaking'));
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000), 'son remonté après l\'interruption');
+  voice.stop();
+});
+
+test('page -> background Firefox : la voix sort de la page de fond', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 3 };
+  const win = fakeBgWindow();
+  const { bg } = ttsBackground({ win });
+  const { sp, track, voice, video } = dubSetup([cue], { voiceMode: 'dub' }, { tts: bridgeTts(bg) });
+  voice.start();
+  track.fire([cue]);
+  assert.ok(await until(() => win.speechSynthesis.spoken.length === 1));
+  assert.equal(win.speechSynthesis.spoken[0].text, 'HELLO');
+  assert.equal(win.speechSynthesis.spoken[0].voice.name, 'Google français', 'même ordre de préférence que la page');
+  assert.equal(sp.spoken.length, 0);
+  assert.equal(voice.status().ttsEngine, 'synth');
+  win.speechSynthesis.finish(0);
+  assert.ok(await until(() => Math.abs(video.volume - 0.8) < 1e-9, 1000));
+  voice.stop();
+});
+
+test('repli : extension sans synthèse (no_tts) ou sans voix pour la langue -> speechSynthesis de la page', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 3 };
+  const none = ttsBackground({});
+  const a = dubSetup([cue], { voiceMode: 'dub' }, { tts: bridgeTts(none.bg) });
+  a.voice.start();
+  a.track.fire([cue]);
+  assert.ok(await until(() => a.sp.spoken.length === 1), 'phrase dite par la page');
+  assert.equal(a.voice.status().ttsEngine, 'page');
+  a.voice.stop();
+  // voix de l'extension seulement en anglais : la page a une voix française
+  const tts = fakeChromeTts([{ voiceName: 'Google US English', lang: 'en-US' }]);
+  const b = dubSetup([cue], { voiceMode: 'dub' }, { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg) });
+  b.voice.start();
+  b.track.fire([cue]);
+  assert.ok(await until(() => b.sp.spoken.length === 1));
+  assert.equal(b.sp.spoken[0].voice.name, 'Google français');
+  assert.equal(tts.calls.length, 0);
+  b.voice.stop();
+  // réponse « no_tts » en cours de route (background d'une ancienne version) : phrase suivante par la page
+  const c = dubSetup([cue, { text: 'World', startTime: 3, endTime: 6 }], { voiceMode: 'dub' }, {
+    tts: { voices: () => Promise.resolve({ ok: true, engine: 'tts', voices: [{ name: 'Google français', lang: 'fr-FR' }] }),
+      speak: () => Promise.resolve({ ok: false, error: 'no_tts' }), stop: () => Promise.resolve() }
+  });
+  c.voice.start();
+  c.track.fire([cue]);
+  await wait(50);
+  c.ctl.time = 3;
+  c.track.fire([{ text: 'World', startTime: 3, endTime: 6 }]);
+  assert.ok(await until(() => c.sp.spoken.length === 1), 'repli sur la page');
+  assert.equal(c.sp.spoken[0].text, 'WORLD');
+  c.voice.stop();
+});
+
+test('repli page sous Chrome sans clic : message « clique une fois », phrase redite au premier clic', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 3 };
+  const { dom, sp, track, voice } = dubSetup([cue], {}, {}, { refuse: true });
+  voice.start();
+  track.fire([cue]);
+  assert.ok(await until(() => overlay(dom).msg === 'voiceDubClick'));
+  sp.speak = function (u) { this.spoken.push(u); u.onstart && u.onstart({}); };   // le clic débloque la voix
+  dom.window.document.body.dispatchEvent(new dom.window.Event('pointerdown', { bubbles: true }));
+  assert.ok(await until(() => sp.spoken.length === 2), 'phrase redite après le clic');
+  assert.equal(sp.spoken[1].text, 'HELLO');
+  assert.equal(overlay(dom).msg, '', 'message retiré');
+  voice.stop();
+});
+
+function linesShown(dom) {
+  const sr = overlay(dom).host.shadowRoot;
+  return [...sr.querySelectorAll('.line')].filter((l) => !l.hidden && l.textContent).length;
+}
+
+test('voix seule : aucune ligne de texte (seulement la barre), la voix parle ; haut-parleur coupé : sous-titres de retour', async () => {
+  const cue = { text: 'Open the terminal', startTime: 0, endTime: 3 };
+  const tts = fakeChromeTts();
+  const { dom, track, voice } = dubSetup([cue], { voiceMode: 'voice' }, { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg) });
+  voice.start();
+  assert.equal(voice.status().voiceMode, 'voice');
+  track.fire([cue]);
+  assert.ok(await until(() => tts.calls.length === 1), 'la traduction est dite');
+  const sr = overlay(dom).host.shadowRoot;
+  assert.equal(linesShown(dom), 0, 'pas de ligne de texte');
+  assert.equal(sr.querySelector('.bar').hidden, false, 'barre de contrôle visible');
+  assert.equal(sr.querySelector('.rates').hidden, false, 'vitesse dans la barre');
+  assert.ok(sr.querySelector('.box').classList.contains('voiceonly'));
+  overlay(dom).speak.click();                    // voix coupée : on ne laisse pas l'écran vide
+  assert.equal(linesShown(dom), 1, 'sous-titres de retour');
+  assert.equal(overlay(dom).tr, 'OPEN THE TERMINAL');
+  voice.stop();
+  // aucune voix pour la langue : sous-titres affichés et message
+  const d2 = dubSetup([cue], { voiceMode: 'voice', target: 'ja' }, { tts: bridgeTts(ttsBackground({ chromeTts: fakeChromeTts() }).bg) });
+  d2.voice.start();
+  assert.ok(await until(() => /^voiceNoTts/.test(overlay(d2.dom).msg)));
+  d2.track.fire([cue]);
+  assert.ok(await until(() => overlay(d2.dom).tr === 'OPEN THE TERMINAL'));
+  assert.equal(linesShown(d2.dom), 1);
+  d2.voice.stop();
+});
+
+test('voix seule : choix du popup appliqué à la voix en cours (sous-titres -> voix seule -> doublage), ancien voiceDub repris', async () => {
+  const cue = { text: 'Hello', startTime: 0, endTime: 3 };
+  const tts = fakeChromeTts();
+  const { dom, track, voice } = dubSetup([cue], { voiceMode: 'subs' }, { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg) });
+  voice.start();
+  assert.equal(voice.status().speaking, false);
+  track.fire([cue]);
+  assert.ok(await until(() => overlay(dom).tr === 'HELLO'));
+  let st = await voice.setMode('voice');
+  assert.equal(st.speaking, true);
+  assert.equal(st.voiceMode, 'voice');
+  assert.ok(await until(() => tts.calls.length === 1), 'la traduction affichée est dite tout de suite');
+  assert.equal(linesShown(dom), 0);
+  st = await voice.setMode('dub');
+  assert.equal(linesShown(dom), 1, 'doublage : sous-titres et voix');
+  assert.equal(st.speaking, true);
+  st = await voice.setMode('subs');
+  assert.equal(st.speaking, false);
+  assert.equal((await voice.setDub(true)).voiceMode, 'dub', 'ancien message « dub » (on: true)');
+  voice.stop();
+  // ancien réglage voiceDub: true (1.2) -> doublage au démarrage
+  const old = dubSetup([cue], { voiceDub: true }, { tts: bridgeTts(ttsBackground({ chromeTts: fakeChromeTts() }).bg) });
+  old.voice.start();
+  assert.equal(old.voice.status().voiceMode, 'dub');
+  assert.ok(await until(() => old.voice.status().speaking));
+  old.voice.stop();
+});
+
+test('vitesse : multipliée par le réglage puis bornée (0,5 à 3), − / + dans la barre, enregistrée, appliquée à la phrase suivante', async () => {
+  const c1 = { text: 'Install the package first', startTime: 0, endTime: 4 };
+  const c2 = { text: 'Install the package first.', startTime: 4, endTime: 8 };
+  const tts = fakeChromeTts();
+  const saved = [];
+  const { dom, track, voice, ctl } = dubSetup([c1, c2], { voiceMode: 'dub', voiceRate: 1.5 },
+    { tts: bridgeTts(ttsBackground({ chromeTts: tts }).bg), saveRate: (r) => { saved.push(r); return Promise.resolve(); } });
+  const base = dom.window.DDT_dubRate('INSTALL THE PACKAGE FIRST', 4, 0, 'fr-FR');
+  voice.start();
+  const sr = overlay(dom).host.shadowRoot;
+  assert.equal(sr.querySelector('.rate').textContent, '1,5×', 'valeur affichée (« 1,5× » en français)');
+  track.fire([c1]);
+  assert.ok(await until(() => tts.calls.length === 1));
+  assert.equal(tts.calls[0].opts.rate, Math.round(base * 1.5 * 100) / 100, 'calage × réglage');
+  sr.querySelector('.faster').click();
+  assert.equal(voice.status().voiceRate, 1.6);
+  assert.equal(sr.querySelector('.rate').textContent, '1,6×');
+  assert.deepEqual(saved, [1.6], 'enregistrée');
+  assert.equal(tts.calls.length, 1, 'la phrase en cours n\'est pas redite');
+  tts.end(0);
+  ctl.time = 4;
+  track.fire([c2]);
+  assert.ok(await until(() => tts.calls.length === 2));
+  const base2 = dom.window.DDT_dubRate('INSTALL THE PACKAGE FIRST.', 4, 0, 'fr-FR');
+  assert.equal(tts.calls[1].opts.rate, Math.round(base2 * 1.6 * 100) / 100, 'phrase suivante à la nouvelle vitesse');
+  // bornes du réglage : 0,5 à 2, boutons désactivés au bout
+  for (let i = 0; i < 10; i++) sr.querySelector('.faster').click();
+  assert.equal(voice.status().voiceRate, 2);
+  assert.equal(sr.querySelector('.faster').disabled, true);
+  for (let i = 0; i < 30; i++) sr.querySelector('.slower').click();
+  assert.equal(voice.status().voiceRate, 0.5);
+  assert.equal(sr.querySelector('.slower').disabled, true);
+  assert.equal(sr.querySelector('.slower').getAttribute('aria-label'), 'voiceSlower');
+  // réglage changé ailleurs (page de réglages) : appliqué sans être réenregistré
+  const n = saved.length;
+  voice.setRate(1.2);
+  assert.equal(voice.status().voiceRate, 1.2);
+  assert.equal(saved.length, n);
+  assert.equal(voice.setRate(7).voiceRate, 2, 'valeur hors bornes ramenée à 2');
+  voice.stop();
+  // vitesse finale bornée à 3 (calage 1,7 × 2) et à 0,5
+  const lim = dom.window.DDT_VOICE_LIMITS;
+  assert.deepEqual([lim.min, lim.max, lim.chars], [0.5, 3, 1000]);
+  const long = { text: 'This is a very long explanation that keeps going on and on about configuration files', startTime: 0, endTime: 1 };
+  const t2 = fakeChromeTts();
+  const f = dubSetup([long], { voiceMode: 'dub', voiceRate: 2 }, { tts: bridgeTts(ttsBackground({ chromeTts: t2 }).bg) });
+  f.voice.start();
+  f.track.fire([long]);
+  assert.ok(await until(() => t2.calls.length === 1));
+  assert.equal(t2.calls[0].opts.rate, 3);
+  f.voice.stop();
+  const t3 = fakeChromeTts();
+  const g = dubSetup([{ text: 'Oui', startTime: 0, endTime: 5 }], { voiceMode: 'dub', voiceRate: 0.5 }, { tts: bridgeTts(ttsBackground({ chromeTts: t3 }).bg) });
+  g.voice.start();
+  g.track.fire([{ text: 'Oui', startTime: 0, endTime: 5 }]);
+  assert.ok(await until(() => t3.calls.length === 1));
+  assert.equal(t3.calls[0].opts.rate, 0.5, '0,9 × 0,5 = 0,45 -> 0,5');
+  g.voice.stop();
+});
+
+test('vitesse : boutons cachés sans voix, pas de innerHTML dans la bande (construite élément par élément)', () => {
+  const src = H.read('voice.js');
+  assert.equal(/\.innerHTML\s*=/.test(src), false, 'aucune affectation innerHTML (addons-linter : UNSAFE_VAR_ASSIGNMENT)');
+  const { dom, voice } = dubSetup([], { voiceMode: 'subs' });
+  voice.start();
+  const sr = overlay(dom).host.shadowRoot;
+  assert.equal(sr.querySelector('.rates').hidden, true, 'sous-titres seuls : pas de réglage de vitesse');
+  assert.equal(sr.querySelectorAll('svg path').length >= 4, true, 'icônes SVG dessinées');
+  assert.equal(sr.querySelector('svg').namespaceURI, 'http://www.w3.org/2000/svg');
+  voice.stop();
+});
+
+test('réglages partagés : voiceModeOf (migration de voiceDub) et clampVoiceRate / formatVoiceRate', () => {
+  assert.equal(DDT.voiceModeOf({}), 'subs');
+  assert.equal(DDT.voiceModeOf({ voiceDub: true }), 'dub');
+  assert.equal(DDT.voiceModeOf({ voiceDub: false }), 'subs');
+  assert.equal(DDT.voiceModeOf({ voiceDub: true, voiceMode: 'voice' }), 'voice', 'le nouveau réglage gagne');
+  assert.equal(DDT.voiceModeOf({ voiceMode: 'bizarre', voiceDub: true }), 'dub');
+  assert.deepEqual([0.3, 0.55, 1.26, 2.5, 'x', null, '1.4'].map(DDT.clampVoiceRate), [0.5, 0.6, 1.3, 2, 1, 1, 1.4]);
+  assert.equal(DDT.formatVoiceRate(1.2, 'fr'), '1,2×');
+  assert.equal(DDT.formatVoiceRate(1, 'en'), '1.0×');
+  assert.equal(DDT.DEFAULT_SETTINGS.voiceMode, 'subs');
+  assert.equal(DDT.DEFAULT_SETTINGS.voiceRate, 1);
+});
+
+test('mise à jour 1.2 -> 1.3 : voiceDub remplacé par voiceMode dans les réglages enregistrés', () => {
+  H.loadBackground();
+  const mig = globalThis.DDT_migrateSettings;
+  assert.deepEqual(mig({ termsStyle: 3, target: 'fr', voiceDub: true }), { termsStyle: 3, target: 'fr', voiceMode: 'dub' });
+  assert.deepEqual(mig({ termsStyle: 3, voiceDub: false }), { termsStyle: 3, voiceMode: 'subs' });
+  assert.equal(mig({ termsStyle: 3, voiceMode: 'voice', voiceRate: 1.4 }), null, 'déjà à jour : rien à écrire');
+  assert.equal(mig({ termsStyle: 1, voiceMode: 'dub' }).explainTerms, false, 'ancienne migration gardée');
+});
+
+
 /* ---------------- Partout : shadow DOM, <audio>, plusieurs vidéos, lecteurs intégrés ---------------- */
 function rect(el, r) {
   el.getBoundingClientRect = () => Object.assign({ left: 0, top: 0 }, r, { right: (r.left || 0) + r.width, bottom: (r.top || 0) + r.height });
@@ -1132,7 +1538,7 @@ test('plein écran natif : traductions dans une piste texte DevDocTrad, seulemen
 });
 
 /* ---------------- Fichiers de l'extension ---------------- */
-test('extension : raccourci de la voix déclaré, voice.js présent, popup avec l\'interrupteur', () => {
+test('extension : raccourci de la voix déclaré, voice.js présent, popup avec l\'interrupteur, permission tts pour Chrome', () => {
   const fs = require('fs');
   const path = require('path');
   const base = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifests', 'base.json'), 'utf8'));
@@ -1140,9 +1546,15 @@ test('extension : raccourci de la voix déclaré, voice.js présent, popup avec 
   assert.ok(Object.keys(base.commands).length <= 4, 'Chrome : 4 raccourcis maximum');
   assert.ok(fs.existsSync(path.join(H.SRC, 'voice.js')));
   assert.ok(H.read('popup.html').includes('id="voiceSwitch"'));
-  assert.ok(H.read('popup.html').includes('id="voiceDubSel"'), 'choix sous-titres / doublage');
-  assert.equal(DDT.DEFAULT_SETTINGS.voiceDub, false, 'défaut : sous-titres');
-  assert.ok(!/tabCapture|offscreen/.test(JSON.stringify(base)), 'aucune nouvelle permission demandée');
+  assert.ok(H.read('popup.html').includes('id="voiceModeSel"'), 'choix sous-titres / doublage / voix seule');
+  assert.equal(DDT.DEFAULT_SETTINGS.voiceMode, 'subs', 'défaut : sous-titres');
+  assert.ok(!/tabCapture|offscreen/.test(JSON.stringify(base)), 'aucune permission de capture demandée');
+  // « tts » : Chrome seulement (pas d'avertissement à l'installation) ; Firefox n'a pas browser.tts
+  const chrome = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifests', 'chrome.json'), 'utf8'));
+  const firefox = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'manifests', 'firefox.json'), 'utf8'));
+  assert.deepEqual(chrome.permissions, ['tts']);
+  assert.equal(base.permissions.includes('tts'), false);
+  assert.equal('permissions' in firefox, false);
 });
 
 /* ---------------- Corrections d'audit ---------------- */

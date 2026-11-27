@@ -231,5 +231,11 @@
 "voiceNoTts": "Nenhuma voz sintetizada em {0} neste dispositivo: apenas legendas.",
 "voiceDubClick": "Clique na página para permitir a voz traduzida.",
 "voiceInFrame": "Este vídeo está em um player incorporado ({0}): abra-o em uma guia para traduzi-lo.",
-"voiceOpenTab": "Abrir o vídeo em uma guia"
+"voiceOpenTab": "Abrir o vídeo em uma guia",
+"popupVoiceOnly": "Só voz traduzida (sem legendas)",
+"optVoiceRate": "Velocidade da voz traduzida",
+"optVoiceRateHelp": "Voz dos vídeos (dublagem e só voz). 1× = velocidade normal; a voz acelera um pouco para acompanhar as legendas.",
+"voiceSlower": "Voz mais lenta",
+"voiceFaster": "Voz mais rápida",
+"voiceRateValue": "Velocidade da voz: {0}"
 }

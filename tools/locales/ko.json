@@ -231,5 +231,11 @@
 "voiceNoTts": "이 기기에는 {0} 합성 음성이 없습니다: 자막만 표시합니다.",
 "voiceDubClick": "번역 음성을 허용하려면 페이지를 클릭하세요.",
 "voiceInFrame": "이 동영상은 삽입된 플레이어({0})에 있습니다: 번역하려면 탭에서 여세요.",
-"voiceOpenTab": "동영상을 탭에서 열기"
+"voiceOpenTab": "동영상을 탭에서 열기",
+"popupVoiceOnly": "번역된 음성만 (자막 없음)",
+"optVoiceRate": "번역 음성 속도",
+"optVoiceRateHelp": "동영상 음성(더빙 및 음성만). 1× = 보통 속도이며, 자막을 따라가도록 음성이 조금 빨라집니다.",
+"voiceSlower": "느리게",
+"voiceFaster": "빠르게",
+"voiceRateValue": "음성 속도: {0}"
 }

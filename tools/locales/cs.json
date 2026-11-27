@@ -231,5 +231,11 @@
 "voiceNoTts": "V tomto zařízení není syntetický hlas pro {0}: pouze titulky.",
 "voiceDubClick": "Klikněte na stránku, abyste povolili přeložený hlas.",
 "voiceInFrame": "Toto video je ve vloženém přehrávači ({0}): otevřete ho v kartě, aby šlo přeložit.",
-"voiceOpenTab": "Otevřít video v kartě"
+"voiceOpenTab": "Otevřít video v kartě",
+"popupVoiceOnly": "Jen přeložený hlas (bez titulků)",
+"optVoiceRate": "Rychlost přeloženého hlasu",
+"optVoiceRateHelp": "Hlas ve videích (dabing a jen hlas). 1× = normální rychlost; hlas trochu zrychlí, aby stíhal titulky.",
+"voiceSlower": "Pomalejší hlas",
+"voiceFaster": "Rychlejší hlas",
+"voiceRateValue": "Rychlost hlasu: {0}"
 }

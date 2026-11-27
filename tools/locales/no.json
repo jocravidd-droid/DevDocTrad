@@ -231,5 +231,11 @@
 "voiceNoTts": "Ingen talesyntesestemme for {0} på denne enheten: bare undertekster.",
 "voiceDubClick": "Klikk på siden for å tillate den oversatte stemmen.",
 "voiceInFrame": "Denne videoen er i en innebygd spiller ({0}): åpne den i en fane for å oversette den.",
-"voiceOpenTab": "Åpne videoen i en fane"
+"voiceOpenTab": "Åpne videoen i en fane",
+"popupVoiceOnly": "Bare oversatt stemme (uten undertekster)",
+"optVoiceRate": "Hastighet for oversatt stemme",
+"optVoiceRateHelp": "Stemmen i videoer (dubbing og bare stemme). 1× = normal hastighet; stemmen øker litt for å holde følge med undertekstene.",
+"voiceSlower": "Saktere stemme",
+"voiceFaster": "Raskere stemme",
+"voiceRateValue": "Stemmehastighet: {0}"
 }

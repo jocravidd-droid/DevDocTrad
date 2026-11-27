@@ -488,6 +488,8 @@
     $('explainTerms').checked = !!settings.explainTerms;
     $('translateComments').checked = !!settings.translateComments;
     $('pageCap').value = settings.pageCap;
+    $('voiceRate').value = String(DDT.clampVoiceRate(settings.voiceRate));
+    renderVoiceRate();
     var pats = $('sensitiveBase');
     pats.textContent = '';
     DDT.DEFAULT_SENSITIVE.forEach(function (p) { pats.appendChild(el('span', 'pat', p)); });
@@ -503,6 +505,26 @@
     var v = Math.max(10000, Number(e.target.value) || DDT.DEFAULT_SETTINGS.pageCap);
     e.target.value = v;
     saveSettings({ pageCap: v });
+  });
+  /* Vitesse de la voix traduite : 0,5 à 2, pas de 0,1 ; appliquée tout de suite à la vidéo en cours
+     (la voix lit le réglage à chaque changement du stockage) */
+  function renderVoiceRate() {
+    var v = DDT.clampVoiceRate($('voiceRate').value);
+    var label = DDT.formatVoiceRate(v);
+    $('voiceRateOut').textContent = label;
+    $('voiceRate').setAttribute('aria-valuetext', label);
+  }
+  var rateTimer = null;
+  $('voiceRate').addEventListener('input', function () {
+    renderVoiceRate();
+    // enregistré pendant le glissement, sans écrire à chaque pixel
+    if (rateTimer) clearTimeout(rateTimer);
+    rateTimer = setTimeout(function () { rateTimer = null; saveSettings({ voiceRate: DDT.clampVoiceRate($('voiceRate').value) }); }, 250);
+  });
+  $('voiceRate').addEventListener('change', function () {
+    if (rateTimer) { clearTimeout(rateTimer); rateTimer = null; }
+    renderVoiceRate();
+    saveSettings({ voiceRate: DDT.clampVoiceRate($('voiceRate').value) });
   });
   $('sensitiveExtra').addEventListener('change', function (e) {
     saveSettings({ sensitiveExtra: e.target.value.split(/\n+/).map(function (s) { return s.trim().toLowerCase(); }).filter(Boolean) });

@@ -80,8 +80,34 @@
     sensitiveExtra: [],
     autoSites: [],              // noms d'hôte
     theme: 'system',            // 'system' | 'light' | 'dark'
-    voiceDub: false             // voix des vidéos : false = sous-titres, true = sous-titres + voix traduite (doublage)
+    voiceMode: 'subs',          // voix des vidéos : 'subs' (sous-titres) | 'dub' (sous-titres + voix traduite) | 'voice' (voix seule)
+    voiceRate: 1                // vitesse de la voix traduite : 0,5 à 2 (multiplie le calage sur la durée du sous-titre)
   };
+
+  /* ---------- Voix des vidéos : mode et vitesse ---------- */
+  var VOICE_MODES = ['subs', 'dub', 'voice'];
+  var VOICE_RATE_MIN = 0.5;
+  var VOICE_RATE_MAX = 2;
+  /* Mode enregistré ; ancien réglage booléen « voiceDub » (1.2) repris : true -> 'dub', sinon 'subs'.
+     À appeler sur les réglages lus dans le stockage, avant de les fusionner avec DEFAULT_SETTINGS. */
+  function voiceModeOf(raw) {
+    raw = raw || {};
+    if (VOICE_MODES.indexOf(raw.voiceMode) !== -1) return raw.voiceMode;
+    return raw.voiceDub === true ? 'dub' : 'subs';
+  }
+  /* Vitesse choisie par l'utilisateur : pas de 0,1, entre 0,5 et 2, 1 si la valeur est invalide */
+  function clampVoiceRate(x) {
+    var n = Number(x);
+    if (x === null || x === undefined || x === '' || !isFinite(n)) return 1;
+    return Math.round(Math.min(VOICE_RATE_MAX, Math.max(VOICE_RATE_MIN, n)) * 10) / 10;
+  }
+  /* « 1,2× » en français, « 1.2× » en anglais (langue de l'interface du navigateur) */
+  function formatVoiceRate(x, uiLang) {
+    var n = clampVoiceRate(x);
+    var s;
+    try { s = n.toLocaleString(uiLang || browserLanguage(), { minimumFractionDigits: 1, maximumFractionDigits: 1 }); } catch (e) { s = n.toFixed(1); }
+    return s + '\u00d7';
+  }
 
   /* ---------- Échappement ---------- */
   function escapeText(s) {
@@ -614,6 +640,12 @@
     OLLAMA_ORIGINS: OLLAMA_ORIGINS,
     DEFAULT_SENSITIVE: DEFAULT_SENSITIVE,
     DEFAULT_SETTINGS: DEFAULT_SETTINGS,
+    VOICE_MODES: VOICE_MODES,
+    VOICE_RATE_MIN: VOICE_RATE_MIN,
+    VOICE_RATE_MAX: VOICE_RATE_MAX,
+    voiceModeOf: voiceModeOf,
+    clampVoiceRate: clampVoiceRate,
+    formatVoiceRate: formatVoiceRate,
     escapeText: escapeText,
     unescapeText: unescapeText,
     tokenize: tokenize,

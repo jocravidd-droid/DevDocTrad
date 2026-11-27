@@ -231,5 +231,11 @@
 "voiceNoTts": "Hakuna sauti ya usanisi kwa {0} kwenye kifaa hiki: manukuu pekee.",
 "voiceDubClick": "Bofya ukurasa ili kuruhusu sauti iliyotafsiriwa.",
 "voiceInFrame": "Video hii iko ndani ya kicheza kilichopachikwa ({0}): ifungue kwenye kichupo ili kuitafsiri.",
-"voiceOpenTab": "Fungua video kwenye kichupo"
+"voiceOpenTab": "Fungua video kwenye kichupo",
+"popupVoiceOnly": "Sauti iliyotafsiriwa pekee (bila manukuu)",
+"optVoiceRate": "Kasi ya sauti iliyotafsiriwa",
+"optVoiceRateHelp": "Sauti ya video (udubishaji na sauti pekee). 1× = kasi ya kawaida; sauti huongeza kasi kidogo ili kwenda sambamba na manukuu.",
+"voiceSlower": "Sauti polepole zaidi",
+"voiceFaster": "Sauti haraka zaidi",
+"voiceRateValue": "Kasi ya sauti: {0}"
 }

@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "動画をタブで開く"
   },
+  "popupVoiceOnly": {
+    "message": "翻訳音声のみ（字幕なし）"
+  },
+  "optVoiceRate": {
+    "message": "翻訳音声の速さ"
+  },
+  "optVoiceRateHelp": {
+    "message": "動画の音声（吹き替えと音声のみ）。1× = 通常の速さ。字幕に追いつくため、音声は少し速くなります。"
+  },
+  "voiceSlower": {
+    "message": "遅くする"
+  },
+  "voiceFaster": {
+    "message": "速くする"
+  },
+  "voiceRateValue": {
+    "message": "音声の速さ：{0}"
+  },
   "popupSensitive": {
     "message": "機密性の高いページ：自動では翻訳しません。ボタンは使えます。Ollama が設定されていれば優先して使います。"
   },

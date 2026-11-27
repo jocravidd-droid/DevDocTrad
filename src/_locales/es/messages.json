@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Abrir el vídeo en una pestaña"
   },
+  "popupVoiceOnly": {
+    "message": "Solo voz traducida (sin subtítulos)"
+  },
+  "optVoiceRate": {
+    "message": "Velocidad de la voz traducida"
+  },
+  "optVoiceRateHelp": {
+    "message": "Voz de los vídeos (doblaje y solo voz). 1× = velocidad normal; la voz acelera un poco para seguir los subtítulos."
+  },
+  "voiceSlower": {
+    "message": "Voz más lenta"
+  },
+  "voiceFaster": {
+    "message": "Voz más rápida"
+  },
+  "voiceRateValue": {
+    "message": "Velocidad de la voz: {0}"
+  },
   "popupSensitive": {
     "message": "Página sensible: nunca se traduce automáticamente. El botón funciona y, si está configurado, Ollama se usa primero."
   },

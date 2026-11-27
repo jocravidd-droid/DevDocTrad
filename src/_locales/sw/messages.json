@@ -215,6 +215,24 @@
   "voiceOpenTab": {
     "message": "Fungua video kwenye kichupo"
   },
+  "popupVoiceOnly": {
+    "message": "Sauti iliyotafsiriwa pekee (bila manukuu)"
+  },
+  "optVoiceRate": {
+    "message": "Kasi ya sauti iliyotafsiriwa"
+  },
+  "optVoiceRateHelp": {
+    "message": "Sauti ya video (udubishaji na sauti pekee). 1× = kasi ya kawaida; sauti huongeza kasi kidogo ili kwenda sambamba na manukuu."
+  },
+  "voiceSlower": {
+    "message": "Sauti polepole zaidi"
+  },
+  "voiceFaster": {
+    "message": "Sauti haraka zaidi"
+  },
+  "voiceRateValue": {
+    "message": "Kasi ya sauti: {0}"
+  },
   "popupSensitive": {
     "message": "Ukurasa nyeti: hautafsiriwi kiotomatiki kamwe. Kitufe kinafanya kazi, Ollama hutumika kwanza ikiwa imesanidiwa."
   },

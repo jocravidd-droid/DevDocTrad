@@ -231,5 +231,11 @@
 "voiceNoTts": "Geen spraaksynthesestem voor {0} op dit apparaat: alleen ondertitels.",
 "voiceDubClick": "Klik op de pagina om de vertaalde stem toe te staan.",
 "voiceInFrame": "Deze video staat in een ingesloten speler ({0}): open hem in een tabblad om hem te vertalen.",
-"voiceOpenTab": "Video openen in een tabblad"
+"voiceOpenTab": "Video openen in een tabblad",
+"popupVoiceOnly": "Alleen vertaalde stem (zonder ondertiteling)",
+"optVoiceRate": "Snelheid van de vertaalde stem",
+"optVoiceRateHelp": "Stem in video's (nasynchronisatie en alleen stem). 1× = normale snelheid; de stem versnelt iets om de ondertitels bij te houden.",
+"voiceSlower": "Langzamere stem",
+"voiceFaster": "Snellere stem",
+"voiceRateValue": "Spreeksnelheid: {0}"
 }
